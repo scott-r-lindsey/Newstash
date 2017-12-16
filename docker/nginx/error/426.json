@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 426,
+            "phrase": "Upgrade Required",
+            "type": "client error",
+            "message": "The request MUST be HTTP/1.1 or HTTP/2, and use TLS 1.2 or newer."
+        }
+    ],
+    "code": 426,
+    "resource": null,
+    "source": "nginx"
+}

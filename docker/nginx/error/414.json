@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 414,
+            "phrase": "URI Too Long",
+            "type": "client error",
+            "message": "The URI that was requested is too long."
+        }
+    ],
+    "code": 414,
+    "resource": null,
+    "source": "nginx"
+}

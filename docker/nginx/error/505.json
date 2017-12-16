@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 505,
+            "phrase": "HTTP Version Not Supported",
+            "type": "server error",
+            "message": "The request MUST be HTTP/1.1 or HTTP/2, and use TLS 1.2 or newer."
+        }
+    ],
+    "code": 505,
+    "resource": null,
+    "source": "nginx"
+}

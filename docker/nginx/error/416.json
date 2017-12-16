@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 416,
+            "phrase": "Range Not Satisfiable",
+            "type": "client error",
+            "message": "The `Range` that was requested is not satisfiable by this resource."
+        }
+    ],
+    "code": 416,
+    "resource": null,
+    "source": "nginx"
+}

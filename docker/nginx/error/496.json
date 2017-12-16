@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 496,
+            "phrase": "No Certificate",
+            "type": "client error",
+            "message": "Nginx internal code used when client didn't provide certificate to distinguish it from 4XX in a log and an error page redirection."
+        }
+    ],
+    "code": 496,
+    "resource": null,
+    "source": "nginx"
+}

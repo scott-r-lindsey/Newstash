@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 405,
+            "phrase": "Method Not Allowed",
+            "type": "client error",
+            "message": "The client used an HTTP method to request this resource is not supported or not permitted."
+        }
+    ],
+    "code": 405,
+    "resource": null,
+    "source": "nginx"
+}

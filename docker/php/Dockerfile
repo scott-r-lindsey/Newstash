@@ -1,0 +1,36 @@
+FROM php:7.1-fpm-alpine 
+                                        
+ENV BUILD_DEPS alpine-sdk autoconf coreutils gettext-dev libxml2-dev openssl-dev postgresql-dev pcre-dev
+ENV PERSISTENT_DEPS sqlite zip openssl subversion coreutils
+ENV INSTALL_EXTENSIONS dom fileinfo gettext json opcache simplexml zip pdo pdo_pgsql pgsql
+
+# Install Packages
+RUN apk upgrade --update && \
+    apk add --no-cache --virtual .build-deps $BUILD_DEPS && \
+    apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
+    docker-php-ext-install $INSTALL_EXTENSIONS && \
+    runDeps="$( \
+        scanelf --needed --nobanner --recursive /usr/local \
+            | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
+            | sort -u \                 
+            | xargs -r apk info --installed \
+            | sort -u \                 
+    )" && \
+    apk add --no-cache --virtual .php-rundeps $runDeps && \
+    apk del .build-deps && \            
+    rm -rf /tmp/*
+
+# Copy shell commands                   
+COPY run.sh fix_user_id.sh wait.sh /var/run/
+
+# Copy project code
+COPY Symfony /var/www/html/phpapp/Symfony
+RUN chown -R www-data:www-data /var/www/html/phpapp/Symfony
+        
+# Fix web user permissions              
+RUN /var/run/fix_user_id.sh
+
+# ----------------------------------    
+USER www-data
+cmd ["/var/run/run.sh"]                 
+WORKDIR /var/www/html/phpapp/Symfony

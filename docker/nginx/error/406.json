@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 406,
+            "phrase": "Not Acceptable",
+            "type": "client error",
+            "message": "The value of the `Accept` header is unsupported."
+        }
+    ],
+    "code": 406,
+    "resource": null,
+    "source": "nginx"
+}

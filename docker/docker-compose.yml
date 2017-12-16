@@ -1,0 +1,34 @@
+version: '3'
+services:                               
+    mysql:
+        container_name: bookstash-mysql-container
+        image: mysql:8
+        
+        environment:
+            MYSQL_ROOT_PASSWORD: bookstash
+            MYSQL_DATABASE: bookstash
+            MYSQL_USER: bookstash
+            MYSQL_PASSWORD: bookstash
+        ports:
+            - "3306:33306"
+
+    php:
+        container_name: bookstash-php-container
+        build: ../docker/php
+        volumes:
+            - "${APP_PATH}:/var/www/html/phpapp"     
+        depends_on:
+            - mysql
+
+    nginx:
+        container_name: bookstash-nginx-container
+        build: ../docker/nginx
+        ports:                          
+            - "1337:80"          
+        volumes:                        
+            - "${APP_PATH}:/var/www/html/phpapp"     
+        depends_on:
+            - php
+
+
+

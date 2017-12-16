@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 415,
+            "phrase": "Unsupported Media Type",
+            "type": "client error",
+            "message": "The client did not request a supported media type."
+        }
+    ],
+    "code": 415,
+    "resource": null,
+    "source": "nginx"
+}

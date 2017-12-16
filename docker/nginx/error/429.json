@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 429,
+            "phrase": "Too Many Requests",
+            "type": "client error",
+            "message": "The client has been rate-limited."
+        }
+    ],
+    "code": 429,
+    "resource": null,
+    "source": "nginx"
+}

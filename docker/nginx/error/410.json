@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 410,
+            "phrase": "Gone",
+            "type": "client error",
+            "message": "The resource was available a short time ago, but is no longer available. This is a temporary response code."
+        }
+    ],
+    "code": 410,
+    "resource": null,
+    "source": "nginx"
+}

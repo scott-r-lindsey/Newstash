@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 500,
+            "phrase": "Internal Server Error",
+            "type": "server error",
+            "message": "Unknown server error."
+        }
+    ],
+    "code": 500,
+    "resource": null,
+    "source": "nginx"
+}

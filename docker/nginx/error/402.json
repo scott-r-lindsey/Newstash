@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 402,
+            "phrase": "Payment Required",
+            "type": "client error",
+            "message": "You are not subscribed to a plan which allows access to this resource."
+        }
+    ],
+    "code": 402,
+    "resource": null,
+    "source": "nginx"
+}

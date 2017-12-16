@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 502,
+            "phrase": "Bad Gateway",
+            "type": "server error",
+            "message": "The server is acting as a proxy and did not receive an acceptable response from the upstream server."
+        }
+    ],
+    "code": 502,
+    "resource": null,
+    "source": "nginx"
+}

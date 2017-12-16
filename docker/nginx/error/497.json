@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 497,
+            "phrase": "HTTP Request Sent to HTTPS Port",
+            "type": "client error",
+            "message": "All client requests MUST be sent over HTTPS."
+        }
+    ],
+    "code": 497,
+    "resource": null,
+    "source": "nginx"
+}

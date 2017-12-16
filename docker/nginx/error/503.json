@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 503,
+            "phrase": "Service Unavailable",
+            "type": "server error",
+            "message": "The service is undergoing maintenance."
+        }
+    ],
+    "code": 503,
+    "resource": null,
+    "source": "nginx"
+}

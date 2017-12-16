@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 444,
+            "phrase": "No Response",
+            "type": "client error",
+            "message": "No response."
+        }
+    ],
+    "code": 444,
+    "resource": null,
+    "source": "nginx"
+}

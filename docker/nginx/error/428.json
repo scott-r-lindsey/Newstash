@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 428,
+            "phrase": "Precondition Required",
+            "type": "client error",
+            "message": "The resource could not be updated because the `If-Match` header did not meet expectations."
+        }
+    ],
+    "code": 428,
+    "resource": null,
+    "source": "nginx"
+}

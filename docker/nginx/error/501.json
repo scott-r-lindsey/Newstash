@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 501,
+            "phrase": "Not Implemented",
+            "type": "server error",
+            "message": "The action you are attempting to perform has not been implemented."
+        }
+    ],
+    "code": 501,
+    "resource": null,
+    "source": "nginx"
+}

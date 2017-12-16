@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 495,
+            "phrase": "Certificate Error",
+            "type": "client error",
+            "message": "Nginx internal code used when SSL client certificate error occurred to distinguish it from 4XX in a log and an error page redirection."
+        }
+    ],
+    "code": 495,
+    "resource": null,
+    "source": "nginx"
+}

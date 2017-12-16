@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 494,
+            "phrase": "Request Header Fields Too Large",
+            "type": "client error",
+            "message": "The request header values are too large."
+        }
+    ],
+    "code": 494,
+    "resource": null,
+    "source": "nginx"
+}

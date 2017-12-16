@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 417,
+            "phrase": "Expectation Failed",
+            "type": "client error",
+            "message": "The `Expect` header should only be used for uploads."
+        }
+    ],
+    "code": 417,
+    "resource": null,
+    "source": "nginx"
+}

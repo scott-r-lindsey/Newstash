@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 409,
+            "phrase": "Conflict",
+            "type": "client error",
+            "message": "A conflict occurred while updating the resource."
+        }
+    ],
+    "code": 409,
+    "resource": null,
+    "source": "nginx"
+}

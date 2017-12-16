@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 411,
+            "phrase": "Length Required",
+            "type": "client error",
+            "message": "The client did not send a valid `Content-Length` header."
+        }
+    ],
+    "code": 411,
+    "resource": null,
+    "source": "nginx"
+}

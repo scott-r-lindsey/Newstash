@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 422,
+            "phrase": "Unprocessable Entity",
+            "type": "client error",
+            "message": "The syntax of the request was correct, but the server was unable to process the contained instructions. This can occur when input is provided as the wrong type."
+        }
+    ],
+    "code": 422,
+    "resource": null,
+    "source": "nginx"
+}

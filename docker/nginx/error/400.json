@@ -1,0 +1,13 @@
+{
+    "errors": [
+        {
+            "code": 400,
+            "phrase": "Bad Request",
+            "type": "client error",
+            "message": "Unknown client error."
+        }
+    ],
+    "code": 400,
+    "resource": null,
+    "source": "nginx"
+}

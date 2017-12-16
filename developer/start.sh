@@ -27,19 +27,23 @@ $__here/bin/devify_container.sh &
 
 cd $__root/docker
 
-echo "-------------------------------------------------------------------------------"
-start_blue
+green "-------------------------------------------------------------------------------"
 echo ""
-teal "  This app should be available at http://localhost:$APP_PORT/."
+start_teal
+echo -n "  This app should be available at " 
+end_color
+blue "http://localhost:$APP_PORT/" 
 echo ""
-blue "  mysql -h 127.0.0.1 -P $MYSQL_PORT -u bookstash --password=bookstash bookstash"
+echo " Access MySQL:"
+echo ""
+teal "  mysql -h 127.0.0.1 -P $MYSQL_PORT -u bookstash --password=bookstash bookstash"
 echo ""
 echo " To shell into the running php instance:"
 echo ""
-teal "  docker exec -u www-data -it bookstash-php-container sh"
+teal "  docker exec -u www-data -it newstash-php-container sh"
 echo ""
 end_color
-echo "-------------------------------------------------------------------------------"
+green "-------------------------------------------------------------------------------"
 
 
 docker-compose up

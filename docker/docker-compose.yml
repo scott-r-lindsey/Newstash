@@ -1,7 +1,7 @@
 version: '3'
 services:                               
     mysql:
-        container_name: bookstash-mysql-container
+        container_name: newstash-mysql-container
         image: mysql:8
         
         environment:
@@ -13,16 +13,18 @@ services:
             - "3306:33306"
 
     php:
-        container_name: bookstash-php-container
+        container_name: newstash-php-container
         build: ../docker/php
+        image: newstash-php-image
         volumes:
             - "${APP_PATH}:/var/www/html/phpapp"     
         depends_on:
             - mysql
 
     nginx:
-        container_name: bookstash-nginx-container
+        container_name: newstash-nginx-container
         build: ../docker/nginx
+        image: newstash-nginx-image
         ports:                          
             - "1337:80"          
         volumes:                        

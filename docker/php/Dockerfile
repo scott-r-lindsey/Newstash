@@ -21,14 +21,15 @@ RUN apk upgrade --update && \
     rm -rf /tmp/*
 
 # Copy shell commands                   
-COPY run.sh fix_user_id.sh wait.sh /var/run/
+COPY run.sh wait.sh /var/run/
 
 # Copy project code
 COPY Symfony /var/www/html/phpapp/Symfony
 RUN chown -R www-data:www-data /var/www/html/phpapp/Symfony
         
 # Fix web user permissions              
-RUN /var/run/fix_user_id.sh
+RUN sed -i "s/82:82/1000:1000/g" /etc/passwd && \
+    sed -i "s/:82:/:1000:/g" /etc/group
 
 # ----------------------------------    
 USER www-data

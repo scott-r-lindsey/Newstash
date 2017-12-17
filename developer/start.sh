@@ -9,7 +9,7 @@ set -e
 __here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __root="$__here/../"
 
-. ./bin/colors.sh
+. $__here/bin/colors.sh
 
 # make sure we're not running as root
 if (( `/usr/bin/id -u` == 0 )); then

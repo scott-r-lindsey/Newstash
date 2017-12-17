@@ -23,15 +23,15 @@ RUN apk upgrade --update && \
 # Copy shell commands                   
 COPY run.sh wait.sh /var/run/
 
-# Copy project code
-COPY Symfony /var/www/html/phpapp/Symfony
-RUN chown -R www-data:www-data /var/www/html/phpapp/Symfony
-        
 # Fix web user permissions              
 RUN sed -i "s/82:82/1000:1000/g" /etc/passwd && \
     sed -i "s/:82:/:1000:/g" /etc/group
 
+# Copy project code
+COPY Symfony /var/www/html/phpapp/Symfony
+RUN chown -R www-data:www-data /var/www/html/phpapp/Symfony /home/www-data
+        
 # ----------------------------------    
 USER www-data
-cmd ["/var/run/run.sh"]                 
+CMD ["/var/run/run.sh"]                 
 WORKDIR /var/www/html/phpapp/Symfony

@@ -16,8 +16,14 @@ services:
         container_name: newstash-php-container
         build: ../docker/php
         image: newstash-php-image
+
         volumes:
             - "${APP_PATH}:/var/www/html/phpapp"     
+
+        environment:
+            APP_ENV: dev
+            APP_SECRET: devsecretdevsecretdevsecret
+
         depends_on:
             - mysql
 

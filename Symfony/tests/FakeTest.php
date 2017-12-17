@@ -12,9 +12,10 @@ class FakeTest extends BaseTest
     {
         $this->assertTrue(true);
     }
-    public function testService()
+    public function testService(): void
     {
         $this->container->get('test.App\Service\BookParser');
         $this->assertTrue(true);
     }
+
 }

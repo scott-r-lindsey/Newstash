@@ -8,7 +8,7 @@ use App\Service\DelayFish;
 use Psr\Log\LoggerInterface;
 
 /**
- * @covers DelayFish
+ * @covers App\Service\DelayFish
  */
 class DelayFishTest extends BaseTest
 {
@@ -44,7 +44,7 @@ class DelayFishTest extends BaseTest
         $this->mockLogger->expects($this->once())
             ->method('info')
             ->with($this->matchesRegularExpression(
-                '/^Sleeping for 0.099............ seconds$/'
+                '/^Sleeping for 0.099[\d]+ seconds$/'
             ));
 
         $now = microtime(true);

@@ -14,7 +14,6 @@ abstract class BaseTest extends WebTestCase
 
     public function setup()
     {
-
         $this->client = static::createClient();
         $this->container = $this->client->getContainer();
 
@@ -30,8 +29,6 @@ abstract class BaseTest extends WebTestCase
      */
     protected function resetDB(): void
     {
-        putenv("DATABASE_URL=mysql://bookstash:bookstash@mysql:3306/bookstash_test");
-
         $root = static::$kernel->getContainer()->get('kernel')->getRootDir();
         exec($root.'/../bin/console --env=test doctrine:schema:drop --force');
         exec($root . "/../bin/console --env=test doctrine:schema:create");

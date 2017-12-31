@@ -51,13 +51,16 @@ class BrowseNode{
     /** @ORM\Column(type="boolean") */
     private $root = false;
 
-    public function upsertChild($child){
+    public function upsertChild(BrowseNode $child): void
+    {
         $children = $this->getChildren();
+
         foreach ($children as $c){
             if ($c->getId() == $child->getId()){
                 return;
             }
         }
+
         $this->addChildren($child);
     }
 
@@ -213,29 +216,6 @@ class BrowseNode{
     }
 
     /**
-     * Add parents
-     *
-     * @param \Scott\DataBundle\Entity\BrowseNode $parents
-     * @return BrowseNode
-     */
-    public function addParent(\Scott\DataBundle\Entity\BrowseNode $parents)
-    {
-        $this->parents[] = $parents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove parents
-     *
-     * @param \Scott\DataBundle\Entity\BrowseNode $parents
-     */
-    public function removeParent(\Scott\DataBundle\Entity\BrowseNode $parents)
-    {
-        $this->parents->removeElement($parents);
-    }
-
-    /**
      * Get parents
      *
      * @return \Doctrine\Common\Collections\Collection 
@@ -248,10 +228,10 @@ class BrowseNode{
     /**
      * Add children
      *
-     * @param \Scott\DataBundle\Entity\BrowseNode $children
+     * @param \App\Entity\BrowseNode $children
      * @return BrowseNode
      */
-    public function addChildren(\Scott\DataBundle\Entity\BrowseNode $children)
+    public function addChildren(\App\Entity\BrowseNode $children)
     {
         $this->children[] = $children;
     
@@ -261,9 +241,9 @@ class BrowseNode{
     /**
      * Remove children
      *
-     * @param \Scott\DataBundle\Entity\BrowseNode $children
+     * @param \App\Entity\BrowseNode $children
      */
-    public function removeChildren(\Scott\DataBundle\Entity\BrowseNode $children)
+    public function removeChildren(\App\Entity\BrowseNode $children)
     {
         $this->children->removeElement($children);
     }

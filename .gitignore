@@ -6,6 +6,7 @@
 *.config
 *.pid
 
+/Symfony/coverage_report/
 /Symfony/vendor/
 /Symfony/web/bundles/
 /Symfony/web/release.txt
@@ -19,3 +20,5 @@
 
 /docker/php/Symfony
 /docker/nginx/Symfony
+
+/developer/config.sh

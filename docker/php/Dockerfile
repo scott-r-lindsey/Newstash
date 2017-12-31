@@ -2,7 +2,7 @@ FROM php:7.1-fpm-alpine
                                         
 ENV BUILD_DEPS alpine-sdk autoconf coreutils gettext-dev libxml2-dev openssl-dev postgresql-dev pcre-dev
 ENV PERSISTENT_DEPS sqlite zip openssl subversion coreutils
-ENV INSTALL_EXTENSIONS dom fileinfo gettext json opcache simplexml zip pdo pdo_pgsql pgsql
+ENV INSTALL_EXTENSIONS dom fileinfo gettext json opcache simplexml zip pdo pdo_mysql
 
 # Install Packages
 RUN apk upgrade --update && \

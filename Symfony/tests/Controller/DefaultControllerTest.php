@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Tests;    
+namespace App\Tests;
 
-use PHPUnit\Framework\TestCase;         
-use App\Tests\Lib\BaseTest;             
+use PHPUnit\Framework\TestCase;
+use App\Tests\Lib\BaseTest;
 
 class DefaultControllerTest extends BaseTest
 {

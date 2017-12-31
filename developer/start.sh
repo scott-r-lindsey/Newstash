@@ -10,6 +10,7 @@ __here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __root="$__here/../"
 
 . $__here/bin/colors.sh
+. $__here/config.sh
 
 # make sure we're not running as root
 if (( `/usr/bin/id -u` == 0 )); then
@@ -22,6 +23,7 @@ APP_PORT=1337
 
 #------------------------------------------------------------------------------
 export APP_PATH=$__root
+export MYSQL_PORT APP_PORT
 
 $__here/bin/devify_container.sh &
 

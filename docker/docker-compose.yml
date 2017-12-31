@@ -1,16 +1,16 @@
 version: '3'
-services:                               
+services:
     mysql:
         container_name: newstash-mysql-container
         image: mysql:8
-        
+
         environment:
             MYSQL_ROOT_PASSWORD: bookstash
             MYSQL_DATABASE: bookstash
             MYSQL_USER: bookstash
             MYSQL_PASSWORD: bookstash
         ports:
-            - "3306:33306"
+            - "${MYSQL_PORT}:3306"
 
     php:
         container_name: newstash-php-container
@@ -18,11 +18,17 @@ services:
         image: newstash-php-image
 
         volumes:
-            - "${APP_PATH}:/var/www/html/phpapp"     
+            - "${APP_PATH}:/var/www/html/phpapp"
 
         environment:
             APP_ENV: dev
             APP_SECRET: devsecretdevsecretdevsecret
+            DATABASE_URL: "mysql://bookstash:bookstash@mysql:3306/bookstash"
+
+            AWS_REGION: "${AWS_REGION}"
+            AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+            AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+            AWS_ASSOCIATE_TAG: "${AWS_ASSOCIATE_TAG}"
 
         depends_on:
             - mysql
@@ -31,10 +37,10 @@ services:
         container_name: newstash-nginx-container
         build: ../docker/nginx
         image: newstash-nginx-image
-        ports:                          
-            - "1337:80"          
-        volumes:                        
-            - "${APP_PATH}:/var/www/html/phpapp"     
+        ports:
+            - "${APP_PORT}:80"
+        volumes:
+            - "${APP_PATH}:/var/www/html/phpapp"
         depends_on:
             - php
 

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 abstract class BaseTest extends WebTestCase
 {
-    protected $db_setup = true;
+    protected $DBSetup = false;
     protected $client;
     protected $container;
 
@@ -18,9 +18,28 @@ abstract class BaseTest extends WebTestCase
         $this->client = static::createClient();
         $this->container = $this->client->getContainer();
 
+        if ($this->DBSetup) {
+            $this->resetDB();
+        }
+
         parent::setup();
     }
 
+    /**
+     *
+     */
+    protected function resetDB(): void
+    {
+        putenv("DATABASE_URL=mysql://bookstash:bookstash@mysql:3306/bookstash_test");
+
+        $root = static::$kernel->getContainer()->get('kernel')->getRootDir();
+        exec($root.'/../bin/console --env=test doctrine:schema:drop --force');
+        exec($root . "/../bin/console --env=test doctrine:schema:create");
+    }
+
+    /**
+     *
+     */
     protected function doNumJsonQuery(
         string $endpoint,
         string $method,
@@ -50,6 +69,9 @@ abstract class BaseTest extends WebTestCase
         return $response;
     }
 
+    /**
+     *
+     */
     protected function doJsonQuery(
         string $endpoint,
         string $method = 'GET',
@@ -80,7 +102,7 @@ abstract class BaseTest extends WebTestCase
     }
 
     /**
-     * 
+     *
      */
     protected function validateUnsetBasic(array &$incoming): void
     {
@@ -104,11 +126,11 @@ abstract class BaseTest extends WebTestCase
     }
 
     /**
-     * 
+     *
      */
     protected function validUnsetDate(
-        array &$incoming, 
-        string $key = 'date', 
+        array &$incoming,
+        string $key = 'date',
         bool $format = false
     ): void {
 
@@ -138,5 +160,7 @@ abstract class BaseTest extends WebTestCase
 
         unset($incoming[$key]);
     }
+
+
 
 }

@@ -4,12 +4,16 @@
     "require": {
         "php": "^7.1.3",
         "ext-iconv": "*",
+        "eightpoints/guzzle-bundle": "^7.2",
         "friendsofsymfony/rest-bundle": "^2.3",
+        "symfony/asset": "^4.0",
         "symfony/browser-kit": "^4.0",
         "symfony/console": "^4.0",
         "symfony/flex": "^1.0",
         "symfony/framework-bundle": "^4.0",
         "symfony/lts": "^4@dev",
+        "symfony/maker-bundle": "^1.0",
+        "symfony/orm-pack": "^1.0",
         "symfony/phpunit-bridge": "^4.0",
         "symfony/serializer-pack": "^1.0",
         "symfony/translation": "^4.0",
@@ -59,7 +63,7 @@
     "extra": {
         "symfony": {
             "id": "01C1GE95VGX0W7X4BPR19TWZ4A",
-            "allow-contrib": false
+            "allow-contrib": "true"
         }
     }
 }

@@ -24,5 +24,22 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+
+    # -------------------------------------------------------------------------
+
+    aws_delayfish:
+        class: App\Service\DelayFish
+        autowire: false
+        arguments:
+            - "@logger"
+            - 1.1
+
+    App\Service\AwsProductApi:
+        arguments:
+            $api: '@eight_points_guzzle.client.aws_webservice'
+            $aws_access_key_id: '%env(AWS_ACCESS_KEY_ID)%'
+            $aws_secret_access_key: '%env(AWS_SECRET_ACCESS_KEY)%'
+            $aws_associate_tag: '%env(AWS_ASSOCIATE_TAG)%'
+            $delayProvider: "@aws_delayfish"
+
+

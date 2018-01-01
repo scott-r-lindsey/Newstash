@@ -64,9 +64,6 @@ class AwsProductApi
 
         $query              = $this->generateSignedQuery($params);
 
-        $this->logger->info(
-            "-----> API call: http://webservices.amazon.com/onca/xml$query");
-
         $this->delayProvider->delay();
 
         $response           = $this->client->request($method, $query);
@@ -82,9 +79,11 @@ class AwsProductApi
      */
     private function generateSignedQuery(array $params): string
     {
-        $scheme     = $this->client->getConfig()['base_uri']->getScheme();
-        $host       = $this->client->getConfig()['base_uri']->getHost();
-        $path       = $this->client->getConfig()['base_uri']->getPath();
+        $config = $this->client->getConfig();
+
+        $scheme     = $config['base_uri']->getScheme();
+        $host       = $config['base_uri']->getHost();
+        $path       = $config['base_uri']->getPath();
 
         $additional_params = array(
             'Service'           => 'AWSECommerceService',
@@ -111,6 +110,12 @@ class AwsProductApi
 
         $signature              = str_replace("%7E", "~", rawurlencode($signature));
 
-        return "?$canonicalized_query&Signature=$signature";
+        $query = "?$canonicalized_query&Signature=$signature";
+
+        $this->logger->info(
+            "-----> API call: $scheme://$host$path$query");
+
+        return $query;
+
     }
 }

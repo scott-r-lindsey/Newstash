@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>node test</title>
+        <style type="text/css">
+            .left{
+                position:absolute;
+                top:30px;
+                left:0;
+                width:260px;
+            }
+            .right{
+                position:absolute;
+                top:30px;
+                left:261px;
+            }
+            .book{
+                display:inline-block;
+                width:60px;
+                height:100px;
+                float:left;
+            }
+        </style>
+        </style>
+    </head>
+    <body>
+
+        {% set prefix = '/test/node' %}
+
+        <a href="{{ prefix }}">Books</a>
+
+        {% for n in nodes %}
+            {% set prefix %}{{ prefix }}/{{ n.id }}{% endset %}
+            -- <a href="{{ prefix }}">{{ n.name }}</a>
+        {% endfor %}
+
+        <br />
+        <div class="left">
+            <ul>
+            {% for c in children %}
+                <li><a href="{{ prefix }}/{{ c.id }}">{{ c.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="right">
+            {% for work in works %}
+                <div class="book">
+                    <img src="{{ work.getFrontEdition.getAmznSmallCover }}" title="{{ work.getFrontEdition.title }}" />
+                </div>
+            {% endfor %}
+        </div>
+
+
+    </body>
+</html>

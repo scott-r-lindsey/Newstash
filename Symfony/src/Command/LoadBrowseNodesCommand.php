@@ -92,7 +92,6 @@ class LoadBrowseNodesCommand extends BaseCommand
         $children = [];
 
         if ($sxe->BrowseNodes->BrowseNode->Children) {
-            $seen = [];
 
             foreach ($sxe->BrowseNodes->BrowseNode->Children->BrowseNode as $b){
 
@@ -100,11 +99,11 @@ class LoadBrowseNodesCommand extends BaseCommand
                     continue;
                 }
 
-                $child = $this->upfetch((int)$b->BrowseNodeId);
+                $child          = $this->upfetch((int)$b->BrowseNodeId);
+                $children[]     = $child;
 
                 $this->updateChild($b, $child, $parent);
-
-                $children[] = $child;
+                $parent->upsertChild($child);
             }
         }
 

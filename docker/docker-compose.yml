@@ -12,6 +12,11 @@ services:
         ports:
             - "${MYSQL_PORT}:3306"
 
+        volumes:
+            - "${APP_PATH}/data/mysql:/var/lib/mysql"
+            - "${APP_PATH}/data/conf.d:/etc/mysql/conf.d"
+
+
     php:
         container_name: newstash-php-container
         build: ../docker/php

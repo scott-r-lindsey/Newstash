@@ -40,10 +40,18 @@ fi
 
 green "-----> Setting up testing dba...";
 
-docker exec -u www-data -i newstash-php-container sh -c '\
-    MYSQL_PWD=bookstash mysql -h mysql -u root -e "CREATE DATABASE IF NOT EXISTS bookstash_test"'
-docker exec -u www-data -i newstash-php-container sh -c '\
-    MYSQL_PWD=bookstash mysql -h mysql -u root -e "GRANT ALL PRIVILEGES ON bookstash_test.* TO bookstash@\"%\""'
+
+docker exec -it newstash-mysql-container \
+    MYSQL_PWD=bookstash mysql  -u bookstash bookstash -e \
+    "ALTER USER 'bookstash'@'%' IDENTIFIED WITH mysql_native_password BY 'bookstash'";
+
+docker exec -it newstash-mysql-container \
+    MYSQL_PWD=bookstash mysql  -u bookstash bookstash -e \
+    "CREATE DATABASE IF NOT EXISTS bookstash_test"
+
+docker exec -it newstash-mysql-container \
+    MYSQL_PWD=bookstash mysql  -u bookstash bookstash -e \
+    "GRANT ALL PRIVILEGES ON bookstash_test.* TO bookstash@\"%\""
 
 #------------------------------------------------------------------------------
 green "-----> Devification complete!"

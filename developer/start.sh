@@ -32,13 +32,13 @@ cd $__root/docker
 green "-------------------------------------------------------------------------------"
 echo ""
 start_teal
-echo -n "  This app should be available at " 
+echo -n "  This app should be available at "
 end_color
-blue "http://localhost:$APP_PORT/" 
+blue "http://localhost:$APP_PORT/"
 echo ""
 echo " Access MySQL:"
 echo ""
-teal "  mysql -h 127.0.0.1 -P $MYSQL_PORT -u bookstash --password=bookstash bookstash"
+teal "  docker exec -it newstash-mysql-container mysql  -u bookstash --password=bookstash bookstash"
 echo ""
 echo " To shell into the running php instance:"
 echo ""

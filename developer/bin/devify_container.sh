@@ -38,20 +38,29 @@ fi
 #------------------------------------------------------------------------------
 # setup testing db access
 
-green "-----> Setting up testing dba...";
+green "-----> Fixing user auth";
+docker exec -i \
+    --env MYSQL_PWD=bookstash \
+    newstash-mysql-container \
+    mysql \
+        --user root bookstash \
+        --execute "ALTER USER 'bookstash'@'%' IDENTIFIED WITH mysql_native_password BY 'bookstash'";
 
+green "-----> Creatin testing dba...";
+docker exec -i \
+    --env MYSQL_PWD=bookstash \
+    newstash-mysql-container \
+    mysql \
+        --user root bookstash \
+        --execute "CREATE DATABASE IF NOT EXISTS bookstash_test"
 
-docker exec -it newstash-mysql-container \
-    MYSQL_PWD=bookstash mysql  -u bookstash bookstash -e \
-    "ALTER USER 'bookstash'@'%' IDENTIFIED WITH mysql_native_password BY 'bookstash'";
-
-docker exec -it newstash-mysql-container \
-    MYSQL_PWD=bookstash mysql  -u bookstash bookstash -e \
-    "CREATE DATABASE IF NOT EXISTS bookstash_test"
-
-docker exec -it newstash-mysql-container \
-    MYSQL_PWD=bookstash mysql  -u bookstash bookstash -e \
-    "GRANT ALL PRIVILEGES ON bookstash_test.* TO bookstash@\"%\""
+green "-----> Granting access to testing db...";
+docker exec -i \
+    --env MYSQL_PWD=bookstash \
+    newstash-mysql-container \
+    mysql \
+        --user root bookstash \
+        --execute "GRANT ALL PRIVILEGES ON bookstash_test.* TO bookstash@\"%\""
 
 #------------------------------------------------------------------------------
 green "-----> Devification complete!"

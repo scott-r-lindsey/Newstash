@@ -36,6 +36,19 @@ class BrowseNode{
      */
     private $children;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Edition", mappedBy="browse_nodes")
+     */
+    private $editions;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Edition", mappedBy="primary_browse_nodes")
+     */
+    private $editions_primary;
+
+
+    // ------------------------------------------------------------------------
+
     /** @ORM\Column(type="string", length=80) */
     private $name;
 
@@ -76,7 +89,7 @@ class BrowseNode{
         $this->parents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Set id
      *
@@ -86,14 +99,14 @@ class BrowseNode{
     public function setId($id)
     {
         $this->id = $id;
-    
+
         return $this;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -109,14 +122,14 @@ class BrowseNode{
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -132,14 +145,14 @@ class BrowseNode{
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -155,14 +168,14 @@ class BrowseNode{
     public function setPathdata($pathdata)
     {
         $this->pathdata = $pathdata;
-    
+
         return $this;
     }
 
     /**
      * Get pathdata
      *
-     * @return array 
+     * @return array
      */
     public function getPathdata()
     {
@@ -178,14 +191,14 @@ class BrowseNode{
     public function setSlug($slug)
     {
         $this->slug = $slug;
-    
+
         return $this;
     }
 
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -201,14 +214,14 @@ class BrowseNode{
     public function setRoot($root)
     {
         $this->root = $root;
-    
+
         return $this;
     }
 
     /**
      * Get root
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getRoot()
     {
@@ -218,7 +231,7 @@ class BrowseNode{
     /**
      * Get parents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getParents()
     {
@@ -234,7 +247,7 @@ class BrowseNode{
     public function addChildren(\App\Entity\BrowseNode $children)
     {
         $this->children[] = $children;
-    
+
         return $this;
     }
 
@@ -251,7 +264,7 @@ class BrowseNode{
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {

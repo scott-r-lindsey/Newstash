@@ -3,30 +3,28 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
-class TestController extends Controller
+class TestController extends AbstractController
 {
 
     const NODE_ROOT     = 283155;
 
     /**
-     * @Route("/test/node")
-     * @Route("/test/node/{n1}")
-     * @Route("/test/node/{n1}/{n2}")
-     * @Route("/test/node/{n1}/{n2}/{n3}")
-     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}")
-     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}")
-     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}/{n6}")
-     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}/{n6}/{n7}")
-     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}/{n6}/{n7}/{n8}")
-     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}/{n6}/{n7}/{n8}/{n9}")
-     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}/{n6}/{n7}/{n8}/{n9}/{n10}")
-     * @Method("GET")
+     * @Route("/test/node", methods={"GET"})
+     * @Route("/test/node/{n1}", methods={"GET"})
+     * @Route("/test/node/{n1}/{n2}", methods={"GET"})
+     * @Route("/test/node/{n1}/{n2}/{n3}", methods={"GET"})
+     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}", methods={"GET"})
+     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}", methods={"GET"})
+     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}/{n6}", methods={"GET"})
+     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}/{n6}/{n7}", methods={"GET"})
+     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}/{n6}/{n7}/{n8}", methods={"GET"})
+     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}/{n6}/{n7}/{n8}/{n9}", methods={"GET"})
+     * @Route("/test/node/{n1}/{n2}/{n3}/{n4}/{n5}/{n6}/{n7}/{n8}/{n9}/{n10}", methods={"GET"})
      * @Template()
      */
     public function nodeAction(

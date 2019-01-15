@@ -5,8 +5,9 @@ namespace App\Controller;
 
 use App\Controller\BaseApiController;
 use FOS\RestBundle\Controller\FOSRestController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Routing\Annotation\Route;
+#use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+#use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class DefaultController extends BaseApiController
 {

@@ -10,12 +10,10 @@ abstract class BaseTest extends WebTestCase
 {
     protected $DBSetup = false;
     protected $client;
-    protected $container;
 
     public function setup()
     {
         $this->client = static::createClient();
-        $this->container = $this->client->getContainer();
 
         if ($this->DBSetup) {
             $this->resetDB();
@@ -29,9 +27,9 @@ abstract class BaseTest extends WebTestCase
      */
     protected function resetDB(): void
     {
-        $root = static::$kernel->getContainer()->get('kernel')->getRootDir();
-        exec($root.'/../bin/console --env=test doctrine:schema:drop --force');
-        exec($root . "/../bin/console --env=test doctrine:schema:create");
+        $root = static::$kernel->getContainer()->get('kernel')->getProjectDir();
+        exec($root.'/bin/console --env=test doctrine:schema:drop --force');
+        exec($root . "/bin/console --env=test doctrine:schema:create");
     }
 
     /**

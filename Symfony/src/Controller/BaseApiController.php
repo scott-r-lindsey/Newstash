@@ -3,18 +3,18 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\View\View;           
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Exception;
-use BadMethodCallException;             
+use BadMethodCallException;
 
 /**
  *
  */
-class BaseApiController extends FOSRestController
+class BaseApiController extends AbstractFOSRestController
 {
     protected function bundleResponse(
         array $result,
@@ -27,7 +27,7 @@ class BaseApiController extends FOSRestController
         $response_data = [
             'status'    => [
                 'message'       => $message,
-                'code'          => $code       
+                'code'          => $code
             ],
             'timestamp'     => $time,
             'date'          => date(\DateTime::ISO8601, $time),

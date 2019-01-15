@@ -14,7 +14,7 @@ class FakeTest extends BaseTest
     }
     public function testService(): void
     {
-        $this->container->get('test.App\Service\BookParser');
+        self::$container->get('test.App\Service\BookParser');
         $this->assertTrue(true);
     }
 

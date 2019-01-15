@@ -19,7 +19,7 @@ class EditionTest extends BaseTest
     public function setUp()
     {
         parent::setup();
-        $this->em = $this->container->get('doctrine')->getManager();
+        $this->em = self::$container->get('doctrine')->getManager();
     }
 
 

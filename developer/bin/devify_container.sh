@@ -26,7 +26,7 @@ if [ ! -x "`docker exec -u www-data -i newstash-php-container sh -c 'which gcc'`
     green "-----> Installing xdebug and a ton of build tools...";
     docker exec -u root -i newstash-php-container sh -c '\
         apk add alpine-sdk autoconf mysql-client &&
-        pecl install xdebug &&
+        pecl install xdebug-beta &&
         docker-php-ext-enable xdebug &&
         curl https://getcomposer.org/installer >composer-setup.php &&
         php composer-setup.php &&

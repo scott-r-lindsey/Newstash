@@ -1,8 +1,8 @@
 <?php
-declare(strict_types=1); 
+declare(strict_types=1);
 
 namespace App\Command;
-  
+
 use App\Command\BaseCommand;
 use App\Entity\BrowseNode;
 use Symfony\Component\Console\Command\Command;
@@ -42,9 +42,9 @@ class LoadBrowseNodesCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('newstash:aws-load-browsenodes')         
-            ->setDescription('Fetches browse nodes from amazon')   
-            ->setHelp('This is the help')            
+            ->setName('newstash:aws-load-browsenodes')
+            ->setDescription('Fetches browse nodes from amazon')
+            ->setHelp('This is the help')
         ;
     }
 
@@ -134,7 +134,7 @@ class LoadBrowseNodesCommand extends BaseCommand
      *
      */
     private function updateChild(
-        \SimpleXmlElement $node, 
+        \SimpleXmlElement $node,
         BrowseNode $child,
         BrowseNode $parent
     ): void {
@@ -169,7 +169,8 @@ class LoadBrowseNodesCommand extends BaseCommand
     /**
      *
      */
-    private function slugify(array $strings): string{
+    private function slugify(array $strings): string
+    {
         $slug = implode(' ', $strings);
         $slug = preg_replace('/[^a-zA-Z0-9 ]/', '', $slug);
         $slug = strtolower($slug);

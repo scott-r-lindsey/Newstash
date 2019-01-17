@@ -85,8 +85,8 @@ class BrowseNodeTest extends BaseTest
             false
         );
 
-        $node->addChildren($child_one);
-        $node->addChildren($child_two);
+        $node->addChild($child_one);
+        $node->addChild($child_two);
         $this->em->flush();
         $this->em->clear();
 
@@ -111,7 +111,7 @@ class BrowseNodeTest extends BaseTest
         $child_two = $this->em->getRepository(BrowseNode::class)
             ->findOneById(1002);
 
-        $root->removeChildren($child_two);
+        $root->removeChild($child_two);
         $this->em->flush();
         $this->em->clear();
 

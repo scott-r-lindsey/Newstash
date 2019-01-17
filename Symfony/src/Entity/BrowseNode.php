@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -64,6 +65,33 @@ class BrowseNode{
     /** @ORM\Column(type="boolean") */
     private $root = false;
 
+    //-------------------------------------------------------------------------------
+
+    public function setId(?int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getId(): ?string
+    {
+        return (string)$this->id;
+    }
+
+
+    //-------------------------------------------------------------------------------
+    // ./bin/console make:entity --regenerate
+    //-------------------------------------------------------------------------------
+
+    public function __construct()
+    {
+        $this->parents = new ArrayCollection();
+        $this->children = new ArrayCollection();
+        $this->editions = new ArrayCollection();
+        $this->editions_primary = new ArrayCollection();
+    }
+
     public function upsertChild(BrowseNode $child): void
     {
         $children = $this->getChildren();
@@ -74,144 +102,63 @@ class BrowseNode{
             }
         }
 
-        $this->addChildren($child);
+        $this->addChild($child);
     }
 
-    //-------------------------------------------------------------------------------
-    // ./app/console doctrine:generate:entities Scott/DataBundle/Entity/BrowseNode
-    //-------------------------------------------------------------------------------
-
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function getName(): ?string
     {
-        $this->parents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->name;
     }
 
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return BrowseNode
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return (int)$this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return BrowseNode
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getDescription(): ?string
     {
-        return $this->name;
+        return $this->description;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return BrowseNode
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getPathdata(): ?array
     {
-        return $this->description;
+        return $this->pathdata;
     }
 
-    /**
-     * Set pathdata
-     *
-     * @param array $pathdata
-     * @return BrowseNode
-     */
-    public function setPathdata($pathdata)
+    public function setPathdata(?array $pathdata): self
     {
         $this->pathdata = $pathdata;
 
         return $this;
     }
 
-    /**
-     * Get pathdata
-     *
-     * @return array
-     */
-    public function getPathdata()
+    public function getSlug(): ?string
     {
-        return $this->pathdata;
+        return $this->slug;
     }
 
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return BrowseNode
-     */
-    public function setSlug($slug)
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
 
         return $this;
     }
 
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
+    public function getRoot(): ?bool
     {
-        return $this->slug;
+        return $this->root;
     }
 
-    /**
-     * Set root
-     *
-     * @param boolean $root
-     * @return BrowseNode
-     */
-    public function setRoot($root)
+    public function setRoot(bool $root): self
     {
         $this->root = $root;
 
@@ -219,55 +166,114 @@ class BrowseNode{
     }
 
     /**
-     * Get root
-     *
-     * @return boolean
+     * @return Collection|BrowseNode[]
      */
-    public function getRoot()
-    {
-        return $this->root;
-    }
-
-    /**
-     * Get parents
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getParents()
+    public function getParents(): Collection
     {
         return $this->parents;
     }
 
-    /**
-     * Add children
-     *
-     * @param \App\Entity\BrowseNode $children
-     * @return BrowseNode
-     */
-    public function addChildren(\App\Entity\BrowseNode $children)
+    public function addParent(BrowseNode $parent): self
     {
-        $this->children[] = $children;
+        if (!$this->parents->contains($parent)) {
+            $this->parents[] = $parent;
+            $parent->addChild($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParent(BrowseNode $parent): self
+    {
+        if ($this->parents->contains($parent)) {
+            $this->parents->removeElement($parent);
+            $parent->removeChild($this);
+        }
 
         return $this;
     }
 
     /**
-     * Remove children
-     *
-     * @param \App\Entity\BrowseNode $children
+     * @return Collection|BrowseNode[]
      */
-    public function removeChildren(\App\Entity\BrowseNode $children)
-    {
-        $this->children->removeElement($children);
-    }
-
-    /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildren()
+    public function getChildren(): Collection
     {
         return $this->children;
     }
+
+    public function addChild(BrowseNode $child): self
+    {
+        if (!$this->children->contains($child)) {
+            $this->children[] = $child;
+        }
+
+        return $this;
+    }
+
+    public function removeChild(BrowseNode $child): self
+    {
+        if ($this->children->contains($child)) {
+            $this->children->removeElement($child);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Edition[]
+     */
+    public function getEditions(): Collection
+    {
+        return $this->editions;
+    }
+
+    public function addEdition(Edition $edition): self
+    {
+        if (!$this->editions->contains($edition)) {
+            $this->editions[] = $edition;
+            $edition->addBrowseNode($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEdition(Edition $edition): self
+    {
+        if ($this->editions->contains($edition)) {
+            $this->editions->removeElement($edition);
+            $edition->removeBrowseNode($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Edition[]
+     */
+    public function getEditionsPrimary(): Collection
+    {
+        return $this->editions_primary;
+    }
+
+    public function addEditionsPrimary(Edition $editionsPrimary): self
+    {
+        if (!$this->editions_primary->contains($editionsPrimary)) {
+            $this->editions_primary[] = $editionsPrimary;
+            $editionsPrimary->addPrimaryBrowseNode($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEditionsPrimary(Edition $editionsPrimary): self
+    {
+        if ($this->editions_primary->contains($editionsPrimary)) {
+            $this->editions_primary->removeElement($editionsPrimary);
+            $editionsPrimary->removePrimaryBrowseNode($this);
+        }
+
+        return $this;
+    }
+
+
 }

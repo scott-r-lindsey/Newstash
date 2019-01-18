@@ -237,7 +237,6 @@ class Edition{
         \DateTime $amzn_updated_at = null,
         \DateTime $pub_date = null): bool
     {
-
         // scans a book to see if it should be considered active
         // book must have:
         //  * amznUpdatedAt
@@ -275,17 +274,19 @@ class Edition{
     }
 
     /**
-     * @ORM\PrePersist()
+     * @ORM\PreFlush()
      * @ORM\PreUpdate()
      */
     public function evaluateActive(): void
     {
-        $noprice = false;
-        $format_id = false;
+        $noprice        = false;
+        $format_id      = false;
+
         if ($format = $this->getFormat()){
-            $noprice = $format->getNoprice();
-            $format_id = $format->getId();
+            $noprice    = $format->getNoprice();
+            $format_id  = $format->getId();
         }
+
         $this->setActive(
             $this->evaluateActiveLogic(
                 $noprice,
@@ -315,7 +316,7 @@ class Edition{
         return $this->asin;
     }
 
-    public function setIsbn(?int $isbn): self
+    public function setIsbn(?string $isbn): self
     {
         $this->isbn = $isbn;
 

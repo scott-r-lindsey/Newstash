@@ -86,6 +86,9 @@
             "ref": "8be83603226d268ee8a93721b5bb77ec71d8d334"
         }
     },
+    "ezyang/htmlpurifier": {
+        "version": "v4.10.0"
+    },
     "friendsofsymfony/rest-bundle": {
         "version": "2.2",
         "recipe": {

@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Apa;
 
+use App\Service\DelayFish;
 use Psr\Log\LoggerInterface;
 use \GuzzleHttp\Client;
-use App\Service\DelayFish;
+use \SimpleXMLElement;
 
-class AwsProductApi
+class ProductApi
 {
     private $logger;
     private $client;
@@ -48,6 +49,22 @@ class AwsProductApi
 
         return $this->aws_signed_request($params);
     }
+
+    public function ItemLookup(
+        array $asins,
+        array $responses
+    ): SimpleXMLElement
+    {
+        $params = [
+            'Operation'     => 'ItemLookup',
+            'ItemId'        => implode(',', $asins),
+            'IdType'        => 'ASIN',
+            'ResponseGroup' => implode(',', $responses)
+        ];
+
+        return $this->aws_signed_request($params);
+    }
+
 
     # -------------------------------------------------------------------------
 

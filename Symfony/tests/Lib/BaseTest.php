@@ -29,7 +29,8 @@ abstract class BaseTest extends WebTestCase
     {
         $root = static::$kernel->getContainer()->get('kernel')->getProjectDir();
         exec($root.'/bin/console --env=test doctrine:schema:drop --force');
-        exec($root . "/bin/console --env=test doctrine:schema:create");
+        exec($root."/bin/console --env=test doctrine:schema:create");
+        exec($root.'/bin/console --env=test doctrine:fixtures:load --no-interaction');
     }
 
     /**

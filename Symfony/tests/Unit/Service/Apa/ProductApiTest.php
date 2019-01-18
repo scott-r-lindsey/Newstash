@@ -2,7 +2,7 @@
 
 namespace App\Tests\Unit\Service;
 
-use App\Service\AwsProductApi;
+use App\Service\Apa\ProductApi;
 use App\Service\DelayFish;
 use App\Tests\Lib\BaseTest;
 use PHPUnit\Framework\TestCase;
@@ -13,9 +13,9 @@ use \GuzzleHttp\Response;
 use GuzzleHttp\Psr7;
 
 /**
- * @covers App\Service\AwsProductApi
+ * @covers App\Service\Apa\ProductApi
  */
-class AwsProductApiTest extends BaseTest
+class ProductApiTest extends BaseTest
 {
     private $mockLogger;
     private $mockClient;
@@ -40,7 +40,7 @@ class AwsProductApiTest extends BaseTest
      */
     public function testBrowseNodeLookup()
     {
-        $productApi = new AwsProductApi(
+        $productApi = new ProductApi(
             $this->mockLogger,
             $this->mockClient,
             SELF::KEY_ID,

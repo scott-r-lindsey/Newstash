@@ -8,7 +8,7 @@ use App\Entity\BrowseNode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Service\AwsProductApi;
+use App\Service\Apa\ProductApi;
 use Doctrine\ORM\EntityManagerInterface;
 
 class LoadBrowseNodesCommand extends BaseCommand
@@ -26,7 +26,7 @@ class LoadBrowseNodesCommand extends BaseCommand
      *
      */
     public function __construct(
-        AwsProductApi $api,
+        ProductApi $api,
         EntityManagerInterface $em
     )
     {
@@ -80,7 +80,7 @@ class LoadBrowseNodesCommand extends BaseCommand
         }
         $this->pulled[$parent->getId()] = 1;
 
-        $sxe = $this->api->browseNodeLookup($parent->getId());
+        $sxe = $this->api->browseNodeLookup((int)$parent->getId());
 
         // dupe 171225 could lead to inconstent node naming
         $name = (string)$sxe->BrowseNodes->BrowseNode->Name;

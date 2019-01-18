@@ -1,0 +1,357 @@
+<?xml version="1.0"?>
+<ItemLookupResponse xmlns="http://webservices.amazon.com/AWSECommerceService/2011-08-01">
+  <OperationRequest>
+    <HTTPHeaders>
+      <Header Name="UserAgent" Value="GuzzleHttp/6.3.3 curl/7.61.1 PHP/7.3.1"/>
+    </HTTPHeaders>
+    <RequestId>978e91f9-ca75-44af-8def-e9848f500bde</RequestId>
+    <Arguments>
+      <Argument Name="AWSAccessKeyId" Value="AKIAJM43FSTV6EHTINOQ"/>
+      <Argument Name="AssociateTag" Value="12GO5ZuW7/eR9zIMSHM6bEWfzgY4n2iysahzF4Fj"/>
+      <Argument Name="IdType" Value="ASIN"/>
+      <Argument Name="ItemId" Value="0553576399"/>
+      <Argument Name="Operation" Value="ItemLookup"/>
+      <Argument Name="ResponseGroup" Value="Large"/>
+      <Argument Name="Service" Value="AWSECommerceService"/>
+      <Argument Name="Timestamp" Value="2019-01-18T00:06:15Z"/>
+      <Argument Name="Version" Value="2011-08-01"/>
+      <Argument Name="Signature" Value="96JO3tP0jBzdeeObKYRNf4+/7ka6DZRwAdc4oqVfyUs="/>
+    </Arguments>
+    <RequestProcessingTime>0.0973100220000000</RequestProcessingTime>
+  </OperationRequest>
+  <Items>
+    <Request>
+      <IsValid>True</IsValid>
+      <ItemLookupRequest>
+        <IdType>ASIN</IdType>
+        <ItemId>0553576399</ItemId>
+        <ResponseGroup>Large</ResponseGroup>
+        <VariationPage>All</VariationPage>
+      </ItemLookupRequest>
+    </Request>
+    <Item>
+      <ASIN>0553576399</ASIN>
+      <DetailPageURL>https://www.amazon.com/Distraction-Bruce-Sterling/dp/0553576399?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=165953&amp;creativeASIN=0553576399</DetailPageURL>
+      <ItemLinks>
+        <ItemLink>
+          <Description>Technical Details</Description>
+          <URL>https://www.amazon.com/Distraction-Bruce-Sterling/dp/tech-data/0553576399?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0553576399</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Baby Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/baby/add-item.html?asin.0=0553576399&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0553576399</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wedding Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/wedding/add-item.html?asin.0=0553576399&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0553576399</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wishlist</Description>
+          <URL>https://www.amazon.com/gp/registry/wishlist/add-item.html?asin.0=0553576399&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0553576399</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Tell A Friend</Description>
+          <URL>https://www.amazon.com/gp/pdp/taf/0553576399?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0553576399</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Customer Reviews</Description>
+          <URL>https://www.amazon.com/review/product/0553576399?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0553576399</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Offers</Description>
+          <URL>https://www.amazon.com/gp/offer-listing/0553576399?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0553576399</URL>
+        </ItemLink>
+      </ItemLinks>
+      <SalesRank>747865</SalesRank>
+      <SmallImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/519QIjH9euL._SL75_.jpg</URL>
+        <Height Units="pixels">75</Height>
+        <Width Units="pixels">46</Width>
+      </SmallImage>
+      <MediumImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/519QIjH9euL._SL160_.jpg</URL>
+        <Height Units="pixels">160</Height>
+        <Width Units="pixels">97</Width>
+      </MediumImage>
+      <LargeImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/519QIjH9euL.jpg</URL>
+        <Height Units="pixels">500</Height>
+        <Width Units="pixels">304</Width>
+      </LargeImage>
+      <ImageSets>
+        <ImageSet Category="variant">
+          <SwatchImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OsRLz7TFL._SL30_.jpg</URL>
+            <Height Units="pixels">30</Height>
+            <Width Units="pixels">22</Width>
+          </SwatchImage>
+          <SmallImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OsRLz7TFL._SL75_.jpg</URL>
+            <Height Units="pixels">75</Height>
+            <Width Units="pixels">56</Width>
+          </SmallImage>
+          <ThumbnailImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OsRLz7TFL._SL75_.jpg</URL>
+            <Height Units="pixels">75</Height>
+            <Width Units="pixels">56</Width>
+          </ThumbnailImage>
+          <TinyImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OsRLz7TFL._SL110_.jpg</URL>
+            <Height Units="pixels">110</Height>
+            <Width Units="pixels">82</Width>
+          </TinyImage>
+          <MediumImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OsRLz7TFL._SL160_.jpg</URL>
+            <Height Units="pixels">160</Height>
+            <Width Units="pixels">120</Width>
+          </MediumImage>
+          <LargeImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OsRLz7TFL.jpg</URL>
+            <Height Units="pixels">500</Height>
+            <Width Units="pixels">375</Width>
+          </LargeImage>
+        </ImageSet>
+        <ImageSet Category="primary">
+          <SwatchImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/519QIjH9euL._SL30_.jpg</URL>
+            <Height Units="pixels">30</Height>
+            <Width Units="pixels">18</Width>
+          </SwatchImage>
+          <SmallImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/519QIjH9euL._SL75_.jpg</URL>
+            <Height Units="pixels">75</Height>
+            <Width Units="pixels">46</Width>
+          </SmallImage>
+          <ThumbnailImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/519QIjH9euL._SL75_.jpg</URL>
+            <Height Units="pixels">75</Height>
+            <Width Units="pixels">46</Width>
+          </ThumbnailImage>
+          <TinyImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/519QIjH9euL._SL110_.jpg</URL>
+            <Height Units="pixels">110</Height>
+            <Width Units="pixels">67</Width>
+          </TinyImage>
+          <MediumImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/519QIjH9euL._SL160_.jpg</URL>
+            <Height Units="pixels">160</Height>
+            <Width Units="pixels">97</Width>
+          </MediumImage>
+          <LargeImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/519QIjH9euL.jpg</URL>
+            <Height Units="pixels">500</Height>
+            <Width Units="pixels">304</Width>
+          </LargeImage>
+        </ImageSet>
+      </ImageSets>
+      <ItemAttributes>
+        <Author>Bruce Sterling</Author>
+        <Binding>Mass Market Paperback</Binding>
+        <EAN>9780553576399</EAN>
+        <EANList>
+          <EANListElement>9780553576399</EANListElement>
+        </EANList>
+        <ISBN>0553576399</ISBN>
+        <IsEligibleForTradeIn>1</IsEligibleForTradeIn>
+        <ItemDimensions>
+          <Height Units="hundredths-inches">689</Height>
+          <Length Units="hundredths-inches">417</Length>
+          <Weight Units="Hundredths Pounds">55</Weight>
+          <Width Units="hundredths-inches">115</Width>
+        </ItemDimensions>
+        <Label>Spectra</Label>
+        <Languages>
+          <Language>
+            <Name>English</Name>
+            <Type>Published</Type>
+          </Language>
+          <Language>
+            <Name>English</Name>
+            <Type>Original Language</Type>
+          </Language>
+          <Language>
+            <Name>English</Name>
+            <Type>Unknown</Type>
+          </Language>
+        </Languages>
+        <ListPrice>
+          <Amount>799</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$7.99</FormattedPrice>
+        </ListPrice>
+        <Manufacturer>Spectra</Manufacturer>
+        <NumberOfItems>1</NumberOfItems>
+        <NumberOfPages>544</NumberOfPages>
+        <PackageDimensions>
+          <Height Units="hundredths-inches">140</Height>
+          <Length Units="hundredths-inches">680</Length>
+          <Weight Units="Hundredths Pounds">55</Weight>
+          <Width Units="hundredths-inches">410</Width>
+        </PackageDimensions>
+        <PackageQuantity>1</PackageQuantity>
+        <ProductGroup>Book</ProductGroup>
+        <ProductTypeName>ABIS_BOOK</ProductTypeName>
+        <PublicationDate>1999-10-05</PublicationDate>
+        <Publisher>Spectra</Publisher>
+        <ReleaseDate>1999-10-05</ReleaseDate>
+        <Studio>Spectra</Studio>
+        <Title>Distraction</Title>
+      </ItemAttributes>
+      <OfferSummary>
+        <LowestNewPrice>
+          <Amount>7929</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$79.29</FormattedPrice>
+        </LowestNewPrice>
+        <LowestUsedPrice>
+          <Amount>587</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$5.87</FormattedPrice>
+        </LowestUsedPrice>
+        <TotalNew>4</TotalNew>
+        <TotalUsed>26</TotalUsed>
+        <TotalCollectible>0</TotalCollectible>
+        <TotalRefurbished>0</TotalRefurbished>
+      </OfferSummary>
+      <Offers>
+        <TotalOffers>0</TotalOffers>
+        <TotalOfferPages>0</TotalOfferPages>
+        <MoreOffersUrl>0</MoreOffersUrl>
+      </Offers>
+      <CustomerReviews>
+        <IFrameURL>https://www.amazon.com/reviews/iframe?akid=AKIAJM43FSTV6EHTINOQ&amp;alinkCode=xm2&amp;asin=0553576399&amp;atag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;exp=2019-01-19T00%3A06%3A16Z&amp;v=2&amp;sig=trdGdW8Tlu6kNDg4qaWH0Gk87YEKbfyLpJeS1mesTxg%253D</IFrameURL>
+        <HasReviews>true</HasReviews>
+      </CustomerReviews>
+      <EditorialReviews>
+        <EditorialReview>
+          <Source>Product Description</Source>
+          <Content>It's November 2044, an election year, and the state of the Union is a farce. The government is broke, the cities are privately owned, and the military is shaking down citizens in the streets. Washington has become a circus and no one knows that better than Oscar Valparaiso. A political spin doctor, Oscar has always made things look good. Now he wants to make a difference.&lt;br&gt;&lt;br&gt;But Oscar has a skeleton in his closet. His only ally: Dr. Greta Penninger, a gifted neurologist at the bleeding edge of the neural revolution. Together they're out to spread a very dangerous idea whose time has come. And so have their enemies: every technofanatic, government goon, and laptop assassin in America. Oscar and Greta might not survive to change the world, but they'll put a new spin on it.</Content>
+          <IsLinkSuppressed>0</IsLinkSuppressed>
+        </EditorialReview>
+      </EditorialReviews>
+      <SimilarProducts>
+        <SimilarProduct>
+          <ASIN>0440343690</ASIN>
+          <Title>I Heard the Owl Call My Name</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0060853980</ASIN>
+          <Title>Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>076533805X</ASIN>
+          <Title>Everfair: A Novel</Title>
+        </SimilarProduct>
+      </SimilarProducts>
+      <BrowseNodes>
+        <BrowseNode>
+          <BrowseNodeId>16272</BrowseNodeId>
+          <Name>Science Fiction</Name>
+          <Children>
+            <BrowseNode>
+              <BrowseNodeId>16273</BrowseNodeId>
+              <Name>Adventure</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>9059886011</BrowseNodeId>
+              <Name>Alien Invasion</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>16275</BrowseNodeId>
+              <Name>Alternate History</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>16277</BrowseNodeId>
+              <Name>Anthologies</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>10387335011</BrowseNodeId>
+              <Name>Colonization</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>9059887011</BrowseNodeId>
+              <Name>Cyberpunk</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>3559311011</BrowseNodeId>
+              <Name>Dystopian</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>10387340011</BrowseNodeId>
+              <Name>Exploration</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>10387336011</BrowseNodeId>
+              <Name>First Contact</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>10387337011</BrowseNodeId>
+              <Name>Galactic Empire</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>9059888011</BrowseNodeId>
+              <Name>Genetic Engineering</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>16286</BrowseNodeId>
+              <Name>Hard Science Fiction</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>16288</BrowseNodeId>
+              <Name>History &amp; Criticism</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>16926921011</BrowseNodeId>
+              <Name>Humorous</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>7538385011</BrowseNodeId>
+              <Name>Military</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>7538386011</BrowseNodeId>
+              <Name>Post-Apocalyptic</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>16308</BrowseNodeId>
+              <Name>Short Stories</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>271585011</BrowseNodeId>
+              <Name>Space Opera</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>3559312011</BrowseNodeId>
+              <Name>Steampunk</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>7587452011</BrowseNodeId>
+              <Name>Time Travel</Name>
+            </BrowseNode>
+          </Children>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>25</BrowseNodeId>
+              <Name>Science Fiction &amp; Fantasy</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>1000</BrowseNodeId>
+                  <Name>Subjects</Name>
+                  <IsCategoryRoot>1</IsCategoryRoot>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>283155</BrowseNodeId>
+                      <Name>Books</Name>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+      </BrowseNodes>
+    </Item>
+  </Items>
+</ItemLookupResponse>
+
+sup

@@ -1,0 +1,541 @@
+<?xml version="1.0"?>
+<ItemLookupResponse xmlns="http://webservices.amazon.com/AWSECommerceService/2011-08-01">
+  <OperationRequest>
+    <HTTPHeaders>
+      <Header Name="UserAgent" Value="GuzzleHttp/6.3.3 curl/7.61.1 PHP/7.3.1"/>
+    </HTTPHeaders>
+    <RequestId>7d300317-cc79-4697-88f3-778ef350ab6d</RequestId>
+    <Arguments>
+      <Argument Name="AWSAccessKeyId" Value="AKIAJM43FSTV6EHTINOQ"/>
+      <Argument Name="AssociateTag" Value="12GO5ZuW7/eR9zIMSHM6bEWfzgY4n2iysahzF4Fj"/>
+      <Argument Name="IdType" Value="ASIN"/>
+      <Argument Name="ItemId" Value="B0025KVLU6"/>
+      <Argument Name="Operation" Value="ItemLookup"/>
+      <Argument Name="ResponseGroup" Value="Large"/>
+      <Argument Name="Service" Value="AWSECommerceService"/>
+      <Argument Name="Timestamp" Value="2019-01-18T20:01:01Z"/>
+      <Argument Name="Version" Value="2011-08-01"/>
+      <Argument Name="Signature" Value="GMESjQj9PYDD8ouMaABzGILyY0K330qt8oeVmaIbsR8="/>
+    </Arguments>
+    <RequestProcessingTime>0.0438481710000000</RequestProcessingTime>
+  </OperationRequest>
+  <Items>
+    <Request>
+      <IsValid>True</IsValid>
+      <ItemLookupRequest>
+        <IdType>ASIN</IdType>
+        <ItemId>B0025KVLU6</ItemId>
+        <ResponseGroup>Large</ResponseGroup>
+        <VariationPage>All</VariationPage>
+      </ItemLookupRequest>
+    </Request>
+    <Item>
+      <ASIN>B0025KVLU6</ASIN>
+      <DetailPageURL>https://www.amazon.com/White-Album-Beatles/dp/B0025KVLU6?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=165953&amp;creativeASIN=B0025KVLU6</DetailPageURL>
+      <ItemLinks>
+        <ItemLink>
+          <Description>Technical Details</Description>
+          <URL>https://www.amazon.com/White-Album-Beatles/dp/tech-data/B0025KVLU6?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B0025KVLU6</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Baby Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/baby/add-item.html?asin.0=B0025KVLU6&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B0025KVLU6</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wedding Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/wedding/add-item.html?asin.0=B0025KVLU6&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B0025KVLU6</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wishlist</Description>
+          <URL>https://www.amazon.com/gp/registry/wishlist/add-item.html?asin.0=B0025KVLU6&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B0025KVLU6</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Tell A Friend</Description>
+          <URL>https://www.amazon.com/gp/pdp/taf/B0025KVLU6?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B0025KVLU6</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Customer Reviews</Description>
+          <URL>https://www.amazon.com/review/product/B0025KVLU6?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B0025KVLU6</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Offers</Description>
+          <URL>https://www.amazon.com/gp/offer-listing/B0025KVLU6?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B0025KVLU6</URL>
+        </ItemLink>
+      </ItemLinks>
+      <SalesRank>454</SalesRank>
+      <SmallImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/316GrhxGleL._SL75_.jpg</URL>
+        <Height Units="pixels">75</Height>
+        <Width Units="pixels">75</Width>
+      </SmallImage>
+      <MediumImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/316GrhxGleL._SL160_.jpg</URL>
+        <Height Units="pixels">160</Height>
+        <Width Units="pixels">160</Width>
+      </MediumImage>
+      <LargeImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/316GrhxGleL.jpg</URL>
+        <Height Units="pixels">500</Height>
+        <Width Units="pixels">500</Width>
+      </LargeImage>
+      <ImageSets>
+        <ImageSet Category="variant">
+          <SwatchImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51Q3oiI%2BXtL._SL30_.jpg</URL>
+            <Height Units="pixels">27</Height>
+            <Width Units="pixels">30</Width>
+          </SwatchImage>
+          <SmallImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51Q3oiI%2BXtL._SL75_.jpg</URL>
+            <Height Units="pixels">69</Height>
+            <Width Units="pixels">75</Width>
+          </SmallImage>
+          <ThumbnailImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51Q3oiI%2BXtL._SL75_.jpg</URL>
+            <Height Units="pixels">69</Height>
+            <Width Units="pixels">75</Width>
+          </ThumbnailImage>
+          <TinyImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51Q3oiI%2BXtL._SL110_.jpg</URL>
+            <Height Units="pixels">101</Height>
+            <Width Units="pixels">110</Width>
+          </TinyImage>
+          <MediumImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51Q3oiI%2BXtL._SL160_.jpg</URL>
+            <Height Units="pixels">146</Height>
+            <Width Units="pixels">160</Width>
+          </MediumImage>
+          <LargeImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51Q3oiI%2BXtL.jpg</URL>
+            <Height Units="pixels">457</Height>
+            <Width Units="pixels">500</Width>
+          </LargeImage>
+        </ImageSet>
+        <ImageSet Category="primary">
+          <SwatchImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/316GrhxGleL._SL30_.jpg</URL>
+            <Height Units="pixels">30</Height>
+            <Width Units="pixels">30</Width>
+          </SwatchImage>
+          <SmallImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/316GrhxGleL._SL75_.jpg</URL>
+            <Height Units="pixels">75</Height>
+            <Width Units="pixels">75</Width>
+          </SmallImage>
+          <ThumbnailImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/316GrhxGleL._SL75_.jpg</URL>
+            <Height Units="pixels">75</Height>
+            <Width Units="pixels">75</Width>
+          </ThumbnailImage>
+          <TinyImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/316GrhxGleL._SL110_.jpg</URL>
+            <Height Units="pixels">110</Height>
+            <Width Units="pixels">110</Width>
+          </TinyImage>
+          <MediumImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/316GrhxGleL._SL160_.jpg</URL>
+            <Height Units="pixels">160</Height>
+            <Width Units="pixels">160</Width>
+          </MediumImage>
+          <LargeImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/316GrhxGleL.jpg</URL>
+            <Height Units="pixels">500</Height>
+            <Width Units="pixels">500</Width>
+          </LargeImage>
+        </ImageSet>
+      </ImageSets>
+      <ItemAttributes>
+        <Artist>The Beatles</Artist>
+        <Binding>Audio CD</Binding>
+        <Brand>EMI Music</Brand>
+        <CatalogNumberList>
+          <CatalogNumberListElement>F67032</CatalogNumberListElement>
+          <CatalogNumberListElement>3824662</CatalogNumberListElement>
+          <CatalogNumberListElement>0094638246626</CatalogNumberListElement>
+        </CatalogNumberList>
+        <Color>white</Color>
+        <EAN>0094638246626</EAN>
+        <EANList>
+          <EANListElement>0094638246626</EANListElement>
+        </EANList>
+        <Edition>Limited Edition</Edition>
+        <Feature>.</Feature>
+        <Format>Enhanced</Format>
+        <Format>Limited Edition</Format>
+        <Format>Original recording remastered</Format>
+        <Genre>Rock</Genre>
+        <IsAdultProduct>0</IsAdultProduct>
+        <ItemDimensions>
+          <Height Units="hundredths-inches">51</Height>
+          <Length Units="hundredths-inches">555</Length>
+          <Weight Units="Hundredths Pounds">31</Weight>
+          <Width Units="hundredths-inches">512</Width>
+        </ItemDimensions>
+        <Label>Capitol</Label>
+        <Languages>
+          <Language>
+            <Name>Spanish</Name>
+            <Type>Published</Type>
+          </Language>
+          <Language>
+            <Name>English</Name>
+            <Type>Original Language</Type>
+          </Language>
+          <Language>
+            <Name>English</Name>
+            <Type>Unknown</Type>
+          </Language>
+        </Languages>
+        <Manufacturer>Capitol</Manufacturer>
+        <Model>5317022</Model>
+        <MPN>8506626</MPN>
+        <NumberOfDiscs>2</NumberOfDiscs>
+        <NumberOfItems>2</NumberOfItems>
+        <PackageDimensions>
+          <Height Units="hundredths-inches">63</Height>
+          <Length Units="hundredths-inches">567</Length>
+          <Weight Units="Hundredths Pounds">31</Weight>
+          <Width Units="hundredths-inches">520</Width>
+        </PackageDimensions>
+        <PackageQuantity>1</PackageQuantity>
+        <PartNumber>8506626</PartNumber>
+        <ProductGroup>Music</ProductGroup>
+        <ProductTypeName>ABIS_MUSIC</ProductTypeName>
+        <PublicationDate>2009-09-09</PublicationDate>
+        <Publisher>Capitol</Publisher>
+        <ReleaseDate>2009-09-08</ReleaseDate>
+        <Studio>Capitol</Studio>
+        <Title>The White Album</Title>
+        <UPC>094638246626</UPC>
+        <UPCList>
+          <UPCListElement>094638246626</UPCListElement>
+        </UPCList>
+      </ItemAttributes>
+      <OfferSummary>
+        <LowestNewPrice>
+          <Amount>1187</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$11.87</FormattedPrice>
+        </LowestNewPrice>
+        <LowestUsedPrice>
+          <Amount>645</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$6.45</FormattedPrice>
+        </LowestUsedPrice>
+        <TotalNew>16</TotalNew>
+        <TotalUsed>20</TotalUsed>
+        <TotalCollectible>0</TotalCollectible>
+        <TotalRefurbished>0</TotalRefurbished>
+      </OfferSummary>
+      <Offers>
+        <TotalOffers>1</TotalOffers>
+        <TotalOfferPages>1</TotalOfferPages>
+        <MoreOffersUrl>https://www.amazon.com/gp/offer-listing/B0025KVLU6?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B0025KVLU6</MoreOffersUrl>
+        <Offer>
+          <OfferAttributes>
+            <Condition>New</Condition>
+          </OfferAttributes>
+          <OfferListing>
+            <OfferListingId>2fVhBQukX9cqu62R6ywo9xHveGNvx3xxpPPBJXzLwtSSWY7iaRetIQJc%2BRJTgD54AgIlZ2J1bhUe9ynQU7RTSmzjY8JaCwlOv7BI1r%2BQi9dX9AMBSWCGbg%3D%3D</OfferListingId>
+            <Price>
+              <Amount>1332</Amount>
+              <CurrencyCode>USD</CurrencyCode>
+              <FormattedPrice>$13.32</FormattedPrice>
+            </Price>
+            <Availability>Usually ships in 24 hours</Availability>
+            <AvailabilityAttributes>
+              <AvailabilityType>now</AvailabilityType>
+              <MinimumHours>0</MinimumHours>
+              <MaximumHours>0</MaximumHours>
+            </AvailabilityAttributes>
+            <IsEligibleForSuperSaverShipping>1</IsEligibleForSuperSaverShipping>
+            <IsEligibleForPrime>1</IsEligibleForPrime>
+          </OfferListing>
+        </Offer>
+      </Offers>
+      <CustomerReviews>
+        <IFrameURL>https://www.amazon.com/reviews/iframe?akid=AKIAJM43FSTV6EHTINOQ&amp;alinkCode=xm2&amp;asin=B0025KVLU6&amp;atag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;exp=2019-01-19T20%3A01%3A01Z&amp;v=2&amp;sig=8d4cAHyvslTPBV%252BpwZaq3NtHCCKZhrF9fKuKhkX8YNA%253D</IFrameURL>
+        <HasReviews>true</HasReviews>
+      </CustomerReviews>
+      <EditorialReviews>
+        <EditorialReview>
+          <Source>Product Description</Source>
+          <Content>The classic original Beatles studio albums have been re-mastered by a dedicated team of engineers at Abbey Road Studios in London over a four year period utilising state of the art recording technology alongside vintage studio equipment, carefully maintaining the authenticity and integrity of the original analogue recordings. The result of this painstaking process is the highest fidelity the Beatles catalogue has seen since its original release.&lt;p&gt;&lt;br&gt; &lt;br&gt;Within each CD's new packaging, booklets include detailed historical notes along with informative recording notes. For a limited period, each CD will also be embedded with a brief documentary film about the album. The newly produced mini-documentaries on the making of each album, directed by Bob Smeaton, are included as QuickTime files on each album. The documentaries contain archival footage, rare photographs and never-before-heard studio chat from The Beatles, offering a unique and very personal insight into the studio atmosphere.</Content>
+          <IsLinkSuppressed>0</IsLinkSuppressed>
+        </EditorialReview>
+      </EditorialReviews>
+      <SimilarProducts>
+        <SimilarProduct>
+          <ASIN>B0025KVLUQ</ASIN>
+          <Title>Abbey Road</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>B0025KVLTC</ASIN>
+          <Title>Revolver</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>B06X6MJGB7</ASIN>
+          <Title>Sgt. Pepper's Lonely Hearts Club Band [2 CD][Deluxe Edition]</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>B0025KVLV0</ASIN>
+          <Title>Let It Be</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>B0025KVLTW</ASIN>
+          <Title>Magical Mystery Tour</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>B0025KVLT2</ASIN>
+          <Title>Rubber Soul</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>B0025KVLS8</ASIN>
+          <Title>A Hard Day's Night</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>B003YNFYD8</ASIN>
+          <Title>The Beatles: 1967-1970</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>B003YNFYCO</ASIN>
+          <Title>The Beatles: 1962-1966</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>B0025KVLRO</ASIN>
+          <Title>Please Please Me</Title>
+        </SimilarProduct>
+      </SimilarProducts>
+      <Tracks>
+        <Disc Number="1">
+          <Track Number="1">Back In The U.S.S.R.</Track>
+          <Track Number="2">Dear Prudence</Track>
+          <Track Number="3">Glass Onion</Track>
+          <Track Number="4">Ob-La-Di, Ob-La-Da</Track>
+          <Track Number="5">Wild Honey Pie</Track>
+          <Track Number="6">The Continuing Story Of Bungalow Bill</Track>
+          <Track Number="7">While My Guitar Gently Weeps</Track>
+          <Track Number="8">Happiness Is A Warm Gun</Track>
+          <Track Number="9">Martha My Dear</Track>
+          <Track Number="10">I'm So Tired</Track>
+          <Track Number="11">Blackbird</Track>
+          <Track Number="12">Piggies</Track>
+          <Track Number="13">Rocky Racoon</Track>
+          <Track Number="14">Don't Pass Me By</Track>
+          <Track Number="15">Why Don't We Do It In The Road?</Track>
+          <Track Number="16">I Will</Track>
+          <Track Number="17">Julia</Track>
+        </Disc>
+        <Disc Number="2">
+          <Track Number="1">Birthday</Track>
+          <Track Number="2">Yer Blues</Track>
+          <Track Number="3">Mother Nature's Son</Track>
+          <Track Number="4">Everybody's Got Something To Hide Except Me And My Monkey</Track>
+          <Track Number="5">Sexy Sadie</Track>
+          <Track Number="6">Helter Skelter</Track>
+          <Track Number="7">Long, Long, Long</Track>
+          <Track Number="8">Revolution 1</Track>
+          <Track Number="9">Honey Pie</Track>
+          <Track Number="10">Savoy Truffle</Track>
+          <Track Number="11">Cry Baby Cry</Track>
+          <Track Number="12">Revolution 9</Track>
+          <Track Number="13">Good Night</Track>
+          <Track Number="14">The Beatles Documentary</Track>
+        </Disc>
+      </Tracks>
+      <BrowseNodes>
+        <BrowseNode>
+          <BrowseNodeId>408254</BrowseNodeId>
+          <Name>Album-Oriented Rock (AOR)</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>67204</BrowseNodeId>
+              <Name>Classic Rock</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>301668</BrowseNodeId>
+                  <Name>Styles</Name>
+                  <IsCategoryRoot>1</IsCategoryRoot>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>5174</BrowseNodeId>
+                      <Name>CDs &amp; Vinyl</Name>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>67220</BrowseNodeId>
+          <Name>Psychedelic Rock</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>67204</BrowseNodeId>
+              <Name>Classic Rock</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>301668</BrowseNodeId>
+                  <Name>Styles</Name>
+                  <IsCategoryRoot>1</IsCategoryRoot>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>5174</BrowseNodeId>
+                      <Name>CDs &amp; Vinyl</Name>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>32</BrowseNodeId>
+          <Name>Folk</Name>
+          <Children>
+            <BrowseNode>
+              <BrowseNodeId>225373</BrowseNodeId>
+              <Name>British &amp; Celtic Folk</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>598642</BrowseNodeId>
+              <Name>Contemporary Folk</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>63825</BrowseNodeId>
+              <Name>Jewish &amp; Yiddish</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>63719</BrowseNodeId>
+              <Name>Traditional Folk</Name>
+            </BrowseNode>
+          </Children>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>301668</BrowseNodeId>
+              <Name>Styles</Name>
+              <IsCategoryRoot>1</IsCategoryRoot>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>5174</BrowseNodeId>
+                  <Name>CDs &amp; Vinyl</Name>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>63779</BrowseNodeId>
+          <Name>Britain</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>63778</BrowseNodeId>
+              <Name>British Isles</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>63777</BrowseNodeId>
+                  <Name>Europe</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>33</BrowseNodeId>
+                      <Name>World Music</Name>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>301668</BrowseNodeId>
+                          <Name>Styles</Name>
+                          <IsCategoryRoot>1</IsCategoryRoot>
+                          <Ancestors>
+                            <BrowseNode>
+                              <BrowseNodeId>5174</BrowseNodeId>
+                              <Name>CDs &amp; Vinyl</Name>
+                            </BrowseNode>
+                          </Ancestors>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>604220</BrowseNodeId>
+          <Name>Baroque Pop</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>284031</BrowseNodeId>
+              <Name>Oldies</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>37</BrowseNodeId>
+                  <Name>Pop</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>301668</BrowseNodeId>
+                      <Name>Styles</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>5174</BrowseNodeId>
+                          <Name>CDs &amp; Vinyl</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>67176</BrowseNodeId>
+          <Name>Singer-Songwriters</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>37</BrowseNodeId>
+              <Name>Pop</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>301668</BrowseNodeId>
+                  <Name>Styles</Name>
+                  <IsCategoryRoot>1</IsCategoryRoot>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>5174</BrowseNodeId>
+                      <Name>CDs &amp; Vinyl</Name>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>67205</BrowseNodeId>
+          <Name>Folk Rock</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>40</BrowseNodeId>
+              <Name>Rock</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>301668</BrowseNodeId>
+                  <Name>Styles</Name>
+                  <IsCategoryRoot>1</IsCategoryRoot>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>5174</BrowseNodeId>
+                      <Name>CDs &amp; Vinyl</Name>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+      </BrowseNodes>
+    </Item>
+  </Items>
+</ItemLookupResponse>

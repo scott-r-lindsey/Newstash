@@ -1,0 +1,345 @@
+<?xml version="1.0"?>
+<ItemLookupResponse xmlns="http://webservices.amazon.com/AWSECommerceService/2011-08-01">
+  <OperationRequest>
+    <HTTPHeaders>
+      <Header Name="UserAgent" Value="GuzzleHttp/6.3.3 curl/7.61.1 PHP/7.3.1"/>
+    </HTTPHeaders>
+    <RequestId>a72ce659-69c2-4d1e-bcc7-6f64f214d815</RequestId>
+    <Arguments>
+      <Argument Name="AWSAccessKeyId" Value="AKIAJM43FSTV6EHTINOQ"/>
+      <Argument Name="AssociateTag" Value="12GO5ZuW7/eR9zIMSHM6bEWfzgY4n2iysahzF4Fj"/>
+      <Argument Name="IdType" Value="ASIN"/>
+      <Argument Name="ItemId" Value="1520079273"/>
+      <Argument Name="Operation" Value="ItemLookup"/>
+      <Argument Name="ResponseGroup" Value="Large"/>
+      <Argument Name="Service" Value="AWSECommerceService"/>
+      <Argument Name="Timestamp" Value="2019-01-18T19:21:54Z"/>
+      <Argument Name="Version" Value="2011-08-01"/>
+      <Argument Name="Signature" Value="miifo4PJbwAGIfKBp637MUtUxb9gHkWUAbMsakcBWqU="/>
+    </Arguments>
+    <RequestProcessingTime>0.0636061090000000</RequestProcessingTime>
+  </OperationRequest>
+  <Items>
+    <Request>
+      <IsValid>True</IsValid>
+      <ItemLookupRequest>
+        <IdType>ASIN</IdType>
+        <ItemId>1520079273</ItemId>
+        <ResponseGroup>Large</ResponseGroup>
+        <VariationPage>All</VariationPage>
+      </ItemLookupRequest>
+    </Request>
+    <Item>
+      <ASIN>1520079273</ASIN>
+      <DetailPageURL>https://www.amazon.com/Capitalist-Code-Save-Your-Life/dp/1520079273?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=165953&amp;creativeASIN=1520079273</DetailPageURL>
+      <ItemLinks>
+        <ItemLink>
+          <Description>Technical Details</Description>
+          <URL>https://www.amazon.com/Capitalist-Code-Save-Your-Life/dp/tech-data/1520079273?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=1520079273</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Baby Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/baby/add-item.html?asin.0=1520079273&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=1520079273</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wedding Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/wedding/add-item.html?asin.0=1520079273&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=1520079273</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wishlist</Description>
+          <URL>https://www.amazon.com/gp/registry/wishlist/add-item.html?asin.0=1520079273&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=1520079273</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Tell A Friend</Description>
+          <URL>https://www.amazon.com/gp/pdp/taf/1520079273?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=1520079273</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Customer Reviews</Description>
+          <URL>https://www.amazon.com/review/product/1520079273?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=1520079273</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Offers</Description>
+          <URL>https://www.amazon.com/gp/offer-listing/1520079273?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=1520079273</URL>
+        </ItemLink>
+      </ItemLinks>
+      <SalesRank>1219789</SalesRank>
+      <SmallImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/511PtyxR%2BmL._SL75_.jpg</URL>
+        <Height Units="pixels">62</Height>
+        <Width Units="pixels">75</Width>
+      </SmallImage>
+      <MediumImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/511PtyxR%2BmL._SL160_.jpg</URL>
+        <Height Units="pixels">132</Height>
+        <Width Units="pixels">160</Width>
+      </MediumImage>
+      <LargeImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/511PtyxR%2BmL.jpg</URL>
+        <Height Units="pixels">414</Height>
+        <Width Units="pixels">500</Width>
+      </LargeImage>
+      <ImageSets>
+        <ImageSet Category="primary">
+          <SwatchImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/511PtyxR%2BmL._SL30_.jpg</URL>
+            <Height Units="pixels">25</Height>
+            <Width Units="pixels">30</Width>
+          </SwatchImage>
+          <SmallImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/511PtyxR%2BmL._SL75_.jpg</URL>
+            <Height Units="pixels">62</Height>
+            <Width Units="pixels">75</Width>
+          </SmallImage>
+          <ThumbnailImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/511PtyxR%2BmL._SL75_.jpg</URL>
+            <Height Units="pixels">62</Height>
+            <Width Units="pixels">75</Width>
+          </ThumbnailImage>
+          <TinyImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/511PtyxR%2BmL._SL110_.jpg</URL>
+            <Height Units="pixels">91</Height>
+            <Width Units="pixels">110</Width>
+          </TinyImage>
+          <MediumImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/511PtyxR%2BmL._SL160_.jpg</URL>
+            <Height Units="pixels">132</Height>
+            <Width Units="pixels">160</Width>
+          </MediumImage>
+          <LargeImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/511PtyxR%2BmL.jpg</URL>
+            <Height Units="pixels">414</Height>
+            <Width Units="pixels">500</Width>
+          </LargeImage>
+        </ImageSet>
+      </ImageSets>
+      <ItemAttributes>
+        <Author>Ben Stein</Author>
+        <Binding>Audio CD</Binding>
+        <Creator Role="Narrator">Blake Swihart</Creator>
+        <EAN>9781520079271</EAN>
+        <EANList>
+          <EANListElement>9781520079271</EANListElement>
+        </EANList>
+        <Edition>Unabridged</Edition>
+        <Format>Audiobook</Format>
+        <Format>MP3 Audio</Format>
+        <Format>Unabridged</Format>
+        <ISBN>1520079273</ISBN>
+        <ItemDimensions>
+          <Height Units="hundredths-inches">504</Height>
+          <Length Units="hundredths-inches">604</Length>
+          <Width Units="hundredths-inches">113</Width>
+        </ItemDimensions>
+        <Label>Dreamscape Media</Label>
+        <Languages>
+          <Language>
+            <Name>English</Name>
+            <Type>Published</Type>
+          </Language>
+          <Language>
+            <Name>English</Name>
+            <Type>Original Language</Type>
+          </Language>
+          <Language>
+            <Name>English</Name>
+            <Type>Unknown</Type>
+          </Language>
+        </Languages>
+        <ListPrice>
+          <Amount>2999</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$29.99</FormattedPrice>
+        </ListPrice>
+        <Manufacturer>Dreamscape Media</Manufacturer>
+        <NumberOfItems>1</NumberOfItems>
+        <PackageDimensions>
+          <Height Units="hundredths-inches">51</Height>
+          <Length Units="hundredths-inches">539</Length>
+          <Weight Units="Hundredths Pounds">15</Weight>
+          <Width Units="hundredths-inches">480</Width>
+        </PackageDimensions>
+        <ProductGroup>Book</ProductGroup>
+        <ProductTypeName>ABIS_BOOK</ProductTypeName>
+        <PublicationDate>2017-09-26</PublicationDate>
+        <Publisher>Dreamscape Media</Publisher>
+        <RunningTime Units="minutes">133</RunningTime>
+        <Studio>Dreamscape Media</Studio>
+        <Title>Capitalist Code, The: It Can Save Your Life and Make You Very Rich</Title>
+      </ItemAttributes>
+      <OfferSummary>
+        <LowestNewPrice>
+          <Amount>1806</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$18.06</FormattedPrice>
+        </LowestNewPrice>
+        <LowestUsedPrice>
+          <Amount>1824</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$18.24</FormattedPrice>
+        </LowestUsedPrice>
+        <TotalNew>13</TotalNew>
+        <TotalUsed>5</TotalUsed>
+        <TotalCollectible>0</TotalCollectible>
+        <TotalRefurbished>0</TotalRefurbished>
+      </OfferSummary>
+      <Offers>
+        <TotalOffers>1</TotalOffers>
+        <TotalOfferPages>1</TotalOfferPages>
+        <MoreOffersUrl>https://www.amazon.com/gp/offer-listing/1520079273?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=1520079273</MoreOffersUrl>
+        <Offer>
+          <OfferAttributes>
+            <Condition>New</Condition>
+          </OfferAttributes>
+          <OfferListing>
+            <OfferListingId>zh0NyIcGCDnCRHG1EXXrIjz78xHkXpFhd2JAqs2xu6Bdf1y56cFos1foKl72qsBFcfcqbnv8LliyOKmZcrBl%2FVMCokQ%2FnxXADY3%2BThnSH%2FOj%2B8HAuL6WTA%3D%3D</OfferListingId>
+            <Price>
+              <Amount>1949</Amount>
+              <CurrencyCode>USD</CurrencyCode>
+              <FormattedPrice>$19.49</FormattedPrice>
+            </Price>
+            <AmountSaved>
+              <Amount>1050</Amount>
+              <CurrencyCode>USD</CurrencyCode>
+              <FormattedPrice>$10.50</FormattedPrice>
+            </AmountSaved>
+            <PercentageSaved>35</PercentageSaved>
+            <Availability>Usually ships in 24 hours</Availability>
+            <AvailabilityAttributes>
+              <AvailabilityType>now</AvailabilityType>
+              <MinimumHours>0</MinimumHours>
+              <MaximumHours>0</MaximumHours>
+            </AvailabilityAttributes>
+            <IsEligibleForSuperSaverShipping>1</IsEligibleForSuperSaverShipping>
+            <IsEligibleForPrime>1</IsEligibleForPrime>
+          </OfferListing>
+        </Offer>
+      </Offers>
+      <CustomerReviews>
+        <IFrameURL>https://www.amazon.com/reviews/iframe?akid=AKIAJM43FSTV6EHTINOQ&amp;alinkCode=xm2&amp;asin=1520079273&amp;atag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;exp=2019-01-19T19%3A21%3A54Z&amp;v=2&amp;sig=HwE5SWihIim8cuRJcOMQ3eImhILARkJ0VuiQEShDhGo%253D</IFrameURL>
+        <HasReviews>true</HasReviews>
+      </CustomerReviews>
+      <EditorialReviews>
+        <EditorialReview>
+          <Source>Product Description</Source>
+          <Content>Most Americans have not inherited wealth or a successful business that can set them up for life. That means most Americans are destined to live with financial worries and concerns for the rest of their lives, right? Wrong! With his entertaining and informative style, New York Times bestselling author, actor, and financial pundit Ben Stein refutes the current notion that the corporate system is rigged against ordinary citizens and explains how corporate stock ownership is the best system ever devised to give both workers and savers a route to financial comfort and security. That's what this book is all about: how being smart about consistent, conservative investment in a diversified portfolio of stocks can harness the incredible power of the US economy, building financial security for any American that decides to participate.</Content>
+          <IsLinkSuppressed>0</IsLinkSuppressed>
+        </EditorialReview>
+      </EditorialReviews>
+      <SimilarProducts>
+        <SimilarProduct>
+          <ASIN>1508243247</ASIN>
+          <Title>Principles: Life and Work</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1508232709</ASIN>
+          <Title>Unshakeable: Your Financial Freedom Playbook</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1508246351</ASIN>
+          <Title>Ship of Fools: How a Selfish Ruling Class Is Bringing America to the Brink of Revolution</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>006079383X</ASIN>
+          <Title>The Intelligent Investor CD: The Classic Text on Value Investing</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0743517822</ASIN>
+          <Title>The Millionaire Next Door: The Surprising Secrets Of Americas Wealthy</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1478903600</ASIN>
+          <Title>Duplicity: A Novel (The Major Brooke Grant Series)</Title>
+        </SimilarProduct>
+      </SimilarProducts>
+      <BrowseNodes>
+        <BrowseNode>
+          <BrowseNodeId>2670</BrowseNodeId>
+          <Name>Introduction</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2665</BrowseNodeId>
+              <Name>Investing</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>3</BrowseNodeId>
+                  <Name>Business &amp; Money</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>2674</BrowseNodeId>
+          <Name>Stocks</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2665</BrowseNodeId>
+              <Name>Investing</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>3</BrowseNodeId>
+                  <Name>Business &amp; Money</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>2731</BrowseNodeId>
+          <Name>Retirement Planning</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2717</BrowseNodeId>
+              <Name>Personal Finance</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>3</BrowseNodeId>
+                  <Name>Business &amp; Money</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+      </BrowseNodes>
+    </Item>
+  </Items>
+</ItemLookupResponse>

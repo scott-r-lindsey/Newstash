@@ -23,6 +23,7 @@ class FormatFixtures extends Fixture
             ['Audio CD', false, false, true, false],
             ['Downloadable Audio', false, false, true, false],
             ['Kindle Edition with Audio/Video', false, true, false, true],
+            ['MP3 CD', false, false, true, false],
         ];
 
         foreach ($fix as $f){

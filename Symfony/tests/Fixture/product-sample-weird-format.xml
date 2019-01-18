@@ -1,0 +1,512 @@
+<?xml version="1.0"?>
+<ItemLookupResponse xmlns="http://webservices.amazon.com/AWSECommerceService/2011-08-01">
+  <OperationRequest>
+    <HTTPHeaders>
+      <Header Name="UserAgent" Value="GuzzleHttp/6.3.3 curl/7.61.1 PHP/7.3.1"/>
+    </HTTPHeaders>
+    <RequestId>928831fb-3ade-4c43-8387-3a2a044b657f</RequestId>
+    <Arguments>
+      <Argument Name="AWSAccessKeyId" Value="AKIAJM43FSTV6EHTINOQ"/>
+      <Argument Name="AssociateTag" Value="12GO5ZuW7/eR9zIMSHM6bEWfzgY4n2iysahzF4Fj"/>
+      <Argument Name="IdType" Value="ASIN"/>
+      <Argument Name="ItemId" Value="0674979850"/>
+      <Argument Name="Operation" Value="ItemLookup"/>
+      <Argument Name="ResponseGroup" Value="Large"/>
+      <Argument Name="Service" Value="AWSECommerceService"/>
+      <Argument Name="Timestamp" Value="2019-01-18T00:04:34Z"/>
+      <Argument Name="Version" Value="2011-08-01"/>
+      <Argument Name="Signature" Value="scZJP6hpf5kGsTj8GJeiSJ7es4GHj1WHLN7zoT8X/7c="/>
+    </Arguments>
+    <RequestProcessingTime>0.1521093600000000</RequestProcessingTime>
+  </OperationRequest>
+  <Items>
+    <Request>
+      <IsValid>True</IsValid>
+      <ItemLookupRequest>
+        <IdType>ASIN</IdType>
+        <ItemId>0674979850</ItemId>
+        <ResponseGroup>Large</ResponseGroup>
+        <VariationPage>All</VariationPage>
+      </ItemLookupRequest>
+    </Request>
+    <Item>
+      <ASIN>0674979850</ASIN>
+      <DetailPageURL>https://www.amazon.com/Capital-Twenty-First-Century-Thomas-Piketty/dp/0674979850?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=165953&amp;creativeASIN=0674979850</DetailPageURL>
+      <ItemLinks>
+        <ItemLink>
+          <Description>Technical Details</Description>
+          <URL>https://www.amazon.com/Capital-Twenty-First-Century-Thomas-Piketty/dp/tech-data/0674979850?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0674979850</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Baby Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/baby/add-item.html?asin.0=0674979850&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0674979850</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wedding Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/wedding/add-item.html?asin.0=0674979850&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0674979850</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wishlist</Description>
+          <URL>https://www.amazon.com/gp/registry/wishlist/add-item.html?asin.0=0674979850&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0674979850</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Tell A Friend</Description>
+          <URL>https://www.amazon.com/gp/pdp/taf/0674979850?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0674979850</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Customer Reviews</Description>
+          <URL>https://www.amazon.com/review/product/0674979850?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0674979850</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Offers</Description>
+          <URL>https://www.amazon.com/gp/offer-listing/0674979850?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0674979850</URL>
+        </ItemLink>
+      </ItemLinks>
+      <SalesRank>5425</SalesRank>
+      <SmallImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/41OKpWydb-L._SL75_.jpg</URL>
+        <Height Units="pixels">75</Height>
+        <Width Units="pixels">48</Width>
+      </SmallImage>
+      <MediumImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/41OKpWydb-L._SL160_.jpg</URL>
+        <Height Units="pixels">160</Height>
+        <Width Units="pixels">103</Width>
+      </MediumImage>
+      <LargeImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/41OKpWydb-L.jpg</URL>
+        <Height Units="pixels">500</Height>
+        <Width Units="pixels">323</Width>
+      </LargeImage>
+      <ImageSets>
+        <ImageSet Category="primary">
+          <SwatchImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OKpWydb-L._SL30_.jpg</URL>
+            <Height Units="pixels">30</Height>
+            <Width Units="pixels">19</Width>
+          </SwatchImage>
+          <SmallImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OKpWydb-L._SL75_.jpg</URL>
+            <Height Units="pixels">75</Height>
+            <Width Units="pixels">48</Width>
+          </SmallImage>
+          <ThumbnailImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OKpWydb-L._SL75_.jpg</URL>
+            <Height Units="pixels">75</Height>
+            <Width Units="pixels">48</Width>
+          </ThumbnailImage>
+          <TinyImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OKpWydb-L._SL110_.jpg</URL>
+            <Height Units="pixels">110</Height>
+            <Width Units="pixels">71</Width>
+          </TinyImage>
+          <MediumImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OKpWydb-L._SL160_.jpg</URL>
+            <Height Units="pixels">160</Height>
+            <Width Units="pixels">103</Width>
+          </MediumImage>
+          <LargeImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41OKpWydb-L.jpg</URL>
+            <Height Units="pixels">500</Height>
+            <Width Units="pixels">323</Width>
+          </LargeImage>
+        </ImageSet>
+      </ImageSets>
+      <ItemAttributes>
+        <Author>Thomas Piketty</Author>
+        <Binding>Weird Format</Binding>
+        <Creator Role="Translator">Arthur Goldhammer</Creator>
+        <EAN>9780674979857</EAN>
+        <EANList>
+          <EANListElement>9780674979857</EANListElement>
+        </EANList>
+        <Edition>Reprint</Edition>
+        <ISBN>9780674979857</ISBN>
+        <ItemDimensions>
+          <Height Units="hundredths-inches">840</Height>
+          <Length Units="hundredths-inches">550</Length>
+          <Weight Units="Hundredths Pounds">183</Weight>
+          <Width Units="hundredths-inches">180</Width>
+        </ItemDimensions>
+        <Label>Belknap Press: An Imprint of Harvard University Press</Label>
+        <Languages>
+          <Language>
+            <Name>English</Name>
+            <Type>Published</Type>
+          </Language>
+          <Language>
+            <Name>English</Name>
+            <Type>Original Language</Type>
+          </Language>
+          <Language>
+            <Name>English</Name>
+            <Type>Unknown</Type>
+          </Language>
+        </Languages>
+        <ListPrice>
+          <Amount>1995</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$19.95</FormattedPrice>
+        </ListPrice>
+        <Manufacturer>Belknap Press: An Imprint of Harvard University Press</Manufacturer>
+        <MPN>26785352</MPN>
+        <NumberOfItems>1</NumberOfItems>
+        <NumberOfPages>816</NumberOfPages>
+        <PackageDimensions>
+          <Height Units="hundredths-inches">180</Height>
+          <Length Units="hundredths-inches">840</Length>
+          <Weight Units="Hundredths Pounds">215</Weight>
+          <Width Units="hundredths-inches">520</Width>
+        </PackageDimensions>
+        <PartNumber>26785352</PartNumber>
+        <ProductGroup>Book</ProductGroup>
+        <ProductTypeName>ABIS_BOOK</ProductTypeName>
+        <PublicationDate>2017-08-14</PublicationDate>
+        <Publisher>Belknap Press: An Imprint of Harvard University Press</Publisher>
+        <Studio>Belknap Press: An Imprint of Harvard University Press</Studio>
+        <Title>Capital in the Twenty-First Century</Title>
+      </ItemAttributes>
+      <OfferSummary>
+        <LowestNewPrice>
+          <Amount>1394</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$13.94</FormattedPrice>
+        </LowestNewPrice>
+        <LowestUsedPrice>
+          <Amount>1295</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$12.95</FormattedPrice>
+        </LowestUsedPrice>
+        <TotalNew>71</TotalNew>
+        <TotalUsed>48</TotalUsed>
+        <TotalCollectible>0</TotalCollectible>
+        <TotalRefurbished>0</TotalRefurbished>
+      </OfferSummary>
+      <Offers>
+        <TotalOffers>1</TotalOffers>
+        <TotalOfferPages>1</TotalOfferPages>
+        <MoreOffersUrl>https://www.amazon.com/gp/offer-listing/0674979850?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0674979850</MoreOffersUrl>
+        <Offer>
+          <OfferAttributes>
+            <Condition>New</Condition>
+          </OfferAttributes>
+          <OfferListing>
+            <OfferListingId>veMUaLnmTqHDAxYjBX2somOljtVe0gOgsCkZsLBrI32jDOj6rZnHJlyEeH1TUb3wZO3EsTgqDgs6k%2Bxfw01%2BJ8smacf4LKHV1JgNfSAIDdYYhbupsFp%2BOg%3D%3D</OfferListingId>
+            <Price>
+              <Amount>1712</Amount>
+              <CurrencyCode>USD</CurrencyCode>
+              <FormattedPrice>$17.12</FormattedPrice>
+            </Price>
+            <AmountSaved>
+              <Amount>283</Amount>
+              <CurrencyCode>USD</CurrencyCode>
+              <FormattedPrice>$2.83</FormattedPrice>
+            </AmountSaved>
+            <PercentageSaved>14</PercentageSaved>
+            <Availability>Usually ships in 24 hours</Availability>
+            <AvailabilityAttributes>
+              <AvailabilityType>now</AvailabilityType>
+              <MinimumHours>0</MinimumHours>
+              <MaximumHours>0</MaximumHours>
+            </AvailabilityAttributes>
+            <IsEligibleForSuperSaverShipping>1</IsEligibleForSuperSaverShipping>
+            <IsEligibleForPrime>1</IsEligibleForPrime>
+          </OfferListing>
+        </Offer>
+      </Offers>
+      <CustomerReviews>
+        <IFrameURL>https://www.amazon.com/reviews/iframe?akid=AKIAJM43FSTV6EHTINOQ&amp;alinkCode=xm2&amp;asin=0674979850&amp;atag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;exp=2019-01-19T00%3A04%3A34Z&amp;v=2&amp;sig=L4eWAXDSe%252FkQC%252Fxo4mGKupqIKhrdFfaIYHZB8qyuR2k%253D</IFrameURL>
+        <HasReviews>true</HasReviews>
+      </CustomerReviews>
+      <EditorialReviews>
+        <EditorialReview>
+          <Source>Product Description</Source>
+          <Content>&lt;p&gt;A &lt;i&gt;New York Times&lt;/i&gt; #1 Bestseller&lt;br&gt; An Amazon #1 Bestseller&lt;br&gt; A &lt;i&gt;Wall Street Journal&lt;/i&gt; #1 Bestseller &lt;br&gt;A &lt;i&gt;USA Today&lt;/i&gt; Bestseller&lt;br&gt; A &lt;i&gt;Sunday Times&lt;/i&gt; Bestseller&lt;br&gt;Winner of the &lt;i&gt;Financial Times&lt;/i&gt; and McKinsey Business Book of the Year Award&lt;br&gt;Winner of the British Academy Medal&lt;br&gt;Finalist, National Book Critics Circle Award &lt;/p&gt;&lt;br&gt;&lt;p&gt;&#x201C;It seems safe to say that &lt;i&gt;Capital in the Twenty-First Century&lt;/i&gt;, the magnum opus of the French economist Thomas Piketty, will be the most important economics book of the year&#x2015;and maybe of the decade.&#x201D;&lt;br&gt;&#x2015;Paul Krugman, &lt;i&gt;New York Times&lt;/i&gt;&lt;/p&gt;&lt;p&gt; &#x201C;The book aims to revolutionize the way people think about the economic history of the past two centuries. It may well manage the feat.&#x201D;&lt;br&gt;&#x2015;&lt;i&gt;The Economist&lt;/i&gt;&lt;/p&gt;&lt;p&gt;&#x201C;Piketty&#x2019;s &lt;i&gt;Capital in the Twenty-First Century&lt;/i&gt; is an intellectual tour de force, a triumph of economic history over the theoretical, mathematical modeling that has come to dominate the economics profession in recent years.&#x201D;&lt;br&gt;&#x2015;Steven Pearlstein, &lt;i&gt;Washington Post&lt;/i&gt;&lt;/p&gt;&lt;p&gt;&#x201C;Piketty has written an extraordinarily important book&#x2026;In its scale and sweep it brings us back to the founders of political economy.&#x201D;&lt;br&gt;&#x2015;Martin Wolf, &lt;i&gt;Financial Times&lt;/i&gt;&lt;/p&gt;&lt;p&gt;&#x201C;A sweeping account of rising inequality&#x2026;Piketty has written a book that nobody interested in a defining issue of our era can afford to ignore.&#x201D;&lt;br&gt;&#x2015;John Cassidy, &lt;i&gt;New Yorker&lt;/i&gt;&lt;/p&gt;&lt;p&gt;&#x201C;Stands a fair chance of becoming the most influential work of economics yet published in our young century. It is the most important study of inequality in over fifty years.&#x201D;&lt;br&gt;&#x2015;Timothy Shenk, &lt;i&gt;The Nation&lt;/i&gt;&lt;/p&gt;</Content>
+          <IsLinkSuppressed>0</IsLinkSuppressed>
+        </EditorialReview>
+      </EditorialReviews>
+      <SimilarProducts>
+        <SimilarProduct>
+          <ASIN>0674504801</ASIN>
+          <Title>The Economics of Inequality</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1944424253</ASIN>
+          <Title>Anti-Piketty: Capital for the 21st-Century</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0307719227</ASIN>
+          <Title>Why Nations Fail: The Origins of Power, Prosperity, and Poverty</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0393345068</ASIN>
+          <Title>The Price of Inequality: How Today's Divided Society Endangers Our Future</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0691175802</ASIN>
+          <Title>The Rise and Fall of American Growth: The U.S. Standard of Living since the Civil War (The Princeton Economic History of the Western World)</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0226264211</ASIN>
+          <Title>Capitalism and Freedom: Fortieth Anniversary Edition</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1683783069</ASIN>
+          <Title>Summary of Capital in the Twenty-First Century by Thomas Piketty | Includes Analysis</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0226320618</ASIN>
+          <Title>The Road to Serfdom: Fiftieth Anniversary Edition</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0804170045</ASIN>
+          <Title>The Attention Merchants: The Epic Scramble to Get Inside Our Heads</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0143036580</ASIN>
+          <Title>The End of Poverty: Economic Possibilities for Our Time</Title>
+        </SimilarProduct>
+      </SimilarProducts>
+      <BrowseNodes>
+        <BrowseNode>
+          <BrowseNodeId>2583</BrowseNodeId>
+          <Name>Comparative</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2581</BrowseNodeId>
+              <Name>Economics</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>3</BrowseNodeId>
+                  <Name>Business &amp; Money</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>2585</BrowseNodeId>
+          <Name>Development &amp; Growth</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2581</BrowseNodeId>
+              <Name>Economics</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>3</BrowseNodeId>
+                  <Name>Business &amp; Money</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>2589</BrowseNodeId>
+          <Name>Economic History</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2581</BrowseNodeId>
+              <Name>Economics</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>3</BrowseNodeId>
+                  <Name>Business &amp; Money</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>2588</BrowseNodeId>
+          <Name>Economic Policy &amp; Development</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2581</BrowseNodeId>
+              <Name>Economics</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>3</BrowseNodeId>
+                  <Name>Business &amp; Money</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>2602</BrowseNodeId>
+          <Name>Theory</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2581</BrowseNodeId>
+              <Name>Economics</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>3</BrowseNodeId>
+                  <Name>Business &amp; Money</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>9147391011</BrowseNodeId>
+          <Name>Income Inequality</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2581</BrowseNodeId>
+              <Name>Economics</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>3</BrowseNodeId>
+                  <Name>Business &amp; Money</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>2594</BrowseNodeId>
+          <Name>Economics</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2657</BrowseNodeId>
+              <Name>International</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>3</BrowseNodeId>
+                  <Name>Business &amp; Money</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>5571278011</BrowseNodeId>
+          <Name>Economic Policy</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>5571275011</BrowseNodeId>
+              <Name>Public Affairs &amp; Policy</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>5571255011</BrowseNodeId>
+                  <Name>Politics &amp; Government</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>3377866011</BrowseNodeId>
+                      <Name>Politics &amp; Social Sciences</Name>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>1000</BrowseNodeId>
+                          <Name>Subjects</Name>
+                          <IsCategoryRoot>1</IsCategoryRoot>
+                          <Ancestors>
+                            <BrowseNode>
+                              <BrowseNodeId>283155</BrowseNodeId>
+                              <Name>Books</Name>
+                            </BrowseNode>
+                          </Ancestors>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+      </BrowseNodes>
+    </Item>
+  </Items>
+</ItemLookupResponse>

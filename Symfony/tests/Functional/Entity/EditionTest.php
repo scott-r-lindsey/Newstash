@@ -42,7 +42,7 @@ class EditionTest extends BaseTest
 
         $edition = $this->createEdition(
             'A123456789',
-            9781234567890,
+            '9781234567890',
             'The Title',
             'The Pub Title',
             'The Pub Subtitle',
@@ -73,7 +73,6 @@ class EditionTest extends BaseTest
             'azn editorial review source',
             'azn editorial review',
             'azn alternatives',
-            'sig',
             'azn edition',
             'azn manufacturer',
             'azn_brand'
@@ -121,7 +120,7 @@ class EditionTest extends BaseTest
                 'azn editorial review source',
                 'azn editorial review',
                 'azn alternatives',
-                'sig',
+                'the title|some author',
                 'azn edition',
                 'azn manufacturer',
                 'azn_brand'
@@ -186,7 +185,7 @@ class EditionTest extends BaseTest
     private function createEdition
     (
         string $asin,
-        int $isbn,
+        string $isbn,
         string $title,
         string $pub_title,
         string $pub_subtitle,
@@ -217,7 +216,6 @@ class EditionTest extends BaseTest
         string $amzn_editorial_review_source,
         string $amzn_editorial_review,
         string $amzn_alternatives,
-        string $sig,
         string $amzn_edition,
         string $amzn_manufacturer,
         string $amzn_brand
@@ -258,7 +256,6 @@ class EditionTest extends BaseTest
             ->setAmznEditorialReviewSource($amzn_editorial_review_source)
             ->setAmznEditorialReview($amzn_editorial_review)
             ->setAmznAlternatives($amzn_alternatives)
-            ->setSig($sig)
             ->setAmznEdition($amzn_edition)
             ->setAmznManufacturer($amzn_manufacturer)
             ->setAmznBrand($amzn_brand);

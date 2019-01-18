@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<ItemLookupResponse xmlns="http://webservices.amazon.com/AWSECommerceService/2011-08-01">
+  <OperationRequest>
+    <HTTPHeaders>
+      <Header Name="UserAgent" Value="GuzzleHttp/6.3.3 curl/7.61.1 PHP/7.3.1"/>
+    </HTTPHeaders>
+    <RequestId>af28f44b-ea53-412f-a3bf-7f973e6e7175</RequestId>
+    <Arguments>
+      <Argument Name="AWSAccessKeyId" Value="AKIAJM43FSTV6EHTINOQ"/>
+      <Argument Name="AssociateTag" Value="12GO5ZuW7/eR9zIMSHM6bEWfzgY4n2iysahzF4Fj"/>
+      <Argument Name="IdType" Value="ASIN"/>
+      <Argument Name="ItemId" Value="B005I57NE8"/>
+      <Argument Name="Operation" Value="ItemLookup"/>
+      <Argument Name="ResponseGroup" Value="Large"/>
+      <Argument Name="Service" Value="AWSECommerceService"/>
+      <Argument Name="Timestamp" Value="2019-01-18T20:15:06Z"/>
+      <Argument Name="Version" Value="2011-08-01"/>
+      <Argument Name="Signature" Value="jFYPsQChyptV9ZnJf/XKh84+FRi9PgIsPbwV6HeMiec="/>
+    </Arguments>
+    <RequestProcessingTime>0.0340100650000000</RequestProcessingTime>
+  </OperationRequest>
+  <Items>
+    <Request>
+      <IsValid>True</IsValid>
+      <ItemLookupRequest>
+        <IdType>ASIN</IdType>
+        <ItemId>B005I57NE8</ItemId>
+        <ResponseGroup>Large</ResponseGroup>
+        <VariationPage>All</VariationPage>
+      </ItemLookupRequest>
+    </Request>
+    <Item>
+      <ASIN>B005I57NE8</ASIN>
+      <DetailPageURL>https://www.amazon.com/Violet-Big-Boobs-Diva-DivineBreasts-com-ebook/dp/B005I57NE8?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=165953&amp;creativeASIN=B005I57NE8</DetailPageURL>
+      <ItemLinks>
+        <ItemLink>
+          <Description>Technical Details</Description>
+          <URL>https://www.amazon.com/Violet-Big-Boobs-Diva-DivineBreasts-com-ebook/dp/tech-data/B005I57NE8?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B005I57NE8</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Baby Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/baby/add-item.html?asin.0=B005I57NE8&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B005I57NE8</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wedding Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/wedding/add-item.html?asin.0=B005I57NE8&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B005I57NE8</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wishlist</Description>
+          <URL>https://www.amazon.com/gp/registry/wishlist/add-item.html?asin.0=B005I57NE8&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B005I57NE8</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Tell A Friend</Description>
+          <URL>https://www.amazon.com/gp/pdp/taf/B005I57NE8?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B005I57NE8</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Customer Reviews</Description>
+          <URL>https://www.amazon.com/review/product/B005I57NE8?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B005I57NE8</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Offers</Description>
+          <URL>https://www.amazon.com/gp/offer-listing/B005I57NE8?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=B005I57NE8</URL>
+        </ItemLink>
+      </ItemLinks>
+      <SalesRank>268739</SalesRank>
+      <SmallImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/41kRZMfM9KL._SL75_.jpg</URL>
+        <Height Units="pixels">75</Height>
+        <Width Units="pixels">56</Width>
+      </SmallImage>
+      <MediumImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/41kRZMfM9KL._SL160_.jpg</URL>
+        <Height Units="pixels">160</Height>
+        <Width Units="pixels">120</Width>
+      </MediumImage>
+      <LargeImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/41kRZMfM9KL.jpg</URL>
+        <Height Units="pixels">500</Height>
+        <Width Units="pixels">374</Width>
+      </LargeImage>
+      <ImageSets>
+        <ImageSet Category="primary">
+          <SwatchImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41kRZMfM9KL._SL30_.jpg</URL>
+            <Height Units="pixels">30</Height>
+            <Width Units="pixels">22</Width>
+          </SwatchImage>
+          <SmallImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41kRZMfM9KL._SL75_.jpg</URL>
+            <Height Units="pixels">75</Height>
+            <Width Units="pixels">56</Width>
+          </SmallImage>
+          <ThumbnailImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41kRZMfM9KL._SL75_.jpg</URL>
+            <Height Units="pixels">75</Height>
+            <Width Units="pixels">56</Width>
+          </ThumbnailImage>
+          <TinyImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41kRZMfM9KL._SL110_.jpg</URL>
+            <Height Units="pixels">110</Height>
+            <Width Units="pixels">82</Width>
+          </TinyImage>
+          <MediumImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41kRZMfM9KL._SL160_.jpg</URL>
+            <Height Units="pixels">160</Height>
+            <Width Units="pixels">120</Width>
+          </MediumImage>
+          <LargeImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/41kRZMfM9KL.jpg</URL>
+            <Height Units="pixels">500</Height>
+            <Width Units="pixels">374</Width>
+          </LargeImage>
+        </ImageSet>
+      </ImageSets>
+      <ItemAttributes>
+        <Author>Jeff Kawl</Author>
+        <Binding>Kindle Edition</Binding>
+        <Format>Kindle eBook</Format>
+        <IsAdultProduct>0</IsAdultProduct>
+        <Label>DivineBreasts.com</Label>
+        <Languages>
+          <Language>
+            <Name>English</Name>
+            <Type>Published</Type>
+          </Language>
+        </Languages>
+        <Manufacturer>DivineBreasts.com</Manufacturer>
+        <NumberOfPages>98</NumberOfPages>
+        <ProductGroup>eBooks</ProductGroup>
+        <ProductTypeName>ABIS_EBOOKS</ProductTypeName>
+        <PublicationDate>2011-08-18</PublicationDate>
+        <Publisher>DivineBreasts.com</Publisher>
+        <ReleaseDate>2011-08-18</ReleaseDate>
+        <Studio>DivineBreasts.com</Studio>
+        <Title>Violet Big Boobs Sex Diva of DivineBreasts.com</Title>
+      </ItemAttributes>
+      <CustomerReviews>
+        <IFrameURL>https://www.amazon.com/reviews/iframe?akid=AKIAJM43FSTV6EHTINOQ&amp;alinkCode=xm2&amp;asin=B005I57NE8&amp;atag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;exp=2019-01-19T20%3A15%3A07Z&amp;v=2&amp;sig=NKE%252Bt5tlXEV1K908M0Ji7C4QS%252BCDyJoHru58ovTD2Ao%253D</IFrameURL>
+        <HasReviews>true</HasReviews>
+      </CustomerReviews>
+      <EditorialReviews>
+        <EditorialReview>
+          <Source>Product Description</Source>
+          <Content>Violet is as beautiful as she is busty. This big tits fem fatal is curvy with a nice round ass. She jiggles her bum and tits in our videos. One of her breasts is slightly larger than the other. She used to feel bad about it until she started getting tons of fan mail from men who love it!</Content>
+          <IsLinkSuppressed>0</IsLinkSuppressed>
+        </EditorialReview>
+      </EditorialReviews>
+      <SimilarProducts>
+        <SimilarProduct>
+          <ASIN>B00TSR8KEO</ASIN>
+          <Title>Big Busty MILFS - Gorgeous Mature Ladies</Title>
+        </SimilarProduct>
+      </SimilarProducts>
+      <BrowseNodes>
+        <BrowseNode>
+          <BrowseNodeId>2029</BrowseNodeId>
+          <Name>Erotic Photography</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>2020</BrowseNodeId>
+              <Name>Photography &amp; Video</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>1</BrowseNodeId>
+                  <Name>Arts &amp; Photography</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>2243074011</BrowseNodeId>
+          <Name>Erotica</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>154715011</BrowseNodeId>
+              <Name>Photography</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>154607011</BrowseNodeId>
+                  <Name>Arts &amp; Photography</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>154606011</BrowseNodeId>
+                      <Name>Kindle eBooks</Name>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>133141011</BrowseNodeId>
+                          <Name>Categories</Name>
+                          <IsCategoryRoot>1</IsCategoryRoot>
+                          <Ancestors>
+                            <BrowseNode>
+                              <BrowseNodeId>133140011</BrowseNodeId>
+                              <Name>Kindle Store</Name>
+                            </BrowseNode>
+                          </Ancestors>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+      </BrowseNodes>
+    </Item>
+  </Items>
+</ItemLookupResponse>

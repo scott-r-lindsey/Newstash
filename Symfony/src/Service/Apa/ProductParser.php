@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Service\Apa;
 
 use App\Entity\Edition;
+use App\Service\Apa\ProductRejector;
+use App\Service\FormatCache;
 use App\Service\IsbnConverter;
 use App\Service\PubFixer;
 use DateTime;
@@ -19,22 +21,27 @@ class ProductParser
     private $isbnConverter;
     private $purifier;
     private $pubfixer;
+    private $rejector;
     private $formats            = [];
     private $formats_noprice    = [];
 
-    const SALES_RANK_MAX = 2147483647;
+    const SALES_RANK_MAX    = 2147483647;
 
     public function __construct(
         LoggerInterface $logger,
         EntityManagerInterface $em,
         IsbnConverter $isbnConverter,
-        PubFixer $pubfixer
+        PubFixer $pubfixer,
+        ProductRejector $rejector,
+        FormatCache $formatCache
     )
     {
         $this->logger               = $logger;
         $this->em                   = $em;
         $this->isbnConverter        = $isbnConverter;
         $this->pubfixer             = $pubfixer;
+        $this->rejector             = $rejector;
+        $this->formatCache          = $formatCache;
     }
 
     public function ingest(
@@ -43,7 +50,7 @@ class ProductParser
     ): ?Edition
     {
 
-        $this->loadFormats();
+        //$this->loadFormats();
         $this->initHtmlPurifier();
 
         if (null == $edition) {
@@ -52,13 +59,12 @@ class ProductParser
             $this->em->persist($edition);
         }
 
-        $edition = $this->parseMetaData($sxe, $edition);
+        $edition    = $this->parseMetaData($sxe, $edition);
+        $asin       = $edition->getAsin();
 
+        $valid = $this->rejector->evaluate($sxe, $edition);
 
-
-        // fixes and rejections here
-
-
+        $this->leadFollowed($asin, $edition->getRejected(), $edition->getAmznFormat());
 
 
 
@@ -178,8 +184,10 @@ class ProductParser
         // --------------------------------------------------------------------
         // format
 
-        if (isset($this->formats[(string)$sxe->ItemAttributes->Binding])) {
-            if ($format = $this->formats[(string)$sxe->ItemAttributes->Binding]){
+        $formats = $this->formatCache->getExtendedFormatsByName();
+
+        if (isset($formats[(string)$sxe->ItemAttributes->Binding])) {
+            if ($format = $formats[(string)$sxe->ItemAttributes->Binding]){
                 $edition->setFormat($format);
             }
         }
@@ -195,7 +203,55 @@ class ProductParser
             ->setAmznAlternatives($amzn_alternatives)
 */
 
-        return $edition;;
+        return $edition;
+    }
+
+    private function newLeads(array $asins): void
+    {
+        $dbh = $this->em->getConnection();
+
+        $sql = '
+            INSERT IGNORE INTO xlead
+                (id, created_at, updated_at, new)
+            VALUES
+                (?, ?, ?, 1)';
+        $sth = $dbh->prepare($sql);
+
+        foreach ($asins as $asin){
+            $bind = array(
+                $asin,
+                date('Y-m-d H:i:s', strtotime('now')),
+                date('Y-m-d H:i:s', strtotime('now')));
+
+            $sth->execute($bind);
+        }
+    }
+
+    private function leadFollowed(
+        string $asin,
+        bool $rejected = false,
+        string $amzn_format = null
+    ): void
+    {
+        $dbh = $this->em->getConnection();
+
+        $sql = '
+            UPDATE xlead SET
+                new = 0,
+                updated_at = ?,
+                rejected = ?,
+                amzn_format = ?
+            WHERE
+                id = ?';
+
+        $sth = $dbh->prepare($sql);
+        $bind = array(
+            date('Y-m-d H:i:s', strtotime('now')),
+            $rejected ? 1 : 0,
+            $amzn_format,
+            $asin,
+        );
+        $sth->execute($bind);
     }
 
     private function isbnFromSxe(SimpleXMLElement $sxe): ?string
@@ -221,32 +277,6 @@ class ProductParser
         return $isbn;
     }
 
-    private function loadFormats(): void
-    {
-
-        if (0 === count($this->formats)) {
-
-            $dql = '
-                SELECT f
-                FROM
-                    App\Entity\Format f';
-
-            $query      = $this->em->createQuery($dql);
-            $formats    = $query->getResult();
-
-            foreach ($formats as $f) {
-                $this->formats[$f->getDescription()] = $f;
-                $this->formats_noprice[$f->getDescription()] = $f->getNoprice();
-            }
-
-            $this->formats['Mass Market Paperback']             = $this->formats['Paperback'];
-            $this->formats['Kindle Edition']                    = $this->formats['Kindle eBook'];
-
-            $this->formats_noprice['Mass Market Paperback']     = $this->formats_noprice['Paperback'];
-            $this->formats_noprice['Kindle Edition']            = $this->formats_noprice['Kindle eBook'];
-        }
-    }
-
     private function initHtmlPurifier(): void
     {
         if (!$this->purifier) {
@@ -261,4 +291,18 @@ class ProductParser
         }
     }
 
+    private function exitRejected(
+        string $reason,
+        Edition $edition
+    ): Edition
+    {
+        $asin = $edition->getAsin();
+
+        $this->logger->info($reason . " (http://amzn.com/$asin)");
+        $this->leadFollowed($asin, false);
+        $edition->setRejected(true);
+
+        $this->em->flush();
+        return $edition;
+    }
 }

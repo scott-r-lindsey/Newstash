@@ -11,7 +11,24 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(
- *      name="edition"
+ *      name="edition",
+ *      indexes={
+ *          @ORM\Index(name="idx_amzn_salesrank", columns={"amzn_salesrank"}),
+ *          @ORM\Index(name="idx_edition_asin", columns={"asin"}),
+ *          @ORM\Index(name="idx_edition_isbn", columns={"isbn"}),
+ *          @ORM\Index(name="idx_edition_url", columns={"url"}),
+ *          @ORM\Index(name="idx_edition_title", columns={"title"}),
+ *          @ORM\Index(name="idx_edition_sig", columns={"sig"}),
+ *          @ORM\Index(name="idx_edition_create", columns={"created_at"}),
+ *          @ORM\Index(name="idx_edition_update", columns={"updated_at"}),
+ *          @ORM\Index(name="idx_edition_pubscraped", columns={"publisher_scraped_at"}),
+ *          @ORM\Index(name="idx_edition_amznupdate", columns={"amzn_updated_at"}),
+ *          @ORM\Index(name="idx_edition_amznscrape", columns={"amzn_scraped_at"}),
+ *          @ORM\Index(name="idx_edition_active", columns={"active"}),
+ *          @ORM\Index(name="idx_edition_deleted", columns={"deleted"}),
+ *          @ORM\Index(name="idx_edition_apparent_amzn_osi", columns={"apparent_amzn_osi"}),
+ *          @ORM\Index(name="idx_edition_rejected", columns={"rejected"}),
+ *      }
  * )
  */
 
@@ -178,6 +195,24 @@ class Edition{
     private $slug;
 
     //-------------------------------------------------------------------------------
+
+    /**
+     * @ORM\PreFlush()
+     * @ORM\PreUpdate()
+     */
+    public function buildSig(): void
+    {
+        $publisher  = $this->getAmznPublisher();
+        $title      = trim(strtolower($this->getTitle()));
+        $author     = trim(strtolower($this->getAmznAuthorlist()[0] ?? ''));
+
+        if (preg_match('/Hachette/i', $publisher)) {
+            // strip away ':a novel .*' from hachette titles
+            $sig = preg_replace('/: a novel.*/', '', $sig);
+        }
+
+        $this->setSig("$title|$author");
+    }
 
     public function slugify($title, $author = false): string
     {

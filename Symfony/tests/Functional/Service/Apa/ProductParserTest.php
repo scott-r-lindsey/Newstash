@@ -18,6 +18,7 @@ class ProductParserTest extends BaseTest
         $asin           = '0674979850';
 
         $em             = self::$container->get('doctrine')->getManager();
+        $dbh            = $em->getConnection();
         $leadManager    = self::$container->get('test.App\Service\LeadManager');
 
         $leadManager->newLeads([$asin]);
@@ -37,6 +38,24 @@ class ProductParserTest extends BaseTest
         $this->assertFalse(
             $lead->getNew()
         );
+
+        // validate lead count
+        $count = $dbh->query('SELECT COUNT(*) as c FROM xlead')->fetchAll()[0]['c'];
+
+        $this->assertEquals(
+            29,
+            $count
+        );
+
+        // validate similar edition count
+        $count = $dbh->query('SELECT COUNT(*) as c FROM similar_edition')->fetchAll()[0]['c'];
+
+        $this->assertEquals(
+            10,
+            $count
+        );
+
+
     }
 
     public function testRejectedNullFormat(): void

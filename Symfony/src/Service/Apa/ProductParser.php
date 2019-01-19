@@ -66,6 +66,7 @@ class ProductParser
             $edition = new Edition();
             $edition->setAsin((string)$sxe->ASIN);
             $this->em->persist($edition);
+            $this->em->flush($edition); // stub it in
         }
 
         $edition    = $this->parseMetaData($sxe, $edition);
@@ -211,10 +212,12 @@ class ProductParser
             }
 
             $edition->setAmznAlternatives(implode(',', $foundAsins));
+            $this->leadManager->newLeads($foundAsins);
         }
         // --------------------------------------------------------------------
         // similar products
 
+        $foundAsins = [];
         if (($sxe->SimilarProducts) && ($sxe->SimilarProducts->SimilarProduct)){
 
             foreach ($sxe->SimilarProducts->SimilarProduct as $a){
@@ -224,8 +227,15 @@ class ProductParser
 
         if (count($foundAsins)) {
             $this->leadManager->newLeads($foundAsins);
+            $this->editionManager->stubEditions(($foundAsins));
+            $this->editionManager->similarUpdate(
+                $edition->getAsin(),
+                $foundAsins
+            );
         }
 
+        // --------------------------------------------------------------------
+        // browse nodes
 
 
 

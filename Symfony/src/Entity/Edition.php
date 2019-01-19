@@ -66,6 +66,12 @@ class Edition{
      */
     private $format;
 
+    /**
+     * @ORM\OneToMany(targetEntity="SimilarEdition", mappedBy="edition")
+     * @ORM\OrderBy({"rank" = "DESC"})
+     */
+    private $similar_editions;
+
     // ------------------------------------------------------------------------
 
     /** @ORM\Column(type="bigint", unique=false, nullable=true) */
@@ -344,6 +350,7 @@ class Edition{
     {
         $this->browse_nodes = new ArrayCollection();
         $this->primary_browse_nodes = new ArrayCollection();
+        $this->similar_editions = new ArrayCollection();
     }
 
     public function getAsin(): ?string
@@ -910,6 +917,37 @@ class Edition{
     public function setFormat(?Format $format): self
     {
         $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SimilarEdition[]
+     */
+    public function getSimilarEditions(): Collection
+    {
+        return $this->similar_editions;
+    }
+
+    public function addSimilarEdition(SimilarEdition $similarEdition): self
+    {
+        if (!$this->similar_editions->contains($similarEdition)) {
+            $this->similar_editions[] = $similarEdition;
+            $similarEdition->setEdition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSimilarEdition(SimilarEdition $similarEdition): self
+    {
+        if ($this->similar_editions->contains($similarEdition)) {
+            $this->similar_editions->removeElement($similarEdition);
+            // set the owning side to null (unless already changed)
+            if ($similarEdition->getEdition() === $this) {
+                $similarEdition->setEdition(null);
+            }
+        }
 
         return $this;
     }

@@ -51,4 +51,81 @@ class EditionManagerTest extends BaseTest
             $edition->getIsbn()
         );
     }
+
+    public function testSimilarEditionUpdate(): void
+    {
+        $em                 = self::$container->get('doctrine')->getManager();
+        $dbh                = $em->getConnection();
+        $editionManager     = self::$container->get('test.App\Service\EditionManager');
+
+        // --------------------------------------------------------------------
+        // stub some records
+
+        $editionManager->stubEditions([
+            '0000000000',
+            '0000000001',
+            '0000000002',
+            '0000000003',
+            '0000000004',
+            '0000000005',
+            '0000000006',
+            '0000000007',
+            '0000000008',
+            '0000000009'
+        ]);
+
+        $count = $dbh->query('SELECT COUNT(*) as c FROM similar_edition')
+            ->fetchAll()[0]['c'];
+
+        $this->assertEquals(
+            0,
+            $count
+        );
+
+        // --------------------------------------------------------------------
+        // run the thing
+
+        $editionManager->similarUpdate(
+            '0000000000',
+            [
+                '0000000001',
+                '0000000002',
+                '0000000003',
+                '0000000004',
+                '0000000005',
+                '0000000006',
+                '0000000007',
+                '0000000008',
+                '0000000009'
+            ]
+        );
+
+        $count = $dbh->query('SELECT COUNT(*) as c FROM similar_edition')
+            ->fetchAll()[0]['c'];
+
+        $this->assertEquals(
+            9,
+            $count
+        );
+
+        // --------------------------------------------------------------------
+        // run the update
+
+        $editionManager->similarUpdate(
+            '0000000000',
+            [
+                '0000000001',
+                '0000000002',
+                '0000000003'
+            ]
+        );
+
+        $count = $dbh->query('SELECT COUNT(*) as c FROM similar_edition')
+            ->fetchAll()[0]['c'];
+
+        $this->assertEquals(
+            3,
+            $count
+        );
+    }
 }

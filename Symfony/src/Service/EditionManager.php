@@ -43,4 +43,40 @@ class EditionManager
         }
     }
 
+    public function similarUpdate(
+        string $asin,
+        array $asins): void
+    {
+
+        $dbh = $this->em->getConnection();
+
+        // clear out old records
+        $sql = '
+            DELETE FROM similar_edition
+            WHERE edition_asin = ?';
+
+        $sth = $dbh->prepare($sql);
+        $sth->execute([$asin]);
+
+        // insert new records
+        $sql = '
+            INSERT INTO similar_edition
+                (edition_asin, similar_asin, xrank)
+            VALUES
+                (?,?,?)';
+        $sth = $dbh->prepare($sql);
+
+        $rank = 1;
+        foreach ($asins as $a) {
+            $sth->execute([$asin, $a, $rank]);
+            $rank++;
+        }
+    }
+
+    public function browseNodeUpdate(): void
+    {
+
+
+
+    }
 }

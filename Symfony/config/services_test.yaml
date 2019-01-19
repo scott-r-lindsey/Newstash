@@ -9,4 +9,6 @@ services:
     # test.App\Service\MyService: '@App\Service\MyService'
 
     test.App\Service\BookParser: '@App\Service\BookParser'
+    test.App\Service\EditionManager: '@App\Service\EditionManager'
+    test.App\Service\LeadManager: '@App\Service\LeadManager'
     test.App\Service\Apa\ProductParser: '@App\Service\Apa\ProductParser'

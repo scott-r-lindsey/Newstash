@@ -8,6 +8,8 @@ use App\Service\Apa\ProductRejector;
 use App\Service\FormatCache;
 use App\Service\IsbnConverter;
 use App\Service\PubFixer;
+use App\Service\EditionManager;
+use App\Service\LeadManager;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use HtmlPurifier;
@@ -22,6 +24,10 @@ class ProductParser
     private $purifier;
     private $pubfixer;
     private $rejector;
+    private $formatCache;
+    private $editionManager;
+    private $leadManager;
+
     private $formats            = [];
     private $formats_noprice    = [];
 
@@ -33,7 +39,9 @@ class ProductParser
         IsbnConverter $isbnConverter,
         PubFixer $pubfixer,
         ProductRejector $rejector,
-        FormatCache $formatCache
+        FormatCache $formatCache,
+        EditionManager $editionManager,
+        LeadManager $leadManager
     )
     {
         $this->logger               = $logger;
@@ -42,6 +50,8 @@ class ProductParser
         $this->pubfixer             = $pubfixer;
         $this->rejector             = $rejector;
         $this->formatCache          = $formatCache;
+        $this->editionManager       = $editionManager;
+        $this->leadManager          = $leadManager;
     }
 
     public function ingest(
@@ -50,7 +60,6 @@ class ProductParser
     ): ?Edition
     {
 
-        //$this->loadFormats();
         $this->initHtmlPurifier();
 
         if (null == $edition) {
@@ -64,9 +73,7 @@ class ProductParser
 
         $valid = $this->rejector->evaluate($sxe, $edition);
 
-        $this->leadFollowed($asin, $edition->getRejected(), $edition->getAmznFormat());
-
-
+        $this->leadManager->leadFollowed($asin, $edition->getRejected(), $edition->getAmznFormat());
 
 
 
@@ -86,7 +93,7 @@ class ProductParser
         // basic data
 
         $edition
-            ->setIsbn(              $this->isbnFromSxe($sxe))
+            ->setIsbn(              $this->isbnConverter->isbnFromSxe($sxe))
             ->setTitle(             (string)$sxe->ItemAttributes->Title)
             ->setPages(             (int)$sxe->ItemAttributes->NumberOfPages)
             ->setListPrice(         ((int)$sxe->ItemAttributes->ListPrice->Amount) /100)
@@ -192,6 +199,37 @@ class ProductParser
             }
         }
 
+        // --------------------------------------------------------------------
+        // alternative versions
+
+        $foundAsins = [];
+        if (isset($sxe->AlternateVersions)){
+            $foundAsins = [];
+
+            foreach ($sxe->AlternateVersions->AlternateVersion as $a){
+                $foundAsins[]    = (string)$a->ASIN;
+            }
+
+            $edition->setAmznAlternatives(implode(',', $foundAsins));
+        }
+        // --------------------------------------------------------------------
+        // similar products
+
+        if (($sxe->SimilarProducts) && ($sxe->SimilarProducts->SimilarProduct)){
+
+            foreach ($sxe->SimilarProducts->SimilarProduct as $a){
+                $foundAsins[]    = (string)$a->ASIN;
+            }
+        }
+
+        if (count($foundAsins)) {
+            $this->leadManager->newLeads($foundAsins);
+        }
+
+
+
+
+
 /*
         $edition
             ->setPubTitle($pub_title)
@@ -206,77 +244,6 @@ class ProductParser
         return $edition;
     }
 
-    private function newLeads(array $asins): void
-    {
-        $dbh = $this->em->getConnection();
-
-        $sql = '
-            INSERT IGNORE INTO xlead
-                (id, created_at, updated_at, new)
-            VALUES
-                (?, ?, ?, 1)';
-        $sth = $dbh->prepare($sql);
-
-        foreach ($asins as $asin){
-            $bind = array(
-                $asin,
-                date('Y-m-d H:i:s', strtotime('now')),
-                date('Y-m-d H:i:s', strtotime('now')));
-
-            $sth->execute($bind);
-        }
-    }
-
-    private function leadFollowed(
-        string $asin,
-        bool $rejected = false,
-        string $amzn_format = null
-    ): void
-    {
-        $dbh = $this->em->getConnection();
-
-        $sql = '
-            UPDATE xlead SET
-                new = 0,
-                updated_at = ?,
-                rejected = ?,
-                amzn_format = ?
-            WHERE
-                id = ?';
-
-        $sth = $dbh->prepare($sql);
-        $bind = array(
-            date('Y-m-d H:i:s', strtotime('now')),
-            $rejected ? 1 : 0,
-            $amzn_format,
-            $asin,
-        );
-        $sth->execute($bind);
-    }
-
-    private function isbnFromSxe(SimpleXMLElement $sxe): ?string
-    {
-        $ic = $this->isbnConverter;
-        $isbn = null;
-
-        if (isset($sxe->ItemAttributes->EAN)){
-            $isbn = (string)$sxe->ItemAttributes->EAN;
-        }
-        else if (isset($sxe->ItemAttributes->ISBN)){
-            $isbn = (string)$sxe->ItemAttributes->ISBN;
-            if (13 != strlen($isbn)){
-                $isbn = $ic->isbn10to13($isbn);
-            }
-        }
-        else if (isset($sxe->ItemAttributes->EISBN)){
-            $isbn = (string)$sxe->ItemAttributes->EISBN;
-            if (13 != strlen($isbn)){
-                $isbn = $ic->isbn10to13($isbn);
-            }
-        }
-        return $isbn;
-    }
-
     private function initHtmlPurifier(): void
     {
         if (!$this->purifier) {
@@ -289,20 +256,5 @@ class ProductParser
             $config->set('HTML.AllowedAttributes', array());
             $this->purifier = new \HTMLPurifier($config);
         }
-    }
-
-    private function exitRejected(
-        string $reason,
-        Edition $edition
-    ): Edition
-    {
-        $asin = $edition->getAsin();
-
-        $this->logger->info($reason . " (http://amzn.com/$asin)");
-        $this->leadFollowed($asin, false);
-        $edition->setRejected(true);
-
-        $this->em->flush();
-        return $edition;
     }
 }

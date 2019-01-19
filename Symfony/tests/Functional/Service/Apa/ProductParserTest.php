@@ -3,6 +3,7 @@
 namespace App\Tests\Functional\Service\Apa\ProductParser;
 
 use App\Entity\Edition;
+use App\Entity\Lead;
 use App\Tests\Lib\BaseTest;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
@@ -13,11 +14,28 @@ class ProductParserTest extends BaseTest
 
     public function testBasic(): void
     {
+
+        $asin           = '0674979850';
+
+        $em             = self::$container->get('doctrine')->getManager();
+        $leadManager    = self::$container->get('test.App\Service\LeadManager');
+
+        $leadManager->newLeads([$asin]);
+
         $edition = $this->loadEdition('product-sample.xml');
 
+        // validate the object type
         $this->assertInstanceOf(
             Edition::class,
             $edition
+        );
+
+        // validate that the lead was marked not-new
+        $lead = $em->getRepository(Lead::class)
+            ->findOneById($asin);
+
+        $this->assertFalse(
+            $lead->getNew()
         );
     }
 

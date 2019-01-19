@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="App\Repository\LeadRepository")
  * @ORM\Table(
  *      name="xlead",
  *      indexes={

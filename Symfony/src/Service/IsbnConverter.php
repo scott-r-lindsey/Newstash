@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use SimpleXMLElement;
+
 class IsbnConverter{
 
     public function isbn10to13(string $isbn): string
@@ -13,6 +15,28 @@ class IsbnConverter{
         $sum13 = $this->genchksum13($isbn2);
 
         return "$isbn2$sum13";
+    }
+
+    public function isbnFromSxe(SimpleXMLElement $sxe): ?string
+    {
+        $isbn = null;
+
+        if (isset($sxe->ItemAttributes->EAN)){
+            $isbn = (string)$sxe->ItemAttributes->EAN;
+        }
+        else if (isset($sxe->ItemAttributes->ISBN)){
+            $isbn = (string)$sxe->ItemAttributes->ISBN;
+            if (13 != strlen($isbn)){
+                $isbn = $this->isbn10to13($isbn);
+            }
+        }
+        else if (isset($sxe->ItemAttributes->EISBN)){
+            $isbn = (string)$sxe->ItemAttributes->EISBN;
+            if (13 != strlen($isbn)){
+                $isbn = $this->isbn10to13($isbn);
+            }
+        }
+        return $isbn;
     }
 
     public function isbn13to10(string $isbn): string

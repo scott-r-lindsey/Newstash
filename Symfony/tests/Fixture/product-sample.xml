@@ -4,20 +4,20 @@
     <HTTPHeaders>
       <Header Name="UserAgent" Value="GuzzleHttp/6.3.3 curl/7.61.1 PHP/7.3.1"/>
     </HTTPHeaders>
-    <RequestId>928831fb-3ade-4c43-8387-3a2a044b657f</RequestId>
+    <RequestId>9c655bd0-e8b1-4d70-be28-50edd0039f1b</RequestId>
     <Arguments>
       <Argument Name="AWSAccessKeyId" Value="AKIAJM43FSTV6EHTINOQ"/>
       <Argument Name="AssociateTag" Value="12GO5ZuW7/eR9zIMSHM6bEWfzgY4n2iysahzF4Fj"/>
       <Argument Name="IdType" Value="ASIN"/>
       <Argument Name="ItemId" Value="0674979850"/>
       <Argument Name="Operation" Value="ItemLookup"/>
-      <Argument Name="ResponseGroup" Value="Large"/>
+      <Argument Name="ResponseGroup" Value="ItemAttributes,Images,Large,AlternateVersions,EditorialReview"/>
       <Argument Name="Service" Value="AWSECommerceService"/>
-      <Argument Name="Timestamp" Value="2019-01-18T00:04:34Z"/>
+      <Argument Name="Timestamp" Value="2019-01-18T23:55:48Z"/>
       <Argument Name="Version" Value="2011-08-01"/>
-      <Argument Name="Signature" Value="scZJP6hpf5kGsTj8GJeiSJ7es4GHj1WHLN7zoT8X/7c="/>
+      <Argument Name="Signature" Value="6uSKlz0xWTzxXBevjImFizn4iUJH20MeflOsc8D2OAA="/>
     </Arguments>
-    <RequestProcessingTime>0.1521093600000000</RequestProcessingTime>
+    <RequestProcessingTime>0.0890740280000000</RequestProcessingTime>
   </OperationRequest>
   <Items>
     <Request>
@@ -25,7 +25,11 @@
       <ItemLookupRequest>
         <IdType>ASIN</IdType>
         <ItemId>0674979850</ItemId>
+        <ResponseGroup>ItemAttributes</ResponseGroup>
+        <ResponseGroup>Images</ResponseGroup>
         <ResponseGroup>Large</ResponseGroup>
+        <ResponseGroup>AlternateVersions</ResponseGroup>
+        <ResponseGroup>EditorialReview</ResponseGroup>
         <VariationPage>All</VariationPage>
       </ItemLookupRequest>
     </Request>
@@ -62,7 +66,7 @@
           <URL>https://www.amazon.com/gp/offer-listing/0674979850?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0674979850</URL>
         </ItemLink>
       </ItemLinks>
-      <SalesRank>5425</SalesRank>
+      <SalesRank>6939</SalesRank>
       <SmallImage>
         <URL>https://images-na.ssl-images-amazon.com/images/I/41OKpWydb-L._SL75_.jpg</URL>
         <Height Units="pixels">75</Height>
@@ -168,17 +172,17 @@
       </ItemAttributes>
       <OfferSummary>
         <LowestNewPrice>
-          <Amount>1394</Amount>
+          <Amount>1460</Amount>
           <CurrencyCode>USD</CurrencyCode>
-          <FormattedPrice>$13.94</FormattedPrice>
+          <FormattedPrice>$14.60</FormattedPrice>
         </LowestNewPrice>
         <LowestUsedPrice>
-          <Amount>1295</Amount>
+          <Amount>1233</Amount>
           <CurrencyCode>USD</CurrencyCode>
-          <FormattedPrice>$12.95</FormattedPrice>
+          <FormattedPrice>$12.33</FormattedPrice>
         </LowestUsedPrice>
-        <TotalNew>71</TotalNew>
-        <TotalUsed>48</TotalUsed>
+        <TotalNew>69</TotalNew>
+        <TotalUsed>50</TotalUsed>
         <TotalCollectible>0</TotalCollectible>
         <TotalRefurbished>0</TotalRefurbished>
       </OfferSummary>
@@ -191,18 +195,18 @@
             <Condition>New</Condition>
           </OfferAttributes>
           <OfferListing>
-            <OfferListingId>veMUaLnmTqHDAxYjBX2somOljtVe0gOgsCkZsLBrI32jDOj6rZnHJlyEeH1TUb3wZO3EsTgqDgs6k%2Bxfw01%2BJ8smacf4LKHV1JgNfSAIDdYYhbupsFp%2BOg%3D%3D</OfferListingId>
+            <OfferListingId>1ImuvqMR%2F3wgFkE1EfXZCYYjM3tM64dvBa5CLBMpa069wXnnIYkgfYKWk2O7F%2BqOkCKAfOkY36VaW7iLGhrU6nXQqkQ7D3e5nYEJH0TaAWYMedFMtYUv%2Bg%3D%3D</OfferListingId>
             <Price>
-              <Amount>1712</Amount>
+              <Amount>1626</Amount>
               <CurrencyCode>USD</CurrencyCode>
-              <FormattedPrice>$17.12</FormattedPrice>
+              <FormattedPrice>$16.26</FormattedPrice>
             </Price>
             <AmountSaved>
-              <Amount>283</Amount>
+              <Amount>369</Amount>
               <CurrencyCode>USD</CurrencyCode>
-              <FormattedPrice>$2.83</FormattedPrice>
+              <FormattedPrice>$3.69</FormattedPrice>
             </AmountSaved>
-            <PercentageSaved>14</PercentageSaved>
+            <PercentageSaved>18</PercentageSaved>
             <Availability>Usually ships in 24 hours</Availability>
             <AvailabilityAttributes>
               <AvailabilityType>now</AvailabilityType>
@@ -215,7 +219,7 @@
         </Offer>
       </Offers>
       <CustomerReviews>
-        <IFrameURL>https://www.amazon.com/reviews/iframe?akid=AKIAJM43FSTV6EHTINOQ&amp;alinkCode=xm2&amp;asin=0674979850&amp;atag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;exp=2019-01-19T00%3A04%3A34Z&amp;v=2&amp;sig=L4eWAXDSe%252FkQC%252Fxo4mGKupqIKhrdFfaIYHZB8qyuR2k%253D</IFrameURL>
+        <IFrameURL>https://www.amazon.com/reviews/iframe?akid=AKIAJM43FSTV6EHTINOQ&amp;alinkCode=xm2&amp;asin=0674979850&amp;atag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;exp=2019-01-19T23%3A55%3A49Z&amp;v=2&amp;sig=8ahUZPJcd3OGEBuvvCE9aXIOmDY%252BC9FI5H50gyZNRJ0%253D</IFrameURL>
         <HasReviews>true</HasReviews>
       </CustomerReviews>
       <EditorialReviews>
@@ -255,12 +259,12 @@
           <Title>Summary of Capital in the Twenty-First Century by Thomas Piketty | Includes Analysis</Title>
         </SimilarProduct>
         <SimilarProduct>
-          <ASIN>0226320618</ASIN>
-          <Title>The Road to Serfdom: Fiftieth Anniversary Edition</Title>
-        </SimilarProduct>
-        <SimilarProduct>
           <ASIN>0804170045</ASIN>
           <Title>The Attention Merchants: The Epic Scramble to Get Inside Our Heads</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0226320618</ASIN>
+          <Title>The Road to Serfdom: Fiftieth Anniversary Edition</Title>
         </SimilarProduct>
         <SimilarProduct>
           <ASIN>0143036580</ASIN>
@@ -507,6 +511,98 @@
           </Ancestors>
         </BrowseNode>
       </BrowseNodes>
+      <AlternateVersions>
+        <AlternateVersion>
+          <ASIN>B00K33AFOK</ASIN>
+          <Title>Capital in the Twenty-First Century</Title>
+          <Binding>Audible Audiobook</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01K3RCRIW</ASIN>
+          <Title>Capital in the Twenty-First Century by Thomas Piketty (2014-06-17)</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B074DVRW88</ASIN>
+          <Title>Capital in the Twenty-First Century</Title>
+          <Binding>Kindle Edition</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>8937834588</ASIN>
+          <Title>[Capital in the Twenty First Century] Capital in the 21st Century by Thomas Piketty: Thomas Piketty CAPITAL IN THE 21ST CENTURY</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>8967351275</ASIN>
+          <Title>Capital in the Twenty-first Century (Korean Edition)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1491534664</ASIN>
+          <Title>Capital in the Twenty-First Century</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0674980255</ASIN>
+          <Title>Capital in the Twenty-First Century [Paperback] Piketty, Thomas</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1491534648</ASIN>
+          <Title>Capital in the Twenty-First Century</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1491591609</ASIN>
+          <Title>Capital in the Twenty-First Century</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B00RWTSQ4E</ASIN>
+          <Title>By Thomas Piketty [Capital in the Twenty-First Century Audiobook] Capital in the Twenty First Century Audio CD {Capita (2nd Second Edition) [Audio CD]</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>8937834693</ASIN>
+          <Title>Capital in the Twenty-First Century</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>893783488X</ASIN>
+          <Title>[Capital in the Twenty-First Century Audiobook] Capital in the Twenty First Century Audio CD {Capital in the 21st Century Audio CD Unabridged by Thomas Piketty}</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01GML6F86</ASIN>
+          <Title>Capital in the Twenty-First Century (Hardcover)--by Thomas Piketty [2014 Edition] ISBN: 9780674430006</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1491591617</ASIN>
+          <Title>Capital in the Twenty-First Century</Title>
+          <Binding>MP3 CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>8956608105</ASIN>
+          <Title>Capital in the Twenty First Century [Capital in the 21st Century]:by Thomas Piketty CAPITAL</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1491534656</ASIN>
+          <Title>Capital in the Twenty-First Century</Title>
+          <Binding>MP3 CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B00N4HGRDK</ASIN>
+          <Title>By Thomas Piketty Capital in the Twenty-First Century (3e)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>067443000X</ASIN>
+          <Title>Capital in the Twenty First Century</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+      </AlternateVersions>
     </Item>
   </Items>
 </ItemLookupResponse>

@@ -58,7 +58,10 @@ class AdhocAsinIngestCommand extends BaseCommand
 
         $asin = $input->getArgument('asin');
 
-        $sxe = $this->api->ItemLookup([$asin], ['Large']);
+        $sxe = $this->api->ItemLookup(
+            [$asin],
+            ['ItemAttributes,Images,Large,AlternateVersions,EditorialReview']
+        );
 
         if ($input->getOption('output-only')){
 

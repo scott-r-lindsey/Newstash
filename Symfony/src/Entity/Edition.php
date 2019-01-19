@@ -202,8 +202,8 @@ class Edition{
      */
     public function buildSig(): void
     {
-        $publisher  = $this->getAmznPublisher();
-        $title      = trim(strtolower($this->getTitle()));
+        $publisher  = $this->getAmznPublisher() ?? '';
+        $title      = trim(strtolower($this->getTitle() ?? ''));
         $author     = trim(strtolower($this->getAmznAuthorlist()[0] ?? ''));
 
         if (preg_match('/Hachette/i', $publisher)) {

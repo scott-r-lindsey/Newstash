@@ -20,7 +20,7 @@ class LeadManager
         $this->em                   = $em;
     }
 
-    private function newLeads(array $asins): void
+    public function newLeads(array $asins): void
     {
         $dbh = $this->em->getConnection();
 
@@ -41,7 +41,7 @@ class LeadManager
         }
     }
 
-    private function leadFollowed(
+    public function leadFollowed(
         string $asin,
         bool $rejected = false,
         string $amzn_format = null

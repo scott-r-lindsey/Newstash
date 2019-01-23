@@ -6,6 +6,7 @@ namespace App\Service\Apa;
 use App\Entity\Edition;
 use App\Service\Apa\ProductRejector;
 use App\Service\FormatCache;
+use App\Service\BrowseNodeCache;
 use App\Service\IsbnConverter;
 use App\Service\PubFixer;
 use App\Service\EditionManager;
@@ -24,6 +25,7 @@ class ProductParser
     private $purifier;
     private $pubfixer;
     private $rejector;
+    private $browseNodeCache;
     private $formatCache;
     private $editionManager;
     private $leadManager;
@@ -39,6 +41,7 @@ class ProductParser
         IsbnConverter $isbnConverter,
         PubFixer $pubfixer,
         ProductRejector $rejector,
+        BrowseNodeCache $browseNodeCache,
         FormatCache $formatCache,
         EditionManager $editionManager,
         LeadManager $leadManager
@@ -49,6 +52,7 @@ class ProductParser
         $this->isbnConverter        = $isbnConverter;
         $this->pubfixer             = $pubfixer;
         $this->rejector             = $rejector;
+        $this->browseNodeCache      = $browseNodeCache;
         $this->formatCache          = $formatCache;
         $this->editionManager       = $editionManager;
         $this->leadManager          = $leadManager;
@@ -71,6 +75,8 @@ class ProductParser
 
         $edition    = $this->parseMetaData($sxe, $edition);
         $asin       = $edition->getAsin();
+
+        $this->updateBrowseNodes($asin, $sxe);
 
         $valid = $this->rejector->evaluate($sxe, $edition);
 
@@ -252,6 +258,95 @@ class ProductParser
 */
 
         return $edition;
+    }
+
+
+    /**
+     * FIXME
+     * this implentation is fast for initial load, but writes for no
+     * reason on update :-/
+     **/
+    private function updateBrowseNodes(
+        string $asin,
+        SimpleXMLElement $sxe
+    ): void
+    {
+
+        $dbh = $this->em->getConnection();
+
+        // --------------------------------------------------------------------
+        // clear out existant
+
+        $sql = '
+            DELETE FROM browsenode_edition
+            WHERE edition_asin = ?';
+
+        $sth = $dbh->prepare($sql);
+        $sth->execute([$asin]);
+
+        $sql = '
+            DELETE FROM primary_browsenode_edition
+            WHERE edition_asin = ?';
+
+        $sth = $dbh->prepare($sql);
+        $sth->execute([$asin]);
+
+        // --------------------------------------------------------------------
+        // insert new associations
+
+        $validNodeIds       = $this->browseNodeCache->getBrowseNodesIds();
+        $node_ids           = [];
+        $primary_node_ids   = [];
+
+        // find nodes and all parents
+        if (($sxe->BrowseNodes) and ($sxe->BrowseNodes->BrowseNode)){
+            foreach ($sxe->BrowseNodes->BrowseNode as $bn){
+                $primary_node_ids[] = (string)$bn->BrowseNodeId;
+                $node_ids[(string)$bn->BrowseNodeId] = true;
+                $b = $bn;
+                while (($b->Ancestors) and ($a = $b->Ancestors)){
+                    $b = $a->BrowseNode;
+                    if ($b->IsCategoryRoot){
+                        break;
+                    }
+                    $node_ids[(string)$b->BrowseNodeId] = true;
+                }
+            }
+        }
+
+        // We filter against $validNodeIds because we are not
+        // taking all the nodes.  Mostly, skipping kindle categories.
+
+        if (count($node_ids)){
+            $sql = '
+                INSERT INTO browsenode_edition
+                    (edition_asin, browsenode_id)
+                VALUES
+                    (?, ?)';
+
+            $sth = $dbh->prepare($sql);
+            foreach (array_keys($node_ids) as $node_id){
+                if (!isset($validNodeIds[$node_id])){
+                    continue;
+                }
+                $sth->execute([$asin, $node_id]);
+            }
+        }
+        if (count($primary_node_ids)){
+            $sql = '
+                INSERT INTO primary_browsenode_edition
+                    (edition_asin, browsenode_id)
+                VALUES
+                    (?, ?)';
+
+            $sth = $dbh->prepare($sql);
+            foreach ($primary_node_ids as $node_id){
+                if (!isset($validNodeIds[$node_id])){
+                    continue;
+                }
+                $sth->execute([$asin, $node_id]);
+            }
+        }
     }
 
     private function initHtmlPurifier(): void

@@ -43,6 +43,18 @@ class Edition{
     // ------------------------------------------------------------------------
 
     /**
+     * @ORM\ManyToOne(targetEntity="Work", inversedBy="editions")
+     * @ORM\JoinColumn(name="work_id", referencedColumnName="id", nullable=true)
+     */
+    private $work;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Format", inversedBy="editions")
+     * @ORM\JoinColumn(name="format_id", referencedColumnName="id", nullable=true)
+     */
+    private $format;
+
+    /**
      * @ORM\ManyToMany(targetEntity="BrowseNode", inversedBy="editions")
      * @ORM\JoinTable(name="browsenode_edition",
      *      joinColumns={@ORM\JoinColumn(name="edition_asin", referencedColumnName="asin")},
@@ -60,11 +72,6 @@ class Edition{
      */
     private $primary_browse_nodes;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Format", inversedBy="editions")
-     * @ORM\JoinColumn(name="format_id", referencedColumnName="id", nullable=true)
-     */
-    private $format;
 
     /**
      * @ORM\OneToMany(targetEntity="SimilarEdition", mappedBy="edition")
@@ -948,6 +955,18 @@ class Edition{
                 $similarEdition->setEdition(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getWork(): ?Work
+    {
+        return $this->work;
+    }
+
+    public function setWork(?Work $work): self
+    {
+        $this->work = $work;
 
         return $this;
     }

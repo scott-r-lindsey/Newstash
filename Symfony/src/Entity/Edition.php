@@ -176,10 +176,10 @@ class Edition{
     /** @ORM\Column(type="string", length=255, nullable=true) */
     private $sig;
 
-    /** @ORM\Column(type="boolean") */
+    /** @ORM\Column(type="boolean", options={"default":false}) */
     private $active = false;
 
-    /** @ORM\Column(type="boolean") */
+    /** @ORM\Column(type="boolean", options={"default":false}) */
     private $deleted = false;
 
     /** @ORM\Column(type="string", length=255, nullable=true) */
@@ -191,10 +191,10 @@ class Edition{
     /** @ORM\Column(type="string", length=255, nullable=true) */
     private $amzn_brand;
 
-    /** @ORM\Column(type="boolean") */
+    /** @ORM\Column(type="boolean", options={"default":false}) */
     private $apparent_amzn_osi = false;
 
-    /** @ORM\Column(type="boolean") */
+    /** @ORM\Column(type="boolean", options={"default":false}) */
     private $rejected = false;
 
     /** @ORM\Column(type="string", length=255, nullable=true) */

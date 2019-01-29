@@ -59,6 +59,7 @@ class ProductRejector
 
         $extendedFormats = $this->formatCache->getExtendedFormatsByName();
 
+        // out of scope formats
         if (null == $edition->getAmznFormat()) {
             return $this->exitRejected("Skipped null format", $edition);
         }
@@ -102,18 +103,6 @@ class ProductRejector
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
         return true;
     }

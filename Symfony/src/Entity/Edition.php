@@ -226,6 +226,18 @@ class Edition{
 
         $this->setSig("$title|$author");
     }
+    /**
+     * @ORM\PreFlush()
+     * @ORM\PreUpdate()
+     */
+    public function fixReleaseDate(): void
+    {
+        if (null === $this->release_date){
+            if (null !== $this->publication_date) {
+                $this->release_date = $this->publication_date;
+            }
+        }
+    }
 
     public function slugify($title, $author = false): string
     {

@@ -73,7 +73,13 @@ class ProductParserTest extends BaseTest
             $count
         );
 
+        // validate work count
+        $count = $dbh->query('SELECT COUNT(*) as c FROM work')->fetchAll()[0]['c'];
 
+        $this->assertEquals(
+            1,
+            $count
+        );
     }
 
     public function testRejectedNullFormat(): void

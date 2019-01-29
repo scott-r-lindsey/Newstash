@@ -33,6 +33,11 @@ class WorkGroomer
         $this->frontFinder          = $frontFinder;
     }
 
+    public function workGroom(Edition $edition): void
+    {
+        $this->workGroomLogic($edition->getAsin());
+    }
+
     public function workGroomLogic(string $asin): void
     {
         $em     = $this->em;
@@ -467,10 +472,6 @@ class WorkGroomer
         return $new;
     }
 
-
-
-
-
     private function memoizedQueryByString(
         array $keys,
         array &$searched,
@@ -516,7 +517,4 @@ class WorkGroomer
 
         return $things;
     }
-
-
-
 }

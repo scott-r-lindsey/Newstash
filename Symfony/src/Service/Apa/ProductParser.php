@@ -11,6 +11,7 @@ use App\Service\IsbnConverter;
 use App\Service\PubFixer;
 use App\Service\EditionManager;
 use App\Service\LeadManager;
+use App\Service\Data\WorkGroomer;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use HtmlPurifier;
@@ -29,6 +30,7 @@ class ProductParser
     private $formatCache;
     private $editionManager;
     private $leadManager;
+    private $workGroomer;
 
     private $formats            = [];
     private $formats_noprice    = [];
@@ -44,7 +46,8 @@ class ProductParser
         BrowseNodeCache $browseNodeCache,
         FormatCache $formatCache,
         EditionManager $editionManager,
-        LeadManager $leadManager
+        LeadManager $leadManager,
+        WorkGroomer $workGroomer
     )
     {
         $this->logger               = $logger;
@@ -56,6 +59,7 @@ class ProductParser
         $this->formatCache          = $formatCache;
         $this->editionManager       = $editionManager;
         $this->leadManager          = $leadManager;
+        $this->workGroomer          = $workGroomer;
     }
 
     public function ingest(
@@ -76,17 +80,13 @@ class ProductParser
         $edition    = $this->parseMetaData($sxe, $edition);
         $asin       = $edition->getAsin();
 
-        $this->updateBrowseNodes($asin, $sxe);
-
         $valid = $this->rejector->evaluate($sxe, $edition);
 
         $this->leadManager->leadFollowed($asin, $edition->getRejected(), $edition->getAmznFormat());
 
-
-
-
-
         $this->em->flush();
+
+        $this->workGroomer->workGroom($edition);
 
         return $edition;
     }
@@ -243,7 +243,7 @@ class ProductParser
         // --------------------------------------------------------------------
         // browse nodes
 
-
+        $this->updateBrowseNodes($edition->getAsin(), $sxe);
 
 
 /*

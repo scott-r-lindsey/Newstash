@@ -27,10 +27,35 @@ abstract class BaseTest extends WebTestCase
      */
     protected function resetDB(): void
     {
+
         $root = static::$kernel->getContainer()->get('kernel')->getProjectDir();
-        exec($root.'/bin/console --env=test doctrine:schema:drop --force');
-        exec($root."/bin/console --env=test doctrine:schema:create");
-        exec($root.'/bin/console --env=test doctrine:fixtures:load --no-interaction');
+
+        $snapshot       = $root . '/var/testing-db-snap.sql';
+        $database_url   = getenv('DATABASE_URL');
+
+        preg_match('|mysql://([^:]+):([^@]+)@([^:]+):[\d]+/(.*)|', $database_url, $matches);
+        list($str, $user, $pass, $host, $db) = $matches; 
+
+        if ($pass){ 
+            $pass = "-p$pass";
+        }
+
+        if (    (file_exists($snapshot)) &&
+                (time() - filemtime($snapshot) <= 60 * 60) &&
+                (filesize($snapshot)) // missing mysql = empty file
+            ){ // 1 hour
+
+            exec("mysql -u $user -h $host $pass $db <$snapshot");
+        }
+        else{
+            $root = static::$kernel->getContainer()->get('kernel')->getProjectDir();
+            exec($root.'/bin/console --env=test doctrine:schema:drop --force');
+            exec($root."/bin/console --env=test doctrine:schema:create");
+            exec($root.'/bin/console --env=test doctrine:fixtures:load --no-interaction');
+
+            exec("mysqldump -u $user -h $host $pass $db >$snapshot");
+        }
+
     }
 
     /**

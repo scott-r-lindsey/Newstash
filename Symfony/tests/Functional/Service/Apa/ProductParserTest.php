@@ -35,7 +35,7 @@ class ProductParserTest extends BaseTest
 
         // validate that the lead was marked not-new
         $lead = $em->getRepository(Lead::class)
-            ->findOneById($asin);
+            ->findOneByAsin($asin);
 
         $this->assertFalse(
             $lead->getNew()

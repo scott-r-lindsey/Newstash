@@ -29,7 +29,7 @@ class Lead{
      * @ORM\Column(type="string", nullable=false)
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $id;
+    private $asin;
 
     /** @ORM\Column(type="datetime") */
     private $created_at;
@@ -65,9 +65,9 @@ class Lead{
     // ./bin/console make:entity --regenerate
     //-------------------------------------------------------------------------------
 
-    public function getId(): ?string
+    public function getAsin(): ?string
     {
-        return $this->id;
+        return $this->asin;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
@@ -129,4 +129,5 @@ class Lead{
 
         return $this;
     }
+
 }

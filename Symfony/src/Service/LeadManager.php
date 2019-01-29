@@ -5,40 +5,49 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use App\Service\EditionManager;
 
 class LeadManager
 {
     private $logger;
     private $em;
+    private $editionManager;
 
     public function __construct(
         LoggerInterface $logger,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        EditionManager $editionManager
     )
     {
         $this->logger               = $logger;
         $this->em                   = $em;
+        $this->editionManager       = $editionManager;
     }
 
     public function newLeads(array $asins): void
     {
         $dbh = $this->em->getConnection();
 
+        // --------------------------------------------------------------------
+
         $sql = '
             INSERT IGNORE INTO xlead
-                (id, created_at, updated_at, new)
+                (asin, created_at, updated_at, new)
             VALUES
                 (?, ?, ?, 1)';
         $sth = $dbh->prepare($sql);
 
         foreach ($asins as $asin){
-            $bind = array(
+            $sth->execute([
                 $asin,
                 date('Y-m-d H:i:s', strtotime('now')),
-                date('Y-m-d H:i:s', strtotime('now')));
-
-            $sth->execute($bind);
+                date('Y-m-d H:i:s', strtotime('now'))
+            ]);
         }
+
+        // --------------------------------------------------------------------
+
+        $this->editionManager->stubEditions($asins);
     }
 
     public function leadFollowed(
@@ -56,7 +65,7 @@ class LeadManager
                 rejected = ?,
                 amzn_format = ?
             WHERE
-                id = ?';
+                asin = ?';
 
         $sth = $dbh->prepare($sql);
         $bind = array(

@@ -74,10 +74,9 @@ class ProductParser
             ->findOneByAsin($asin);
 
         if (null == $edition) {
-            $edition = new Edition();
-            $edition->setAsin((string)$sxe->ASIN);
-            $this->em->persist($edition);
-            $this->em->flush($edition); // stub it in
+            $this->editionManager->stubEdition($asin);
+            $edition = $this->em->getRepository(Edition::class)
+                ->findOneByAsin($asin);
         }
 
         $edition    = $this->parseMetaData($sxe, $edition);

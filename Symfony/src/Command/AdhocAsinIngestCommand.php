@@ -58,6 +58,7 @@ class AdhocAsinIngestCommand extends BaseCommand
 
         $asin = $input->getArgument('asin');
 
+        $output->writeln('Requesting from $asin from APA...');
         $sxe = $this->api->ItemLookup(
             [$asin],
             ['ItemAttributes,Images,Large,AlternateVersions,EditorialReview']
@@ -73,11 +74,11 @@ class AdhocAsinIngestCommand extends BaseCommand
             $output->writeln($dom->saveXML());
         }
 
-        $output->writeln('sup');
+        $output->writeln('Parsing and ingesting data...');
 
-        //$sxe = $this->api->browseNodeLookup($parent->getId());
+        $this->parser->ingest($sxe->Items->Item[0]);
 
-
+        $output->writeln('Done!');
     }
 }
 

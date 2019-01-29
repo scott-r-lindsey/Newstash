@@ -63,12 +63,15 @@ class ProductParser
     }
 
     public function ingest(
-        SimpleXMLElement $sxe,
-        Edition $edition = null
+        SimpleXMLElement $sxe
     ): ?Edition
     {
 
         $this->initHtmlPurifier();
+
+        $asin = (string)$sxe->ASIN;
+        $edition = $this->em->getRepository(Edition::class)
+            ->findOneByAsin($asin);
 
         if (null == $edition) {
             $edition = new Edition();

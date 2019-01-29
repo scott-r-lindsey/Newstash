@@ -10,6 +10,9 @@ use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @covers App\Service\Data\WorkGroomer
+ */
 class WorkGroomerTest extends BaseTest
 {
     protected $DBSetup = true;

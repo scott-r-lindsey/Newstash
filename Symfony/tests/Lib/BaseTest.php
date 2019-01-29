@@ -34,9 +34,9 @@ abstract class BaseTest extends WebTestCase
         $database_url   = getenv('DATABASE_URL');
 
         preg_match('|mysql://([^:]+):([^@]+)@([^:]+):[\d]+/(.*)|', $database_url, $matches);
-        list($str, $user, $pass, $host, $db) = $matches; 
+        list($str, $user, $pass, $host, $db) = $matches;
 
-        if ($pass){ 
+        if ($pass){
             $pass = "-p$pass";
         }
 

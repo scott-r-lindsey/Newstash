@@ -63,12 +63,6 @@ class ProductApiTest extends BaseTest
                 'base_uri'  => Psr7\uri_for('http://somesite.nowhere/foo/bar')
             ]));
 
-        $this->mockLogger->expects($this->once())
-            ->method('info')
-            ->with($this->matchesRegularExpression(
-                '/^^-----> API call: http:\/\/somesite.nowhere\/foo\/bar\?AWSAccessKeyId=AKIAXXXXXXXXXXXXXXXX&AssociateTag=1234567890123456789012345678901234567890&BrowseNodeId=1000&Operation=BrowseNodeLookup&ResponseGroup=BrowseNodeInfo&Service=AWSECommerceService&Timestamp=[^&]+&Version=2011-08-01&Signature=.*/'
-            ));
-
         # ---------------------------------------------------------------------
 
         $sxe = $productApi->browseNodeLookup(1000);

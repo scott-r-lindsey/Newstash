@@ -13,3 +13,4 @@ services:
     test.App\Service\Data\WorkGroomer: '@App\Service\Data\WorkGroomer'
     test.App\Service\EditionManager: '@App\Service\EditionManager'
     test.App\Service\LeadManager: '@App\Service\LeadManager'
+    test.App\Service\Apa\Broker: '@App\Service\Apa\Broker'

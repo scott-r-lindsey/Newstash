@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Command\BaseCommand;
+use App\Service\Apa;
 use App\Service\Apa\ProductParser;
 use App\Service\Apa\ProductApi;
 use Symfony\Component\Console\Command\Command;
@@ -61,7 +62,7 @@ class AdhocAsinIngestCommand extends BaseCommand
         $output->writeln('Requesting from $asin from APA...');
         $sxe = $this->api->ItemLookup(
             [$asin],
-            ['ItemAttributes,Images,Large,AlternateVersions,EditorialReview']
+            Apa::STANDARD_RESPONSE_TYPES
         );
 
         if ($input->getOption('output-only')){

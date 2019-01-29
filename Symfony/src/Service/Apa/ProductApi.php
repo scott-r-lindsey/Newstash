@@ -62,6 +62,8 @@ class ProductApi
             'ResponseGroup' => implode(',', $responses)
         ];
 
+        $this->logger->notice("APA ItemLookup on " . implode(',', $asins));
+
         return $this->aws_signed_request($params);
     }
 
@@ -78,6 +80,8 @@ class ProductApi
 
         // FIXME where should this go?
         libxml_use_internal_errors(true);
+
+        $this->logger->info("APA query " . print_r($params, true));
 
         $query              = $this->generateSignedQuery($params);
 

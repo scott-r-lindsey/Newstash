@@ -20,6 +20,11 @@ class EditionManager
         $this->em                   = $em;
     }
 
+    public function stubEdition(string $asin): void
+    {
+        $this->stubEditions([$asin]);
+    }
+
     public function stubEditions(
         array $asins
     ):void
@@ -29,16 +34,18 @@ class EditionManager
 
         $sql = '
             INSERT IGNORE INTO edition
-                (asin, created_at)
+                (asin, created_at, updated_at, stubbed)
             VALUES
-                (?, ?)';
+                (?, ?, ?, ?)';
 
         $sth = $dbh->prepare($sql);
 
         foreach ($asins as $asin) {
             $sth->execute([
                 $asin,
-                date('Y-m-d H:i:s', strtotime('now'))
+                date('Y-m-d H:i:s', strtotime('now')),
+                date('Y-m-d H:i:s', strtotime('now')),
+                1
             ]);
         }
     }
@@ -71,12 +78,5 @@ class EditionManager
             $sth->execute([$asin, $a, $rank]);
             $rank++;
         }
-    }
-
-    public function browseNodeUpdate(): void
-    {
-
-
-
     }
 }

@@ -91,6 +91,7 @@ class WorkGroomer
             FROM
                 edition
             WHERE
+                stubbed = 0 AND
                 asin IN ($in)";
 
         $sth = $dbh->prepare($sql);

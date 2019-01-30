@@ -28,7 +28,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  *          @ORM\Index(name="idx_edition_deleted", columns={"deleted"}),
  *          @ORM\Index(name="idx_edition_apparent_amzn_osi", columns={"apparent_amzn_osi"}),
  *          @ORM\Index(name="idx_edition_rejected", columns={"rejected"}),
- *          @ORM\Index(name="idx_edition_stubbed", columns={"stubbed"}),
  *      }
  * )
  */
@@ -205,9 +204,6 @@ class Edition{
     /** @ORM\Column(type="boolean", options={"default":false}) */
     private $rejected = false;
 
-    /** @ORM\Column(type="boolean", options={"default":false}) */
-    private $stubbed = false;
-
     /** @ORM\Column(type="string", length=255, nullable=true) */
     private $slug;
 
@@ -225,7 +221,7 @@ class Edition{
 
         if (preg_match('/Hachette/i', $publisher)) {
             // strip away ':a novel .*' from hachette titles
-            $sig = preg_replace('/: a novel.*/', '', $sig);
+            $title = preg_replace('/: a novel.*/', '', $title);
         }
 
         $this->setSig("$title|$author");
@@ -290,14 +286,6 @@ class Edition{
         if(null == $this->getCreatedAt()) {
             $this->setCreatedAt(new \DateTime());
         }
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function setNotStubbed(){
-        $this->setStubbed(false);
     }
 
     public function evaluateActiveLogic(
@@ -991,18 +979,6 @@ class Edition{
     public function setWork(?Work $work): self
     {
         $this->work = $work;
-
-        return $this;
-    }
-
-    public function getStubbed(): ?bool
-    {
-        return $this->stubbed;
-    }
-
-    public function setStubbed(bool $stubbed): self
-    {
-        $this->stubbed = $stubbed;
 
         return $this;
     }

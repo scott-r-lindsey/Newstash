@@ -228,9 +228,9 @@ class WorkGroomerTest extends BaseTest
         $sql = '
             INSERT INTO edition
                 (asin, format_id, title, amzn_large_cover, active, release_date,
-                sig, amzn_alternatives, work_id, created_at, updated_at)
+                sig, amzn_alternatives, work_id, created_at, updated_at, amzn_updated_at)
             VALUES
-                (?,?,?,?,?,?,?,?,?,?,?)';
+                (?,?,?,?,?,?,?,?,?,?,?,?)';
 
         $sth = $dbh->prepare($sql);
         $sth->execute([
@@ -243,6 +243,7 @@ class WorkGroomerTest extends BaseTest
             $sig,
             $amzn_alts,
             $work_id,
+            $now->format('Y-m-d H:i:s'),
             $now->format('Y-m-d H:i:s'),
             $now->format('Y-m-d H:i:s'),
         ]);

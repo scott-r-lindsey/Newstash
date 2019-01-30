@@ -10,7 +10,6 @@ use App\Service\BrowseNodeCache;
 use App\Service\IsbnConverter;
 use App\Service\PubFixer;
 use App\Service\EditionManager;
-use App\Service\LeadManager;
 use App\Service\Data\WorkGroomer;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,7 +28,6 @@ class ProductParser
     private $browseNodeCache;
     private $formatCache;
     private $editionManager;
-    private $leadManager;
     private $workGroomer;
 
     private $formats            = [];
@@ -46,7 +44,6 @@ class ProductParser
         BrowseNodeCache $browseNodeCache,
         FormatCache $formatCache,
         EditionManager $editionManager,
-        LeadManager $leadManager,
         WorkGroomer $workGroomer
     )
     {
@@ -58,7 +55,6 @@ class ProductParser
         $this->browseNodeCache      = $browseNodeCache;
         $this->formatCache          = $formatCache;
         $this->editionManager       = $editionManager;
-        $this->leadManager          = $leadManager;
         $this->workGroomer          = $workGroomer;
     }
 
@@ -83,8 +79,6 @@ class ProductParser
         $asin       = $edition->getAsin();
 
         $valid = $this->rejector->evaluate($sxe, $edition);
-
-        $this->leadManager->leadFollowed($asin, $edition->getRejected(), $edition->getAmznFormat());
 
         $this->em->flush();
 
@@ -220,7 +214,7 @@ class ProductParser
             }
 
             $edition->setAmznAlternatives(implode(',', $foundAsins));
-            $this->leadManager->newLeads($foundAsins);
+            $this->editionManager->stubEditions(($foundAsins));
         }
         // --------------------------------------------------------------------
         // similar products
@@ -234,7 +228,6 @@ class ProductParser
         }
 
         if (count($foundAsins)) {
-            $this->leadManager->newLeads($foundAsins);
             $this->editionManager->stubEditions(($foundAsins));
             $this->editionManager->similarUpdate(
                 $edition->getAsin(),

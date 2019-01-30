@@ -91,7 +91,7 @@ class WorkGroomer
             FROM
                 edition
             WHERE
-                stubbed = 0 AND
+                edition.amzn_updated_at IS NOT NULL AND
                 asin IN ($in)";
 
         $sth = $dbh->prepare($sql);
@@ -101,15 +101,21 @@ class WorkGroomer
         $edition_data   = [];
 
         foreach ($sth->fetchAll() as $r){
-            $edition_data[] = array(
+
+            // if the publisher forgot to inlude the release date
+            // we still want to include the book but we will not
+            // put it frontmost
+            $releaseDate = $r['release_data'] ?? '1900-01-01 00:00:00';
+
+            $edition_data[] = [
                 'asin'          => $r['asin'],
                 'work_id'       => $r['work_id'],
                 'title'         => $r['title'],
                 'format_id'     => $r['format_id'],
                 'has_cover'     => (boolean)$r['amzn_large_cover'],
                 'active'        => $r['active'],
-                'releaseDate'   => new \Datetime($r['release_date'])
-            );
+                'releaseDate'   => new \Datetime($releaseDate)
+            ];
             if ($r['work_id']){
                 $work_ids[$r['work_id']] = 1;
             }

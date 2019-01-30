@@ -190,6 +190,36 @@ class EntityEditionTest extends BaseTest{
         $edition->setDeleted(false);
         $edition->evaluateActive();
         $this->assertTrue($edition->getActive());
+    }
 
+    public function testBuildSig(): void
+    {
+        $edition = new Edition();
+
+        $edition->setAmznPublisher('some publisher');
+        $edition->setTitle('some title');
+        $edition->setAmznAuthorlist(['some author']);
+
+        $edition->buildSig();
+
+        $this->assertEquals(
+            'some title|some author',
+            $edition->getSig()
+        );
+    }
+    public function testBuildHachetteSig(): void
+    {
+        $edition = new Edition();
+
+        $edition->setAmznPublisher('Hachette some publisher');
+        $edition->setTitle('some title: a novel');
+        $edition->setAmznAuthorlist(['some author']);
+
+        $edition->buildSig();
+
+        $this->assertEquals(
+            'some title|some author',
+            $edition->getSig()
+        );
     }
 }

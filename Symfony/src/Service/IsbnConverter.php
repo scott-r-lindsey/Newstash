@@ -68,24 +68,33 @@ class IsbnConverter{
 
     private function genchksum13(string $isbn): int
     {
-       $isbn = trim($isbn);
-       $tb = 0;
-       for ($i = 0; $i <= 12; $i++) {
-          $tc = substr($isbn, -1, 1);
-          $isbn = substr($isbn, 0, -1);
-          $ta = ($tc*3);
-          $tci = substr($isbn, -1, 1);
-          $isbn = substr($isbn, 0, -1);
-          $tb = $tb + $ta + $tci;
-       }
+        $isbn = trim($isbn);
+        $tb = 0;
+        for ($i = 0; $i <= 12; $i++) {
+            $tc       = (int)substr($isbn, -1, 1);
+            $isbn     = substr($isbn, 0, -1);
 
-       $tg = ($tb / 10);
-       $tint = intval($tg);
-       if ($tint == $tg) { return 0; }
-       $ts = substr($tg, -1, 1);
-       $tsum = (10 - $ts);
+            if (false == $isbn){
+                $isbn = "0";
+            }
+            $ta       = ($tc*3);
 
-       return $tsum;
+            $tci      = (int)substr($isbn, -1, 1);
+            $isbn     = substr($isbn, 0, -1);
+            $tb       = $tb + $ta + $tci;
+        }
+
+        $tg      = ($tb / 10);
+        $tint    = intval($tg);
+
+        if ($tint == $tg) {
+            return 0;
+        }
+
+        $ts = (int)substr((string)$tg, -1, 1);
+        $tsum = (10 - $ts);
+
+        return $tsum;
     }
 }
 

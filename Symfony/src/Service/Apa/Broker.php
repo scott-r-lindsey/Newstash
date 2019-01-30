@@ -34,12 +34,11 @@ class Broker
     }
 
     public function enqueue(
-        string $asin,
-        Closure $callback
+        string $asin
     ): void
     {
 
-        $this->queue[] = compact('asin', 'callback');
+        $this->queue[] = compact('asin');
 
         if (Apa::MAX_REQUEST_SIZE === count($this->queue)) {
             $this->process();

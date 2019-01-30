@@ -3,8 +3,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Lib;
 
+use App\Entity\Edition;
+use App\Entity\Lead;
+use App\Entity\BrowseNode;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use \SimpleXMLElement;
 
 abstract class BaseTest extends WebTestCase
 {
@@ -181,6 +185,89 @@ abstract class BaseTest extends WebTestCase
 
         unset($incoming[$key]);
     }
+
+
+    protected function loadEditionFromXML(
+        string $file
+    ): ?Edition
+    {
+
+        $em             = self::$container->get('doctrine')->getManager();
+
+        $root   = self::$container->get('kernel')->getProjectDir();
+        $xml    = file_get_contents("$root/tests/Fixture/$file");
+
+        $sxe = new SimpleXMLElement($xml);
+
+        $this->loadBrowseNodesFromSxe($sxe->Items->Item[0]);
+
+        $productParser = self::$container->get('test.App\Service\Apa\ProductParser');
+
+        return $productParser->ingest($sxe->Items->Item[0]);
+    }
+
+    /**
+     * This itterates the browsenodes in a given product xml and adds
+     * them to the testing db to support the ingestion of that product
+     **/
+    protected function loadBrowseNodesFromSxe(
+        SimpleXMLElement $sxe
+    ): void
+    {
+
+        $em         = self::$container->get('doctrine')->getManager();
+        $map        = [];
+        $created    = [];
+
+        if (($sxe->BrowseNodes) and ($sxe->BrowseNodes->BrowseNode)){
+            foreach ($sxe->BrowseNodes->BrowseNode as $bn){
+
+                $b          = $bn;
+                $flip       = [];
+                $flip[]     = (string)$b->BrowseNodeId;
+                $map[(string)$b->BrowseNodeId] = $b;
+
+                while (($b->Ancestors) and ($a = $b->Ancestors)){
+                    $b = $a->BrowseNode;
+
+                    $flip[] = (string)$b->BrowseNodeId;
+                    $map[(string)$b->BrowseNodeId] = $b;
+
+                    if ($b->IsCategoryRoot){
+                        break;
+                    }
+
+                }
+
+                $parent = null;
+                foreach (array_reverse($flip) as $id) {
+                    $bn         = $map[$id];
+
+                    if (isset($created[$id])) {
+                        $browseNode = $created[$id];
+                    }
+                    else{
+                        $browseNode = new BrowseNode();
+                        $browseNode
+                            ->setId((int)$bn->BrowseNodeId)
+                            ->setName((string)$bn->Name);
+                        $em->persist($browseNode);
+                        $created[$id] = $browseNode;
+                    }
+
+                    if ($parent){
+                        $browseNode->addParent($parent);
+                    }
+
+
+                    $parent = $browseNode;
+                }
+            }
+
+            $em->flush();
+        }
+    }
+
 
 
 

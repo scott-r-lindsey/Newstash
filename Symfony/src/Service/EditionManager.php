@@ -34,9 +34,9 @@ class EditionManager
 
         $sql = '
             INSERT IGNORE INTO edition
-                (asin, created_at, updated_at, stubbed)
+                (asin, created_at, updated_at)
             VALUES
-                (?, ?, ?, ?)';
+                (?, ?, ?)';
 
         $sth = $dbh->prepare($sql);
 
@@ -44,8 +44,7 @@ class EditionManager
             $sth->execute([
                 $asin,
                 date('Y-m-d H:i:s', strtotime('now')),
-                date('Y-m-d H:i:s', strtotime('now')),
-                1
+                date('Y-m-d H:i:s', strtotime('now'))
             ]);
         }
     }

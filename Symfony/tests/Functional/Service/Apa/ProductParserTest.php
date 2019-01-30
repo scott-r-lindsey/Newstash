@@ -20,36 +20,20 @@ class ProductParserTest extends BaseTest
     public function testBasic(): void
     {
 
-        $asin           = '0674979850';
+        $asin               = '0674979850';
 
-        $em             = self::$container->get('doctrine')->getManager();
-        $dbh            = $em->getConnection();
-        $leadManager    = self::$container->get('test.App\Service\LeadManager');
+        $em                 = self::$container->get('doctrine')->getManager();
+        $dbh                = $em->getConnection();
+        $editionManager     = self::$container->get('test.App\Service\EditionManager');
 
-        $leadManager->newLeads([$asin]);
+        $editionManager->stubEditions([$asin]);
 
-        $edition = $this->loadEdition('product-sample.xml', $em);
+        $edition = $this->loadEdition('product-sample.xml');
 
         // validate the object type
         $this->assertInstanceOf(
             Edition::class,
             $edition
-        );
-
-        // validate that the lead was marked not-new
-        $lead = $em->getRepository(Lead::class)
-            ->findOneByAsin($asin);
-
-        $this->assertFalse(
-            $lead->getNew()
-        );
-
-        // validate lead count
-        $count = $dbh->query('SELECT COUNT(*) as c FROM xlead')->fetchAll()[0]['c'];
-
-        $this->assertEquals(
-            29,
-            $count
         );
 
         // validate similar edition count
@@ -140,86 +124,9 @@ class ProductParserTest extends BaseTest
     }
 
     private function loadEdition(
-        string $file,
-        EntityManagerInterface $em = null
+        string $file
     ): ?Edition
     {
-
-        if (null === $em) {
-            $em             = self::$container->get('doctrine')->getManager();
-        }
-
-        $root   = self::$container->get('kernel')->getProjectDir();
-        $xml    = file_get_contents("$root/tests/Fixture/$file");
-
-        $sxe = new SimpleXMLElement($xml);
-
-        $this->loadBrowseNodesFromSxe($sxe->Items->Item[0], $em);
-
-        $productParser = self::$container->get('test.App\Service\Apa\ProductParser');
-
-        return $productParser->ingest($sxe->Items->Item[0]);
-    }
-
-    /**
-     * This itterates the browsenodes in a given product xml and adds
-     * them to the testing db to support the ingestion of that product
-     **/
-    private function loadBrowseNodesFromSxe(
-        SimpleXMLElement $sxe,
-        EntityManagerInterface $em
-    ): void
-    {
-
-        $map        = [];
-        $created    = [];
-
-        if (($sxe->BrowseNodes) and ($sxe->BrowseNodes->BrowseNode)){
-            foreach ($sxe->BrowseNodes->BrowseNode as $bn){
-
-                $b          = $bn;
-                $flip       = [];
-                $flip[]     = (string)$b->BrowseNodeId;
-                $map[(string)$b->BrowseNodeId] = $b;
-
-                while (($b->Ancestors) and ($a = $b->Ancestors)){
-                    $b = $a->BrowseNode;
-
-                    $flip[] = (string)$b->BrowseNodeId;
-                    $map[(string)$b->BrowseNodeId] = $b;
-
-                    if ($b->IsCategoryRoot){
-                        break;
-                    }
-
-                }
-
-                $parent = null;
-                foreach (array_reverse($flip) as $id) {
-                    $bn         = $map[$id];
-
-                    if (isset($created[$id])) {
-                        $browseNode = $created[$id];
-                    }
-                    else{
-                        $browseNode = new BrowseNode();
-                        $browseNode
-                            ->setId((int)$bn->BrowseNodeId)
-                            ->setName((string)$bn->Name);
-                        $em->persist($browseNode);
-                        $created[$id] = $browseNode;
-                    }
-
-                    if ($parent){
-                        $browseNode->addParent($parent);
-                    }
-
-
-                    $parent = $browseNode;
-                }
-            }
-
-            $em->flush();
-        }
+        return $this->loadEditionFromXML($file);
     }
 }

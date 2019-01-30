@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Command\BaseCommand;
+use App\Service\Apa\Broker;
 use App\Service\Apa\ProductParser;
 use App\Service\Apa\ProductApi;
+use App\Service\Data\EditionLeadPicker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -13,18 +15,24 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use DOMDocument;
 
-class APAAutoFeedtCommand extends BaseCommand
+class APAAutoFeedCommand extends BaseCommand
 {
-    private $api;
-    private $parser;
+    private $productApi;
+    private $productParser;
+    private $editionLeadPicker;
+    private $APABroker;
 
     public function __construct(
-        ProductApi $api,
-        ProductParser $parser
+        ProductApi $productApi,
+        ProductParser $productParser,
+        EditionLeadPicker $editionLeadPicker,
+        Broker $apaBroker
     )
     {
-        $this->api              = $api;
-        $this->parser           = $parser;
+        $this->productApi           = $productApi;
+        $this->productParser        = $productParser;
+        $this->editionLeadPicker    = $editionLeadPicker;
+        $this->apaBroker            = $apaBroker;
 
         parent::__construct();
     }
@@ -45,12 +53,14 @@ class APAAutoFeedtCommand extends BaseCommand
         OutputInterface $output
     ){
 
+        $asins =  $this->editionLeadPicker->find();
+        $output->writeln('<info>Found '. count($asins) . ' leads</info>');
 
-        // needs a service to find leads, books to refresh
-
-        // needs a service to schedule reads
-
-
+        while (count($asins)) {
+            foreach ($asins as $asin) {
+                $this->apaBroker->enqueue($asin);
+            }
+        }
     }
 }
 

@@ -23,7 +23,7 @@ class BrokerTest extends BaseTest
     {
         $apaBroker = $this->buildBroker();
 
-        $apaBroker->enqueue('A123456789', function() { print "sup\n"; });
+        $apaBroker->enqueue('A123456789');
 
         $this->assertEquals(
             1,
@@ -35,7 +35,7 @@ class BrokerTest extends BaseTest
     {
         $apaBroker = $this->buildBroker();
 
-        $apaBroker->enqueue('A123456789', function() { print "sup\n"; });
+        $apaBroker->enqueue('A123456789');
         $apaBroker->clear();
 
         $this->assertEquals(
@@ -50,7 +50,7 @@ class BrokerTest extends BaseTest
 
         $sxe = $this->readXML('product-sample.xml');
 
-        $apaBroker->enqueue('A123456789', function() { print "sup\n"; });
+        $apaBroker->enqueue('A123456789');
 
         $this->mockProductApi->expects($this->once())
             ->method('ItemLookup')

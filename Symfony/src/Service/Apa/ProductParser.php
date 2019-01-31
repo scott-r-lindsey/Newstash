@@ -97,7 +97,10 @@ class ProductParser
 
         $edition
             ->setIsbn(              $this->isbnConverter->isbnFromSxe($sxe))
-            ->setTitle(             (string)$sxe->ItemAttributes->Title)
+            ->setTitle(             mb_strimwidth(
+                (string)$sxe->ItemAttributes->Title,
+                0,
+                255))
             ->setPages(             (int)$sxe->ItemAttributes->NumberOfPages)
             ->setListPrice(         ((int)$sxe->ItemAttributes->ListPrice->Amount) /100)
             ->setAmznUpdatedAt(     new DateTime())

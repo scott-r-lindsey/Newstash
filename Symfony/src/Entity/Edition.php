@@ -216,8 +216,8 @@ class Edition{
     public function buildSig(): void
     {
         $publisher  = $this->getAmznPublisher() ?? '';
-        $title      = trim(strtolower($this->getTitle() ?? ''));
-        $author     = trim(strtolower($this->getAmznAuthorlist()[0] ?? ''));
+        $author     = mb_strimwidth(trim(strtolower($this->getAmznAuthorlist()[0] ?? '')), 0, 100);
+        $title      = mb_strimwidth(trim(strtolower($this->getTitle() ?? '')), 0, 150);
 
         if (preg_match('/Hachette/i', $publisher)) {
             // strip away ':a novel .*' from hachette titles
@@ -241,8 +241,10 @@ class Edition{
 
     public function slugify($title, $author = false): string
     {
+        $title      = mb_strimwidth(trim(strtolower($title ?? '')), 0, 150);
 
         if ($author){
+            $author     = mb_strimwidth(trim(strtolower($author)), 0, 100);
             $slug = $title . ' by ' . $author;
         }
         else{

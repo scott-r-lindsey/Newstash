@@ -78,7 +78,7 @@ class Broker
     private function runIngest($sxe)
     {
         // forking may be implemented here if required
-        $this->logger->info("Ingesting " . (string)$sxe->ASIN);
+        $this->logger->info("Ingesting http://amzn.com/" . (string)$sxe->ASIN);
         $this->productParser->ingest($sxe);
         $this->logger->info("Finished ingesting " . (string)$sxe->ASIN);
     }

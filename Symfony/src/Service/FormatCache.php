@@ -23,6 +23,7 @@ class FormatCache
 
     public function getFormatsByName(): array
     {
+        $this->validate();
 
         if (0 === count($this->formats)) {
             $this->logger->info("Loading formats");
@@ -46,6 +47,7 @@ class FormatCache
 
     public function getExtendedFormatsByName(): array
     {
+        $this->validate();
 
         if (0 === count($this->extendedFormats)) {
             $this->logger->info("Loading extended formats");
@@ -61,5 +63,20 @@ class FormatCache
         }
 
         return $this->extendedFormats;
+    }
+
+    private function validate(): void
+    {
+        if (count($this->formats)) {
+            if (!$this->em->contains($this->formats['Paperback'])){
+                $this->flush();
+            }
+        }
+    }
+
+    public function flush(): void
+    {
+        $this->formats            = [];
+        $this->extendedFormats    = [];
     }
 }

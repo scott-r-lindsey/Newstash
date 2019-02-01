@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b11cd5264dc1c4e4c6b7886d4c004d8",
+    "content-hash": "905700d21daad8769f498fd4755e4177",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1757,6 +1757,68 @@
                 "sql"
             ],
             "time": "2014-01-12T16:20:24+00:00"
+        },
+        {
+            "name": "misterion/ko-process",
+            "version": "v0.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/misterion/ko-process.git",
+                "reference": "943e1f9034a330c334cf99ebb4336e806c2ec1d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/misterion/ko-process/zipball/943e1f9034a330c334cf99ebb4336e806c2ec1d2",
+                "reference": "943e1f9034a330c334cf99ebb4336e806c2ec1d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "php-mock/php-mock-phpunit": "0.2",
+                "phpunit/phpunit": "~4.0.0"
+            },
+            "suggest": {
+                "ext-pcntl": "*",
+                "ext-posix": "*",
+                "ext-proctitle": "*",
+                "ext-sysvsem": "Required for using the Semaphore class",
+                "ext-sysvshm": "Required for using the SharedMemory class"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Ko": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nikolay Bondarenko",
+                    "email": "misterionkell@gmail.com"
+                }
+            ],
+            "description": "Simple pcntl fork wrapper and process manager",
+            "homepage": "https://github.com/misterion/ko-process",
+            "keywords": [
+                "AMQP",
+                "Thread",
+                "background",
+                "cli",
+                "exit_code",
+                "fork",
+                "pcntl",
+                "posix",
+                "semaphore",
+                "shared memory",
+                "signal",
+                "utility"
+            ],
+            "time": "2016-04-04T14:02:48+00:00"
         },
         {
             "name": "nikic/php-parser",

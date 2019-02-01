@@ -1,7 +1,7 @@
 
 eight_points_guzzle:
     # (de)activate logging/profiler; default: %kernel.debug%
-    logging: true
+    logging: false
 
     clients:
         aws_webservice:

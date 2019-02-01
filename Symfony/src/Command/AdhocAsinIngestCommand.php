@@ -74,12 +74,13 @@ class AdhocAsinIngestCommand extends BaseCommand
 
             $output->writeln($dom->saveXML());
         }
+        else{
+            $output->writeln('Parsing and ingesting data...');
 
-        $output->writeln('Parsing and ingesting data...');
+            $this->parser->ingest($sxe->Items->Item[0]);
 
-        $this->parser->ingest($sxe->Items->Item[0]);
-
-        $output->writeln('Done!');
+            $output->writeln('Done!');
+        }
     }
 }
 

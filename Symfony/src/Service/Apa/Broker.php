@@ -9,6 +9,8 @@ use App\Service\Apa\ProductParser;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Closure;
+use Ko\Process;
+use Ko\ProcessManager;
 
 class Broker
 {
@@ -16,9 +18,11 @@ class Broker
     private $logger;
     private $mm;
     private $productApi;
+    private $processManager;
 
+    private $fork       = false;
     private $queue      = [];
-
+    private $maxProc    = 10;
 
     // --------------------------------------------------------------------------------------
     public function __construct(
@@ -31,6 +35,8 @@ class Broker
         $this->logger           = $logger;
         $this->productApi       = $productApi;
         $this->productParser    = $productParser;
+
+        $this->processManager   = new ProcessManager();
     }
 
     public function enqueue(
@@ -47,6 +53,10 @@ class Broker
 
     public function process(): void
     {
+
+        $this->em->clear();
+        gc_collect_cycles();
+
         $asins = [];
         foreach ($this->queue as $q) {
             $asins[] = $q['asin'];
@@ -58,8 +68,25 @@ class Broker
             Apa::STANDARD_RESPONSE_TYPES
         );
 
-        foreach ($sxe->Items->Item as $item){
-            $this->runIngest($item);
+        if ($this->fork) {
+
+            $this->processManager->dispatch();
+
+            while ($this->processManager->count() >= $this->maxProc) {
+                $this->processManager->dispatch();
+                usleep(250000); // quarter second
+            }
+
+            $this->em->getConnection()->close();
+
+            $this->processManager->fork(
+                function(Process $p) use ($sxe) {
+                    $this->runIngest($sxe);
+                    exit;
+            });
+        }
+        else{
+            $this->runIngest($sxe);
         }
 
         $this->clear();
@@ -75,12 +102,23 @@ class Broker
         $this->queue = [];
     }
 
-    private function runIngest($sxe)
+    public function setFork(bool $fork): void
     {
-        // forking may be implemented here if required
-        $this->logger->info("Ingesting http://amzn.com/" . (string)$sxe->ASIN);
-        $this->productParser->ingest($sxe);
-        $this->logger->info("Finished ingesting " . (string)$sxe->ASIN);
+        $this->fork = $fork;
     }
 
+    public function wait(): void
+    {
+        $this->processManager->wait();
+    }
+
+
+    private function runIngest($sxe)
+    {
+        foreach ($sxe->Items->Item as $item){
+            $this->logger->info("Ingesting http://amzn.com/" . (string)$item->ASIN);
+            $this->productParser->ingest($item);
+            $this->logger->info("Finished ingesting " . (string)$item->ASIN);
+        }
+    }
 }

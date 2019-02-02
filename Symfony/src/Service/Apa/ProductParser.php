@@ -87,6 +87,15 @@ class ProductParser
         return $edition;
     }
 
+    private function strTrim255(string $str): string
+    {
+        return $this->strTrim($str, 255);
+    }
+    private function strTrim(string $str, int $len): string
+    {
+        return mb_strimwidth($str, 0, 255);
+    }
+
     private function parseMetaData(
         SimpleXMLElement $sxe,
         Edition $edition
@@ -97,33 +106,30 @@ class ProductParser
 
         $edition
             ->setIsbn(              $this->isbnConverter->isbnFromSxe($sxe))
-            ->setTitle(             mb_strimwidth(
-                (string)$sxe->ItemAttributes->Title,
-                0,
-                255))
+            ->setTitle(             $this->strTrim255((string)$sxe->ItemAttributes->Title))
             ->setPages(             (int)$sxe->ItemAttributes->NumberOfPages)
             ->setListPrice(         ((int)$sxe->ItemAttributes->ListPrice->Amount) /100)
             ->setAmznUpdatedAt(     new DateTime())
-            ->setAmznSmallCover(    (string)$sxe->SmallImage->URL)
+            ->setAmznSmallCover(    $this->strTrim255((string)$sxe->SmallImage->URL))
             ->setAmznSmallCoverX(   (int)$sxe->SmallImage->Width)
             ->setAmznSmallCoverY(   (int)$sxe->SmallImage->Height)
-            ->setAmznMediumCover(   (string)$sxe->MediumImage->URL)
+            ->setAmznMediumCover(   $this->strTrim255((string)$sxe->MediumImage->URL))
             ->setAmznMediumCoverX(  (int)$sxe->MediumImage->Width)
             ->setAmznMediumCoverY(  (int)$sxe->MediumImage->Height)
-            ->setAmznLargeCover(    (string)$sxe->LargeImage->URL)
+            ->setAmznLargeCover(    $this->strTrim255((string)$sxe->LargeImage->URL))
             ->setAmznLargeCoverX(   (int)$sxe->LargeImage->Width)
             ->setAmznLargeCoverY(   (int)$sxe->LargeImage->Height)
-            ->setAmznFormat(        (string)$sxe->ItemAttributes->Binding)
-            ->setAmznEdition(       (string)$sxe->ItemAttributes->Edition)
-            ->setAmznManufacturer(  (string)$sxe->ItemAttributes->Manufacturer)
-            ->setAmznBrand(         (string)$sxe->ItemAttributes->Brand)
+            ->setAmznFormat(        $this->strTrim255((string)$sxe->ItemAttributes->Binding))
+            ->setAmznEdition(       $this->strTrim255((string)$sxe->ItemAttributes->Edition))
+            ->setAmznManufacturer(  $this->strTrim255((string)$sxe->ItemAttributes->Manufacturer))
+            ->setAmznBrand(         $this->strTrim255((string)$sxe->ItemAttributes->Brand))
         ;
 
         // --------------------------------------------------------------------
         // amazon publisher
 
         $amzn_publisher = $this->pubfixer->fix( (string)$sxe->ItemAttributes->Publisher);
-        $edition ->setAmznPublisher($amzn_publisher);
+        $edition ->setAmznPublisher($this->strTrim255($amzn_publisher));
 
         // --------------------------------------------------------------------
         // author(s)
@@ -146,7 +152,7 @@ class ProductParser
             $author_display .= ' and ' . $end;
         }
 
-        $edition->setAmznAuthorDisplay($author_display)
+        $edition->setAmznAuthorDisplay($this->strTrim255($author_display))
             ->setAmznAuthorList(    $authors)
         ;
 

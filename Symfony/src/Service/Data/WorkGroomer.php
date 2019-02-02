@@ -135,7 +135,7 @@ class WorkGroomer
                         work
                     SET
                         updated_at = ?,
-                        front_edition_id = NULL,
+                        front_edition_asin = NULL,
                         deleted = 1
                     WHERE
                         work.id = ?';

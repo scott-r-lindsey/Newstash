@@ -36,6 +36,12 @@ class IsbnConverter{
                 $isbn = $this->isbn10to13($isbn);
             }
         }
+
+        if (null !== $isbn) {
+            if (!preg_match('/^[\d]{13}$/', $isbn)) {
+                return null;
+            }
+        }
         return $isbn;
     }
 

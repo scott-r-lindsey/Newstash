@@ -5,6 +5,7 @@ namespace App\Tests\Unit\Service;
 use PHPUnit\Framework\TestCase;
 use App\Tests\Lib\BaseTest;
 use App\Service\IsbnConverter;
+use SimpleXMLElement;
 
 /**
  * @covers App\Service\IsbnConverter
@@ -32,12 +33,54 @@ class IsbnConverterTest extends BaseTest
             $this->isbnConverter->isbn13to10('9780307719218')
         );
     }
-/*
-    public function testIsbnFromSxe(): void
-    {
-        $this->assertTrue(true);
 
+    public function testIsbnFromSxeByEAN(): void
+    {
+        $fromEanXml = new SimpleXMLElement('
+            <item>
+                <ItemAttributes>
+                    <EAN>9780307719218</EAN>
+                </ItemAttributes>
+            </item>
+        ');
+
+        $this->assertEquals(
+            '9780307719218',
+            $this->isbnConverter->isbnFromSxe($fromEanXml)
+        );
     }
-*/
+
+    public function testIsbnFromSxeByIsbn(): void
+    {
+        $fromEanXml = new SimpleXMLElement('
+            <item>
+                <ItemAttributes>
+                    <ISBN>0307719219</ISBN>
+                </ItemAttributes>
+            </item>
+        ');
+
+        $this->assertEquals(
+            '9780307719218',
+            $this->isbnConverter->isbnFromSxe($fromEanXml)
+        );
+    }
+
+    public function testIsbnFromSxeWithBaddlyFormedEAN(): void
+    {
+        $fromEanXml = new SimpleXMLElement('
+            <item>
+                <ItemAttributes>
+                    <EAN>9780ABCDEFGHI</EAN>
+                </ItemAttributes>
+            </item>
+        ');
+
+        $this->assertEquals(
+            null,
+            $this->isbnConverter->isbnFromSxe($fromEanXml)
+        );
+    }
+
 
 }

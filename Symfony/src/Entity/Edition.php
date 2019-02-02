@@ -159,7 +159,7 @@ class Edition{
     /** @ORM\Column(type="string", length=255, nullable=true) */
     private $amzn_format;
 
-    /** @ORM\Column(type="smallint", nullable=true) */
+    /** @ORM\Column(type="integer", nullable=true) */
     protected $pages;
 
     /** @ORM\Column(type="datetime", nullable=true) */
@@ -206,6 +206,13 @@ class Edition{
 
     /** @ORM\Column(type="string", length=255, nullable=true) */
     private $slug;
+
+    public function __construct()
+    {
+        $this->browse_nodes = new ArrayCollection();
+        $this->primary_browse_nodes = new ArrayCollection();
+        $this->similar_editions = new ArrayCollection();
+    }
 
     //-------------------------------------------------------------------------------
 
@@ -266,17 +273,6 @@ class Edition{
         return $this->slug = $this->slugify($this->title, $this->amzn_authordisplay);
     }
 
-    public function setAsin(?string $asin): self
-    {
-        $this->asin = $asin;
-
-        return $this;
-    }
-
-    public function getIsbn(): ?string
-    {
-        return $this->isbn;
-    }
 
     /**
      * @ORM\PrePersist()
@@ -362,26 +358,30 @@ class Edition{
         );
     }
 
+    public function getIsbn(): ?string
+    {
+        return $this->isbn;
+    }
+
+    public function setIsbn(?string $isbn): self
+    {
+        $this->isbn = $isbn;
+
+        return $this;
+    }
 
     //-------------------------------------------------------------------------------
     // ./bin/console make:entity --regenerate
     //-------------------------------------------------------------------------------
-
-    public function __construct()
-    {
-        $this->browse_nodes = new ArrayCollection();
-        $this->primary_browse_nodes = new ArrayCollection();
-        $this->similar_editions = new ArrayCollection();
-    }
 
     public function getAsin(): ?string
     {
         return $this->asin;
     }
 
-    public function setIsbn(?string $isbn): self
+    public function setAsin(?string $asin): self
     {
-        $this->isbn = $isbn;
+        $this->asin = $asin;
 
         return $this;
     }
@@ -878,6 +878,30 @@ class Edition{
         return $this;
     }
 
+    public function getWork(): ?Work
+    {
+        return $this->work;
+    }
+
+    public function setWork(?Work $work): self
+    {
+        $this->work = $work;
+
+        return $this;
+    }
+
+    public function getFormat(): ?Format
+    {
+        return $this->format;
+    }
+
+    public function setFormat(?Format $format): self
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
     /**
      * @return Collection|BrowseNode[]
      */
@@ -930,18 +954,6 @@ class Edition{
         return $this;
     }
 
-    public function getFormat(): ?Format
-    {
-        return $this->format;
-    }
-
-    public function setFormat(?Format $format): self
-    {
-        $this->format = $format;
-
-        return $this;
-    }
-
     /**
      * @return Collection|SimilarEdition[]
      */
@@ -969,18 +981,6 @@ class Edition{
                 $similarEdition->setEdition(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getWork(): ?Work
-    {
-        return $this->work;
-    }
-
-    public function setWork(?Work $work): self
-    {
-        $this->work = $work;
 
         return $this;
     }

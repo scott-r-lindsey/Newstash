@@ -98,13 +98,13 @@ class ProductApi
 
         $this->logger->info("APA query " . print_r($params, true));
 
-        $query              = $this->generateSignedQuery($params);
-
         $this->delayProvider->delay();
 
         $fail = 0;
         $xml = null;
         while (null === $xml) {
+            $query              = $this->generateSignedQuery($params);
+
             if ($fail === 10) {
                 throw new \Exception('Too many guzzle errors');
             }

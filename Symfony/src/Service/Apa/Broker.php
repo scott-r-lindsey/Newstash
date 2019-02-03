@@ -56,52 +56,54 @@ class Broker
 
     public function process(): void
     {
+        if (count($this->queue)) {
 
-        // clear the em after CLEAR_PROD cycles
-        if (self::CLEAR_PROC === $this->procCount) {
-            $this->em->clear();
-            gc_collect_cycles();
-            $this->procCount = 0;
-        }
-
-        $this->procCount++;
-
-        $asins = [];
-        foreach ($this->queue as $q) {
-            $asins[] = $q['asin'];
-        }
-        $query = implode(',', $asins);
-
-        $sxe = $this->productApi->ItemLookup(
-            $asins,
-            Apa::STANDARD_RESPONSE_TYPES
-        );
-
-        if ($this->fork) {
-
-            $this->processManager->dispatch();
-
-            while ($this->processManager->count() >= $this->maxProc) {
-                $this->processManager->dispatch();
-                usleep(250000); // quarter second
+            // clear the em after CLEAR_PROD cycles
+            if (self::CLEAR_PROC === $this->procCount) {
+                $this->em->clear();
+                gc_collect_cycles();
+                $this->procCount = 0;
             }
 
-            $this->em->getConnection()->close();
+            $this->procCount++;
 
-            $this->processManager->fork(
-                function(Process $p) use ($sxe, $query) {
+            $asins = [];
+            foreach ($this->queue as $q) {
+                $asins[] = $q['asin'];
+            }
+            $query = implode(',', $asins);
 
-                    $p->setProcessTitle("APA Ingesst $query");
+            $sxe = $this->productApi->ItemLookup(
+                $asins,
+                Apa::STANDARD_RESPONSE_TYPES
+            );
 
-                    $this->runIngest($sxe);
-                    exit;
-            });
+            if ($this->fork) {
+
+                $this->processManager->dispatch();
+
+                while ($this->processManager->count() >= $this->maxProc) {
+                    $this->processManager->dispatch();
+                    usleep(250000); // quarter second
+                }
+
+                $this->em->getConnection()->close();
+
+                $this->processManager->fork(
+                    function(Process $p) use ($sxe, $query) {
+
+                        $p->setProcessTitle("APA Ingesst $query");
+
+                        $this->runIngest($sxe);
+                        exit;
+                });
+            }
+            else{
+                $this->runIngest($sxe);
+            }
+
+            $this->clear();
         }
-        else{
-            $this->runIngest($sxe);
-        }
-
-        $this->clear();
     }
 
     public function getQueueCount(): int

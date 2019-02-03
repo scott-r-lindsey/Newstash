@@ -114,7 +114,7 @@ class ProductApi
                 $xml                = $response->getBody();
             }
             catch (ClientException | ServerException $e) {
-                $response           = $this->client->request($method, $query);
+                $response = $e->getResponse();
                 $this->logger->notice("Caught guzzle exception code " . $response->getStatusCode());
 
                 $fail++;

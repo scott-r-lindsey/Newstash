@@ -115,7 +115,7 @@ class ProductApi
             }
             catch (ClientException | ServerException $e) {
                 $response           = $this->client->request($method, $query);
-                $this->logger->notice("Caught guzzle exception code " . $e->getStatusCode());
+                $this->logger->notice("Caught guzzle exception code " . $response->getStatusCode());
 
                 $fail++;
             }

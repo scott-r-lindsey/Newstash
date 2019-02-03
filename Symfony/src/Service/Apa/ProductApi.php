@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace App\Service\Apa;
 
 use App\Service\DelayFish;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use Psr\Log\LoggerInterface;
-use \GuzzleHttp\Client;
-use \SimpleXMLElement;
+use SimpleXMLElement;
 
 class ProductApi
 {
@@ -100,8 +102,24 @@ class ProductApi
 
         $this->delayProvider->delay();
 
-        $response           = $this->client->request($method, $query);
-        $xml                = $response->getBody();
+        $fail = 0;
+        $xml = null;
+        while (null === $xml) {
+            if ($fail === 10) {
+                throw new \Exception('Too many guzzle errors');
+            }
+
+            try {
+                $response           = $this->client->request($method, $query);
+                $xml                = $response->getBody();
+            }
+            catch (ClientException | ServerException $e) {
+                $response           = $this->client->request($method, $query);
+                $this->logger->warn("Caught guzzle exception code " . $e->getStatusCode());
+
+                $fail++;
+            }
+        }
 
         $sxe                = new \SimpleXMLElement((string)$xml);
 

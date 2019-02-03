@@ -34,7 +34,7 @@ services:
         autowire: false
         arguments:
             - "@logger"
-            - 1.1
+            - 1.4
 
     App\Service\Apa\ProductApi:
         arguments:

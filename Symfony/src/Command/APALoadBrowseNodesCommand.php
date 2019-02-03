@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use App\Service\Apa\ProductApi;
 use Doctrine\ORM\EntityManagerInterface;
 
-class LoadBrowseNodesCommand extends BaseCommand
+class APALoadBrowseNodesCommand extends BaseCommand
 {
 
     private $api;
@@ -42,7 +42,7 @@ class LoadBrowseNodesCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('newstash:aws-load-browsenodes')
+            ->setName('newstash:apa-load-browsenodes')
             ->setDescription('Fetches browse nodes from amazon')
             ->setHelp('This is the help')
         ;
@@ -72,6 +72,9 @@ class LoadBrowseNodesCommand extends BaseCommand
      */
     private function loadChildren(BrowseNode $parent): void
     {
+
+        $this->output->writeln('Loading children for browseNode ' . $parent->getSlug());
+
         $children       = [];
         $description    = $parent->getDescription();
 

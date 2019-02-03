@@ -67,6 +67,19 @@ class ProductApi
         return $this->aws_signed_request($params);
     }
 
+    public function topSellerBrowsenodeLookup(
+        int $browseNode
+    ): SimpleXMLElement
+    {
+        $params = [
+            'Operation'     => 'BrowseNodeLookup',
+            'BrowseNodeId'  => $browseNode,
+            'ResponseGroup' => 'TopSellers',
+        ];
+
+        return $this->aws_signed_request($params);
+    }
+
 
     # -------------------------------------------------------------------------
 

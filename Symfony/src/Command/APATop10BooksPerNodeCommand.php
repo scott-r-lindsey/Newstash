@@ -5,7 +5,7 @@ namespace App\Command;
 
 use App\Command\BaseCommand;
 use App\Service\Apa;
-use App\Service\Apa\ProductParser;
+use App\Service\Apa\Broker;
 use App\Service\Apa\ProductApi;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,18 +14,18 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use DOMDocument;
 
-class AdhocAsinIngestCommand extends BaseCommand
+class APATop10BooksPerNodeCommand extends BaseCommand
 {
     private $api;
-    private $parser;
+    private $broker;
 
     public function __construct(
         ProductApi $api,
-        ProductParser $parser
+        Broker $broker
     )
     {
         $this->api              = $api;
-        $this->parser           = $parser;
+        $this->broker           = $broker;
 
         parent::__construct();
     }
@@ -34,14 +34,9 @@ class AdhocAsinIngestCommand extends BaseCommand
     {
 
         $this
-            ->setName('newstash:adhoc-asin-ingest')
-            ->setDescription('Fetches a book')
+            ->setName('newstash:apa-top-10-books-per-node')
+            ->setDescription('Fetches the top 100 books')
             ->setHelp('This is the help')
-            ->addArgument(
-                'asin',
-                InputArgument::REQUIRED,
-                'The asin to query?'
-            )
             ->addOption(
                 'output-only',
                 null,
@@ -57,13 +52,12 @@ class AdhocAsinIngestCommand extends BaseCommand
         OutputInterface $output
     ){
 
-        $asin = $input->getArgument('asin');
+        $output->writeln('Requesting from Top Sellers from APA...');
+        $sxe = $this->api->topSellerBrowsenodeLookup(Apa::NODE_BOOKS);
 
-        $output->writeln('Requesting from $asin from APA...');
-        $sxe = $this->api->ItemLookup(
-            [$asin],
-            Apa::STANDARD_RESPONSE_TYPES
-        );
+
+        //FIXME this needs to recurse the browsenodes and grab top
+        // books for each browsenode, not just the base ten
 
         if ($input->getOption('output-only')){
 
@@ -75,9 +69,15 @@ class AdhocAsinIngestCommand extends BaseCommand
             $output->writeln($dom->saveXML());
         }
         else{
-            $output->writeln('Parsing and ingesting data...');
 
-            $this->parser->ingest($sxe->Items->Item[0]);
+            $asins = [];
+            foreach ($sxe->BrowseNodes->BrowseNode->TopSellers->TopSeller as $t) {
+                $asins[] = (string)$t->ASIN;
+            }
+
+            dump($asins);
+
+
 
             $output->writeln('Done!');
         }

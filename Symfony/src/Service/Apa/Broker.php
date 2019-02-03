@@ -23,6 +23,9 @@ class Broker
     private $fork       = false;
     private $queue      = [];
     private $maxProc    = 10;
+    private $procCount  = 0;
+
+    const CLEAR_PROC    = 10;
 
     // --------------------------------------------------------------------------------------
     public function __construct(
@@ -54,8 +57,14 @@ class Broker
     public function process(): void
     {
 
-        $this->em->clear();
-        gc_collect_cycles();
+        // clear the em after CLEAR_PROD cycles
+        if (self::CLEAR_PROC === $this->procCount) {
+            $this->em->clear();
+            gc_collect_cycles();
+            $this->procCount = 0;
+        }
+
+        $this->procCount++;
 
         $asins = [];
         foreach ($this->queue as $q) {

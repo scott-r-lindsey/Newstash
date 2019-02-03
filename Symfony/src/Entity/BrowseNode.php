@@ -65,6 +65,9 @@ class BrowseNode{
     /** @ORM\Column(type="boolean") */
     private $root = false;
 
+    /** @ORM\Column(type="boolean") */
+    private $leaf = false;
+
     //-------------------------------------------------------------------------------
 
     public function setId(?int $id): self
@@ -271,6 +274,18 @@ class BrowseNode{
             $this->editions_primary->removeElement($editionsPrimary);
             $editionsPrimary->removePrimaryBrowseNode($this);
         }
+
+        return $this;
+    }
+
+    public function getLeaf(): ?bool
+    {
+        return $this->leaf;
+    }
+
+    public function setLeaf(bool $leaf): self
+    {
+        $this->leaf = $leaf;
 
         return $this;
     }

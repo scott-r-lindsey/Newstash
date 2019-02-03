@@ -53,6 +53,8 @@ class APALoadBrowseNodesCommand extends BaseCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        ini_set('memory_limit', '1024M');
+
         $this->output   = $output;
         $this->input    = $input;
 
@@ -72,49 +74,67 @@ class APALoadBrowseNodesCommand extends BaseCommand
      */
     private function loadChildren(BrowseNode $parent): void
     {
-        ini_set('memory_limit', '1024M');
 
-        $this->output->writeln('Loading children for browseNode ' . $parent->getSlug());
+        // if a bn already has children, skip
 
-        $children       = [];
-        $description    = $parent->getDescription();
+        $children = $parent->getChildren();
 
-        if (isset($this->pulled[$parent->getId()])) {
-            return;
-        }
-        $this->pulled[$parent->getId()] = 1;
-
-        $sxe = $this->api->browseNodeLookup((int)$parent->getId());
-
-        // dupe 171225 could lead to inconstent node naming
-        $name = (string)$sxe->BrowseNodes->BrowseNode->Name;
-
-        if ($name != $parent->getName()){
-            $parent->setName($name);
-        }
-
-        $children = [];
-
-        if ($sxe->BrowseNodes->BrowseNode->Children) {
-
-            foreach ($sxe->BrowseNodes->BrowseNode->Children->BrowseNode as $b){
-
-                if (isset($seen[(string)$b->BrowseNodeId])) {
-                    continue;
-                }
-
-                $child          = $this->upfetch((int)$b->BrowseNodeId);
-                $children[]     = $child;
-
-                $this->updateChild($b, $child, $parent);
-                $parent->upsertChild($child);
+        if (count($children)) {
+            $this->output->writeln('NOT Loading children for browseNode ' . $parent->getSlug());
+            foreach ($children as $child) {
+                $this->loadChildren($child);
             }
         }
+        else if ($parent->getLeaf()) {
+            $this->output->writeln('NOT Loading children for leaf browseNode ' . $parent->getSlug());
+        }
+        else{
+            $this->output->writeln('Loading children for browseNode ' . $parent->getSlug());
 
-        $this->em->flush();
+            $children       = [];
+            $description    = $parent->getDescription();
 
-        foreach ($children as $child) {
-            $this->loadChildren($child);
+            if (isset($this->pulled[$parent->getId()])) {
+                return;
+            }
+            $this->pulled[$parent->getId()] = 1;
+
+            $sxe = $this->api->browseNodeLookup((int)$parent->getId());
+
+            // dupe 171225 could lead to inconstent node naming
+            $name = (string)$sxe->BrowseNodes->BrowseNode->Name;
+
+            if ($name != $parent->getName()){
+                $parent->setName($name);
+            }
+
+            $children = [];
+
+            if ($sxe->BrowseNodes->BrowseNode->Children) {
+
+                foreach ($sxe->BrowseNodes->BrowseNode->Children->BrowseNode as $b){
+
+                    if (isset($seen[(string)$b->BrowseNodeId])) {
+                        continue;
+                    }
+
+                    $child          = $this->upfetch((int)$b->BrowseNodeId);
+                    $children[]     = $child;
+
+                    $this->updateChild($b, $child, $parent);
+                    $parent->upsertChild($child);
+                }
+            }
+            else{
+                $this->output->writeln('browseNode ' . $parent->getSlug() . ' is a leaf');
+                $parent->setLeaf(true);
+            }
+
+            $this->em->flush();
+
+            foreach ($children as $child) {
+                $this->loadChildren($child);
+            }
         }
     }
 

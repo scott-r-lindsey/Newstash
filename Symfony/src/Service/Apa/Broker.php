@@ -89,7 +89,10 @@ class Broker
             $this->em->getConnection()->close();
 
             $this->processManager->fork(
-                function(Process $p) use ($sxe) {
+                function(Process $p) use ($sxe, $query) {
+
+                    $p->setProcessTitle("APA Ingesst $query");
+
                     $this->runIngest($sxe);
                     exit;
             });

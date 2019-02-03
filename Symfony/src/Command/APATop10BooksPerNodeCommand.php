@@ -51,6 +51,7 @@ class APATop10BooksPerNodeCommand extends BaseCommand
         InputInterface $input,
         OutputInterface $output
     ){
+        ini_set('memory_limit', '1024M');
 
         $output->writeln('Requesting from Top Sellers from APA...');
         $sxe = $this->api->topSellerBrowsenodeLookup(Apa::NODE_BOOKS);

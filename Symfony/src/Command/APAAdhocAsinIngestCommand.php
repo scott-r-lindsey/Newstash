@@ -57,6 +57,8 @@ class APAAdhocAsinIngestCommand extends BaseCommand
         OutputInterface $output
     ){
 
+        ini_set('memory_limit', '1024M');
+
         $asin = $input->getArgument('asin');
 
         $output->writeln('Requesting from $asin from APA...');

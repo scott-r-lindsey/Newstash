@@ -62,7 +62,7 @@ class APAAutoFeedCommand extends BaseCommand
         OutputInterface $output
     ){
 
-        ini_set('memory_limit', '256M');
+        ini_set('memory_limit', '1024M');
 
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
 

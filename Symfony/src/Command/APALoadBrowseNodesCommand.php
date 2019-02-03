@@ -72,6 +72,7 @@ class APALoadBrowseNodesCommand extends BaseCommand
      */
     private function loadChildren(BrowseNode $parent): void
     {
+        ini_set('memory_limit', '1024M');
 
         $this->output->writeln('Loading children for browseNode ' . $parent->getSlug());
 

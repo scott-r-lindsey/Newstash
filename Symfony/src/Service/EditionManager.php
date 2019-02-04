@@ -66,7 +66,7 @@ class EditionManager
 
         // insert new records
         $sql = '
-            INSERT INTO similar_edition
+            INSERT IGNORE INTO similar_edition
                 (edition_asin, similar_asin, xrank)
             VALUES
                 (?,?,?)';

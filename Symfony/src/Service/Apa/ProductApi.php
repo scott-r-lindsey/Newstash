@@ -118,6 +118,7 @@ class ProductApi
                 $this->logger->notice("Caught guzzle exception code " . $response->getStatusCode());
 
                 $fail++;
+                $this->delayProvider->slowDown();
                 $this->delayProvider->delay();
             }
         }

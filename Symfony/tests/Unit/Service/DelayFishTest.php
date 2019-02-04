@@ -55,4 +55,47 @@ class DelayFishTest extends BaseTest
         $this->AssertGreaterThan(.1, (microtime(true) - $now));
         $this->AssertLessThan(0.11, (microtime(true) - $now));
     }
+
+    public function testSlowDownAndSpeedup(): void
+    {
+        $fish = new DelayFish($this->mockLogger, 1);
+
+        $this->assertEquals(
+            1,
+            $fish->getCurrentDelay()
+        );
+
+        $fish->speedUp();
+
+        $this->assertEquals(
+            1,
+            $fish->getCurrentDelay()
+        );
+
+        $fish->slowDown();
+
+        $this->assertEquals(
+            1.5,
+            $fish->getCurrentDelay()
+        );
+
+        $fish->speedUp();
+
+        $this->assertEquals(
+            1.4,
+            $fish->getCurrentDelay()
+        );
+
+
+        $fish->speedUp();
+        $fish->speedUp();
+        $fish->speedUp();
+        $fish->speedUp();
+        $fish->speedUp();
+
+        $this->assertEquals(
+            1,
+            $fish->getCurrentDelay()
+        );
+    }
 }

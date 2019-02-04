@@ -89,7 +89,7 @@ class EditionManager
                         throw $e;
                     }
 
-                    $this->info(
+                    $this->logger->info(
                         "Caught deadlock exception inserting SimilarEdition, retrying ($fail)");
                     $fail++;
                 }

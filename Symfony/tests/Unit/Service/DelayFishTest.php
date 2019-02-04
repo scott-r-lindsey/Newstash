@@ -26,9 +26,6 @@ class DelayFishTest extends BaseTest
     {
         $fish = new DelayFish($this->mockLogger, 5);
 
-        $this->mockLogger->expects($this->never())
-            ->method($this->anything());
-
         $now = microtime(true);
         $fish->delay();
         $this->AssertLessThan(.01, (microtime(true) - $now));
@@ -40,12 +37,6 @@ class DelayFishTest extends BaseTest
     public function testRealDelay()
     {
         $fish = new DelayFish($this->mockLogger, 0.1);
-
-        $this->mockLogger->expects($this->once())
-            ->method('info')
-            ->with($this->matchesRegularExpression(
-                '/^Sleeping for 0.099[\d]+ seconds$/'
-            ));
 
         $now = microtime(true);
 

@@ -14,17 +14,6 @@ class DelayFish{
     const SLOWDOWN = .5;
     const SPEEDUP = .1;
 
-
-    /*
-
-        the starting delay represents the minDelay
-        we maintain another value called "delay"
-        slower() adds "minDay * .5 to delay"
-        when delay() is called, it waits delay, and then
-        decrements delay by .1 * minDelay
-
-    */
-
     private $minDelay;
     private $delay;
     private $last;
@@ -61,15 +50,18 @@ class DelayFish{
         $period = $this->delay - ($this->minDelay * self::SPEEDUP);
         if ($period < $this->minDelay) {
             $this->delay = $this->minDelay;
+            $this->logger->debug('Delay set to ' . (string)$this->delay);
         }
         else{
             $this->delay = $period;
+            $this->logger->debug('Delay restored to default ' . (string)$this->delay);
         }
     }
 
     public function slowDown(): void
     {
         $this->delay += ($this->minDelay * self::SLOWDOWN);
+        $this->logger->info('Delay increase to ' . (string)$this->delay);
     }
 
     public function getCurrentDelay(): float

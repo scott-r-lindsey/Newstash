@@ -19,6 +19,8 @@ class ProductApi
     private $aws_associate_tag;
     private $delayProvider;
 
+    const RETRY_LIMIT = 30;
+
     public function __construct(
         LoggerInterface $logger,
         Client $api,
@@ -105,7 +107,7 @@ class ProductApi
         while (null === $xml) {
             $query              = $this->generateSignedQuery($params);
 
-            if ($fail === 10) {
+            if ($fail === self::RETRY_LIMIT) {
                 throw new \Exception('Too many guzzle errors');
             }
 

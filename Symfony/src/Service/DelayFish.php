@@ -35,7 +35,7 @@ class DelayFish{
 
             $nap_secs = $this->delay - ($now - $this->last);
 
-            $this->logger->info("Sleeping for $nap_secs seconds");
+            $this->logger->info("Sleeping for $nap_secs seconds (of " . (string)$this->delay .")");
 
             usleep ((int)($nap_secs * 1000000));
         }

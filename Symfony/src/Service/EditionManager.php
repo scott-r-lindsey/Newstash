@@ -5,6 +5,7 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Doctrine\DBAL\Exception\DeadlockException;
 
 class EditionManager
 {
@@ -74,6 +75,26 @@ class EditionManager
 
         $rank = 1;
         foreach ($asins as $a) {
+
+            $fail = 0;
+            while (true) {
+
+                try {
+                    $sth->execute([$asin, $a, $rank]);
+                    break;
+
+                } catch (DeadlockException $e) {
+
+                    if (10 === $fail) {
+                        throw $e;
+                    }
+
+                    $this->info(
+                        "Caught deadlock exception inserting SimilarEdition, retrying ($fail)");
+                    $fail++;
+                }
+            }
+
             $sth->execute([$asin, $a, $rank]);
             $rank++;
         }

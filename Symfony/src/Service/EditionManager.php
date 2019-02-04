@@ -95,7 +95,6 @@ class EditionManager
                 }
             }
 
-            $sth->execute([$asin, $a, $rank]);
             $rank++;
         }
     }

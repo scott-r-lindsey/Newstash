@@ -5,6 +5,7 @@ namespace App\Service\Data;
 
 use App\Entity\Edition;
 use App\Service\Data\FrontFinder;
+use App\Service\DeadLockRetryManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -14,6 +15,7 @@ class WorkGroomer
     private $logger;
     private $em;
     private $frontFinder;
+    private $dml;
 
     private $asins                  = [];
     private $sigs                   = [];
@@ -25,12 +27,14 @@ class WorkGroomer
     public function __construct(
         LoggerInterface $logger,
         EntityManagerInterface $em,
-        FrontFinder $frontFinder
+        FrontFinder $frontFinder,
+        DeadLockRetryManager $dlm
     )
     {
         $this->logger               = $logger;
         $this->em                   = $em;
         $this->frontFinder          = $frontFinder;
+        $this->dlm                  = $dlm;
     }
 
     public function workGroom(Edition $edition): void
@@ -54,7 +58,7 @@ class WorkGroomer
                 asin = ?';
 
         $sth    = $dbh->prepare($sql);
-        $sth->execute([$asin]);
+        $this->dlm->exec($sth, [$asin]);
         $r      = $sth->fetch();
 
         $this->asins    = [$r['asin'] => 1];
@@ -95,7 +99,7 @@ class WorkGroomer
                 asin IN ($in)";
 
         $sth = $dbh->prepare($sql);
-        $sth->execute(array_keys($this->asins));
+        $this->dlm->exec($sth, array_keys($this->asins));
 
         $work_ids       = [];
         $edition_data   = [];
@@ -141,9 +145,9 @@ class WorkGroomer
                         work.id = ?';
 
                 $sth = $dbh->prepare($sql);
-                $sth->execute(array(
+                $this->dlm->exec($sth, [
                     $now->format('Y-m-d H:i:s'),
-                    $work_id));
+                    $work_id]);
             }
             return;
         }
@@ -162,11 +166,11 @@ class WorkGroomer
                 ';
 
             $sth = $dbh->prepare($sql);
-            $sth->execute(array(
+            $this->dlm->exec($sth, [
                 $front['asin'],
                 $front['title'],
                 $now->format('Y-m-d H:i:s'),
-                $now->format('Y-m-d H:i:s')));
+                $now->format('Y-m-d H:i:s')]);
 
             $master_work_id = $dbh->lastInsertId();
         }
@@ -186,11 +190,11 @@ class WorkGroomer
                     work.id = ?';
 
             $sth = $dbh->prepare($sql);
-            $sth->execute(array(
+            $this->dlm->exec($sth, [
                 $front['title'],
                 $now->format('Y-m-d H:i:s'),
                 $front['asin'],
-                $master_work_id));
+                $master_work_id]);
         }
         // multilple works found, must be fixed
         else if (1 < count(array_keys($work_ids))){
@@ -214,7 +218,7 @@ class WorkGroomer
                 LIMIT 1";
 
             $sth = $dbh->prepare($sql);
-            $sth->execute(array_keys($work_ids));
+            $this->dlm->exec($sth, array_keys($work_ids));
             $r = $sth->fetch();
             $master_work_id = $r['id'];
 
@@ -238,10 +242,11 @@ class WorkGroomer
                 WHERE id IN ($in)
             ";
             $sth = $dbh->prepare($sql);
-            $sth->execute( array_merge(
+            $this->dlm->exec($sth, array_merge(
                 [$master_work_id],
                 [$now->format('Y-m-d H:i:s')],
-                array_keys($bad_work_ids)) );
+                array_keys($bad_work_ids)
+            ) );
         }
 
         // -------------------------------------------------------------------------
@@ -266,7 +271,8 @@ class WorkGroomer
         ";
 
         $sth = $dbh->prepare($sql);
-        $sth->execute(array_merge(
+
+        $this->dlm->exec($sth, array_merge(
             [$master_work_id],
             [$now->format('Y-m-d H:i:s')],
             $asins
@@ -285,9 +291,9 @@ class WorkGroomer
                 work.id = ?';
 
         $sth = $dbh->prepare($sql);
-        $sth->execute(array(
+        $this->dlm->exec($sth, [
             $now->format('Y-m-d H:i:s'),
-            $master_work_id));
+            $master_work_id]);
 
         // -------------------------------------------------------------------------
         // find similar editions to this work's editions
@@ -306,7 +312,7 @@ class WorkGroomer
                 edition.asin = similar_edition.similar_asin";
 
         $sth = $dbh->prepare($sql);
-        $sth->execute($asins);
+        $this->dlm->exec($sth, $asins);
 
         $in     = '';
         $asins  = [];
@@ -331,7 +337,7 @@ class WorkGroomer
                     edition.asin IN ($in)";
 
             $sth = $dbh->prepare($sql);
-            $sth->execute($asins);
+            $this->dlm->exec($sth, $asins);
 
             $similar_work_ids = [];
             foreach ($sth->fetchAll() as $r){
@@ -346,7 +352,7 @@ class WorkGroomer
             WHERE work_id = ?';
 
         $sth = $dbh->prepare($sql);
-        $sth->execute(array($master_work_id));
+        $this->dlm->exec($sth, [$master_work_id]);
 
         if (count($similar_work_ids)){
             $sql = '
@@ -355,7 +361,7 @@ class WorkGroomer
 
             $sth = $dbh->prepare($sql);
             foreach ($similar_work_ids as $similar_work_id){
-                $sth->execute(array($master_work_id, $similar_work_id));
+                $this->dlm->exec($sth, [$master_work_id, $similar_work_id]);
             }
         }
     }

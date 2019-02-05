@@ -5,20 +5,23 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Doctrine\DBAL\Exception\DeadlockException;
+use App\Service\DeadLockRetryManager;
 
 class EditionManager
 {
     private $logger;
     private $em;
+    private $dml;
 
     public function __construct(
         LoggerInterface $logger,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        DeadLockRetryManager $dlm
     )
     {
         $this->logger               = $logger;
         $this->em                   = $em;
+        $this->dlm                  = $dlm;
     }
 
     public function stubEdition(string $asin): void
@@ -42,7 +45,7 @@ class EditionManager
         $sth = $dbh->prepare($sql);
 
         foreach ($asins as $asin) {
-            $sth->execute([
+            $this->dlm->exec($sth, [
                 $asin,
                 date('Y-m-d H:i:s', strtotime('now')),
                 date('Y-m-d H:i:s', strtotime('now'))
@@ -63,7 +66,7 @@ class EditionManager
             WHERE edition_asin = ?';
 
         $sth = $dbh->prepare($sql);
-        $sth->execute([$asin]);
+        $this->dlm->exec($sth, [$asin]);
 
         // insert new records
         $sql = '
@@ -75,26 +78,7 @@ class EditionManager
 
         $rank = 1;
         foreach ($asins as $a) {
-
-            $fail = 0;
-            while (true) {
-
-                try {
-                    $sth->execute([$asin, $a, $rank]);
-                    break;
-
-                } catch (DeadlockException $e) {
-
-                    if (10 === $fail) {
-                        throw $e;
-                    }
-
-                    $this->logger->info(
-                        "Caught deadlock exception inserting SimilarEdition, retrying ($fail)");
-                    $fail++;
-                }
-            }
-
+            $this->dlm->exec($sth, [$asin, $a, $rank]);
             $rank++;
         }
     }

@@ -35,6 +35,12 @@ services:
             AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
             AWS_ASSOCIATE_TAG: "${AWS_ASSOCIATE_TAG}"
 
+            FACEBOOK_APP_ID: "${FACEBOOK_APP_ID}"
+            GOOGLE_API_KEY: "${GOOGLE_API_KEY}"
+            GOOGLE_APP_ID: "${GOOGLE_APP_ID}"
+            GAQ_ID: "${GAQ_ID}"
+            AMZN_AFFILIATE: "${AMZN_AFFILIATE}"
+
         depends_on:
             - mysql
 

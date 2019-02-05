@@ -1,12 +1,370 @@
+{% set _title %}{% block title %}Bookstash | Fun & Fast Book Discovery{% endblock %}{% endset %}
+{% set _description %}{% block description %}Booksta.sh is fun and modern book discovery{% endblock %}{% endset %}
+{% set _focus %}{% block focus %}{% endblock %}{% endset %}
+{% set _browse %}{% block browse %}{% endblock %}{% endset %}
+{% set _meta %}{% block meta %}{% endblock %}{% endset %}
+
+{% if app.request.isXmlHttpRequest %}
+    <title>{{ _title }}</title>
+    {% if _focus %}
+        {{ _focus }}
+    {% else %}
+        {{ _browse }}
+    {% endif %}
+{% else %}
+
 <!DOCTYPE html>
-<html>
+<!--[if IE]><html class="ie" lang="en"> <![endif]-->
+<!--[if !(IE)]><!--><html lang="en"> <!--<![endif]-->
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{{ _title }}</title>
+        <meta name="description" content="{{ _description }}">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta property="fb:app_id" content="{{ facebook_app_id }}" />
+        {{ _meta }}
+        <link href='http://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps:400,700|Titillium+Web:400,700' rel='stylesheet' type='text/css'>
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        {% if app.debug %}
+            <link rel="stylesheet" href="/css/less/style.php" />
+            <script type="text/javascript" src="/js/dev/masonry.pkgd.min.js"></script>
+            <script type="text/javascript" src="/js/dev/modernizr.custom.js"></script>
+            <script type="text/javascript" src="/js/dev/jquery.infinitescroll.js"></script>
+            <script type="text/javascript" src="/js/dev/jquery.visible.min.js"></script>
+            <script type="text/javascript" src="/js/dev/jquery.autocomplete.min.js"></script>
+            <script type="text/javascript" src="/js/dev/jquery.timeago.js"></script>
+            <script type="text/javascript" src="/js/dev/jquery.raty.js"></script>
+            <script type="text/javascript" src="/js/dev/picker.js"></script>
+            <script type="text/javascript" src="/js/dev/picker.date.js"></script>
+            <script type="text/javascript" src="/js/dev/js.js"></script>
+        {% else %}
+            <link rel="stylesheet" href="/css/style.css" />
+            <link rel="stylesheet" href="/css/raty/jquery.raty.css" />
+            <script type="text/javascript" src="/js/js.js"></script>
+        {% endif %}
+        <link rel="stylesheet" data-bstsh-object="authCssManager" data-bstsh-anon="/css/anon-user.css" data-bstsh-auth="{{ path('auth_user_style') }}" />
+
+        <script type="text/javascript">
+            document.cred = [];
+            document.cred.facebook_app_id = '{{ facebook_app_id }}';
+            document.cred.google_app_id = '{{ google_app_id }}';
+            document.cred.google_api_key = '{{ google_api_key }}';
+            document.cred.gaq_id = '{{ gaq_id }}';
+            document.cred.fb_login_url = '{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}';
+        </script>
+        <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+
+        <script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+              ga('create', '{{ gaq_id }}', 'booksta.sh');
+              ga('send', 'pageview');
+        </script>
     </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+{% if app.user.username is defined %}
+    <body auth="auth">
+{% else %}
+    <body auth="anon">
+{% endif %}
+
+        {# ###################### BROWSE SECTION ###################### #}
+        <div class="browse" tabindex="0">
+            {{ _browse }}
+        </div>
+        <div class="backtotop" data-bstsh-object="backToTopManager" ><a href="" data-bstsh-nohist="nohist"><i class="fa fa-arrow-up"></i><span>top</span></a></div>
+        <div class="search-end" style="display:none">
+            {{ include( 'ScottDataBundle:Fragment:searchfooter.html.twig') }}
+        </div>
+        {# ####################### FOCUS SECTION ###################### #}
+        <div class="alt-focus-bg"></div>
+        <div class="focus {% if _focus %}visible{% endif %}" data-bstsh-object="historyCloseButton" tabindex="0">
+            {{ _focus }}
+        </div>
+        {# ####################### TRIM SECTION ####################### #}
+        <div class="menuwhitebox" data-bstsh-object="menuWhiteBox"></div>
+        <div class="trim">
+            <div class="autocomplete-holder"></div>
+
+            <div class="dropdowns">
+                <div class="menu categories">
+                    <div class="uber">
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="shell">
+                        <div class="head">
+                            Categories
+                        </div>
+                         {{ render(controller('ScottDataBundle:Search:categoryMenu', {
+                                'node_ids': 1000
+                            })) }}
+                    </div>
+                </div>
+                <div class="menu search">
+                    <div class="uber">
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="shell"></div>
+                </div>
+                <div class="menu info">
+                    <div class="uber">
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="shell">
+                        {{ include ('ScottDataBundle:Default:aboutmenu.html.twig') }}
+                    </div>
+                </div>
+                <div class="menu user" id="usermenu">
+                    <div class="uber">
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="shell" data-bstsh-object="eventDomUpdater" data-event="bookster:authchange" data-source="/auth/userdrop" data-replace-target="#usermenuname" data-replace-source=".firstname">
+                        {{ include ('ScottDataBundle:Auth:userdrop.html.twig') }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="topbar">
+                <span class="logo"><a href="/" title="Bookstash Home" >Booksta.sh</a></span>
+                <div class="menu categories" data-bstsh-object="topMenu" data-menu-target=".dropdowns .menu.categories">
+                    <div class="icon"><i class="fa fa-sitemap"></i></div>
+                    <div class="label"><span>Browse</span></div></div>
+                <div class="menu search" data-menu-noautodrop="noautodrop" data-bstsh-object="topMenu searchManager" data-menu-target=".dropdowns .menu.search">
+                    <div class="icon"><img src="/img/magglass.svg" /></div>
+                    <div class="query"><form><input type="text" placeholder="Search by Title, Author or ISBN" class="searchbox" /></form></div><div class="label"><span>Search</span></div></div>
+                <div class="right">
+                    <div class="menu info" data-bstsh-object="topMenu" data-menu-target=".dropdowns .menu.info">
+                        <div class="icon"><img src="/img/info.svg" /></div>
+                        <div class="label"><span>Information</span></div></div>
+                    <div class="menu user" data-bstsh-object="topMenu" data-menu-target=".dropdowns .menu.user" data-user-magic="magic">
+                        <div class="icon"><div class="bstsh-user-avatar-30"></div></div>
+                        <div class="label"><span class="bstsh-user-login-or-first"></span></div></div>
+                </div>
+            </div>
+
+            <div class="user-tabs" data-bstsh-object="userTabManager">
+                <div class="tabs">
+                    <div class="tab mylists" data-action="expand" data-cname="my-lists">
+                        <button title="Mangage my lists">
+                            My Lists
+                        </button>
+                    </div><div class="tab readit" data-action="expand" data-cname="readit">
+                        <button title="Books I have read">
+                            Read It
+                        </button>
+                        <div class="count" data-count-of="readit">0</div>
+                    </div><div class="tab reading" data-action="expand" data-cname="reading">
+                        <button title="Books I'm reading">
+                            Reading
+                        </button>
+                        <div class="count" data-count-of="reading">0</div>
+                    </div><div class="tab toread" data-action="expand" data-cname="toread">
+                        <button title="Books I want to read">
+                            To Read
+                        </button>
+                        <div class="count" data-count-of="toread">0</div>
+                    </div><div class="tab ratings hidden" data-action="expand" data-cname="ratings">
+                        <button title="Books I have rated">
+                            Rated
+                        </button>
+                        <div class="count" data-count-of="ratings">0</div>
+                    </div><div class="tab reviews hidden" data-action="expand" data-cname="reviews">
+                        <button title="Books I have reviewed">
+                            Reviewed
+                        </button>
+                        <div class="count" data-count-of="reviews">0</div>
+                    </div><div class="tab hide" data-action="lessen-tabs">
+                        <button title="Hide the tabs">
+                            <i class="fa fa-angle-double-left"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="minimal" data-action="show-tabs">
+                    <div class="shell">
+                        <button title="Show My Tabs">
+                            <i class="fa fa-angle-double-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="tabs-content">
+                    <div class="content anon-tease">
+                        <div class="anon-silo">
+                            <span>
+                                Incognito <br />
+                                Abecedarian
+                            </span>
+                        </div>
+                        <div class="persuader">
+                            <span class="message">To start <b>your</b> stash, log in now!</span>
+                            <span class="social">
+                                <strong>Log in via: </strong>
+                                <i class="fa fa-facebook" data-bstsh-object="eventThrower" data-event="bookster:facebooklogin"></i>
+                                <i class="fa fa-google-plus" data-bstsh-object="eventThrower" data-event="bookster:gpluslogin"></i>
+                                <i class="bookstash" data-bstsh-object="eventThrower" data-event="bookster:loginrequest,bookster:bookstashlogin">B</i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="content my-lists">
+                        <div class="left">
+                            <div class="user-avatar bstsh-user-avatar-160"></div><br />
+                            <span class="desc">
+                                <span class="bstsh-user-login-or-first"></span>'s<br />
+                                Lists
+                            </span>
+                        </div>
+
+                        <form method="post" action="{{ path('user_displayprefs_save') }}">
+                            <ul class="lists">
+                                <li>
+                                    <input type="checkbox" id="my-readit-cb" class="magic list-cb" value="readit">
+                                    <label for="my-readit-cb" class="magic">
+                                        Read It
+                                    </label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="my-reading-cb" class="magic list-cb" value="reading">
+                                    <label for="my-reading-cb" class="magic">
+                                        Reading
+                                    </label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="my-toread-cb" class="magic list-cb" value="toread">
+                                    <label for="my-toread-cb" class="magic">
+                                        To Read
+                                    </label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="my-rated-cb" class="magic list-cb" value="ratings">
+                                    <label for="my-rated-cb" class="magic">
+                                        Rated
+                                    </label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="my-reviewed-cb" class="magic list-cb" value="reviews">
+                                    <label for="my-reviewed-cb" class="magic">
+                                        Reviewed
+                                    </label>
+                                </li>
+                                <li class="status">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                    <span></span>
+                                <li>
+                            </ul>
+                            <div class="hint">
+                                You can hide lists by unchecking them here.
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div class="content loading">
+                        <div class="progress"><i></i><i></i><i></i><i></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {# ###################### LOGIN SECTION ####################### #}
+        <div id="loginwhitebox"></div>
+        <div id="loginoverlay" data-bstsh-object="loginManager">
+
+            <div class="vert"></div>
+            <div class="window">
+                <div class="ender">
+                    <div class="message">Some sort of message</div>
+                </div>
+                <div class="close" data-bstsh-object="eventThrower" data-event="bookster:logincloserequest">
+                    <div></div>
+                </div>
+                <div class="shell">
+
+                    <div class="loginmain">
+                        <span class="big">Log In</span>
+
+                        <div class="facebook sociallog" data-social="facebook" data-bstsh-object="eventThrower" data-event="bookster:facebooklogin"><i class="fa fa-facebook"></i></div>
+                        <div class="gplus sociallog" data-social="gplus" data-bstsh-object="eventThrower" data-event="bookster:gpluslogin"><i class="fa fa-google-plus"></i></div>
+                        <div class="sep"></div>
+                        <div class="bookstash sociallog" data-social="bookstash" data-bstsh-object="eventThrower" data-event="bookster:bookstashlogin"></div>
+                        <div class="blocker"></div>
+                        <div class="tooltips">
+                            <div class="tooltip facebook">
+                                <div><div></div></div>
+                                Login or create an account with Facebook
+                            </div>
+                            <div class="tooltip gplus">
+                                <div><div></div></div>
+                                Login or create an account with Google+
+                            </div>
+                            <div class="tooltip bookstash">
+                                <div><div></div></div>
+                                Login or create a Booksta.sh account
+                            </div>
+                        </div>
+                        <div class="fauxtip">
+                            You can log in via Facebook, Google, or Bookstash
+                        </div>
+
+                        <div class="locallog">
+                            <form>
+                                <div class="flash"></div>
+                                <div class="forgot-flash">If you have mislaid your password, we can email you a link to reset it.</div>
+                                <input type="text" name="name" class="field email" placeholder="Email" tabindex="1"><br />
+                                <div class="nag email"><i class="fa fa-arrow-up"></i> Please enter your email address here</div><br />
+                                <input type="text" name="firstname" class="firstname field first" placeholder="First Name" tabindex="2">
+                                <input type="text" name="lastname" class="lastname field last" placeholder="Last Name" tabindex="3"><br />
+                                <div class="nag first"><i class="fa fa-arrow-up"></i> Your First Name</div>
+                                <div class="nag last"><i class="fa fa-arrow-up"></i> Your Last Name</div><br />
+                                <input type="password" name="password" class="field password" placeholder="Password" tabindex="4">
+                                <button class="showpass" style="display:none" data-bstsh-object="eventThrower" data-event="bookster:logineyeclick"><i class="fa fa-eye"></i></button><button class="showpass" data-bstsh-object="eventThrower" data-event="bookster:logineyeclick"><i class="fa fa-eye-slash"></i></button><br />
+                                <div class="forgot">
+                                    <span data-bstsh-object="eventThrower" data-event="bookster:resetPasswordRequest">(forgot?)</span>
+                                </div>
+                                <div class="nag password"><i class="fa fa-arrow-up"></i> <span class="create-text">6-20 character password please</span><span class="login-text">Enter your password</div>
+
+                                <div class="login-buttons">
+                                    <button class="secondary" data-bstsh-object="eventThrower" data-event="bookster:createAccountRequest"><i class="fa fa-user"></i> Create a new account</button>
+                                    <button class="primary" data-bstsh-object="eventThrower" data-event="bookster:loginFormSubmit">Log in</button>
+                                </div>
+                                <div class="create-buttons">
+                                    <button class="secondary" data-bstsh-object="eventThrower" data-event="bookster:loginAccountRequest"><i class="fa fa-arrow-left"></i> Back to log in</button>
+                                    <button class="primary" data-bstsh-object="eventThrower" data-event="bookster:loginFormSubmit">Join</button>
+                                </div>
+                                <div class="reset-buttons">
+                                    <button class="secondary" data-bstsh-object="eventThrower" data-event="bookster:loginAccountRequest"><i class="fa fa-arrow-left"></i> Back</button>
+                                    <button class="primary" data-bstsh-object="eventThrower" data-event="bookster:loginFormSubmit">Reset</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:none" id="ingress-forms"></div>
+            </div>
+        </div>
+        {# ###################### MODAL SECTION ####################### #}
+        <div id="modalGeneral">
+            <div class="vert"></div>
+            <div class="message" data-message="message">
+
+                <span class="big"></span>
+                <p></p>
+
+                <div class="form-body">
+                </div>
+
+                <div class="pad"></div>
+                <div class="control">
+                    <div class="progress"><i></i><i></i><i></i><i></i></div>
+                    <button class="cancel">Cancel</button>
+                    <button class="confirm">Submit</button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
+{% endif %}

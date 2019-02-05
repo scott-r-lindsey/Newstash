@@ -14,7 +14,7 @@ use BadMethodCallException;
 /**
  *
  */
-class BaseApiController extends AbstractFOSRestController
+abstract class BaseApiController extends AbstractFOSRestController
 {
     protected function bundleResponse(
         array $result,

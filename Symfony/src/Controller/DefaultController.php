@@ -3,24 +3,23 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\BaseApiController;
-use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-#use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-#use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class DefaultController extends BaseApiController
+class DefaultController extends AbstractController
 {
 
     /**
-     * @Route("/healthcheck")
+     * @Route("/sup", name="home", methods={"GET"})
+     * @Template()
      */
-    public function healthcheckAction()
+    public function newsAction(Request $request)
     {
-        $data = [
-            'healthcheck' => 'ok'
-        ];
 
-        return $this->bundleResponse($data);
+        $items = [];
+
+        return compact('items');
     }
 }

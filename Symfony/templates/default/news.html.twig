@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+{% block browse %}
+{# 
+    <div class="books">
+
+        {% for item in items %}
+            {% if 'rating' == item.type %}
+                {% set factor = 250 / item.work.coverX %}
+                {% set height = (item.work.coverY * factor) |round %}
+                <div class="item news rating" style="width:250px;height:{{height + 72}}px">
+                    <div class="cover">
+                        <img src="{{ item.work.cover }}" height="{{ height }}" width="250" class="cover" />
+                        <a title="{{ item.work.title }}" href="{{ path('work', {work_id: item.work.id, slug: item.work.slug}) }}"></a>
+                    </div>
+                    <div class="bottom">
+                        <div class="user">
+                            <img class="avatar" src="{{ item.user.avatarUrl80 }}" />
+                            <strong>{{ item.user.first_name }} gives it</strong><br />
+                            <span>
+                            {{ include('ScottDataBundle:Fragment:stars.html.twig', {count: item.stars }) }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            {% elseif 'review' == item.type %}
+                {% set factor = 250 / item.work.coverX %}
+                {% set height = (item.work.coverY * factor) |round %}
+                <div class="item news review" style="width:250px;height:{{height + 102}}px">
+                    <div class="cover">
+                        <img src="{{ item.work.cover }}" height="{{ height }}" width="250" class="cover" />
+                        <a title="{{ item.work.title }}" href="{{ path('work', {work_id: item.work.id, slug: item.work.slug}) }}"></a>
+                    </div>
+                    <div class="bottom">
+                        <div class="user">
+                            <img class="avatar" src="{{ item.user.avatarUrl80 }}" />
+                            <strong>{{ item.user.first_name }} reviewed it </strong><br />
+                            <span>
+                            {{ include('ScottDataBundle:Fragment:stars.html.twig', {count: item.stars }) }}
+                            </span>
+                        </div>
+                        {% if item.review.title %}
+                            <div class="title">
+                                <span>
+                                    {{ item.review.title }}
+                                </span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% elseif 'comment' == item.type %}
+                <div class="item news comment">
+                    <div class="head">
+                        <a href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}" title="Behind the Stash: {{ item.post.title|escape('html_attr') }}">Booksta.sh Blog</a>
+                    </div>
+                    <div class="body">
+                    {% if item.parent is defined %}
+                        <div class="replied">
+                            <div class="users">
+                                <div class="user comment-user">
+                                    <img class="avatar" src="{{ item.user.avatarUrl80 }}" />
+                                    {{ item.user.first_name }}
+                                </div>
+                                <div class="user parent-user">
+                                    <img class="avatar" src="{{ item.parent.user.avatarUrl80 }}" />
+                                    {{ item.parent.user.first_name }}
+                                </div>
+                                <strong>
+                                    Replied<br />
+                                    to
+                                </strong>
+                            </div>
+                            <div class="text">
+                                &#8220;{{ item.comment.text | truncate(100, true) }}&#8221;
+                            </div>
+                            <div class="out">
+                                <a href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}#comment-{{ item.comment.id }}">VIEW IN CONVERSATION</a>
+                            </div>
+                        </div>
+                        <a class="over" href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}#comment-{{ item.comment.id }}" title="Jump to Comment"></a>
+
+                    {% else %}
+                        <div class="commented">
+                            <img class="avatar" src="{{ item.user.avatarUrl80 }}" />
+                            <strong>{{ item.user.first_name }} <br />commented </strong><br />
+                            <div class="text">
+                                &#8220;
+                                {{ item.comment.text | truncate(100, true) }}&#8221;
+                            </div>
+                            <div class="out">
+                                <a href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}#comment-{{ item.comment.id }}">VIEW IN CONVERSATION</a>
+                            </div>
+                        </div>
+                        <a class="over" href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}#comment-{{ item.comment.id }}" title="Jump to Comment"></a>
+                    {% endif %}
+
+                    </div>
+                </div>
+            {% elseif 'post' == item.type %}
+                <div class="item news post">
+                    <div class="head">
+                        <a href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}" title="Behind the Stash: {{ item.post.title|escape('html_attr') }}">Booksta.sh Blog</a>
+                    </div>
+                    {% if item.post.image is defined %}
+                        {% set factor = 520 / item.post.imageX %}
+                        {% set height = (item.post.imageY * factor) |round %}
+                        <div class="blog-image">
+                            <img src="/img/blog/{{ item.post.image }}" width="520" height="{{height}}" />
+                            <div class="bottom">
+                                <div class="user">
+                                    <img class="avatar" src="{{ item.user.avatarUrl80 }}" />
+                                    <div class="info">
+                                        {{ item.user.first_name }}<br />
+                                        blogged
+                                    </div>
+                                    <div class="title">
+                                        &#8220;{{ item.post.title }}&#8221;
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="over" href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}" title="Behind the Stash: {{ item.post.title|escape('html_attr') }}"></a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% if items|length %}
+        <div class="navigation" style="display:none;">
+            <a href="/?idlt={{ items|last._id }}" class="morelink" style="display:none"></a>
+        </div>
+    {% else %}
+        {{ include( 'ScottDataBundle:Fragment:searchfooter.html.twig') }}
+    {% endif %}
+#}
+{% endblock %}

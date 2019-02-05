@@ -1,4 +1,11 @@
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_ASSOCIATE_TAG=
+export AWS_REGION=us-east-1
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_ASSOCIATE_TAG=
+
+export FACEBOOK_APP_ID=fixme-fb-id
+export GOOGLE_API_KEY=fixme-google-api-key
+export GOOGLE_APP_ID=fixme-google-app-id
+export GAQ_ID=fixme-gaq-id
+export AMZN_AFFILIATE=fixme-amzn-affiliate
+

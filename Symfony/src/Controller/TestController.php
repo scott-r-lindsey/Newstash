@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,7 @@ class TestController extends AbstractController
      * @Template()
      */
     public function nodeAction(
+        EntityManagerInterface $em,
         ?int $n1 = null,
         ?int $n2 = null,
         ?int $n3 = null,
@@ -40,8 +42,7 @@ class TestController extends AbstractController
         ?int $n10 = null
     ): array{
 
-        $repo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('App:BrowseNode');
+        $repo = $em->getRepository('App:BrowseNode');
 
         $works      = [];
         $nodes      = [];

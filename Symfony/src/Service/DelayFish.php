@@ -35,10 +35,11 @@ class DelayFish{
 
             $nap_secs = $this->delay - ($now - $this->last);
 
-            $this->logger->info("Sleeping for $nap_secs seconds (of " . (string)$this->delay .")");
+            $sleepMicroSeconds = (int)($nap_secs * 1000000);
+            $this->logger->info("Sleeping for $nap_secs seconds ($sleepMicroSeconds ms) of " . (string)$this->delay);
 
             $time_start     = $this->microtime_float();
-            usleep ((int)($nap_secs * 1000000));
+            usleep ($sleepMicroSeconds);
             $time_end       = $this->microtime_float();
 
             $time = $time_end - $time_start;

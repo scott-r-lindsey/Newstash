@@ -130,8 +130,9 @@ class Broker
     private function runIngest($sxe)
     {
         foreach ($sxe->Items->Item as $item){
+            $this->logger->info("Ingesting http://amzn.com/" . (string)$item->ASIN);
             $this->productParser->ingest($item);
-            $this->logger->info("Finished ingesting " . (string)$item->ASIN);
+            $this->logger->debug("Finished ingesting http://amzn.com/" . (string)$item->ASIN);
         }
     }
 }

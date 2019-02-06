@@ -95,7 +95,7 @@ class DelayFish{
             usleep ($μsToSleepNow);
 
             $endSeconds     = microtime(true);
-            $secondsSlept   = $endSeconds = $startSeconds;
+            $secondsSlept   = $endSeconds - $startSeconds;
 
             $μsSlept = (int)($secondsSlept * 1000000);
 

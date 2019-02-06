@@ -27,6 +27,26 @@ class DelayFish{
         $this->logger       = $logger;
     }
 
+
+    public function delay(): void
+    {
+
+        $now = microtime(true);
+
+        if (($this->last + $this->delay) > $now) {
+
+            $secondsToSleep = $this->delay - ($now - $this->last);
+
+            $this->logger->info("Sleeping for $secondsToSleep seconds of " . (string)$this->delay);
+            $this->sleep($secondsToSleep);
+
+        }
+
+        $this->last = microtime(true);
+
+        $this->speedUp();
+    }
+/*
     public function delay(): void
     {
         $now = microtime(true);
@@ -39,7 +59,9 @@ class DelayFish{
             $this->logger->info("Sleeping for $nap_secs seconds ($sleepMicroSeconds ms) of " . (string)$this->delay);
 
             $time_start     = $this->microtime_float();
-            usleep ($sleepMicroSeconds);
+
+            $this->microTimeSleep($sleepMicroSeconds);
+
             $time_end       = $this->microtime_float();
 
             $time = $time_end - $time_start;
@@ -50,6 +72,7 @@ class DelayFish{
 
         $this->speedUp();
     }
+*/
 
     public function speedUp(): void
     {
@@ -78,5 +101,49 @@ class DelayFish{
     {
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
+    }
+/*
+    private function microTimeSleep(int $sleepMs): void
+    {
+        // I'm seeing usleep being inaccurate?  Far shorter sleep times than expected.
+        // but microtime() seems to work, so work around it...
+
+        $timeStart      = (int)($this->microtime_float() * 1000000;
+        $timeSlept      = 0;
+        $i  = 0;
+
+        while ($timeSlept < $sleepMs) {
+            $i++;
+            $this->logger->info("Sleeping for $sleepMs ms, already slept $timeSlept ms");
+            usleep ($sleepMs - $timeSlept);
+
+            $timeEnd    = $this->microtime_float();
+            $timeSlept  = $timeEnd - $timeStart;
+        }
+    }
+*/
+
+    /**
+     * Some weirdness I saw made me not trust usleep.  Crazy?
+     */
+    private function sleep(float $sleepSeconds): void
+    {
+        $startSeconds   = microtime(true);
+        $μsSlept        = 0;
+
+        $μsToSleep      = (int)($sleepSeconds * 1000000);
+
+        while ($μsToSleep > $μsSlept) {
+
+            $μsToSleepNow = $μsToSleep - $μsSlept;
+            $this->logger->info("Sleeping for $μsToSleepNow μs, already slept $μsSlept μs");
+
+            usleep ($μsToSleepNow);
+
+            $endSeconds     = microtime(true);
+            $secondsSlept   = $endSeconds = $startSeconds;
+
+            $μsSlept = (int)($secondsSlept * 1000000);
+        }
     }
 }

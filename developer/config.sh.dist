@@ -1,3 +1,4 @@
+export MYSQL_DATA_PATH=/var/www/html/newstash/data/mysql/
 export MYSQL_BINLOG_PATH=/var/www/html/newstash/data/mysql-binlog/
 
 export AWS_REGION=us-east-1

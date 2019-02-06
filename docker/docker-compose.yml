@@ -13,7 +13,7 @@ services:
             - "${MYSQL_PORT}:3306"
 
         volumes:
-            - "${APP_PATH}/data/mysql:/var/lib/mysql"
+            - "${MYSQL_DATA_PATH}:/var/lib/mysql"
             - "${MYSQL_BINLOG_PATH}:/var/lib/mysql-binlogs"
             - "${APP_PATH}/data/conf.d:/etc/mysql/conf.d"
 

@@ -8,3 +8,6 @@ log_bin = /var/lib/mysql-binlogs/binlog
 
 # this buffers log writes for performance
 innodb_flush_log_at_trx_commit = 2
+
+# disable log bin for now
+skip-log-bin

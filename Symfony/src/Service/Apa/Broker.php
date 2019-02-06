@@ -92,7 +92,7 @@ class Broker
                 $this->processManager->fork(
                     function(Process $p) use ($sxe, $query) {
 
-                        $p->setProcessTitle("APA Ingesst $query");
+                        $p->setProcessTitle("APA Ingest $query");
 
                         $this->runIngest($sxe);
                         exit;
@@ -130,7 +130,6 @@ class Broker
     private function runIngest($sxe)
     {
         foreach ($sxe->Items->Item as $item){
-            $this->logger->info("Ingesting http://amzn.com/" . (string)$item->ASIN);
             $this->productParser->ingest($item);
             $this->logger->info("Finished ingesting " . (string)$item->ASIN);
         }

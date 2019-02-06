@@ -99,7 +99,7 @@ class DelayFish{
 
             $μsSlept = (int)($secondsSlept * 1000000);
 
-            $this->logger->info("I slept for $μsSlept μs");
+            $this->logger->info("I slept for $secondsSlept, or $μsSlept μs");
         }
     }
 }

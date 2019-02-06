@@ -46,33 +46,6 @@ class DelayFish{
 
         $this->speedUp();
     }
-/*
-    public function delay(): void
-    {
-        $now = microtime(true);
-
-        if (($this->last + $this->delay) > $now) {
-
-            $nap_secs = $this->delay - ($now - $this->last);
-
-            $sleepMicroSeconds = (int)($nap_secs * 1000000);
-            $this->logger->info("Sleeping for $nap_secs seconds ($sleepMicroSeconds ms) of " . (string)$this->delay);
-
-            $time_start     = $this->microtime_float();
-
-            $this->microTimeSleep($sleepMicroSeconds);
-
-            $time_end       = $this->microtime_float();
-
-            $time = $time_end - $time_start;
-            $this->logger->info("Finished Sleeping for $nap_secs seconds (of " . (string)$this->delay ."), actual $time");
-        }
-
-        $this->last = microtime(true);
-
-        $this->speedUp();
-    }
-*/
 
     public function speedUp(): void
     {
@@ -102,29 +75,10 @@ class DelayFish{
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
     }
-/*
-    private function microTimeSleep(int $sleepMs): void
-    {
-        // I'm seeing usleep being inaccurate?  Far shorter sleep times than expected.
-        // but microtime() seems to work, so work around it...
-
-        $timeStart      = (int)($this->microtime_float() * 1000000;
-        $timeSlept      = 0;
-        $i  = 0;
-
-        while ($timeSlept < $sleepMs) {
-            $i++;
-            $this->logger->info("Sleeping for $sleepMs ms, already slept $timeSlept ms");
-            usleep ($sleepMs - $timeSlept);
-
-            $timeEnd    = $this->microtime_float();
-            $timeSlept  = $timeEnd - $timeStart;
-        }
-    }
-*/
 
     /**
-     * Some weirdness I saw made me not trust usleep.  Crazy?
+     * Some weirdness I saw made me not trust usleep.  Refactoring fixed
+     * the problem, but I'll leave this here for now just to be sure.
      */
     private function sleep(float $sleepSeconds): void
     {
@@ -144,6 +98,8 @@ class DelayFish{
             $secondsSlept   = $endSeconds = $startSeconds;
 
             $μsSlept = (int)($secondsSlept * 1000000);
+
+            $this->logger->info("I slept for $μsSlept μs");
         }
     }
 }

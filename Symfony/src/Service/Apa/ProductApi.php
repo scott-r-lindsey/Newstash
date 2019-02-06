@@ -98,9 +98,8 @@ class ProductApi
         // FIXME where should this go?
         libxml_use_internal_errors(true);
 
-        $this->logger->info("APA query " . print_r($params, true));
-
         $this->delayProvider->delay();
+        $this->logger->info("APA query " . print_r($params, true));
 
         $fail = 0;
         $xml = null;

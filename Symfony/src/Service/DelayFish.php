@@ -36,9 +36,11 @@ class DelayFish{
             $nap_secs = $this->delay - ($now - $this->last);
 
             $this->logger->info("Sleeping for $nap_secs seconds (of " . (string)$this->delay .")");
-            $time_start = microtime_float();
+
+            $time_start     = $this->microtime_float();
             usleep ((int)($nap_secs * 1000000));
-            $time_end = microtime_float();
+            $time_end       = $this->microtime_float();
+
             $time = $time_end - $time_start;
             $this->logger->info("Finished Sleeping for $nap_secs seconds (of " . (string)$this->delay ."), actual $time");
         }
@@ -70,5 +72,10 @@ class DelayFish{
     public function getCurrentDelay(): float
     {
         return $this->delay;
+    }
+    private function microtime_float()
+    {
+        list($usec, $sec) = explode(" ", microtime());
+        return ((float)$usec + (float)$sec);
     }
 }

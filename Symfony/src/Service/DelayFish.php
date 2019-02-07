@@ -77,8 +77,9 @@ class DelayFish{
     }
 
     /**
-     * Some weirdness I saw made me not trust usleep.  Refactoring fixed
-     * the problem, but I'll leave this here for now just to be sure.
+     * Sometimes usleep is sleeping less than expected?  I think signals
+     * from forked children cause sleep to end.  In any case, this
+     * will keep sleeping until we have napped the desired period.
      */
     private function sleep(float $sleepSeconds): void
     {

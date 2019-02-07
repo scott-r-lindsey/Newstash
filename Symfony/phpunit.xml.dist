@@ -29,6 +29,11 @@
         <!-- Delivery is disabled by default via "null://localhost" -->
         <env name="MAILER_URL" value="null://localhost"/>
         <!-- ###- symfony/swiftmailer-bundle ### -->
+
+        <!-- ###+ hwi/oauth-bundle ### -->
+        <env name="FB_ID" value=""/>
+        <env name="FB_SECRET" value=""/>
+        <!-- ###- hwi/oauth-bundle ### -->
     </php>
 
     <testsuites>

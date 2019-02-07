@@ -14,3 +14,4 @@ services:
     test.App\Service\Data\FrontFinder: '@App\Service\Data\FrontFinder'
     test.App\Service\Data\WorkGroomer: '@App\Service\Data\WorkGroomer'
     test.App\Service\EditionManager: '@App\Service\EditionManager'
+    test.App\Service\Auth\NewstashUserProvider: '@App\Service\Auth\NewstashUserProvider'

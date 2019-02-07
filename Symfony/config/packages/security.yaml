@@ -24,6 +24,17 @@ security:
             logout:       true
             anonymous:    true
 
+            oauth:
+                resource_owners:
+                    facebook:           "/login/check-facebook"
+                    google:             "/login/check-google"
+
+                login_path:        /login
+                failure_path:      /login
+
+                oauth_user_provider:
+                    service: App\Service\Auth\NewstashUserProvider
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:

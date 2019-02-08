@@ -1,7 +1,7 @@
 FROM php:7.3-fpm-alpine 
 
 ENV BUILD_DEPS alpine-sdk autoconf coreutils gettext-dev libxml2-dev pcre-dev libzip-dev
-ENV PERSISTENT_DEPS sqlite zip coreutils
+ENV PERSISTENT_DEPS sqlite zip coreutils libzip libintl
 ENV INSTALL_EXTENSIONS dom fileinfo gettext json opcache simplexml zip pdo pdo_mysql pcntl sysvshm sysvsem
 
 # Install Packages

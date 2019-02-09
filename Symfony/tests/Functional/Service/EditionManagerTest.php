@@ -52,6 +52,38 @@ class EditionManagerTest extends BaseTest
         );
     }
 
+    public function testMarkRejected(): void
+    {
+
+        $asin               = '0674979850';
+        $isbn               = '9871234567890';
+
+        $em                 = self::$container->get('doctrine')->getManager();
+        $editionManager     = self::$container->get('test.App\Service\EditionManager');
+
+        // --------------------------------------------------------------------
+        // create a record via an upsert
+
+        $editionManager->stubEditions([$asin]);
+
+        $edition = $em->getRepository(edition::class)
+            ->findOneByAsin($asin);
+
+        $this->assertFalse(
+            $edition->getRejected()
+        );
+
+        // --------------------------------------------------------------------
+
+        $editionManager->markRejected($asin);
+
+        $em->refresh($edition);
+
+        $this->assertTrue(
+            $edition->getRejected()
+        );
+    }
+
     public function testSimilarEditionUpdate(): void
     {
         $em                 = self::$container->get('doctrine')->getManager();

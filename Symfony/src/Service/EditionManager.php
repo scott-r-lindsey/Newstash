@@ -90,7 +90,7 @@ class EditionManager
         $sql = '
             UPDATE edition
             SET rejected = 1
-            WHERE edition_asin = ?';
+            WHERE asin = ?';
 
         $sth = $dbh->prepare($sql);
         $this->dlm->exec($sth, [$asin]);

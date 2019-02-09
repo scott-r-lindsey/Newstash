@@ -364,6 +364,8 @@ class WorkGroomer
                 $this->dlm->exec($sth, [$master_work_id, $similar_work_id]);
             }
         }
+
+        $this->setEditionsGroomed((int)$master_work_id);
     }
 
     private function findNewSigAsins(): bool
@@ -426,6 +428,21 @@ class WorkGroomer
             }
         }
         return $new;
+    }
+
+    private function setEditionsGroomed(int $work_id): void
+    {
+        $dbh    = $this->em->getConnection();
+
+        $sql = '
+            UPDATE edition
+            SET
+                groomed = 1
+            WHERE
+                work_id = ?';
+
+        $sth = $dbh->prepare($sql);
+        $this->dlm->exec($sth, [$work_id]);
     }
 
     private function findAWSRelated(): bool

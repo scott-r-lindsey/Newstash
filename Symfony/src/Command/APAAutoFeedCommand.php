@@ -10,6 +10,7 @@ use App\Service\Apa\ProductParser;
 use App\Service\Data\EditionLeadPicker;
 use DOMDocument;
 use Doctrine\ORM\EntityManagerInterface;
+use Seld\Signal\SignalHandler;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -62,6 +63,18 @@ class APAAutoFeedCommand extends BaseCommand
         OutputInterface $output
     ){
 
+        $pid = getmypid();
+
+        $signal = SignalHandler::create(
+            ['SIGINT'],
+            function ($signal, $signalName) use ($output, $pid){
+
+                // don't want all the children acking the signal
+                if (getmypid() == $pid) {
+                    $output->writeln("<info>Caught signal $signalName, shutting down...</info>");
+                }
+        });
+
         ini_set('memory_limit', '1024M');
 
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
@@ -74,9 +87,23 @@ class APAAutoFeedCommand extends BaseCommand
         }
 
         while (count($asins)) {
+
             foreach ($asins as $asin) {
                 $this->apaBroker->enqueue($asin);
+
+                if ($signal->isTriggered()) {
+
+                    if ($input->getOption('fork')){
+                        $output->writeln('<info>Calling Wait on broker...</info>');
+
+                        $this->apaBroker->wait();
+                    }
+
+                    $output->writeln('<info>Safe exit!</info>');
+                    break(2);
+                }
             }
+
             $asins =  $this->editionLeadPicker->find();
         }
     }

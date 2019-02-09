@@ -9,7 +9,11 @@
         "ezyang/htmlpurifier": "^4.10",
         "friendsofsymfony/rest-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "^2.1",
+        "hwi/oauth-bundle": "^0.6.3",
         "misterion/ko-process": "^0.5.3",
+        "php-http/guzzle6-adapter": "~1.1.1",
+        "php-http/httplug-bundle": "~1.13",
+        "seld/signal-handler": "^1.1",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^4.0",
         "symfony/browser-kit": "^4.0",
@@ -26,11 +30,7 @@
         "symfony/translation": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/yaml": "^4.0",
-        "twig/extensions": "^1.5",
-        "hwi/oauth-bundle": "^0.6.3",
-        "php-http/guzzle6-adapter": "~1.1.1",
-        "php-http/httplug-bundle": "~1.13"
-
+        "twig/extensions": "^1.5"
     },
     "require-dev": {
         "symfony/dotenv": "^4.0"

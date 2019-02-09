@@ -1,0 +1,5 @@
+{% if amzn_affiliate %}
+    http://www.amazon.com/dp/{{ asin }}/?tag={{ amzn_affiliate }}
+{% else %}
+    http://www.amazon.com/dp/{{ asin }}
+{% endif %}

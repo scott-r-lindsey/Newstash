@@ -1,0 +1,16 @@
+{% if  0 == authors|length %}
+    {% if alternate %}
+        By {{ alternate }}
+    {% endif %}
+{% elseif  1 == authors|length %}
+    {% set author = authors[0] %}
+    By  <a href="{{ path('author_search') }}?query={{ author|escape('url') }}" title="Search for books by {{ author|escape('html_attr') }}">{{ author }}</a>
+{% else %}
+    By
+    {% spaceless %}
+    {% for author in authors %}
+        <a href="{{ path('author_search') }}?query={{ author|escape('url') }}" title="Search for books by {{ author|escape('html_attr') }}">{{ author }}</a>{% if loop.index == loop.length %}{% elseif loop.index == loop.length -1 %} and {% else %}, {% endif %}
+    {% endfor %}
+    {% endspaceless %}
+{% endif %}
+

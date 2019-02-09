@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block browse %}
-{# 
+{#
     <div class="books">
 
         {% for item in items %}
@@ -17,7 +17,7 @@
                             <img class="avatar" src="{{ item.user.avatarUrl80 }}" />
                             <strong>{{ item.user.first_name }} gives it</strong><br />
                             <span>
-                            {{ include('ScottDataBundle:Fragment:stars.html.twig', {count: item.stars }) }}
+                            {{ include('fragment/stars.html.twig', {count: item.stars }) }}
                             </span>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                             <img class="avatar" src="{{ item.user.avatarUrl80 }}" />
                             <strong>{{ item.user.first_name }} reviewed it </strong><br />
                             <span>
-                            {{ include('ScottDataBundle:Fragment:stars.html.twig', {count: item.stars }) }}
+                            {{ include('fragment/stars.html.twig', {count: item.stars }) }}
                             </span>
                         </div>
                         {% if item.review.title %}
@@ -129,7 +129,7 @@
             <a href="/?idlt={{ items|last._id }}" class="morelink" style="display:none"></a>
         </div>
     {% else %}
-        {{ include( 'ScottDataBundle:Fragment:searchfooter.html.twig') }}
+        {{ include( 'fragment/searchfooter.html.twig') }}
     {% endif %}
 #}
 {% endblock %}

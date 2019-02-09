@@ -1,0 +1,17 @@
+Also in Category...
+<div class="flowbox">
+    {% for work in works %}
+        <div class="item">
+            <div class="box">
+                <div class="shadowbehind"></div>
+                <div class="fcover">
+                    <a href="{{ path('work', {work_id: work.work_id, slug: work.slug}) }}">
+                    <img src="{{ work.amzn_medium_cover }}" /></a>
+                </div>
+                <div class="spine"><div><img src="{{ work.amzn_medium_cover }}" /></div></div>
+                <div class="shadowbelow"></div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+

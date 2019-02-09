@@ -1,0 +1,35 @@
+{% if edition.isbn %}
+
+    {% set slug %}{{ edition.slug|default('book-link')}}{% endset %}
+    {% set isbn = edition.isbn %}
+    {% set publisher = edition.publisher %}
+
+    {% if null == publisher %}
+        {% include(nolink) %}
+    {% elseif 'Hachette Book Group' == publisher.name %} 
+        {% set fallback %}http://www.hachettebookgroup.com/titles/author/{{ slug }}/{{ isbn }}/{% endset %}
+        <a href="{{ edition.url|default(fallback) }}" data-bstsh-object="outClickLogger" data-outlink-type="hachette">{{ include(inner, {'slug': 'hachette'}) }}</a>
+    {% elseif 'HarperCollins Publishers' == publisher.name %} 
+        {% set fallback %}http://www.harpercollins.com/books/{{ slug }}/?isbn={{ isbn }}{% endset %}
+        <a href="{{ edition.url|default(fallback) }}" data-bstsh-object="outClickLogger" data-outlink-type="harper">{{ include(inner, {'slug': 'harper'}) }}</a>
+    {% elseif 'Macmillan Publishers' == publisher.name %} 
+        {% set fallback %}http://us.macmillan.com/book.aspx?isbn={{ isbn }}{% endset %}
+        <a href="{{ edition.url|default(fallback) }}" data-bstsh-object="outClickLogger" data-outlink-type="macmillan">{{ include(inner, {'slug': 'macmillan'}) }}</a>
+    {% elseif 'Penguin Group' == publisher.name %} 
+        {% set fallback %}http://www.penguin.com/book/{{ slug }}/{{ isbn }}{% endset %}
+        <a href="{{ edition.url|default(fallback) }}" data-bstsh-object="outClickLogger" data-outlink-type="penguin">{{ include(inner, {'slug': 'penguin'}) }}</a>
+    {#{% elseif 'Random House Inc.' == publisher.name %}
+        {% if edition.url %}
+            <a href="{{ edition.url }}" data-bstsh-object="outClickLogger" data-outlink-type="random">{{ include(inner, {'slug': 'random'}) }}</a>
+        {% endif %}#}
+    {% elseif 'Simon & Schuster' == publisher.name %} 
+        {% set fallback %}http://books.simonandschuster.com/{{ slug }}/author/{{ isbn }}{% endset %}
+        <a href="{{ edition.url|default(fallback) }}" data-bstsh-object="outClickLogger" data-outlink-type="simon">{{ include(inner, {'slug': 'simon'}) }}</a>
+    {% else %}
+        {% if edition.url %}
+            <a href="{{ edition.url }}" data-bstsh-object="outClickLogger" data-outlink-type="random">{{ include(inner, {'slug': 'random'}) }}</a>
+        {% else %}
+            {% include(nolink) %}
+        {% endif %}
+    {% endif %}
+{% endif %}

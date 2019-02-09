@@ -1,0 +1,11 @@
+{% if publisher %}
+    {% if 'Amazon' == publisher.name %}
+        <span class="mute">&nbsp;publisher not available</span>
+    {% elseif publisher.url %}
+        <span class="mute"><a href="{{ publisher.url }}">&nbsp;{{ publisher.name }}</a></span>
+    {% else %}
+        <span class="mute">&nbsp;Published by {{ publisher.name }}</span>
+    {% endif %}
+{% else %}
+    <span class="mute">&nbsp;publisher not available</span>
+{% endif %}

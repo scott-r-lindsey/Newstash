@@ -207,6 +207,7 @@ class EntityEditionTest extends BaseTest{
             $edition->getSig()
         );
     }
+
     public function testBuildHachetteSig(): void
     {
         $edition = new Edition();
@@ -220,6 +221,45 @@ class EntityEditionTest extends BaseTest{
         $this->assertEquals(
             'some title|some author',
             $edition->getSig()
+        );
+    }
+
+    public function testSigChangeAffectsGroom(): void
+    {
+        $edition = new Edition();
+        $edition->setGroomed(true);
+
+        $this->assertTrue(
+            $edition->getGroomed()
+        );
+
+        $edition->setAmznPublisher('some publisher');
+        $edition->setTitle('some title');
+        $edition->setAmznAuthorlist(['some author']);
+        $edition->buildSig();
+
+        $this->assertFalse(
+            $edition->getGroomed()
+        );
+
+        $edition->setGroomed(true);
+
+        $edition->setAmznPublisher('some publisher');
+        $edition->setTitle('some title');
+        $edition->setAmznAuthorlist(['some author']);
+        $edition->buildSig();
+
+        $this->assertTrue(
+            $edition->getGroomed()
+        );
+
+        $edition->setAmznPublisher('some publisher');
+        $edition->setTitle('some title');
+        $edition->setAmznAuthorlist(['another author']);
+        $edition->buildSig();
+
+        $this->assertFalse(
+            $edition->getGroomed()
         );
     }
 }

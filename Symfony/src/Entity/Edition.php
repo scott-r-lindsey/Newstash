@@ -28,6 +28,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *          @ORM\Index(name="idx_edition_deleted", columns={"deleted"}),
  *          @ORM\Index(name="idx_edition_apparent_amzn_osi", columns={"apparent_amzn_osi"}),
  *          @ORM\Index(name="idx_edition_rejected", columns={"rejected"}),
+ *          @ORM\Index(name="idx_edition_groomed", columns={"groomed"}),
  *      }
  * )
  */
@@ -207,6 +208,9 @@ class Edition{
     /** @ORM\Column(type="string", length=255, nullable=true) */
     private $slug;
 
+    /** @ORM\Column(type="boolean", options={"default":false}) */
+    private $groomed = false;
+
     public function __construct()
     {
         $this->browse_nodes = new ArrayCollection();
@@ -369,6 +373,18 @@ class Edition{
 
         return $this;
     }
+
+    public function setSig(?string $sig): self
+    {
+        if ($this->sig != $sig) {
+            $this->setGroomed(false);
+        }
+
+        $this->sig = $sig;
+
+        return $this;
+    }
+
 
     //-------------------------------------------------------------------------------
     // ./bin/console make:entity --regenerate
@@ -775,13 +791,6 @@ class Edition{
         return $this->sig;
     }
 
-    public function setSig(?string $sig): self
-    {
-        $this->sig = $sig;
-
-        return $this;
-    }
-
     public function getActive(): ?bool
     {
         return $this->active;
@@ -981,6 +990,18 @@ class Edition{
                 $similarEdition->setEdition(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGroomed(): ?bool
+    {
+        return $this->groomed;
+    }
+
+    public function setGroomed(bool $groomed): self
+    {
+        $this->groomed = $groomed;
 
         return $this;
     }

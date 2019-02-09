@@ -8,7 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(
+ *      name="user",
+ *      indexes={
+ *           @ORM\Index(name="idx_email", columns={"email"}),
+ *           @ORM\Index(name="idx_facebookId", columns={"facebook_id"}),
+ *           @ORM\Index(name="idx_googleId", columns={"google_id"})
+ *      }
+ * )
  */
 class User extends BaseUser
 {
@@ -66,6 +74,20 @@ class User extends BaseUser
 
     /** @ORM\Column(type="array", nullable=true) */
     protected $display_prefs = array();
+
+    //-------------------------------------------------------------------------------
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function updatedTimestamps(){
+        $this->setUpdatedAt(new \DateTime());
+
+        if(null == $this->getCreatedAt()) {
+            $this->setCreatedAt(new \DateTime());
+        }
+    }
 
     //-------------------------------------------------------------------------------
     // ./bin/console make:entity --regenerate

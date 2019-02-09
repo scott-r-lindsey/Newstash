@@ -18,6 +18,7 @@ RUN apk upgrade --update && \
     )" && \
     apk add --no-cache --virtual .php-rundeps $runDeps && \
     apk del .build-deps && \
+    apk add libzip libintl && \
     rm -rf /tmp/*
 
 # Copy shell commands

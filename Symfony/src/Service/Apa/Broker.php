@@ -30,7 +30,7 @@ class Broker
     private $maxProc    = 10;
     private $procCount  = 0;
 
-    const CLEAR_PROC    = 10;
+    const CLEAR_PROC    = 5;
 
     // --------------------------------------------------------------------------------------
     public function __construct(

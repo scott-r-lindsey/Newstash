@@ -123,6 +123,17 @@ class ProductParserTest extends BaseTest
         );
     }
 
+    public function testDumbPrice(): void
+    {
+        $edition = $this->loadEdition('product-sample-dump-price.xml');
+
+        $this->assertEquals(
+            588614.56,
+            $edition->getListPrice()
+        );
+    }
+
+
     private function loadEdition(
         string $file
     ): ?Edition

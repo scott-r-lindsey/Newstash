@@ -6,18 +6,23 @@ namespace App\Service\Apa;
 use App\Service\Apa;
 use App\Service\Apa\ProductApi;
 use App\Service\Apa\ProductParser;
-use Psr\Log\LoggerInterface;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\EditionManager;
 use Closure;
+use Doctrine\ORM\EntityManagerInterface;
 use Ko\Process;
 use Ko\ProcessManager;
+use Psr\Log\LoggerInterface;
+use SimpleXMLElement;
 
 class Broker
 {
 
+    private $em;
     private $logger;
-    private $mm;
     private $productApi;
+    private $productParser;
+    private $editionManager;
+
     private $processManager;
 
     private $fork       = false;
@@ -32,12 +37,14 @@ class Broker
         LoggerInterface $logger,
         EntityManagerInterface $em,
         ProductApi $productApi,
-        ProductParser $productParser
+        ProductParser $productParser,
+        EditionManager $editionManager
     ){
         $this->em               = $em;
         $this->logger           = $logger;
         $this->productApi       = $productApi;
         $this->productParser    = $productParser;
+        $this->editionManager   = $editionManager;
 
         $this->processManager   = new ProcessManager();
     }
@@ -90,16 +97,16 @@ class Broker
                 $this->em->getConnection()->close();
 
                 $this->processManager->fork(
-                    function(Process $p) use ($sxe, $query) {
+                    function(Process $p) use ($sxe, $query, $asins) {
 
                         $p->setProcessTitle("APA Ingest $query");
 
-                        $this->runIngest($sxe);
+                        $this->runIngest($sxe, $asins);
                         exit;
                 });
             }
             else{
-                $this->runIngest($sxe);
+                $this->runIngest($sxe, $asins);
             }
 
             $this->clear();
@@ -127,12 +134,23 @@ class Broker
     }
 
 
-    private function runIngest($sxe)
+    private function runIngest(SimpleXmlElement $sxe, array $asins)
     {
+        $processed = [];
         foreach ($sxe->Items->Item as $item){
             $this->logger->info("Ingesting http://amzn.com/" . (string)$item->ASIN);
-            $this->productParser->ingest($item);
+
+            $edition        = $this->productParser->ingest($item);
+            if ($edition) {
+                $processed[]    = $edition->getAsin();
+            }
+
             $this->logger->debug("Finished ingesting http://amzn.com/" . (string)$item->ASIN);
+        }
+
+        $missing = array_diff($asins, $processed);
+        foreach ($missing as $m) {
+            $this->editionManager->markRejected($m);
         }
     }
 }

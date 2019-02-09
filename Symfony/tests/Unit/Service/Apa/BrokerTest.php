@@ -2,15 +2,16 @@
 
 namespace App\Tests\Unit\Service;
 
+
 use App\Service\Apa;
 use App\Service\Apa\Broker;
 use App\Service\Apa\ProductApi;
 use App\Service\Apa\ProductParser;
+use App\Service\EditionManager;
 use App\Tests\Lib\BaseTest;
-use SimpleXMLElement;
 use Doctrine\ORM\EntityManager;
+use SimpleXMLElement;
 use Symfony\Component\HttpKernel\Log\Logger;
-
 class BrokerTest extends BaseTest
 {
 
@@ -70,7 +71,8 @@ class BrokerTest extends BaseTest
             $this->mockLogger           = $this->createMock(Logger::class),
             $this->mockEntityManager    = $this->createMock(EntityManager::class),
             $this->mockProductApi       = $this->createMock(ProductApi::class),
-            $this->mockProductParser    = $this->createMock(ProductParser::class)
+            $this->mockProductParser    = $this->createMock(ProductParser::class),
+            $this->mockEditionManager   = $this->createMock(EditionManager::class)
         );
     }
 

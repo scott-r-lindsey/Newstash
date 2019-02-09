@@ -144,10 +144,10 @@ class Edition{
     /** @ORM\Column(type="integer", nullable=true) */
     private $amzn_large_cover_y;
 
-    /** @ORM\Column(type="decimal", scale=2, precision=7, nullable=true) */
+    /** @ORM\Column(type="decimal", scale=2, precision=9, nullable=true) */
     protected $list_price;
 
-    /** @ORM\Column(type="decimal", scale=2, precision=7, nullable=true) */
+    /** @ORM\Column(type="decimal", scale=2, precision=9, nullable=true) */
     protected $amzn_price;
 
     /** @ORM\Column(type="string", length=255, nullable=true) */

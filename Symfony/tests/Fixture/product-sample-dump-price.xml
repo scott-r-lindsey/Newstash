@@ -1,0 +1,842 @@
+<?xml version="1.0"?>
+<ItemLookupResponse xmlns="http://webservices.amazon.com/AWSECommerceService/2011-08-01">
+  <OperationRequest>
+    <HTTPHeaders>
+      <Header Name="UserAgent" Value="GuzzleHttp/6.3.3 curl/7.61.1 PHP/7.3.1"/>
+    </HTTPHeaders>
+    <RequestId>7c20a89f-27cb-40d8-90a8-b7404e9636ac</RequestId>
+    <Arguments>
+      <Argument Name="AWSAccessKeyId" Value="AKIAJM43FSTV6EHTINOQ"/>
+      <Argument Name="AssociateTag" Value="12GO5ZuW7/eR9zIMSHM6bEWfzgY4n2iysahzF4Fj"/>
+      <Argument Name="IdType" Value="ASIN"/>
+      <Argument Name="ItemId" Value="0788798529"/>
+      <Argument Name="Operation" Value="ItemLookup"/>
+      <Argument Name="ResponseGroup" Value="ItemAttributes,Images,Large,AlternateVersions,EditorialReview"/>
+      <Argument Name="Service" Value="AWSECommerceService"/>
+      <Argument Name="Timestamp" Value="2019-02-09T00:11:23Z"/>
+      <Argument Name="Version" Value="2011-08-01"/>
+      <Argument Name="Signature" Value="L9NPBIh7EowsMma11IZkcxGMgYVqmGtxwODV54McFC4="/>
+    </Arguments>
+    <RequestProcessingTime>0.0773551050000000</RequestProcessingTime>
+  </OperationRequest>
+  <Items>
+    <Request>
+      <IsValid>True</IsValid>
+      <ItemLookupRequest>
+        <IdType>ASIN</IdType>
+        <ItemId>0788798529</ItemId>
+        <ResponseGroup>ItemAttributes</ResponseGroup>
+        <ResponseGroup>Images</ResponseGroup>
+        <ResponseGroup>Large</ResponseGroup>
+        <ResponseGroup>AlternateVersions</ResponseGroup>
+        <ResponseGroup>EditorialReview</ResponseGroup>
+        <VariationPage>All</VariationPage>
+      </ItemLookupRequest>
+    </Request>
+    <Item>
+      <ASIN>0788798529</ASIN>
+      <DetailPageURL>https://www.amazon.com/Total-Control-David-Baldacci/dp/0788798529?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=165953&amp;creativeASIN=0788798529</DetailPageURL>
+      <ItemLinks>
+        <ItemLink>
+          <Description>Technical Details</Description>
+          <URL>https://www.amazon.com/Total-Control-David-Baldacci/dp/tech-data/0788798529?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0788798529</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Baby Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/baby/add-item.html?asin.0=0788798529&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0788798529</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wedding Registry</Description>
+          <URL>https://www.amazon.com/gp/registry/wedding/add-item.html?asin.0=0788798529&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0788798529</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Add To Wishlist</Description>
+          <URL>https://www.amazon.com/gp/registry/wishlist/add-item.html?asin.0=0788798529&amp;SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0788798529</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>Tell A Friend</Description>
+          <URL>https://www.amazon.com/gp/pdp/taf/0788798529?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0788798529</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Customer Reviews</Description>
+          <URL>https://www.amazon.com/review/product/0788798529?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0788798529</URL>
+        </ItemLink>
+        <ItemLink>
+          <Description>All Offers</Description>
+          <URL>https://www.amazon.com/gp/offer-listing/0788798529?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0788798529</URL>
+        </ItemLink>
+      </ItemLinks>
+      <SalesRank>6510497</SalesRank>
+      <SmallImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/51xYQT1-ZPL._SL75_.jpg</URL>
+        <Height Units="pixels">63</Height>
+        <Width Units="pixels">75</Width>
+      </SmallImage>
+      <MediumImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/51xYQT1-ZPL._SL160_.jpg</URL>
+        <Height Units="pixels">135</Height>
+        <Width Units="pixels">160</Width>
+      </MediumImage>
+      <LargeImage>
+        <URL>https://images-na.ssl-images-amazon.com/images/I/51xYQT1-ZPL.jpg</URL>
+        <Height Units="pixels">423</Height>
+        <Width Units="pixels">500</Width>
+      </LargeImage>
+      <ImageSets>
+        <ImageSet Category="primary">
+          <SwatchImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51xYQT1-ZPL._SL30_.jpg</URL>
+            <Height Units="pixels">25</Height>
+            <Width Units="pixels">30</Width>
+          </SwatchImage>
+          <SmallImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51xYQT1-ZPL._SL75_.jpg</URL>
+            <Height Units="pixels">63</Height>
+            <Width Units="pixels">75</Width>
+          </SmallImage>
+          <ThumbnailImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51xYQT1-ZPL._SL75_.jpg</URL>
+            <Height Units="pixels">63</Height>
+            <Width Units="pixels">75</Width>
+          </ThumbnailImage>
+          <TinyImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51xYQT1-ZPL._SL110_.jpg</URL>
+            <Height Units="pixels">93</Height>
+            <Width Units="pixels">110</Width>
+          </TinyImage>
+          <MediumImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51xYQT1-ZPL._SL160_.jpg</URL>
+            <Height Units="pixels">135</Height>
+            <Width Units="pixels">160</Width>
+          </MediumImage>
+          <LargeImage>
+            <URL>https://images-na.ssl-images-amazon.com/images/I/51xYQT1-ZPL.jpg</URL>
+            <Height Units="pixels">423</Height>
+            <Width Units="pixels">500</Width>
+          </LargeImage>
+        </ImageSet>
+      </ImageSets>
+      <ItemAttributes>
+        <Author>David Baldacci</Author>
+        <Binding>Audio CD</Binding>
+        <Brand>Example Product Brand</Brand>
+        <Creator Role="Narrator">George Guidall</Creator>
+        <EAN>9780788798528</EAN>
+        <EANList>
+          <EANListElement>9780788798528</EANListElement>
+        </EANList>
+        <Edition>Unabridged CD Audiobook</Edition>
+        <Format>Unabridged</Format>
+        <Format>Audiobook</Format>
+        <ISBN>0788798529</ISBN>
+        <Label>Recorded books, LLC</Label>
+        <Languages>
+          <Language>
+            <Name>English</Name>
+            <Type>Published</Type>
+          </Language>
+          <Language>
+            <Name>English</Name>
+            <Type>Unknown</Type>
+          </Language>
+        </Languages>
+        <ListPrice>
+          <Amount>58861456</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$588,614.56</FormattedPrice>
+        </ListPrice>
+        <Manufacturer>Recorded books, LLC</Manufacturer>
+        <PackageDimensions>
+          <Height Units="hundredths-inches">150</Height>
+          <Length Units="hundredths-inches">720</Length>
+          <Weight Units="Hundredths Pounds">85</Weight>
+          <Width Units="hundredths-inches">630</Width>
+        </PackageDimensions>
+        <ProductGroup>Book</ProductGroup>
+        <ProductTypeName>BOOKS_1973_AND_LATER</ProductTypeName>
+        <PublicationDate>1997</PublicationDate>
+        <Publisher>Recorded books, LLC</Publisher>
+        <RunningTime Units="unknown-units">1080</RunningTime>
+        <SKU>HH-050-92-1018701</SKU>
+        <Studio>Recorded books, LLC</Studio>
+        <Title>Total Control</Title>
+      </ItemAttributes>
+      <OfferSummary>
+        <LowestNewPrice>
+          <Amount>19998</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$199.98</FormattedPrice>
+        </LowestNewPrice>
+        <LowestUsedPrice>
+          <Amount>858</Amount>
+          <CurrencyCode>USD</CurrencyCode>
+          <FormattedPrice>$8.58</FormattedPrice>
+        </LowestUsedPrice>
+        <TotalNew>1</TotalNew>
+        <TotalUsed>12</TotalUsed>
+        <TotalCollectible>0</TotalCollectible>
+        <TotalRefurbished>0</TotalRefurbished>
+      </OfferSummary>
+      <Offers>
+        <TotalOffers>1</TotalOffers>
+        <TotalOfferPages>1</TotalOfferPages>
+        <MoreOffersUrl>https://www.amazon.com/gp/offer-listing/0788798529?SubscriptionId=AKIAJM43FSTV6EHTINOQ&amp;tag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;linkCode=xm2&amp;camp=2025&amp;creative=386001&amp;creativeASIN=0788798529</MoreOffersUrl>
+        <Offer>
+          <OfferAttributes>
+            <Condition>New</Condition>
+          </OfferAttributes>
+          <OfferListing>
+            <OfferListingId>RQyQ5lpXkX1HMbey1yw9rFgtNjsKOAZpjWrIy3ATxJYlmqRrxU%2BuR18S%2BuY1HCL3pGVA8dNO8hr9MGf9Hw1EkakzFqTSclB70yNOzx9KLbYWk7UuxWQcmKbRCZAn92vOMF38CoB%2BejVBkbrSybhT3A%3D%3D</OfferListingId>
+            <Price>
+              <Amount>19998</Amount>
+              <CurrencyCode>USD</CurrencyCode>
+              <FormattedPrice>$199.98</FormattedPrice>
+            </Price>
+            <AmountSaved>
+              <Amount>58841456</Amount>
+              <CurrencyCode>USD</CurrencyCode>
+              <FormattedPrice>$588,414.56</FormattedPrice>
+            </AmountSaved>
+            <PercentageSaved>100</PercentageSaved>
+            <Availability>Usually ships in 1-2 business days</Availability>
+            <AvailabilityAttributes>
+              <AvailabilityType>now</AvailabilityType>
+              <MinimumHours>24</MinimumHours>
+              <MaximumHours>48</MaximumHours>
+            </AvailabilityAttributes>
+            <IsEligibleForSuperSaverShipping>0</IsEligibleForSuperSaverShipping>
+            <IsEligibleForPrime>0</IsEligibleForPrime>
+          </OfferListing>
+        </Offer>
+      </Offers>
+      <CustomerReviews>
+        <IFrameURL>https://www.amazon.com/reviews/iframe?akid=AKIAJM43FSTV6EHTINOQ&amp;alinkCode=xm2&amp;asin=0788798529&amp;atag=12GO5ZuW7%2FeR9zIMSHM6bEWfzgY4n2iysahzF4Fj&amp;exp=2019-02-10T00%3A11%3A24Z&amp;v=2&amp;sig=TikW%252FMH6OYMAgP5BHGOOhWAgqb4ZG7vFuJCjDKTmUTw%253D</IFrameURL>
+        <HasReviews>true</HasReviews>
+      </CustomerReviews>
+      <EditorialReviews>
+        <EditorialReview>
+          <Source>Product Description</Source>
+          <Content>Unabridged CD Audiobook 14 CDs / 17 hours long...</Content>
+          <IsLinkSuppressed>0</IsLinkSuppressed>
+        </EditorialReview>
+      </EditorialReviews>
+      <SimilarProducts>
+        <SimilarProduct>
+          <ASIN>1478999292</ASIN>
+          <Title>Long Road to Mercy (An Atlee Pine Thriller)</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1478952504</ASIN>
+          <Title>Saving Faith</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>154917150X</ASIN>
+          <Title>The Fallen (Memory Man series)</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1478999241</ASIN>
+          <Title>Redemption (Memory Man series)</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1478994630</ASIN>
+          <Title>The Simple Truth</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1549142313</ASIN>
+          <Title>Dark Sacred Night (A Ballard and Bosch Novel)</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>052563925X</ASIN>
+          <Title>The Reckoning: A Novel</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>0525643222</ASIN>
+          <Title>Wild Card (A Stone Barrington Novel)</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1549121162</ASIN>
+          <Title>Ambush (A Michael Bennett Thriller)</Title>
+        </SimilarProduct>
+        <SimilarProduct>
+          <ASIN>1478930039</ASIN>
+          <Title>End Game (Will Robie Series)</Title>
+        </SimilarProduct>
+      </SimilarProducts>
+      <BrowseNodes>
+        <BrowseNode>
+          <BrowseNodeId>2159</BrowseNodeId>
+          <Name>Dramas &amp; Plays</Name>
+          <Children>
+            <BrowseNode>
+              <BrowseNodeId>2168</BrowseNodeId>
+              <Name>Ancient &amp; Classical</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>2161</BrowseNodeId>
+              <Name>Anthologies</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>2162</BrowseNodeId>
+              <Name>British &amp; Irish</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>16233611</BrowseNodeId>
+              <Name>Children's</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>15991411</BrowseNodeId>
+              <Name>Comedy</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>2165</BrowseNodeId>
+              <Name>LGBT</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>16244481</BrowseNodeId>
+              <Name>Medieval</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>10159277011</BrowseNodeId>
+              <Name>Regional &amp; Cultural</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>2216</BrowseNodeId>
+              <Name>Religious &amp; Liturgical</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>10159286011</BrowseNodeId>
+              <Name>Shakespeare</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>15991421</BrowseNodeId>
+              <Name>Tragedy</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>2160</BrowseNodeId>
+              <Name>United States</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>10159289011</BrowseNodeId>
+              <Name>Women Authors</Name>
+            </BrowseNode>
+          </Children>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>17</BrowseNodeId>
+              <Name>Literature &amp; Fiction</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>1000</BrowseNodeId>
+                  <Name>Subjects</Name>
+                  <IsCategoryRoot>1</IsCategoryRoot>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>283155</BrowseNodeId>
+                      <Name>Books</Name>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>10495</BrowseNodeId>
+          <Name>Suspense</Name>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>10484</BrowseNodeId>
+              <Name>Thrillers &amp; Suspense</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>18</BrowseNodeId>
+                  <Name>Mystery, Thriller &amp; Suspense</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+        <BrowseNode>
+          <BrowseNodeId>7538392011</BrowseNodeId>
+          <Name>Crime</Name>
+          <Children>
+            <BrowseNode>
+              <BrowseNodeId>9536063011</BrowseNodeId>
+              <Name>Heist</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>9536064011</BrowseNodeId>
+              <Name>Kidnapping</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>9536065011</BrowseNodeId>
+              <Name>Murder</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>9536066011</BrowseNodeId>
+              <Name>Organized Crime</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>9536067011</BrowseNodeId>
+              <Name>Serial Killers</Name>
+            </BrowseNode>
+            <BrowseNode>
+              <BrowseNodeId>9536068011</BrowseNodeId>
+              <Name>Vigilante Justice</Name>
+            </BrowseNode>
+          </Children>
+          <Ancestors>
+            <BrowseNode>
+              <BrowseNodeId>10484</BrowseNodeId>
+              <Name>Thrillers &amp; Suspense</Name>
+              <Ancestors>
+                <BrowseNode>
+                  <BrowseNodeId>18</BrowseNodeId>
+                  <Name>Mystery, Thriller &amp; Suspense</Name>
+                  <Ancestors>
+                    <BrowseNode>
+                      <BrowseNodeId>1000</BrowseNodeId>
+                      <Name>Subjects</Name>
+                      <IsCategoryRoot>1</IsCategoryRoot>
+                      <Ancestors>
+                        <BrowseNode>
+                          <BrowseNodeId>283155</BrowseNodeId>
+                          <Name>Books</Name>
+                        </BrowseNode>
+                      </Ancestors>
+                    </BrowseNode>
+                  </Ancestors>
+                </BrowseNode>
+              </Ancestors>
+            </BrowseNode>
+          </Ancestors>
+        </BrowseNode>
+      </BrowseNodes>
+      <AlternateVersions>
+        <AlternateVersion>
+          <ASIN>0401820750</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Unknown Binding</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B008C5CLG6</ASIN>
+          <Title>By David Baldacci Total Control (1st)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B019TLUO4W</ASIN>
+          <Title>Total Control by David Baldacci (2015-11-05)</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B001U0U28E</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Unknown Binding</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1570424632</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Audio Cassette</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0330523333</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Digital</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0754003191</ASIN>
+          <Title>Total Control: Complete &amp; Unabridged</Title>
+          <Binding>Audio Cassette</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01FKV2SWG</ASIN>
+          <Title>Total Control by Baldacci, David (1997-05-04)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>3883891037</ASIN>
+          <Title>Total Control, Engl. ed.</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01K9A77ZQ</ASIN>
+          <Title>Total Control by David Baldacci (1997-01-06)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0759524920</ASIN>
+          <Title>Total Control (Oeb)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>078620964X</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0446604844</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Mass Market Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B002STPPEW</ASIN>
+          <Title>Total Control : Unabridged Read By George Guidall</Title>
+          <Binding>Audio Cassette</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B017MYMQTY</ASIN>
+          <Title>Total Control by David Baldacci (2011-11-04)</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B018M35WMC</ASIN>
+          <Title>[(Total Control)] [By (author) David Baldacci] published on (November, 2003)</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B000FA5STS</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Kindle Edition</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1549148133</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1440713073</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Preloaded Digital Audio Player</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0681658193</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1428158677</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1415955190</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0759584656</ASIN>
+          <Title>Total Control (Microsoft Reader)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B00J5T2MI0</ASIN>
+          <Title>by Baldacci, David Total Control (2003) Paperback</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B00RWQFR6W</ASIN>
+          <Title>By David Baldacci Total Control [Mass Market Paperback]</Title>
+          <Binding>Mass Market Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0446673749</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01K3HA8FQ</ASIN>
+          <Title>Total Control by David Baldacci (1997-02-01)</Title>
+          <Binding>Audio Cassette</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0743408470</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0786209631</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B00OHX87J2</ASIN>
+          <Title>Total Control by Baldacci, David (1997) Mass Market Paperback</Title>
+          <Binding>Mass Market Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01N2GIAJE</ASIN>
+          <Title>Total Control by David Baldacci (2011-11-04)</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B007CIK7NI</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Mass Market Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B002SRCBOG</ASIN>
+          <Title>Total Control : Unabridged</Title>
+          <Binding>Audio Cassette</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>153871180X</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B001NCFRX4</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Unknown Binding</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0684820757</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0446520950</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B001IARB76</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01FIYJB4S</ASIN>
+          <Title>Total Control by David Baldacci (1997-12-01)</Title>
+          <Binding>Mass Market Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>033041965X</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>5260840771</ASIN>
+          <Title>Total Control (AUDIO CASSETTE)</Title>
+          <Binding>Unknown Binding</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1447200349</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0759504571</ASIN>
+          <Title>Total Control (Gemstar)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1509862153</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B0056AXD9E</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Mass Market Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B000JMA2KC</ASIN>
+          <Title>Total Control, By David Baldacci, Unabridged 12 Audio Cassettes, Read By Jonathan Marosz</Title>
+          <Binding>Audio Cassette</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0759564582</ASIN>
+          <Title>Total Control (Glassbook)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B00C6OTPCM</ASIN>
+          <Title>Total Control by Baldacci, David (2011)</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B000WZHNVW</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01K3R4XUC</ASIN>
+          <Title>Total Control by David Baldacci (2013-04-02)</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01FODFQEC</ASIN>
+          <Title>David Baldacci: Total Control (Mass Market Paperback); 1997 Edition</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>153874855X</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Mass Market Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B009SCHX88</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Mass Market Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0671856022</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01K8ZB0CI</ASIN>
+          <Title>Total Control by David Baldacci (1998-06-01)</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B000SENAT6</ASIN>
+          <Title>Total Control Uk Edition</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01K3KKZP6</ASIN>
+          <Title>Total Control by David Baldacci (1997-08-01)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0671010905</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Audio Cassette</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>074345006X</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0788712934</ASIN>
+          <Title>TotalControl</Title>
+          <Binding>Audio Cassette</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B004OGALDC</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1455542601</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B06XYTRLVB</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Audible Audiobook</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0759595275</ASIN>
+          <Title>Total Control (PDF)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1447287630</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B004A20UL8</ASIN>
+          <Title>Total Control - Large Print Edition</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B00B4G0FYU</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Audible Audiobook</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1447226836</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1568652704</ASIN>
+          <Title>Total Control : A Novel</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1619696231</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0613071255</ASIN>
+          <Title>Total Control</Title>
+          <Binding>School &amp; Library Binding</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B008KUAYP8</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B007YXWQL2</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B004G9OZM0</ASIN>
+          <Title>Total Control [Mass Market Paperback]</Title>
+          <Binding>Unknown Binding</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0759544611</ASIN>
+          <Title>Total Control (Peanut Press)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>0330545159</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B00DJYF6N0</ASIN>
+          <Title>[Total Control] (By: David Baldacci) [published: December, 1997]</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>1509862145</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B011T72U46</ASIN>
+          <Title>Total Control by David Baldacci (4-Nov-2011) Paperback</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01LP9J3S4</ASIN>
+          <Title>Total Control by David Baldacci (2013-04-02)</Title>
+          <Binding>Audio CD</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B06XCMF4TR</ASIN>
+          <Title>Total Control</Title>
+          <Binding>Paperback</Binding>
+        </AlternateVersion>
+        <AlternateVersion>
+          <ASIN>B01FIZ6DVG</ASIN>
+          <Title>Total Control by David Baldacci (1997-01-01)</Title>
+          <Binding>Hardcover</Binding>
+        </AlternateVersion>
+      </AlternateVersions>
+    </Item>
+  </Items>
+</ItemLookupResponse>

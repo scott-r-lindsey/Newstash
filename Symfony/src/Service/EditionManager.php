@@ -82,4 +82,17 @@ class EditionManager
             $rank++;
         }
     }
+
+    public function markRejected(string $asin): void
+    {
+        $dbh = $this->em->getConnection();
+
+        $sql = '
+            UPDATE edition
+            SET rejected = 1
+            WHERE edition_asin = ?';
+
+        $sth = $dbh->prepare($sql);
+        $this->dlm->exec($sth, [$asin]);
+    }
 }

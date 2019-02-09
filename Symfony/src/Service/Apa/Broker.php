@@ -27,10 +27,10 @@ class Broker
 
     private $fork       = false;
     private $queue      = [];
-    private $maxProc    = 10;
+    private $maxProc    = 5;
     private $procCount  = 0;
 
-    const CLEAR_PROC    = 5;
+    const CLEAR_PROC    = 10;
 
     // --------------------------------------------------------------------------------------
     public function __construct(

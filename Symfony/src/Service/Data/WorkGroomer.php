@@ -8,6 +8,7 @@ use App\Service\Data\FrontFinder;
 use App\Service\DeadLockRetryManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use SebastianBergmann\Timer\Timer;
 
 class WorkGroomer
 {
@@ -49,6 +50,7 @@ class WorkGroomer
         $ff     = $this->frontFinder;
         $now    = new \DateTime('now');
 
+        Timer::start();             // ------>
         $sql = '
             SELECT
                 asin, sig
@@ -59,6 +61,8 @@ class WorkGroomer
 
         $sth    = $dbh->prepare($sql);
         $this->dlm->exec($sth, [$initialAsin]);
+        $this->timerStop($sql);     // <------
+
         $r      = $sth->fetch();
 
         $this->asins    = [$r['asin'] => 1];
@@ -88,6 +92,7 @@ class WorkGroomer
             $in .= '?';
         }
 
+        Timer::start();             // ------>
         $sql = "
             SELECT
                 asin, work_id, title, format_id,
@@ -100,6 +105,7 @@ class WorkGroomer
 
         $sth = $dbh->prepare($sql);
         $this->dlm->exec($sth, array_keys($this->asins));
+        $this->timerStop($sql);     // <------
 
         $work_ids       = [];
         $edition_data   = [];
@@ -133,6 +139,7 @@ class WorkGroomer
         if (!$front){
             // no viable front title
 
+            Timer::start();             // ------>
             foreach ($work_ids as $work_id){
                 $sql = '
                     UPDATE
@@ -148,6 +155,7 @@ class WorkGroomer
                 $this->dlm->exec($sth, [
                     $now->format('Y-m-d H:i:s'),
                     $work_id]);
+            $this->timerStop($sql);     // <------
             }
 
             $this->setEditionGroomed($initialAsin);
@@ -160,6 +168,7 @@ class WorkGroomer
         // work not found, create one
         if (0 === count(array_keys($work_ids))){
 
+            Timer::start();             // ------>
             $sql = '
                 INSERT INTO work
                     (front_edition_asin, title, created_at, updated_at)
@@ -173,6 +182,7 @@ class WorkGroomer
                 $front['title'],
                 $now->format('Y-m-d H:i:s'),
                 $now->format('Y-m-d H:i:s')]);
+            $this->timerStop($sql);     // <------
 
             $master_work_id = $dbh->lastInsertId();
         }
@@ -183,6 +193,7 @@ class WorkGroomer
 
             // update title, updated_at, front
 
+            Timer::start();             // ------>
             $sql = '
                 UPDATE
                     work
@@ -197,6 +208,7 @@ class WorkGroomer
                 $now->format('Y-m-d H:i:s'),
                 $front['asin'],
                 $master_work_id]);
+            $this->timerStop($sql);     // <------
         }
         // multilple works found, must be fixed
         else if (1 < count(array_keys($work_ids))){
@@ -208,6 +220,7 @@ class WorkGroomer
                 $in .= '?';
             }
 
+            Timer::start();             // ------>
             $sql = "
                 SELECT
                     id
@@ -221,6 +234,7 @@ class WorkGroomer
 
             $sth = $dbh->prepare($sql);
             $this->dlm->exec($sth, array_keys($work_ids));
+            $this->timerStop($sql);     // <------
             $r = $sth->fetch();
             $master_work_id = $r['id'];
 
@@ -238,6 +252,7 @@ class WorkGroomer
                 $bad_work_ids[$work_id] = 1;
             }
 
+            Timer::start();             // ------>
             $sql = "
                 UPDATE work
                 SET superseding_id=?, updated_at=?
@@ -249,6 +264,7 @@ class WorkGroomer
                 [$now->format('Y-m-d H:i:s')],
                 array_keys($bad_work_ids)
             ) );
+            $this->timerStop($sql);     // <------
         }
 
         // -------------------------------------------------------------------------
@@ -263,6 +279,7 @@ class WorkGroomer
             $in .= '?';
             $asins[] = $ed['asin'];
         }
+        Timer::start();             // ------>
         $sql = "
             UPDATE
                 edition
@@ -279,10 +296,12 @@ class WorkGroomer
             [$now->format('Y-m-d H:i:s')],
             $asins
         ));
+        $this->timerStop($sql);     // <------
 
         // -------------------------------------------------------------------------
         // undelete works which have gained editions
 
+        Timer::start();             // ------>
         $sql = '
             UPDATE
                 work
@@ -296,6 +315,7 @@ class WorkGroomer
         $this->dlm->exec($sth, [
             $now->format('Y-m-d H:i:s'),
             $master_work_id]);
+        $this->timerStop($sql);     // <------
 
         // -------------------------------------------------------------------------
 
@@ -320,6 +340,7 @@ class WorkGroomer
             $in .= '?';
         }
 
+        Timer::start();             // ------>
         $sql = "
             SELECT
                 similar_asin
@@ -334,6 +355,7 @@ class WorkGroomer
 
         $sth = $dbh->prepare($sql);
         $this->dlm->exec($sth, $asins);
+        $this->timerStop($sql);     // <------
 
         $in     = '';
         $asins  = [];
@@ -347,6 +369,7 @@ class WorkGroomer
 
         $similar_work_ids = [];
         if (count($asins)){
+            Timer::start();             // ------>
             $sql = "
                 SELECT
                     work_id
@@ -359,6 +382,7 @@ class WorkGroomer
 
             $sth = $dbh->prepare($sql);
             $this->dlm->exec($sth, $asins);
+            $this->timerStop($sql);     // <------
 
             $similar_work_ids = [];
             foreach ($sth->fetchAll() as $r){
@@ -368,14 +392,17 @@ class WorkGroomer
             }
         }
 
+        Timer::start();             // ------>
         $sql = '
             DELETE FROM similar_work
             WHERE work_id = ?';
 
         $sth = $dbh->prepare($sql);
         $this->dlm->exec($sth, [$master_work_id]);
+        $this->timerStop($sql);     // <------
 
         if (count($similar_work_ids)){
+            Timer::start();             // ------>
             $sql = '
                 INSERT INTO similar_work (work_id, similar_id)
                 VALUES (?,?)';
@@ -384,6 +411,7 @@ class WorkGroomer
             foreach ($similar_work_ids as $similar_work_id){
                 $this->dlm->exec($sth, [$master_work_id, $similar_work_id]);
             }
+            $this->timerStop($sql);     // <------
         }
     }
 
@@ -392,6 +420,7 @@ class WorkGroomer
         // returns true if any new asins are found
         // backstops against $this->searched_sigs
 
+        Timer::start();             // ------>
         $sql = '
             SELECT
                 asin
@@ -408,6 +437,7 @@ class WorkGroomer
             $sql,
             'asin'
         );
+        $this->timerStop($sql);     // <------
 
         foreach ($asins as $asin){
             if (!isset($this->asins[(string)$asin])){
@@ -423,6 +453,7 @@ class WorkGroomer
         // returns true if any new sigs are found
         // backstops against $this->searched_asins
 
+        Timer::start();             // ------>
         $sql = '
             SELECT
                 DISTINCT sig
@@ -439,6 +470,7 @@ class WorkGroomer
             $sql,
             'sig'
         );
+        $this->timerStop($sql);     // <------
 
         foreach ($sigs as $sig){
             if (!isset($this->sigs[$sig])){
@@ -453,6 +485,7 @@ class WorkGroomer
     {
         $dbh    = $this->em->getConnection();
 
+        Timer::start();             // ------>
         $sql = '
             UPDATE edition
             SET
@@ -462,12 +495,14 @@ class WorkGroomer
 
         $sth = $dbh->prepare($sql);
         $this->dlm->exec($sth, [$asin]);
+        $this->timerStop($sql);     // <------
     }
 
     private function setEditionsGroomed(int $work_id): void
     {
         $dbh    = $this->em->getConnection();
 
+        Timer::start();             // ------>
         $sql = '
             UPDATE edition
             SET
@@ -477,6 +512,7 @@ class WorkGroomer
 
         $sth = $dbh->prepare($sql);
         $this->dlm->exec($sth, [$work_id]);
+        $this->timerStop($sql);     // <------
     }
 
     private function findAWSRelated(): bool
@@ -486,6 +522,7 @@ class WorkGroomer
 
         $dbh    = $this->em->getConnection();
 
+        Timer::start();             // ------>
         $sql = '
             SELECT asin, amzn_alternatives
             FROM edition
@@ -533,6 +570,7 @@ class WorkGroomer
                 }
             }
         }
+        $this->timerStop($sql);     // <------
         return $new;
     }
 
@@ -580,5 +618,12 @@ class WorkGroomer
         }
 
         return $things;
+    }
+
+    private function timerStop(string $sql): void
+    {
+        $time = Timer::stop();
+
+        $this->logger->debug(Timer::secondsToTimeString($time) . ': ' . $sql);
     }
 }

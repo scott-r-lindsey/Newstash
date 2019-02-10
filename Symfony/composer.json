@@ -13,6 +13,7 @@
         "misterion/ko-process": "^0.5.3",
         "php-http/guzzle6-adapter": "~1.1.1",
         "php-http/httplug-bundle": "~1.13",
+        "phpunit/php-timer": "^2.0",
         "seld/signal-handler": "^1.1",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^4.0",

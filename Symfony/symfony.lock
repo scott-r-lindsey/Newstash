@@ -191,6 +191,9 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
+    "phpunit/php-timer": {
+        "version": "2.0.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },

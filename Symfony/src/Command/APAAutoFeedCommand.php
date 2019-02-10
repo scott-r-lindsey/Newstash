@@ -85,6 +85,7 @@ class APAAutoFeedCommand extends BaseCommand
         if ($input->getOption('fork')){
             $this->apaBroker->setFork(true);
         }
+        $this->apaBroker->setWorkGroom(false);
 
         while (count($asins)) {
 

@@ -56,7 +56,7 @@ class AutoWorkGroomCommand extends BaseCommand
                 $output->writeln("<info>Caught signal $signalName, shutting down...</info>");
         });
 
-        ini_set('memory_limit', '1024M');
+        ini_set('memory_limit', '2948M');
 
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
 

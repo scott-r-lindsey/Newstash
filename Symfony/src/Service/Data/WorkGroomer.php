@@ -42,7 +42,7 @@ class WorkGroomer
         $this->workGroomLogic($edition->getAsin());
     }
 
-    public function workGroomLogic(string $asin): void
+    public function workGroomLogic(string $initialAsin): void
     {
         $em     = $this->em;
         $dbh    = $em->getConnection();
@@ -58,7 +58,7 @@ class WorkGroomer
                 asin = ?';
 
         $sth    = $dbh->prepare($sql);
-        $this->dlm->exec($sth, [$asin]);
+        $this->dlm->exec($sth, [$initialAsin]);
         $r      = $sth->fetch();
 
         $this->asins    = [$r['asin'] => 1];
@@ -149,6 +149,8 @@ class WorkGroomer
                     $now->format('Y-m-d H:i:s'),
                     $work_id]);
             }
+
+            $this->setEditionGroomed($initialAsin);
             return;
         }
 
@@ -296,8 +298,27 @@ class WorkGroomer
             $master_work_id]);
 
         // -------------------------------------------------------------------------
-        // find similar editions to this work's editions
-        // re-use $in and $asins
+
+        $this->updateSimilarWorks($asins, (int)$master_work_id);
+
+        $this->setEditionsGroomed((int)$master_work_id);
+    }
+
+    private function updateSimilarWorks(
+        array $asins,
+        int $master_work_id
+    ): void
+    {
+        $em     = $this->em;
+        $dbh    = $em->getConnection();
+
+        $in         = '';
+        foreach ($asins as $a) {
+            if ($in){
+                $in .= ',';
+            }
+            $in .= '?';
+        }
 
         $sql = "
             SELECT
@@ -364,8 +385,6 @@ class WorkGroomer
                 $this->dlm->exec($sth, [$master_work_id, $similar_work_id]);
             }
         }
-
-        $this->setEditionsGroomed((int)$master_work_id);
     }
 
     private function findNewSigAsins(): bool
@@ -428,6 +447,21 @@ class WorkGroomer
             }
         }
         return $new;
+    }
+
+    private function setEditionGroomed(string $asin): void
+    {
+        $dbh    = $this->em->getConnection();
+
+        $sql = '
+            UPDATE edition
+            SET
+                groomed = 1
+            WHERE
+                asin = ?';
+
+        $sth = $dbh->prepare($sql);
+        $this->dlm->exec($sth, [$asin]);
     }
 
     private function setEditionsGroomed(int $work_id): void

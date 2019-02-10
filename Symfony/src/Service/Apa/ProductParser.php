@@ -59,7 +59,8 @@ class ProductParser
     }
 
     public function ingest(
-        SimpleXMLElement $sxe
+        SimpleXMLElement $sxe,
+        bool $groom = true
     ): ?Edition
     {
 
@@ -82,7 +83,9 @@ class ProductParser
 
         $this->em->flush();
 
-        $this->workGroomer->workGroom($edition);
+        if ($groom) {
+            $this->workGroomer->workGroom($edition);
+        }
 
         return $edition;
     }

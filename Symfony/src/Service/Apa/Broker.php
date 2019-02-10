@@ -25,6 +25,7 @@ class Broker
 
     private $processManager;
 
+    private $workGroom  = true;
     private $fork       = false;
     private $queue      = [];
     private $maxProc    = 5;
@@ -59,6 +60,11 @@ class Broker
         if (Apa::MAX_REQUEST_SIZE === count($this->queue)) {
             $this->process();
         }
+    }
+
+    public function setWorkGroom(bool $groom): void
+    {
+        $this->workGroom = $groom;
     }
 
     public function process(): void
@@ -140,7 +146,7 @@ class Broker
         foreach ($sxe->Items->Item as $item){
             $this->logger->info("Ingesting http://amzn.com/" . (string)$item->ASIN);
 
-            $edition        = $this->productParser->ingest($item);
+            $edition        = $this->productParser->ingest($item, $this->workGroom);
             if ($edition) {
                 $processed[]    = $edition->getAsin();
             }

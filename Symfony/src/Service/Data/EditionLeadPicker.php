@@ -73,6 +73,35 @@ class EditionLeadPicker
         return $asins;
     }
 
+    public function findGroomable(): ?string
+    {
+
+        $sql = "
+            SELECT
+                asin
+            FROM
+                edition
+            WHERE
+                groomed = 0 AND
+                rejected = 0
+            ORDER BY
+                updated_at ASC
+            LIMIT 1";
+
+        $dbh = $this->em->getConnection();
+
+        $sth = $dbh->prepare($sql);
+        $sth->execute();
+
+        $results = $sth->fetchAll();
+
+        if (!count($results)) {
+            return null;
+        }
+
+        return (string)$results[0]['asin'];
+    }
+
     private function markers($ar){
         $str = '';
         foreach ($ar as $a){

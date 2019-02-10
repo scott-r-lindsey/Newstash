@@ -79,7 +79,7 @@ class APAAdhocAsinIngestCommand extends BaseCommand
         else{
             $output->writeln('Parsing and ingesting data...');
 
-            $this->parser->ingest($sxe->Items->Item[0]);
+            $this->parser->ingest($sxe->Items->Item[0], true);
 
             $output->writeln('Done!');
         }

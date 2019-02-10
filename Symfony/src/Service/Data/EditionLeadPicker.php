@@ -83,7 +83,8 @@ class EditionLeadPicker
                 edition
             WHERE
                 groomed = 0 AND
-                rejected = 0
+                rejected = 0 AND
+                amzn_updated_at IS NOT NULL
             ORDER BY
                 updated_at ASC
             LIMIT 1";

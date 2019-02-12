@@ -17,6 +17,10 @@ RUN apk upgrade --update && \
             | sort -u \
     )" && \
     apk add --no-cache --virtual .php-rundeps $runDeps && \
+    pecl install mongodb && \
+    pecl install redis && docker-php-ext-enable redis && \
+    docker-php-ext-install bcmath && \
+    echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/mongo.ini && \
     apk del .build-deps && \
     apk add libzip libintl && \
     rm -rf /tmp/*

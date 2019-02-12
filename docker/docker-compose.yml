@@ -17,7 +17,6 @@ services:
             - "${MYSQL_BINLOG_PATH}:/var/lib/mysql-binlogs"
             - "${APP_PATH}/data/conf.d:/etc/mysql/conf.d"
 
-
     php:
         container_name: newstash-php-container
         build: ../docker/php
@@ -27,6 +26,9 @@ services:
             - "${APP_PATH}:/var/www/html/phpapp"
 
         environment:
+            MONGODB_URL: "${MONGODB_URL}"
+            MONGODB_DB: "${MONGODB_DB}"
+
             APP_ENV: dev
             APP_SECRET: devsecretdevsecretdevsecret
             DATABASE_URL: "mysql://bookstash:bookstash@mysql:3306/bookstash"
@@ -57,5 +59,7 @@ services:
         depends_on:
             - php
 
-
+    mongo:
+        container_name: newstash-mongo-container
+        image: mongo:4
 

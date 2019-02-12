@@ -10,8 +10,12 @@ services:
 
     test.App\Service\Apa\Broker: '@App\Service\Apa\Broker'
     test.App\Service\Apa\ProductParser: '@App\Service\Apa\ProductParser'
+    test.App\Service\Auth\NewstashUserProvider: '@App\Service\Auth\NewstashUserProvider'
     test.App\Service\Data\EditionLeadPicker: '@App\Service\Data\EditionLeadPicker'
     test.App\Service\Data\FrontFinder: '@App\Service\Data\FrontFinder'
     test.App\Service\Data\WorkGroomer: '@App\Service\Data\WorkGroomer'
     test.App\Service\EditionManager: '@App\Service\EditionManager'
-    test.App\Service\Auth\NewstashUserProvider: '@App\Service\Auth\NewstashUserProvider'
+    test.App\Service\Export\BrowseNode: '@App\Service\Export\BrowseNode'
+    test.App\Service\Export\Work: '@App\Service\Export\Work'
+    test.App\Service\Mongo\BrowseNode: '@App\Service\Mongo\BrowseNode'
+    test.App\Service\Mongo: '@App\Service\Mongo'

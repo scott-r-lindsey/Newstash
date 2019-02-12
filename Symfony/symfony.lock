@@ -1,4 +1,7 @@
 {
+    "alcaeus/mongo-php-adapter": {
+        "version": "1.1.6"
+    },
     "clue/stream-filter": {
         "version": "v1.4.0"
     },
@@ -71,6 +74,21 @@
     "doctrine/migrations": {
         "version": "v1.6.2"
     },
+    "doctrine/mongodb": {
+        "version": "1.6.3"
+    },
+    "doctrine/mongodb-odm": {
+        "version": "1.2.6"
+    },
+    "doctrine/mongodb-odm-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "1fd8598bf42227a1c8905edd32f640e4c5d15eff"
+        }
+    },
     "doctrine/orm": {
         "version": "v2.5.13"
     },
@@ -130,6 +148,9 @@
     },
     "misterion/ko-process": {
         "version": "v0.5.3"
+    },
+    "mongodb/mongodb": {
+        "version": "1.4.2"
     },
     "nikic/php-parser": {
         "version": "v4.2.0"

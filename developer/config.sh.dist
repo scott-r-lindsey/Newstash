@@ -1,3 +1,6 @@
+export MONGODB_URL=mongodb://mongo:27017
+export MONGODB_DB=newstash
+
 export DATABASE_URL=mysql://bookstash:bookstash@mysql:3306/bookstash
 export MYSQL_DATA_PATH=/var/www/html/newstash/data/mysql/
 export MYSQL_BINLOG_PATH=/var/www/html/newstash/data/mysql-binlog/

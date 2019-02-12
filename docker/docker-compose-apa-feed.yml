@@ -1,0 +1,30 @@
+version: '3'
+services:
+
+    php-apa-auto-feed:
+        container_name: newstash-php-apa-feed-container
+        build: ../docker/php
+        image: newstash-php-apa-feed-image
+
+        volumes:
+            - "${APP_PATH}:/var/www/html/phpapp"
+
+        environment:
+            APP_ENV: dev
+            APP_SECRET: devsecretdevsecretdevsecret
+            DATABASE_URL: "mysql://bookstash:bookstash@mysql:3306/bookstash"
+            DATABASE_URL: "${DATABASE_URL}"
+
+            AWS_REGION: "${AWS_REGION}"
+            AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+            AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+            AWS_ASSOCIATE_TAG: "${AWS_ASSOCIATE_TAG}"
+
+            FACEBOOK_APP_ID: "${FACEBOOK_APP_ID}"
+            GOOGLE_API_KEY: "${GOOGLE_API_KEY}"
+            GOOGLE_APP_ID: "${GOOGLE_APP_ID}"
+            GAQ_ID: "${GAQ_ID}"
+            AMZN_AFFILIATE: "${AMZN_AFFILIATE}"
+
+        entrypoint: /usr/local/bin/php
+        command: ./bin/console newstash:apa-auto-feed --env=prod --fork -vv

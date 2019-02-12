@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\Mongo\BrowseNode;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,37 +19,35 @@ class SearchController extends AbstractController
     /**
      * @Template()
      */
-    public function categoryMenuAction($node_ids): array
+    public function categoryMenu(
+        BrowseNode $bn,
+        $node_ids
+    ): array
     {
         // category drop down menu generated from mongo
 
         if (!is_array($node_ids)){
             $fixed = [];
-            foreach (explode(',', $node_ids) as $node_id){
+            foreach (explode(',', (string)$node_ids) as $node_id){
                 $fixed[] = (int)$node_id;
             }
             $node_ids = $fixed;
         }
 
-        $mongodb = $this->container->get('bookstash.search.mongodb_factory')->getMongoDB();
-        $nodes_collection = $mongodb->nodes;
-
-        $cursor = $nodes_collection->find([
-            'id' => array('$in' => $node_ids)
-        ]);
-
-        $nodes_by_id = array();
-        foreach ($cursor as $node) {
-            $nodes_by_id[(string)$node['id']] = $node;
-        }
-
-        $nodes = array();
-        foreach ($node_ids as $node_id){
-            $nodes[] = $nodes_by_id[(string)$node_id];
-        }
+        $nodes = $bn->findNodesById($node_ids);
 
         return array(
             'nodes' => $nodes
         );
     }
+
+    /**
+     * @Route("/browse/category/{node_id}/{slug}", requirements={"node_id" = "^\d+$"}, name="search_browse_category", methods={"GET"})
+     * @Template()
+     */
+    public function browseCategoryAction(Request $request, $node_id, $slug){
+        $workSearcher   = $this->container->get('bookstash.search.works');
+        return $workSearcher->doCategorySearch($request, $node_id, $slug);
+    }
+
 }

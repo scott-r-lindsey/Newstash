@@ -1,0 +1,67 @@
+
+{% if app.user.username is defined %}
+
+    {% set usertype %}social{% endset %}
+    {% if app.user.facebookId is not null %}
+        {% set via %}via Facebook{% endset %}
+    {% elseif app.user.googleId is not null %}
+        {% set via %}via Google+{% endset %}
+    {% else %}
+        {% set via %}{% endset %}
+        {% set usertype %}local{% endset %}
+    {% endif %}
+
+    <div class="user-shell" data-usertype="{{ usertype }}" data-bstsh-object="userDropWidget" data-user-id="{{ app.user.id }}" id="bstsh-user-data-id">
+
+        <div class="top">
+            <img src="{{ app.user.avatarUrl(100) }}" />
+            <b>{{ app.user.name }}</b><br />
+            {{ app.user.email }}<br />
+        </div>
+        <div class="middle">
+            <p></p>
+        </div>
+
+        <div class="password-reset">
+            <form>
+                <strong>Please enter your old password and your new password.</strong>
+
+                <input type="password" class="password old-password" placeholder="Old Password" data-bstsh-object="passInputManager" tabindex="1">
+                <button class="showpass show" style="display:none"><i class="fa fa-eye"></i></button><button class="showpass hide"><i class="fa fa-eye-slash"></i></button><br />
+
+                <div class="nag"><i class="fa fa-arrow-up"></i><span></span></div>
+
+                <input type="password" class="password new-password" placeholder="New Password" data-bstsh-object="passInputManager" tabindex="1">
+                <button class="showpass show" style="display:none"><i class="fa fa-eye"></i></button><button class="showpass hide"><i class="fa fa-eye-slash"></i></button><br />
+
+                <div class="nag"><i class="fa fa-arrow-up"></i><span></span></div>
+
+                <div class="progress"><i></i><i></i><i></i><i></i></div>
+
+                <span class="control">
+                    <button class="fakelink cancel">Cancel</button>
+                    <button class="fakelink save-password change">Save</button>
+                </span>
+            </form>
+            <div class="hidden-form" style="display:none">
+            </div>
+        </div>
+        <div class="password-changed">
+            <span>
+                Your password has been updated.
+            </span>
+
+            <button class="fakelink ok">ok</button>
+        </div>
+
+        <div class="bottom">
+            <div class="password">
+                <button class="fakelink change-password">Change Password</button>
+            </div><div>
+                <button class="fakelink" data-bstsh-object="eventThrower" data-event="bookster:logoutrequest">Logout</button>
+            </div>
+        </div>
+
+    </div>
+{% else %}
+{% endif %}

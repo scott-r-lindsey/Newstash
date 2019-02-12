@@ -101,7 +101,7 @@
                         <div class="head">
                             Categories
                         </div>
-                         {{ render(controller('ScottDataBundle:Search:categoryMenu', {
+                         {{ render(controller('App\\Controller\\SearchController:categoryMenu', {
                                 'node_ids': 1000
                             })) }}
                     </div>
@@ -117,7 +117,7 @@
                         <div class="triangle"></div>
                     </div>
                     <div class="shell">
-                        {{ include ('ScottDataBundle:Default:aboutmenu.html.twig') }}
+                        {{ include('default/aboutmenu.html.twig') }}
                     </div>
                 </div>
                 <div class="menu user" id="usermenu">
@@ -125,7 +125,7 @@
                         <div class="triangle"></div>
                     </div>
                     <div class="shell" data-bstsh-object="eventDomUpdater" data-event="bookster:authchange" data-source="/auth/userdrop" data-replace-target="#usermenuname" data-replace-source=".firstname">
-                        {{ include ('ScottDataBundle:Auth:userdrop.html.twig') }}
+                        {{ include ('auth/userdrop.html.twig') }}
                     </div>
                 </div>
             </div>

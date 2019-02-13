@@ -1,7 +1,7 @@
 
 defaults: &job-defaults
   docker:
-    - image: circleci/php:7.2.6-zts-node-browsers
+    - image: circleci/php:7.3-fpm-node-browsers-legacy 
 
 jobs:
     build:

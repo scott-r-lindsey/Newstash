@@ -1,5 +1,12 @@
+
+defaults: &job-defaults
+  docker:
+    - image: circleci/php:7.2.6-zts-node-browsers
+
 jobs:
     build:
+        <<: *job-defaults
+
         steps:
             - checkout
             - run: 'echo "what up!"'

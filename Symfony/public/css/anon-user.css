@@ -1,0 +1,21 @@
+.bstsh-user-avatar-30{
+    display:inline-block;
+    height:30px;
+    width:30px;
+    border-radius: 4px;
+    background-image:url('/img/user.svg');
+    background-size: 100%;
+}  
+.bstsh-user-avatar-80{
+    display:inline-block;
+    height:80px;
+    width:80px;
+    border-radius: 8px;
+    background-image:url('/img/avatar-unknown.svg');
+}
+.bstsh-user-name:before{
+}   
+.bstsh-user-login-or-first:before{
+    content:'Log In';
+}
+

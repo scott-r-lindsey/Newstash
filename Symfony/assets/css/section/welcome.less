@@ -1,0 +1,121 @@
+section.welcome{
+    position:fixed;           
+    width:100%;                         
+    height:100%;
+    background-color:black;
+    overflow:hidden;
+
+    .shell{
+        overflow:hidden;
+        position:relative;
+        width:100%;                         
+        height:100%;
+        z-index:0;
+        a.escape{
+            display:none;
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            display:none;
+        }
+        a.escape.visible{
+            display:block;
+            .cursor-zoom-out();
+        }
+        .cursor-zoom-out();
+        .b-hero{
+            display:inline-block;
+            position:relative;
+            width:250px;
+            height:250px;
+            text-align:center;
+            color:white;
+            font-family: 'Oleo Script Swash Caps', cursive;
+            text-shadow: 2px 1px 2px darken(@firebrick, 10%);
+            font-size:220px;
+            line-height:180px;
+            background-color:fade(@firebrick, 90%);
+            border-radius:20px;
+            .box-sizing(border-box);
+            vertical-align:middle;
+            padding-top:40px;
+            .link{
+                position:absolute;
+                bottom:-180px;
+                left:220px;
+                width:500px;
+                height:50px;
+                line-height:0;
+                a{
+                    display:none;
+                    vertical-align:top;
+                    height:50px;
+                    line-height:50px;
+                    padding:0 40px;
+                    border-radius:2px;
+                    color:white;
+                    font-size:20px;
+                    .box-sizing(border-box);
+                    text-shadow: none;
+                    opacity:.8;
+                    letter-spacing:3px;
+                }
+                a:hover{
+                    text-decoration:none;
+                }
+                a.visible{
+                    display:inline-block;
+                    -webkit-animation: fadeInOut 2s infinite;
+                    animation: fadeInOut 2s infinite;
+                }
+            }
+        }
+        .welcome{
+            display:inline-block;
+            width:600px;
+            color:white;
+            opacity:.9;
+            vertical-align:middle;
+            line-height:20px;
+            h2{
+                padding-left:10px;
+                display:inline-block;
+                font-size:50px;
+                text-shadow: 2px 1px 2px black;
+                text-align:left;
+                width:400px;
+                line-height:50px;
+                opacity:0;
+                font-family: 'Oleo Script Swash Caps', cursive;
+                .transform(~'translate(1000px,0)');
+                .transition(~'transform 1s cubic-bezier(.5,-0.5,.5,1.5)');
+            }
+            h2.middle{
+                font-family: 'Titillium Web', sans-serif;
+                font-size:25px;
+                padding:0 0 0 60px;
+            }
+            h2.visible{
+                .transform(~'translate(0,0)');
+                opacity:.8;
+            }
+        }
+    }
+    .shell:after{
+        content: " ";
+        background-image: url('/img/photo/books_on_shelf.jpeg');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.4;
+        .filter(~'blur(3px) saturate(2.6)');
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;  
+        
+    }
+}

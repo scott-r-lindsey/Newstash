@@ -1,0 +1,94 @@
+section.about{
+    width:100%;
+    min-height:100%;
+    background-color:@faint_grey;
+    .splash{
+        position:relative;
+        display:inline-block;
+        width:100%;
+        min-height:500px;
+        max-height:800px;
+        background-image:url('/img/photo/books_on_shelf.jpeg');
+        background-size: cover;
+        background-position:center;
+        .dummy{
+            padding-top: 65%; 
+        }
+        .content{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align:left;
+            .logo{
+                position:absolute;
+                display:inline-block;
+                max-width:400px;
+                top:180px;
+                right:100px;
+                background-color:fade(@firebrick, 95%);
+                color:white;
+                padding:20px 60px 40px 60px;
+                .border-radius(7px);
+                h1{
+                    font-family: 'Oleo Script Swash Caps', cursive;
+                    font-size:60px;
+                }
+                p{
+                }
+            }
+            .links{
+                position:absolute;
+                bottom:0;
+                left: 0;
+                right: 0;
+                height:40px;
+                background: -moz-linear-gradient(-45deg,  rgba(255,244,244,0.3) 0%, rgba(191,191,191,0.3) 26%, rgba(137,137,137,0.3) 41%, rgba(213,235,251,0.3) 100%);
+                background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(255,244,244,0.3)), color-stop(26%,rgba(191,191,191,0.3)), color-stop(41%,rgba(137,137,137,0.3)), color-stop(100%,rgba(213,235,251,0.3)));
+                background: -webkit-linear-gradient(-45deg,  rgba(255,244,244,0.3) 0%,rgba(191,191,191,0.3) 26%,rgba(137,137,137,0.3) 41%,rgba(213,235,251,0.3) 100%);
+                background: -o-linear-gradient(-45deg,  rgba(255,244,244,0.3) 0%,rgba(191,191,191,0.3) 26%,rgba(137,137,137,0.3) 41%,rgba(213,235,251,0.3) 100%);
+                background: -ms-linear-gradient(-45deg,  rgba(255,244,244,0.3) 0%,rgba(191,191,191,0.3) 26%,rgba(137,137,137,0.3) 41%,rgba(213,235,251,0.3) 100%);
+                background: linear-gradient(135deg,  rgba(255,244,244,0.3) 0%,rgba(191,191,191,0.3) 26%,rgba(137,137,137,0.3) 41%,rgba(213,235,251,0.3) 100%);
+                background-color:fade(darken(@bright_blue, 20%), 95%);
+                a{
+                    margin-left:50px;
+                    color:white;
+                    line-height:40px;
+                }
+                a:hover{
+                    text-decoration:none;
+                    color:lighten(#1789e2, 30%);
+                }
+            }
+        }
+    }
+    .more_content{
+        color: @slate;
+        .scott{
+            margin-top:200px;
+            img{
+                vertical-align:middle;
+                border:8px solid #aaa;
+                .border-radius(7px);
+                margin-right:50px;
+            }
+            div{
+                vertical-align:middle;
+                text-align:left;
+            }
+        }
+        .amazon{
+            max-width:80%;
+            margin:0 auto;
+            margin-top:200px;
+        }
+    }
+    .copyright{
+        margin-top:50px;
+        font-size:13px;
+    }
+}
+
+
+

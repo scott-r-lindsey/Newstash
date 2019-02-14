@@ -1,0 +1,35 @@
+{
+    "devDependencies": {
+        "@symfony/webpack-encore": "^0.22.0",
+        "webpack-notifier": "^1.6.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "devbridge-autocomplete": "^1.4.10",
+        "expose-loader": "^0.7.5",
+        "fs": "^0.0.1-security",
+        "generate": "^0.14.0",
+        "imports-loader": "^0.8.0",
+        "jquery": "^3.3.1",
+        "jquery-visible": "^1.2.0",
+        "less": "^3.9.0",
+        "less-loader": "^4.1.0",
+        "masonry-desandro": "^3.3.2",
+        "modernizr": "^3.6.0",
+        "modernizr-loader": "^1.0.1",
+        "node-sass": "^4.11.0",
+        "package": "^1.0.1",
+        "pickadate": "^3.5.6",
+        "raty-js": "^2.9.0",
+        "sass-loader": "^7.0.1",
+        "script-loader": "^0.7.2",
+        "timeago": "^1.6.4"
+    }
+}

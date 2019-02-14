@@ -1,0 +1,328 @@
+*{
+    margin:0;
+    padding:0;
+}
+a{
+    color:#333;
+    text-decoration:none;
+}
+img{
+    border-width:0;
+}
+body, html{
+    height:100%;
+}
+html{
+    overflow:hidden;;
+}
+body{
+    overflow-y:scroll;
+    background: url(/img/badbrowser/bg.jpeg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/badbrowser/bg.jpeg', sizingMethod='scale');
+    -ms-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/badbrowser/bg.jpeg', sizingMethod='scale');
+    background-attachment:fixed;
+}
+.shell{
+    height:100%;
+    text-align:center;
+    white-space:nowrap;
+}
+.shell *{
+    white-space:normal;
+}
+.shell .vert{
+    height:100%;
+    width:0;
+    display:inline-block;
+    vertical-align: middle;
+}
+.shell .home.content{
+    position:relative;
+    display:inline-block;
+    vertical-align: middle;
+}
+.shell .home.content h1{
+    font-family: 'Oleo Script Swash Caps', cursive;
+    font-size:120px;
+    color:white;
+    background-color:#E64F48;
+    margin-bottom:10px;
+    font-weight:normal;
+}
+.shell .home.content h2{
+    font-family: 'Oleo Script Swash Caps', cursive;
+    font-size:30px;
+    color:white;
+    background-color:#EA7A75;
+    margin-bottom:10px;
+    font-weight:normal;
+    padding:20px 20px;
+}
+.shell .home.content .browsers{
+    background-color:white;
+    margin-bottom:10px;
+    vertical-align:top;
+    padding:20px;
+}
+.shell .home.content .browsers .browser{
+    text-align:center;
+    display:inline-block;
+    vertical-align:top;
+    margin:4px;
+    width:170px;
+    overflow:hidden;
+}
+.shell .home.content .browsers .browser a{
+    width:100%;
+    padding:5px 0;
+    display:inline-block;
+}
+.shell .home.content .browsers .browser a:hover{
+    background-color:#C7C7C7;
+}
+.shell .home.content .browsers .browser label{
+    display:block;
+    text-transform:uppercase;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight:bold;
+}
+.shell .home.content .browsers .browser span{
+    font-family: 'Titillium Web', sans-serif;
+    color: #888;
+    font-size:12px;
+    text-decoration:none;
+}
+.shell .home.content h3{
+    font-family: 'Titillium Web', sans-serif;
+    font-size:18px;
+    color:white;
+    background-color:#E64F48;
+    font-weight:normal;
+    line-height:34px;
+}
+/* ---------------------------------------------------------------------------- */
+.shell .work.content{
+    width:764px;
+    position:relative;
+    display:inline-block;
+    vertical-align: middle;
+}
+.shell .work.content .top{
+    font-family: 'Oleo Script Swash Caps', cursive;
+    color:white;
+    background-color:#E64F48;
+    margin-bottom:10px;
+    padding:10px 20px;
+}
+.shell .work.content .top h1{
+    font-size:120px;
+    font-weight:normal;
+}
+.shell .work.content .top h2{
+    font-size:30px;
+    font-weight:normal;
+}
+.shell .work.content .middle{
+    background-color:white;
+    font-family: 'Titillium Web', sans-serif;
+    text-align:left;
+    color: #888;
+    padding:20px;
+    min-height:200px;
+    max-width:724px;
+}
+.shell .work.content .middle h2{
+    display:inline;
+    color:#333;
+}
+.shell .work.content .middle h3{
+    display:inline;
+}
+.shell .work.content .middle h4{
+    display:inline;
+}
+.shell .work.content .middle .cover{
+    float:right;
+}
+.shell .work.content .middle .details{
+}
+.shell .work.content .middle .details .stars{
+    line-height:40px;
+}
+.shell .work.content .middle .details .stars.noreviews{
+    color:#aaa;
+}
+.shell .work.content .middle .details .naggap{
+    height:10px;
+}
+.shell .work.content .middle .details i.nag{
+    color:#333;
+}
+.shell .work.content .middle .outlinks{
+    padding-top:20px;
+    clear:both;
+    max-width:724px;
+}
+.shell .work.content .middle .outlinks a{
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    width:165px;
+    height:100%;
+    padding-left:50px;
+}
+.shell .work.content .middle .outlinks .arrow{
+    display:inline-block;
+    width:50px;
+    height:50px;
+    vertical-align:top;
+    background-color:#D1C181;
+    color:white;
+    text-align:center;
+    line-height:50px;
+    font-size:30px;
+}
+.shell .work.content .middle .outlinks .outlink{
+    position:relative;
+    display:inline-block;
+    width:215px;
+    height:50px;
+    background-color:#EFEFCD;
+    margin:10px;
+    overflow:hidden;
+    vertical-align:top;
+}
+.shell .work.content .middle .outlinks .outlink:hover{
+    opacity:.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+}
+.shell .work.content .middle .outlinks .amazon{
+}
+.shell .work.content .middle .outlinks .amazon img{
+    margin:16px 0 0 18px;
+    border-width:0;
+}
+.shell .work.content .middle .outlinks .goodreads{
+}
+.shell .work.content .middle .outlinks .goodreads img{
+    margin:12px 0 0 18px;
+}
+.shell .work.content .middle .outlinks .publisher{
+}
+.shell .work.content .middle .outlinks .publisher .mute{
+    line-height:50px;
+}
+.shell .work.content .bottom{
+    background-color:white;
+    margin-top:10px;
+}
+.shell .work.content .bottom .nag{
+    color:white;
+    background-color:#EA7A75;
+    font-family: 'Oleo Script Swash Caps', cursive;
+    line-height: 36px;
+}
+.shell .work.content .browsers{
+    background-color:white;
+    margin-bottom:10px;
+    vertical-align:top;
+    padding:20px;
+}
+.shell .work.content .browsers .browser{
+    text-align:center;
+    display:inline-block;
+    vertical-align:top;
+    margin:4px;
+    width:170px;
+    overflow:hidden;
+}
+.shell .work.content .browsers .browser a{
+    width:100%;
+    padding:5px 0;
+    display:inline-block;
+}
+.shell .work.content .browsers .browser a:hover{
+    background-color:#C7C7C7;
+}
+.shell .work.content .browsers .browser a img{
+    border-width:0;
+}
+.shell .work.content .browsers .browser label{
+    display:block;
+    text-transform:uppercase;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight:bold;
+}
+.shell .work.content .browsers .browser span{
+    font-family: 'Titillium Web', sans-serif;
+    color: #888;
+    font-size:12px;
+    text-decoration:none;
+}
+/* ---------------------------------------------------------------------------- */
+.shell .about.content{
+    width:70%;
+    margin:0 auto;
+    background-color:white;
+    margin-top:20%;
+    font-family: 'Titillium Web', sans-serif;
+}
+.shell .about.content .logo{
+    margin: 50px 0;
+    background-color:#E64F48;
+    display:inline-block;
+    color:white;
+}
+.shell .about.content .logo h1{
+    font-family: 'Oleo Script Swash Caps', cursive;
+    font-size:60px;
+    padding:10px 30px;
+}
+.shell .about.content .more_content{
+    color:#444;
+}
+.shell .about.content .more_content .scott{
+}
+.shell .about.content .more_content .scott img{
+    vertical-align:middle;
+    margin-right:50px;
+}
+.shell .about.content .more_content .scott div{
+    vertical-align:middle;
+    text-align:left;
+}
+.shell .about.content .more_content .amazon{
+    margin:80px 80px;
+}
+.shell .about.content .more_content .copyright{
+    padding-bottom:20px;
+}
+
+
+/* ---------------------------------------------------------------------------- */
+.corner{
+    position:fixed;
+    bottom:0;
+    right:0;
+    background-color:white;
+    padding:5px 10px;
+    font-family: 'Titillium Web', sans-serif;
+}
+.corner a:hover{
+    text-decoration:underline;
+}
+.privacyblock{
+    text-align:left;
+    font-family: 'Titillium Web', sans-serif;
+    width:80%;
+    margin:0 auto;
+    background-color:white;
+    padding:20px;
+    color:#444;
+}
+

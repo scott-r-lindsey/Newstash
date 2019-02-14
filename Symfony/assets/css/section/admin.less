@@ -1,0 +1,165 @@
+section.admin{
+    @background: #ddd;
+    text-align:left;
+    width:900px;
+    display:inline-block;
+    background-color:white;
+    vertical-align:middle;
+    .box-shadow(1px 1px 14px rgba(50, 50, 50, 0.75));
+    min-height:600px;
+    h1{
+        font-size:24px;
+        margin:0;
+    }
+    h2{
+        font-size:20px;
+    }
+    hr{
+        margin:4px 0;
+        height:1px;
+        background-color:#ddd;
+    }
+    .shell{
+        padding:20px;
+        .flash{
+            margin-top:10px;
+            background-color:#ddd;
+            padding:10px;
+        }
+        .flag-shell{
+            border:2px solid lighten(@firebrick, 20%);
+            padding:8px 14px; 
+            margin:20px 0;
+            h3{
+                color:@firebrick; 
+            }
+            .comment-flag, .review-flag{
+                .quartered{
+                    span{
+                        display:inline-block;
+                        width:25%;
+                        text-align:center;
+                    }
+                    span:first-child{
+                        text-align:left;
+                    }
+                    span:last-child{
+                        text-align:right;
+                    }
+                }
+                .comment-text{
+                    margin-top:6px;
+                    margin-bottom:6px;
+                    background-color:#eee;
+                    padding:4px;
+                    font-size:80%;
+                    em{
+                        font-size:80%;
+                        color:#666;
+                    }
+                }
+            }
+            .review-flag{
+            }
+            .useragent{
+                margin:10px 4px;
+                font-size:70%;
+                color:@slate;
+            }
+            hr{
+                margin:20px 0;
+                background-color:#777;
+            }
+            form{
+                text-align:right;
+                input{
+                    background-color:@firebrick;
+                    padding:4px 10px;
+                    color:white;
+                    font-weight:bold;
+                    .border-radius(4px); 
+                }
+                input:hover{
+                    text-decoration:underline;      
+                    .box-shadow(inset 0px 0px 8px rgba(255,255,255, 0.75));
+                }   
+            }
+        }
+    }
+    nav{
+        float:right;
+    }
+    .posts{
+        margin-top:20px;
+        .post{
+            background-color:#ddd;
+            padding:5px 10px;
+            span{
+                font-size:80%;
+                opacity:.8;
+            }
+            .control{
+                form{
+                    display:inline;
+                }
+                float:right;
+                em{
+                    font-size:70%;
+                    color:lighten(@slate, 20%);
+                }
+                i{
+                    color:@link_blue;
+                    margin-right:5px;
+                    margin-left:5px;
+                }
+                i.mute{
+                    color:lighten(@slate, 20%);
+                    opacity:.3;
+                }
+                .fauxa, a{
+                    background-color:white;
+                    padding:0 6px;
+                    font-size:80%;
+                    cursor:pointer;
+                }
+                .fauxa:hover, a:hover{
+                    background-color:#eee;
+                }
+            }
+        }
+        .post:nth-child(even){
+            background-color:#eee;
+        }
+    }
+}
+section.admin.blog{
+    .shell{
+        form{
+            margin-top:20px;
+            label{
+                width:100px;
+                display:inline-block;
+            }
+            input, textarea{
+                border:1px solid #aaa;
+            }
+            input[type="text"]{
+                width:400px;
+            }
+            input[type="submit"]{
+                padding:10px 20px;
+            }
+            input[type="submit"]:hover{
+                opacity:.8;
+            }
+            .editor{
+                textarea{
+                    width:860px;
+                }
+            }
+            .control{
+                text-align:right;
+            }
+        }
+    }
+}

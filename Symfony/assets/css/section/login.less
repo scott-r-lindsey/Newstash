@@ -1,0 +1,561 @@
+// ----------------------------------------------------------------------------
+// LOGIN OVERLAY 
+@focus_blue:#CDE7F7;
+body > #loginwhitebox{
+    position:fixed;
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    z-index:200;
+    //background-color:fade(white, 30%);
+
+    background:
+        -webkit-radial-gradient(65% 50%, ellipse cover,  rgba(255,255,255,.4) 0%, rgba(255,255,255,0) 100%),
+        -webkit-linear-gradient(left,  rgba(255,255,255,.5) 0%, rgba(75,75,75,.5) 100%),
+        -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(23,226,67,1)), color-stop(100%,rgba(23,137,226,1)));
+    background:
+        radial-gradient(ellipse at 65% 50%,  rgba(255,255,255,.4) 0%, rgba(255,255,255,0) 100%),
+        linear-gradient(to right,  rgba(255,255,255,.5) 0%, rgba(75,75,75,.5) 100%),
+        linear-gradient(to bottom,  rgba(23,226,67,1) 0%,rgba(23,137,226,1) 100%);
+    background-attachment:fixed;
+
+    visibility:hidden;
+    opacity:0;
+    cursor:pointer;
+    .transition(~"visibility 0s linear 0.2s, opacity 0.2s ease, tranform 0.2s ease");
+}
+body > #loginwhitebox.visible{
+    visibility:visible;
+    opacity:.8;
+    .transition(opacity 0.2s linear);
+}
+body > #loginoverlay.visible{
+    opacity:1;
+}
+body > #loginoverlay{
+    position:fixed;
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    visibility:hidden;
+    z-index:201;
+    text-align:center;
+    .transition(~'all 0.6s ease-in');
+    transition-timing-function: cubic-bezier(.5,-0.5,.5,1.5);
+    opacity:0;
+    > div{
+        display:inline-block;
+        vertical-align:middle;
+    }
+    .window{
+        position:relative;
+        .ender{
+            z-index:100;
+            position:absolute;
+            top:0;
+            left:0;
+            background-color:@firebrick;
+            height:300px;
+            width:562px;
+            opacity:0;
+            overflow:hidden;
+            visibility:hidden;
+            .transition(~"opacity 0.4s ease-in-out 1.2s");
+            color:white;
+            text-shadow: 0px 0px 6px darken(@firebrick,10%);
+            .border-radius(12px);
+            .message{
+                display:inline-block;
+                width:562px;
+                i.fa-envelope-o{
+                    display: block;
+                    width: 120px;
+                    height: 120px;
+                    position: absolute;
+                    top: 40px;
+                    left: 40px;
+                    color: #ddd;
+                    font-size: 100px;
+                    line-height: 120px;
+                    border: 1px solid #ddd;
+                    text-align: center;
+                    background-color: #e75851;
+                }   
+                p{
+                    text-shadow: 0px 0px 6px darken(@firebrick,20%);
+                    font-size:18px;
+                    margin:50px 20px 0 190px;
+                    text-align:left;
+                    b{
+                        font-size:20px;
+                    }
+                }
+                button.ender-close{
+                    height: 47px;
+                    width: 188px;
+                    border-radius: 4px;
+                    margin-top: 70px;
+                    font-size: 20px;
+                    background-color:lighten(@firebrick, 10%);
+                    text-shadow: 0px 0px 6px darken(@firebrick,10%);
+                    color: white;
+                }
+                button.ender-close:hover{
+                    text-decoration: underline;
+                    box-shadow: inset 0px 0px 8px rgba(255, 255, 255, 0.75);
+                }
+            }
+        }
+        .close{
+            position:absolute;
+            z-index:101;
+            top:-25px;
+            right:-25px;
+            width:50px;
+            height:50px;
+            border:1px solid lighten(@slate, 15%);
+            background-color:@slate;
+            .transition(~"all 0.1s linear");
+            .border-radius(25px);
+            div{
+                position:absolute;
+            }
+            div:before,
+            div:after{
+                height:4px;
+                width:33px;
+                top:23px;
+                right:-42px;
+                display:block;
+                content:' ';
+                background-color:white;
+                position:absolute;
+            }
+            div:before{
+                .transform(~'rotate(45deg)');
+            }
+            div:after{
+                .transform(~'rotate(135deg)');
+            }
+        }
+        .close:hover{
+            .transform(~'scale(1.15, 1.15)');
+            border:1px solid lighten(@slate, 25%);
+            .box-shadow(1px 1px 14px rgba(0, 0, 0, 0.25));
+        }
+        .shell{
+            .box-shadow(1px 1px 14px rgba(50, 50, 50, 0.75));
+            overflow:hidden;
+            .border-radius(12px);
+            .loginmain{
+                padding:50px 50px 20px 50px;
+                @logbg:lighten(@firebrick,0%);
+                background: -webkit-gradient(left top, left bottom, color-stop(0%, @logbg), color-stop(160px, @logbg), color-stop(160px, #ffffff), color-stop(100%, #ffffff));
+                background: -webkit-linear-gradient(top, @logbg 0%, @logbg 160px, #ffffff 160px, #ffffff 100%);
+                background: linear-gradient(to bottom, @logbg 0%, @logbg 160px, #ffffff 160px, #ffffff 100%);
+                max-height:652px;
+
+                span.big{
+                    color:white;
+                    font-weight:bold;
+                    display:block;
+                    text-shadow: 2px 1px 2px darken(@firebrick, 5%);
+                    font-size:90px;
+                    margin-top:-46px;
+                    overflow:hidden;
+                }
+                .sociallog.facebook, .sociallog.gplus, .sociallog.bookstash, .sep{
+                    margin: 60px 30px 30px 30px;
+                    height:70px;
+                    vertical-align:top;
+                    display:inline-block;
+                    line-height:70px;
+                    .transition(~"all 0.2s ease-in-out");
+                }
+                .sociallog{
+                    width:70px;
+                    .border-radius(35px);
+                    background-size:cover;
+                    color:white;
+                    font-size:43px;
+                    .transition(~"all 0.1s ease-in-out");
+                }
+                .sociallog:hover{
+                    .transform(~'scale(1.1, 1.1)');
+                    .box-shadow(2px 2px 8px rgba(50, 50, 50, 0.75));
+                }
+                .sociallog.facebook{
+                    background-color:@brand_facebook;
+                }
+                .sociallog.gplus{
+                    background-color:@brand_google;
+                    background-position:-70px 0%;
+                }
+                .blocker{
+                    position:absolute;
+                    top:195px;
+                    width:240px;
+                    height:80px;
+                    background-color:white;
+                    opacity:.5;
+                    display:none;
+                }
+                .sep{
+                    width:1px;
+                    background-color:#ccc;
+                }
+                .sociallog.bookstash{
+                    background-image:none;
+                    background-color:@brand_bookstash;
+                }
+                .sociallog.bookstash:after{
+                    content:'B';
+                    font-family: 'Oleo Script Swash Caps', cursive;
+                    font-size:50px;
+                    text-shadow: 2px 1px 2px darken(@firebrick, 5%);
+                    .transition(~"all 0.8s ease-in-out");
+                    display:inline-block;
+                }
+                .tooltips{
+                    position:relative;
+                    .tooltip{
+                        opacity:0;
+                        position:absolute;
+                        top:0px;
+                        width:100%;
+                        left:0;
+                        //background-color:#ddd;
+                        background-color:@focus_blue;
+                        color:#30678B;
+                        line-height:50px;
+                        .border-radius(3px);
+                        .transition(~"opacity 0.2s linear");
+                        text-shadow: 2px 1px 2px white;
+                        
+                        > div{
+                            position:relative;
+                            > div{
+                                position:absolute;
+                                top:-10px;
+                                width: 0px;
+                                height: 0px;
+                                border-style: solid;
+                                border-width: 0 10px 10px 10px;
+                                border-color: transparent transparent @focus_blue transparent;
+                            }
+                        }
+                    }
+                    .tooltip.facebook{
+                        div div{
+                            left:50px;
+                        }
+                    }
+                    .tooltip.gplus{
+                        div div{
+                            left:188px;
+                        }
+                    }
+                    .tooltip.bookstash{
+                        div div{
+                            left:385px;
+                        }
+                    }
+                }
+                .fauxtip{
+                    height:50px;
+                    color:lighten(@slate, 20%);
+                    line-height:50px;
+                    .transition(~"opacity 0.2s linear");
+                }
+                .locallog{
+                    border:1px solid #ccc;
+                    border-width:1px 0 0 0;
+                    padding-top:30px;
+                    position:relative;
+                    height:50px;
+                    overflow:hidden;
+                    margin-top:-50px;
+                    opacity:0;
+                    .transition(~"all .8s ease-in-out, opacity .2s linear");
+                    text-align:center;
+                    form{
+                        input{
+                            .transition(~"all 0.3s ease-in-out");
+                        }
+                        .flash{
+                            height:0px;
+                            line-height:24px;
+                            color:red;
+                        }
+                        .flash.visible{
+                            height:auto;
+                            padding-bottom:10px;
+                        }
+                        .forgot-flash{
+                            display:block;
+                            height:0;
+                            width:320px;
+                            color: #444444;
+                            line-height: 20px;
+                            .transition(height 0.3s ease-in-out);
+                            overflow:hidden;
+                            margin:0 auto;
+                        }
+                        .field{
+                            background-color:#ddd;
+                            line-height:27px;
+                            font-size: 18px;
+                            font-family: 'Titillium Web', sans-serif;
+                            padding: 10px;
+                            margin: 10px;
+                            border-radius: 4px;
+                            width:400px;
+                        }
+                        .field.firstname, .field.lastname{
+                            width:178px;
+                        }
+                        .field.password{
+                            width:348px;
+                        }
+                        .field:focus{
+                            background-color:#CDE7F7;
+                        }
+                        .field.required{
+                            .box-shadow(inset 0px 0px 8px 0px rgba(255,0,0,1));
+                        }
+                        button.showpass{
+                            background-color:white;
+                            font-size:24px;
+                            line-height:47px;
+                            margin-right:10px;
+                            width:38px;
+                            color:#999;
+                            i{
+                                display:inline-block;
+                                border-radius:20px;
+                                height:38px;
+                                width:38px;
+                                line-height:38px;
+                            }
+                        }
+                        button.showpass:hover{
+                            color:#666;
+                            i{
+                                background-color:#ddd;
+                                color:#222;
+                            }
+                        }
+                        .forgot{
+                            overflow:hidden;
+                            position:relative;
+                            height:1px;
+                            width:100%;
+                            span{
+                                position:absolute;
+                                top:-33px;
+                                right:86px;
+                                font-size:13px;
+                                color:rgb(34, 148, 158);
+
+                            }
+                        }
+                        .nag{
+                            height:0px;
+                            width:400px;
+                            display:inline-block;
+                            .transition(~"all 0.3s ease-in-out");
+                            overflow:hidden;
+                            color:red;
+                            text-align:left;
+                        }
+                        .nag.visible{
+                            height:15px;
+                        }
+                        .nag.first, .nag.last{
+                            width:199px;
+                        }
+                        .login-buttons, .create-buttons, .reset-buttons{
+                            display:none;
+                            button{
+                                vertical-align:top;
+                                height:47px;
+                                width:188px;
+                                margin: 20px 20px 0 20px;
+                                border-radius: 4px;
+                                font-size:20px;
+                                //.transition(~"all .1s ease-in-out");
+                            }
+                            button:hover{
+                                text-decoration:underline;
+                                .box-shadow(inset 0px 0px 8px rgba(255,255,255, 0.75));
+                                //opacity:.9;
+                            }
+                            button.primary{
+                                background-color:@firebrick;
+                                color:white;
+                            }
+                            button.secondary{
+                                color:white;
+                                background-color:#58b3eb;
+                                font-size:90%;
+                            }
+                        }
+                    }
+                    form[mode=login]{
+                        .forgot{
+                            overflow:visible;
+                        }
+                        input.firstname, input.lastname, .nag.first, .nag.last{
+                            padding-top:0;
+                            padding-bottom:0;
+                            margin-top:-20px;
+                            margin-bottom:-10px;
+                            height:0;
+                            overflow:hidden;
+                        }
+                        .login-buttons{
+                            display:block;
+                        }
+                    }
+                    form[mode=create]{
+                        .create-buttons{
+                            display:block;
+                        }
+                    }
+                    form[mode=reset]{
+                        .forgot-flash{
+                            height:53px;
+                        }
+                        .reset-buttons{
+                            display:block;
+                            margin-top:10px;
+                        }
+                        input.firstname, input.lastname, .nag.first, .nag.last, input.password, div.forgot, button.showpass{
+                            padding-top:0;
+                            padding-bottom:0;
+                            margin-top:-20px;
+                            margin-bottom:-10px;
+                            height:0;
+                            overflow:hidden;
+                        }
+                    }
+                    form[mode=return]{
+                    }
+                }
+            }
+            .loginmain[suppresstooltips=suppress]{
+                .tooltips{
+                    .tooltip{
+                        opacity:0!important;
+                    }
+                }
+            }
+            .loginmain[hovered=facebook]{
+                .tooltips{
+                    .tooltip.facebook{
+                        opacity:1;
+                    }
+                }
+                .fauxtip{
+                    opacity:0;
+                }
+            }
+            .loginmain[hovered=gplus]{
+                .tooltips{
+                    .tooltip.gplus{
+                        opacity:1;
+                    }
+                }
+                .fauxtip{
+                    opacity:0;
+                }
+            }
+            .loginmain[hovered=bookstash]{
+                .tooltips{
+                    .tooltip.bookstash{
+                        opacity:1;
+                    }
+                }
+                .fauxtip{
+                    opacity:0;
+                }
+            }
+            .loginmain[mode=bookstash]{
+                .blocker{
+                    display:block;
+                }
+                .tooltips{
+                    .tooltip{
+                        opacity:0!important;
+                    }
+                }
+                .sociallog.bookstash{
+                }
+                .sociallog.bookstash:after{
+                    .transform(~'rotate(360deg)');
+                }
+                .fauxtip{
+                    opacity:0!important;
+                }
+                .locallog{
+                    height:406px;
+                    opacity:1;
+                    line-height:0;
+                    .transition(~"all .3s ease-in-out");
+                    form[mode=login]{
+                        .nag.password{
+                            .create-text{
+                                display:none;
+                            }
+                        }
+                    }
+                    form[mode=create]{
+                        .nag.password{
+                            .login-text{
+                                display:none;
+                            }
+                        }
+                    }
+                }
+                .locallog.slow{
+                    .transition(~"all .8s ease-in-out");
+                }
+            }
+        }
+    }
+    .window[final=final]{
+        .ender{
+            display:none;
+            opacity:1;
+            visibility:visible;
+        }
+        .shell{
+            .loginmain{
+                .transition(~'max-height 0.6s ease-in-out .2s');
+                max-height:230px;
+                @logbg:lighten(@firebrick,0%);
+                background: -webkit-gradient(left top, left bottom, color-stop(0%, @logbg), color-stop(700px, @logbg), color-stop(600px, #ffffff), color-stop(100%, #ffffff));
+                background: -webkit-linear-gradient(top, @logbg 0%, @logbg 700px, #ffffff 700px, #ffffff 100%);
+                background: linear-gradient(to bottom, @logbg 0%, @logbg 700px, #ffffff 700px, #ffffff 100%);
+                div.blocker{
+                    display:none;
+                }
+                span.big, .sociallog, .sep , .fauxtip, .tooltips, .locallog{ 
+                    opacity:0;
+                }
+            }
+        }
+    }
+}
+body > #loginoverlay.visible{
+    visibility:visible;
+    .window[final=final]{
+        .ender{
+            display:block;
+            opacity:1;
+            visibility:visible;
+        }
+    }
+}

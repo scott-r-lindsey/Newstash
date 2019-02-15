@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block browse %}
+    <div class="books">
+        {% if 1 == page %}
+            {% if children|length %}
+                <div class="item-stuck">
+                    <div class="item-stuck-wrap">
+                        <div class="flourish"></div>
+                        <div class="top">
+                            <strong>Child Categories</strong>
+                        </div>
+
+                        {% for n in children %}
+                            <a href="{{ path('search_browse_category', {'node_id': n.id, 'slug': n.slug} ) }}" title="{{ n.count }} books in {{ n.name }}">
+                                {{ n.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="item double category" style="width:520px">
+                <div class="current">
+                    <div class="flourish"></div>
+                    <span>Showing {{ matches }} books in: </span>
+
+                    {% set name = '' %}
+                    {% for n in node.pathdata %}
+                        <blockquote>
+                            {% set name %}{% if name %}{{name}} - {% endif %}{{ n.name }}{% endset %}
+                            <a href="{{ path('search_browse_category', {'node_id': n.id, 'slug': n.slug} ) }}" title="Browse all in {{name}}">
+                                {{ n.name }}
+                            </a>
+                    {% endfor %}
+                    {% for n in node.pathdata %}</blockquote>{% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% for work in works %}
+            {{ include( 'search/work.html.twig', { 'work': work }) }}
+        {% endfor %}
+    </div>
+
+    {% if hasmore %}
+        <div class="navigation" style="display:none;">
+            <a href="{{ path('search_browse_category', {'node_id': node_id, 'slug': slug} ) }}?page={{ page+1 }}" class="morelink" style="display:none"></a>
+        </div>
+    {% else %}
+        {{ include( 'fragment/searchfooter.html.twig') }}
+    {% endif %}
+
+{% endblock %}

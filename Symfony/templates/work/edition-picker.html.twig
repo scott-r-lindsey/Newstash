@@ -1,0 +1,13 @@
+<div class="edition {{ selected }}" data-bstsh-asin="{{ edition.asin }}">
+    <p>
+        <b>{{ edition.format.description }}</b><br />
+        {{ edition.publicationDate|date("F jS, Y ") }}<br />
+        {% if edition.amznPrice %}
+            <strong>${{ edition.amznPrice }}</strong> at Amazon
+        {% else %}
+            Price available at Amazon
+        {% endif %}
+    </p>
+    <img src="{{ edition.AmznSmallCover}}" height="{{ edition.AmznSmallCoverY}}" width="{{ edition.AmznSmallCoverX}}" class="format" data-bstsh-lgcover="{{ edition.AmznLargeCover }}" data-bstsh-lgcovery="{{ edition.NormalizedAmznLargeCoverY}}" data-bstsh-lgcoverx="{{ edition.NormalizedAmznLargeCoverX}}" data-bstsh-asin="{{ edition.asin }}" />
+</div>
+

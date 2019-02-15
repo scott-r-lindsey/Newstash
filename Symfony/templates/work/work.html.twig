@@ -1,0 +1,399 @@
+{% extends 'base.html.twig' %}
+
+{% if ':' in work.title %}
+    {% set bits = work.title|split(':', 2) %}
+    {% set title = bits[0] %}
+    {% set subtitle = bits[1] %}
+{% else %}
+    {% set title = work.title %}
+    {% set subtitle = false %}
+{% endif %}
+{% set front = work.frontEdition %}
+
+{% block title %}{{ title }} | {{ work.frontEdition.amznAuthordisplay }}{% endblock %}
+{% block description %}{{ title }}{% if subtitle %}:{{ subtitle }}{% endif %} by {{ work.frontEdition.amznAuthordisplay }}{% endblock %}
+
+{% block meta %}
+    <meta property="og:type" content="book" />
+    <meta property="og:url" content="{{ app.request.schemeAndHttpHost }}{{ url }}" />
+    <meta property="og:title" content="{{ title }} by {{ work.frontEdition.amznAuthordisplay }}" />
+    <meta property="og:description" content="{{ work.frontEdition.description|striptags|truncate(250) }}" />
+    <meta property="og:image" content="{{ work.frontEdition.AmznLargeCover }}" />
+{% endblock %}
+
+{% block focus %}
+<section class="work" data-my-review-reveal="hidden" id="top" data-bstsh-object="workScrollManager" data-bstsh-url="{{ app.request.uri }}">
+    <button class="close-focus close-button" data-bstsh-object="historyCloseButton"><i class="fa fa-times"></i></button>
+    <div class="details full" itemscope itemtype="http://schema.org/Book">
+        <div class="top">
+            <div class="social">
+                <button data-bstsh-object="shareButton" data-share-type="facebook" data-url="{{ app.request.schemeAndHttpHost }}{{ url }}"><i class="fa fa-facebook"></i></button>
+                <button data-bstsh-object="shareButton" data-share-type="pinterest" data-url="{{ app.request.schemeAndHttpHost }}{{ url }}" data-image="{{ work.frontEdition.AmznLargeCover }}"><i class="fa fa-pinterest"></i></button>
+                <button data-bstsh-object="shareButton" data-share-type="google" data-url="{{ app.request.schemeAndHttpHost }}{{ url }}"><i class="fa fa-google-plus"></i></button>
+                <button data-bstsh-object="shareButton" data-share-type="twitter" data-url="{{ app.request.schemeAndHttpHost }}{{ url }}" data-description=""><i class="fa fa-twitter"></i></button>
+            </div>
+
+            <div class="read-status-picker" data-bstsh-object="anonGate readItWidget" data-bstsh-workid="{{ work.id }}">
+                <form>
+                    <input type="radio" name="read-status" value="3" id="readit-{{ work.id}}-3"><label for="readit-{{ work.id}}-3">Read It</label><input type="radio" name="read-status" value="2" id="readit-{{ work.id}}-2"><label for="readit-{{ work.id}}-2">Reading</label><input type="radio" name="read-status" value="1" id="readit-{{ work.id}}-1"><label for="readit-{{ work.id}}-1">To Read</label><div class="end"><button title="Remove this status" class="remove fakelink" value="remove">Remove</button><div class="saving"><i class="fa fa-spinner fa-spin"></i>saving...</div><div class="saved">saved.</div></div>
+                </form>
+            </div>
+
+        </div>
+        <div class="middle truncate">
+            <div class="right">
+                <img src="{{ work.frontEdition.AmznLargeCover }}" height="{{work.frontEdition.NormalizedAmznLargeCoverY}}" width="{{ work.frontEdition.NormalizedAmznLargeCoverX}}" class="cover" />
+
+                <div class="picker" data-bstsh-object="workSwitcher">
+                    <div class="lead">
+                        <b>Available Formats</b>
+                    </div>
+                    <div class="shell">
+                        {{ include ('work/edition-picker.html.twig', {'edition': work.frontEdition, 'selected': 'selected'}) }}
+                        {% for edition in editions %}
+                            {% if edition.asin != work.frontEdition.asin %}
+                                {{ include ('ScottDataBundle:Work:edition-picker.html.twig', {'edition': edition, 'selected': ''}) }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="left" style="width: {{ 940 - work.frontEdition.NormalizedAmznLargeCoverX }}px;" data-bstsh-workcoverxadjust="940 - x">
+                <div class="spacer force-hide-on-browse"></div>
+                <div class="title-block" style="width: {{ 915 - work.frontEdition.NormalizedAmznLargeCoverX }}px;" data-bstsh-workcoverxadjust="915 - x">
+                    <h1 itemprop="name">{{ title }}</h1>
+                    {% if subtitle %}<br /><h2>{{ subtitle }}</h2>{% endif %}<br />
+                    <h4 style="max-width:{{ 830 - work.frontEdition.NormalizedAmznLargeCoverX }}px;" data-bstsh-workcoverxadjust="830 - x">
+                        {{ include('fragment/authors.html.twig', {authors: work.frontEdition.amznAuthorlist, alternate: work.frontEdition.amznAuthordisplay }) }}
+                    </h4>
+                    <div class="end">
+                        <div class="reviews">
+                            <div class="ratings average" data-bstsh-ratings-work="{{ work.id }}">
+                                {{ render(controller('ScottDataBundle:Work:ratings', {work_id: work.id})) }}
+                            </div>
+                            <div class="my-stuff-shell" data-bstsh-object="reviewWidget" data-workid="{{ work.id }}">
+                                <div class="padding">
+                                </div>
+                                <div class="ratings mine">
+                                    <strong>I Give It: </strong>
+                                    <div class="my-stars-shell">
+                                        <div class="my-stars" data-bstsh-object="starsWidget" data-bstsh-workid="{{ work.id }}"></div>
+                                        <span>
+                                            <div class="saving"><i class="fa fa-spinner fa-spin"></i>saving...</div>
+                                            <div class="saved">saved.</div>
+                                            <button class="fakelink clear" title="Delete your rating">Clear</button>
+                                        </span>
+                                    </div>
+                                    <button title="Write or edit your review" class="fakelink review" data-bstsh-object="anonGate eventThrower" data-event="bookster:workreviewrequest:{{ work.id }}">My Review</button>
+                                    <div class="reviewed-check"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="edition-details" style="max-width:{{ 725 - work.frontEdition.NormalizedAmznLargeCoverX }}px;" data-bstsh-workcoverxadjust="725 - x">
+                    {% for edition in editions %}
+                        {% set selected = '' %}
+                        {% if edition.asin == work.frontEdition.asin %}
+                            {% set selected = 'selected' %}
+                        {% endif %}
+                        {{ include ('ScottDataBundle:Work:edition.html.twig', {'edition': edition}) }}
+                    {% endfor %}
+                </div>
+
+                <div class="description">
+                    <article>
+                    {{ work.frontEdition.description|raw }}
+                    </article>
+                    <div class="readless"><a href="" data-bstsh-object="classModLink" data-bstsh-nohist="nohist" data-selector=".middle" data-toadd="truncate">Show Less</a></div>
+                </div><div class="readmore force-hide-on-browse"><a href="" data-bstsh-object="classModLink" data-bstsh-nohist="nohist" data-selector=".middle.truncate" data-toremove="truncate">Show More</a></div>
+
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="left">
+                {% set publink %}{{ include( 'ScottDataBundle:Fragment:publisherLink.text.twig', { 'edition': work.frontEdition }) }}{% endset %}
+                {% if publink %}
+                    <a href="{{ publink }}" title="{{ work.title }} at {{ work.frontEdition.publisher.name }}">At {{ work.frontEdition.publisher.name }} <i class="fa fa-external-link"></i></a>
+                {% endif %}
+            </div>
+            {% if (similar_works|length) > 1 %}
+                {% if similar_works|length == 1 %}
+                    {% set string %} 1 Similar Book{% endset %}
+                {% else %}
+                    {% set string %} {{ similar_works|length }} Similar books{% endset %}
+                {% endif %}
+                <a href="#similar-books-marker" data-bstsh-nohist="nohist" data-bstsh-object="smoothScroller" data-scroll-offset="40"><i class="fa fa-level-down"></i> {{ string }}</a>
+            {% endif %}
+            {% if bns|length > 0 %}
+                {% if bns|length == 1 %}
+                    {% set string %} 1 Category{% endset %}
+                {% elseif bns|length > 5 %}
+                    {% set string %} 5 Categories{% endset %}
+                {% else %}
+                    {% set string %} {{ bns|length }} Categories{% endset %}
+                {% endif %}
+                <a href="#also-in-cat-marker" data-bstsh-nohist="nohist" data-bstsh-object="smoothScroller" data-scroll-offset="40"><i class="fa fa-level-down"></i> {{ string }}</a>
+            {% endif %}
+
+            {% if 0 == review_count %}
+                {% set string %} Not yet Reviewed{% endset %}
+            {% elseif 1 == review_count %}
+                {% set string %} 1 Review{% endset %}
+            {% else %}
+                {% set string %} {{ review_count }} Reviews{% endset %}
+            {% endif %}
+            <a href="#reviews-marker" data-bstsh-nohist="nohist" data-bstsh-object="smoothScroller" data-scroll-offset="40"><i class="fa fa-level-down"></i> <span data-dynamic-review-count={{ work.id }} data-count-zero="Not yet Reviewed">{{ string }}</span></a>
+        </div>
+    </div>
+
+    {% if (similar_works|length) > 1 %}
+        {% set book_width = 70 %}
+
+        <div class="full similar" id="similar-books-marker">
+            <div class="top floater">
+                <h3>Similar Books</h3>
+            </div>
+            <div class="back-to-top">
+                <a href="#top" data-bstsh-nohist="nohist" data-bstsh-object="smoothScroller" data-override-height="0">back to top</a>
+            </div>
+            {% set flow_width = (book_width * (similar_works|length)) + 90 %}
+            <div class="flowbox" style="width:{{ flow_width }}px">
+                {% set left = 0 %}
+                {% for similar_work in similar_works %}
+                    {% set frontEdition = similar_work.similar.frontEdition %}
+                    {% set margintop = '' %}
+                    {% if 500 > frontEdition.NormalizedAmznLargeCoverY %}
+                        {% set margintop %}style="margin-top: {{ (250 - frontEdition.NormalizedAmznLargeCoverY/2)|number_format}}px"{% endset %}
+                    {% endif %}
+                    <div class="book" style="left:{{left}}px">
+                        <div class="box" {{ margintop }}>
+                            <div class="shadowbehind" style="width:{{ (frontEdition.NormalizedAmznLargeCoverX/2)|number_format}}px; height:{{ (frontEdition.NormalizedAmznLargeCoverY/2) |number_format }}px""  >
+                            </div>
+                            <div class="fcover">
+                                <a href="{{ path('work', {'work_id': similar_work.similar.id, 'slug': frontEdition.slug}) }}">
+                                    <img src="{{ frontEdition.AmznLargeCover}}" height="{{ (frontEdition.NormalizedAmznLargeCoverY/2) |number_format }}" width="{{ (frontEdition.NormalizedAmznLargeCoverX/2)|number_format}}" class="format" data-bstsh-lgcover="{{ frontEdition.AmznLargeCover }}" /></a>
+                            </div>
+                            <div class="spine" style="height:{{ (frontEdition.NormalizedAmznLargeCoverY/2) |number_format }}px">
+                                <img src="{{ frontEdition.AmznLargeCover}}" height="{{ (frontEdition.NormalizedAmznLargeCoverY/2) |number_format }}" width="{{ (frontEdition.NormalizedAmznLargeCoverX/2)|number_format}}" class="format" data-bstsh-lgcover="{{ frontEdition.AmznLargeCover }}" />
+                            </div>
+                            <div class="shadowbelow" style="width:{{ (frontEdition.NormalizedAmznLargeCoverX/2)|number_format}}px;">
+                            </div>
+                        </div>
+                        <div class="title-description" style="left:-{{ left + ((1000 - flow_width)/2) }}px; width:1000px">
+                            <span>
+                                {{ similar_work.similar.title }}
+                            </span>
+                        </div>
+                    </div>
+                    {% set left = left + book_width %}
+                {% endfor %}
+                <div class="description" style="left:-{{ 500 - flow_width/2 }}px">
+                    <span>
+                        Showing {{ similar_works|length }} books that are similar to {{ work.title }}
+                    </span>
+                </div>
+            </div>
+            <div class="info">
+            </div>
+        </div>
+    {% endif %}
+
+    {% if bns|length > 0 %}
+        <div class="full also-in-cat-shell" id="also-in-cat-marker">
+            <div class="head floater">
+                <h3>Books in Related Categories</h3>
+            </div>
+            <div class="back-to-top">
+                <a href="#top" data-bstsh-nohist="nohist" data-bstsh-object="smoothScroller" data-override-height="0">back to top</a>
+            </div>
+            <div class="book-list-shell truncate">
+                {% for bn in bns %}
+                    {% if loop.index < 6 %}
+                        {% if 1 == loop.index %}
+                            <div class="book-list selected" id="related-{{ bn.id }}">
+                                {{ render(controller('ScottDataBundle:Search:topSellingSmall', {node_id: bn.id})) }}
+                                <div class="more-link">
+                                    {% for ibn in bn.pathdata %}
+                                        {% set bnslug %}{{ bn.name|escape('url') }}{% endset %}
+                                        <a href="{{ path('search_browse_category', {'node_id': ibn.id, 'slug': bnslug} ) }}" title="{{ ibn.name }}">{{ ibn.name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="book-list" data-source="{{ path('browse_node_small', {node_id: bn.id}) }}" id="related-{{bn.id}}">
+                                <div class="more-link">
+                                    {% set path = '' %}
+                                    {% for ibn in bn.pathdata %}
+                                        {% set bnslug %}{{ bn.name|escape('url') }}{% endset %}
+                                        {% set path %}{{ path }}/{{ ibn.id }}{% endset %}
+                                            <a href="{{ path('search_browse_category', {'node_id': ibn.id, 'slug': bnslug} ) }}" title="{{ ibn.name }}">{{ ibn.name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <div class="show-more">
+                    <a href="" data-bstsh-nohist="nohist" data-bstsh-object="classModLink" data-selector=".book-list-shell.truncate" data-toremove="truncate">Show More</a>
+                </div>
+                <div class="show-less">
+                    <a href="" data-bstsh-object="classModLink" data-bstsh-nohist="nohist" data-selector=".book-list-shell" data-toadd="truncate">Show Less</a>
+                </div>
+            </div>
+            <div class="cat-picker">
+                {% set selected = 'selected' %}
+                {% for bn in bns %}
+                    {% if loop.index < 6 %}
+                        {% set path = '' %}
+                        <div class="cat {{ selected }}" data-target-node="{{ bn.id }}">
+                            <div class="flourish"></div>
+                            {% for ibn in bn.pathdata %}
+                                {% set bnslug %}{{ ibn.name|escape('url') }}{% endset %}
+                                {% set path %}{{ path }}/{{ ibn.id }}{% endset %}
+                                <blockquote>
+                                    <a href="{{ path('search_browse_category', {'node_id': ibn.id, 'slug': bnslug} ) }}" title="{{ ibn.name }}">{{ ibn.name }}</a>
+                            {% endfor %}
+                            {% for ibn in bn.pathdata %}
+                                </blockquote>
+                            {% endfor %}
+                            <div class="glass"></div>
+                        </div>
+                        {% set selected = '' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="full book-reviews" id="reviews-marker" data-review-count="{{ review_count }}" data-bstsh-workid="{{ work.id }}">
+        <div class="head floater">
+            <h3>Reviews</h3>
+            <span class="controls">
+                <button title="Newest First" class="newest fakelink selected" data-mode="new">Newest</button> |
+                <button title="Oldest First" class="oldest fakelink" data-mode="old">Oldest</button> |
+                <button title="Most Liked First" class="liked fakelink" data-mode="liked">Liked</button>
+                <select>
+                    <option value="0">All Reviews</option>
+                    <option value="1">One star</option>
+                    <option value="2">Two star</option>
+                    <option value="3">Three star</option>
+                    <option value="4">Four star</option>
+                    <option value="5">Five star</option>
+                </select>
+
+                <span class="hide-on-anon minefirst">
+                    <input type="checkbox" id="{{ work.id }}-minefirst">
+                    <label for="{{ work.id }}-minefirst">Show my review first</label>
+                </span>
+            </span>
+
+        </div>
+        <div class="back-to-top">
+            <a href="#top" data-bstsh-nohist="nohist" data-bstsh-object="smoothScroller" data-override-height="0">back to top</a>
+        </div>
+        <div class="review-shell">
+            {{ render(controller('ScottDataBundle:Work:reviews', {
+                work_id: work.id,
+                page: 1,
+                sort: 'new'
+            })) }}
+        </div>
+    </div>
+
+    <div class="flag-review" style="display:none">
+        <form action="{{ path('stash_user_review_flag') }}" method="post">
+            <input type="hidden" name="review_id" value="{{ '{{ review_id }}' }}" />
+
+            <blockquote>
+                <input type="radio" name="reason_id" id="blog-comment-reason-spam-{{ '{{ review_id }}' }}" value="1" />
+                <label for="blog-comment-reason-spam-{{ '{{ review_id }}' }}" class="magic">Spam</label><br />
+                <input type="radio" name="reason_id" id="blog-comment-reason-rude-{{ '{{ review_id }}' }}" value="2" />
+                <label for="blog-comment-reason-rude-{{ '{{ review_id }}' }}" class="magic">Trolling or rude</label><br />
+                <input type="radio" name="reason_id" id="blog-comment-reason-offtopic-{{ '{{ review_id }}' }}" value="3" />
+                <label for="blog-comment-reason-offtopic-{{ '{{ review_id }}' }}" class="magic">Off-topic or not constructive</label><br />
+                <input type="radio" name="reason_id" id="blog-comment-reason-other-{{ '{{ review_id }}' }}" value="0" />
+                <label for="blog-comment-reason-other-{{ '{{ review_id }}' }}" class="magic">Other...</label><br />
+            </blockquote>
+
+            <div class="reason-text">
+                <textarea name="message" placeholder="please explain..." class="hidden"></textarea>
+                <div class="text-nag"></div>
+            </div>
+
+            <div class="nag"></div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <span>
+            Booksta.sh is copyright &copy;{{"now"|date('Y')}} Awesome Sauce Web Sites Incorporated.
+            <div>
+                <a href="{{ path('about') }}">About</a> |
+                <a href="{{ path('blog') }}">Blog</a> |
+                <a href="{{ path('privacy') }}">Privacy Policy</a>
+            </div>
+        </span>
+    </div>
+
+    <div class="my-review-large-shell my-review-hider">
+        <div class="my-review-large">
+            <div class="top">
+                <div class="left" style="width:{{ work.frontEdition.AmznMediumCoverX + 40 }}px">
+                    <img src="{{ work.frontEdition.AmznMediumCover}}" />
+                </div>
+                <div class="right">
+                    <h2 itemprop="name">{{ title }}</h2>
+                    {% if subtitle %}<br /><h3>{{ subtitle }}</h3>{% endif %}<br />
+                    <h4 style="max-width:{{ 830 - work.frontEdition.NormalizedAmznLargeCoverX }}px;" data-bstsh-workcoverxadjust="830 - x">By {{ work.frontEdition.amznAuthordisplay }}</h4>
+                    <div class="my-stars-shell">
+                        <div class="fake-input">
+                            <strong>I Give It:</strong>
+                            <div class="my-stars" data-bstsh-object="starsWidget" data-bstsh-workid="{{ work.id }}"></div>
+                        </div>
+                        <span class="indicate">
+                            <div class="saving"><i class="fa fa-spinner fa-spin"></i>saving...</div>
+                            <div class="saved">saved.</div>
+                            <button class="fakelink clear">Clear</button>
+                        </span>
+                    </div>
+                </div>
+                <button title="Close" class="close my-review-hider firebrick" data-bstsh-object="eventThrower" data-event="bookster:workreviewrequest:{{ work.id }}"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="middle">
+
+                <form>
+                    <input class="review-title" type="text" placeholder="Review Title (optional)" />
+                    <div class="dateentry">
+                        <input type="text" class="started-reading datepicked" placeholder="Started Reading"><input type="text" class="finished-reading datepicked" placeholder="Finished Reading">
+                    </div>
+                    <div class="review-text-shell">
+                        <div class="review-text" placeholder="My Review" contenteditable="true"></div>
+                        <div class="countdown"></div>
+                        <div class="review-control">
+                            <button title="Bold" class="bold"><i class="fa fa-bold"></i></button><button title="Italic" class="italic"><i class="fa fa-italic"></i></button><button title="Underline" class="underline"><i class="fa fa-underline"></i></button><button title="Spoiler" class="strikethrough"><i class="fa fa-eye-slash"></i></button><button title="Remove Styling" class="removeFormat"><i class="fa fa-eraser"></i></button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="bottom">
+                <div class="delete">
+                    <button class="fakelink reviewdelete" data-url="{{ path('user_delete_review', {'work_id': work.id}) }}"><i class="fa fa-times"></i>Delete Review</button>
+                </div>
+                <span>
+                    <div class="flash"></div>
+                    <button class="close firebrick my-review-hider" data-bstsh-object="eventThrower" data-event="bookster:workreviewrequest:{{ work.id }}">Close</button>
+                    <button class="save firebrick" disabled="disabled" data-bstsh-object="eventThrower" data-event="bookster:workreviewsaverequest:{{ work.id }}">Save</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" data-bstsh-object="authCssManager" data-bstsh-auth="{{ path('auth_user_review_like_style', {'work_id': work.id}) }}" data-bstsh-refresh-on="bookster:review-like-{{ work.id }}" />
+    <div class="work" data-my-review-reveal="hidden" id="top" data-bstsh-object="workScrollManager" data-bstsh-url="{{ app.request.uri }}">
+    <div class="hidden-data" style="display:none" data-bstsh-url="{{ app.request.uri }}"></div>
+</section>
+{% endblock %}
+

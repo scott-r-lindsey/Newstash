@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Mongo\Work;
 
 class SearchController extends AbstractController
 {
@@ -45,9 +46,19 @@ class SearchController extends AbstractController
      * @Route("/browse/category/{node_id}/{slug}", requirements={"node_id" = "^\d+$"}, name="search_browse_category", methods={"GET"})
      * @Template()
      */
-    public function browseCategoryAction(Request $request, $node_id, $slug){
-        $workSearcher   = $this->container->get('bookstash.search.works');
-        return $workSearcher->doCategorySearch($request, $node_id, $slug);
+    public function browseCategoryAction(
+        Work $workSearcher,
+        Request $request,
+        $node_id,
+        $slug
+    ){
+
+        $page           = $request->query->get('page', 1);
+        $results        = $workSearcher->byCategory((int)$node_id, (int)$page);
+
+        $results['slug'] = $slug;
+
+        return $results;
     }
 
 }

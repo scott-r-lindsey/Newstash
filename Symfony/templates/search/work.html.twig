@@ -1,0 +1,12 @@
+{% if work.amzn_large_cover_x %}
+    {% set factor = 250 / work.amzn_large_cover_x %}
+    {% set height = (work.amzn_large_cover_y * factor) |round %}
+    <div class="item book" style="width:250px;height:{{height}}px">
+        <img src="{{ work.amzn_large_cover }}" />
+        <a title="{{ work.title }}" href="{{ path('work', {work_id: work.work_id, slug: work.slug}) }}"></a>
+    </div>
+{% else %}
+    <div class="item book" style="width:250px;height:350px">
+        <a title="{{ work.title }}" href="{{ path('work', {work_id: work.work_id, slug: work.slug}) }}"></a>
+    </div>
+{% endif %}

@@ -1,0 +1,11 @@
+{% for work in works %}
+    {% if work.amzn_medium_cover_x and work.amzn_medium_cover_y %}
+        {% set size = 107 %}
+        {% set factor = size / work.amzn_medium_cover_x %}
+        {% set height = (work.amzn_medium_cover_y * factor) |round %}
+        <div class="item" style="width:{{ size }}px;height:{{height}}px" sly="sly"> 
+            <img src="{{ work.amzn_medium_cover }}" width="{{size}}" height="{{height}}" />
+            <a title="{{ work.title }}" href="{{ path('work', {work_id: work.work_id, slug: work.slug}) }}"></a>
+        </div> 
+    {% endif %}
+{% endfor %}

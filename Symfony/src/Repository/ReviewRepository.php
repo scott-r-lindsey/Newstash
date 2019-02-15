@@ -14,37 +14,37 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ReviewRepository extends ServiceEntityRepository
 {
+
+    private $review_counts = [];
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Review::class);
     }
 
-    // /**
-    //  * @return Review[] Returns an array of Review objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Review
+    public function findReviewByUserAndWork(
+        int $user_id,
+        int $work_id
+    ): ?Review
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+
+        $em = $this->getEntityManager();
+
+        $dql = '
+            SELECT r, u, rl
+            FROM App\Entity\Review r
+            JOIN r.user u
+            LEFT JOIN r.review_likes rl
+            WHERE
+                r.work = :work AND
+                r.user = :user';
+
+        $query = $em->createQuery($dql);
+
+        $query->setParameter('work', $work_id);
+        $query->setParameter('user', $user_id);
+
+        return $query->getOneOrNullResult();
     }
-    */
 }

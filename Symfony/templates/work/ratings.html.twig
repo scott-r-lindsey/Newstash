@@ -1,0 +1,169 @@
+{% if score is not defined or score is null %}
+    <div class="avg-stars" data-bstsh-object="starsWidget" data-fixed-value="0"></div>
+    <p>Be the first to rate this!</p>
+{% elseif 0 == score.total %}
+    <div class="avg-stars" data-bstsh-object="starsWidget" data-fixed-value="0"></div>
+    <p>Be the first to rate this!</p>
+{% else %}
+    {% set perFive = 0 %}
+    {% if score.fives > 0 %}
+        {% set perFive = (score.fives / score.total) * 100|round(2) %}
+    {% endif %}
+    {% set perFour = 0 %}
+    {% if score.fours > 0 %}
+        {% set perFour = (score.fours / score.total) * 100|round(2) %}
+    {% endif %}
+    {% set perThree = 0 %}
+    {% if score.threes > 0 %}
+        {% set perThree = (score.threes / score.total) * 100|round(2) %}
+    {% endif %}
+    {% set perTwo = 0 %}
+    {% if score.twos > 0 %}
+        {% set perTwo = (score.twos / score.total) * 100|round(2) %}
+    {% endif %}
+    {% set perOne = 0 %}
+    {% if score.ones > 0 %}
+        {% set perOne = (score.ones / score.total) * 100|round(2) %}
+    {% endif %}
+    {#     * * * * * 3.5  287 ratings  87 reviews  #}
+    <div class="avg-stars" data-bstsh-object="starsWidget" data-fixed-value="{{ score.score }}"></div>
+    <span class="score">{{ score.score }}</span>
+    <span class="ratings-count">
+        <button title="Ratings Details" class="fakelink ratings-count" data-bstsh-object="classModLink" data-selector=".ratings-count" data-toadd="show-ratings-detail" data-toggle="toggle" >
+            {{ score.total }}
+            Rating{% if 0 == score.total or score.total > 1 %}s{% endif %}
+        </button>
+
+        <div class="ratings-detail-dot">
+            <div class="ratings-detail-wide">
+                <div class="ratings-detail-triangle"></div><br>
+                <div class="ratings-detail-chart">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="3">
+                                    {{ score.score }} Stars
+                                    <button title="Close" class="fakelink close" data-bstsh-object="classModLink" data-selector=".ratings-count" data-toadd="show-ratings-detail" data-toggle="toggle" ><i class="fa fa-times"></i></button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    5 Stars
+                                </td>
+                                <td>
+                                    <div class="percent">
+                                        {% spaceless %}
+                                        <div class="fill" style="width:{{ perFive }}%">
+                                            {% if perFive > 80 %}<span class="inner">{{ perFive|round(2) }}%</span>{% endif %}
+                                        </div>
+                                        {% if perFive <= 80 %}<span class="outer">{{ perFive|round(2) }}%</span>{% endif %}
+                                        {% endspaceless %}
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ score.fives }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    4 Stars
+                                </td>
+                                <td>
+                                    <div class="percent">
+                                        {% spaceless %}
+                                        <div class="fill" style="width:{{ perFour }}%">
+                                            {% if perFour > 80 %}<span class="inner">{{ perFour|round(2) }}%</span>{% endif %}
+                                        </div>
+                                        {% if perFour <= 80 %}<span class="outer">{{ perFour|round(2) }}%</span>{% endif %}
+                                        {% endspaceless %}
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ score.fours }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    3 Stars
+                                </td>
+                                <td>
+                                    <div class="percent">
+                                        {% spaceless %}
+                                        <div class="fill" style="width:{{ perThree }}%">
+                                            {% if perThree > 80 %}<span class="inner">{{ perThree|round(2) }}%</span>{% endif %}
+                                        </div>
+                                        {% if perThree <= 80 %}<span class="outer">{{ perThree|round(2) }}%</span>{% endif %}
+                                        {% endspaceless %}
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ score.threes }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    2 Stars
+                                </td>
+                                <td>
+                                    <div class="percent">
+                                        {% spaceless %}
+                                        <div class="fill" style="width:{{ perTwo }}%">
+                                            {% if perTwo > 80 %}<span class="inner">{{ perTwo|round(2) }}%</span>{% endif %}
+                                        </div>
+                                        {% if perTwo <= 80 %}<span class="outer">{{ perTwo|round(2) }}%</span>{% endif %}
+                                        {% endspaceless %}
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ score.twos }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    1 Stars
+                                </td>
+                                <td>
+                                    <div class="percent">
+                                        {% spaceless %}
+                                        <div class="fill" style="width:{{ perOne }}%">
+                                            {% if perOne > 80 %}<span class="inner">{{ perOne|round(2) }}%</span>{% endif %}
+                                        </div>
+                                        {% if perOne <= 80 %}<span class="outer">{{ perOne|round(2) }}%</span>{% endif %}
+                                        {% endspaceless %}
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ score.ones }}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">
+                                    <span class="left">
+                                        {{ score.total }} Ratings
+                                    </span>
+                                    <span class="right">
+                                        {% if review_count > 0 %}
+                                            {{ review_count }} reviews
+                                        {% endif %}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </span>
+    {% if 0 == review_count %}
+        <button title="Write the first review?" class="fakelink review-it" data-bstsh-object="anonGate eventThrower" data-event="bookster:workreviewrequest:{{ work_id }}">Review it</button>
+    {% else %}
+        <a href="#reviews-marker" data-bstsh-nohist="nohist" data-bstsh-object="smoothScroller" data-scroll-offset="40">{{ review_count }}
+            Review{% if 0 == review_count or review_count > 1 %}s{% endif %}
+        </a>
+    {% endif %}
+{% endif %}

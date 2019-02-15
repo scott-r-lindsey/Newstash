@@ -52,7 +52,7 @@
                         {{ include ('work/edition-picker.html.twig', {'edition': work.frontEdition, 'selected': 'selected'}) }}
                         {% for edition in editions %}
                             {% if edition.asin != work.frontEdition.asin %}
-                                {{ include ('ScottDataBundle:Work:edition-picker.html.twig', {'edition': edition, 'selected': ''}) }}
+                                {{ include ('work/edition-picker.html.twig', {'edition': edition, 'selected': ''}) }}
                             {% endif %}
                         {% endfor %}
                     </div>
@@ -70,7 +70,7 @@
                     <div class="end">
                         <div class="reviews">
                             <div class="ratings average" data-bstsh-ratings-work="{{ work.id }}">
-                                {{ render(controller('ScottDataBundle:Work:ratings', {work_id: work.id})) }}
+                                {{ render(controller('App\\Controller\\WorkController:ratings', {work_id: work.id})) }}
                             </div>
                             <div class="my-stuff-shell" data-bstsh-object="reviewWidget" data-workid="{{ work.id }}">
                                 <div class="padding">
@@ -99,7 +99,7 @@
                         {% if edition.asin == work.frontEdition.asin %}
                             {% set selected = 'selected' %}
                         {% endif %}
-                        {{ include ('ScottDataBundle:Work:edition.html.twig', {'edition': edition}) }}
+                        {{ include ('work/edition.html.twig', {'edition': edition}) }}
                     {% endfor %}
                 </div>
 
@@ -114,7 +114,7 @@
         </div>
         <div class="bottom">
             <div class="left">
-                {% set publink %}{{ include( 'ScottDataBundle:Fragment:publisherLink.text.twig', { 'edition': work.frontEdition }) }}{% endset %}
+                {% set publink %}{{ include( 'fragment/publisherLink.text.twig', { 'edition': work.frontEdition }) }}{% endset %}
                 {% if publink %}
                     <a href="{{ publink }}" title="{{ work.title }} at {{ work.frontEdition.publisher.name }}">At {{ work.frontEdition.publisher.name }} <i class="fa fa-external-link"></i></a>
                 {% endif %}
@@ -214,7 +214,7 @@
                     {% if loop.index < 6 %}
                         {% if 1 == loop.index %}
                             <div class="book-list selected" id="related-{{ bn.id }}">
-                                {{ render(controller('ScottDataBundle:Search:topSellingSmall', {node_id: bn.id})) }}
+                                {{ render(controller('App\\Controller\\SearchController:topSellingSmall', {node_id: bn.id})) }}
                                 <div class="more-link">
                                     {% for ibn in bn.pathdata %}
                                         {% set bnslug %}{{ bn.name|escape('url') }}{% endset %}
@@ -295,7 +295,7 @@
             <a href="#top" data-bstsh-nohist="nohist" data-bstsh-object="smoothScroller" data-override-height="0">back to top</a>
         </div>
         <div class="review-shell">
-            {{ render(controller('ScottDataBundle:Work:reviews', {
+            {{ render(controller('App\\Controller\\WorkController:reviews', {
                 work_id: work.id,
                 page: 1,
                 sort: 'new'

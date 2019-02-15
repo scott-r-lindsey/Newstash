@@ -3,42 +3,44 @@
 
         {% set slug %}{{ edition.slug|default('book-link')}}{% endset %}
         {% set isbn = edition.isbn %}
+
+{# 
         {% set publisher = edition.publisher %}
 
         {% if null == publisher %}
-        {% elseif 'Hachette Book Group' == publisher.name %} 
+        {% elseif 'Hachette Book Group' == publisher.name %}
             {% if edition.url %}
                 {{ edition.url }}
             {% else %}
                 http://www.hachettebookgroup.com/titles/author/{{ slug }}/{{ isbn }}/
             {% endif %}
-        {% elseif 'HarperCollins Publishers' == publisher.name %} 
+        {% elseif 'HarperCollins Publishers' == publisher.name %}
             {% if edition.url %}
                 {{ edition.url }}
             {% else %}
-                http://www.harpercollins.com/books/{{ slug }}/?isbn={{ isbn }} 
+                http://www.harpercollins.com/books/{{ slug }}/?isbn={{ isbn }}
             {% endif %}
-        {% elseif 'Macmillan Publishers' == publisher.name %} 
+        {% elseif 'Macmillan Publishers' == publisher.name %}
             {% if edition.url %}
                 {{ edition.url }}
             {% else %}
                 http://us.macmillan.com/book.aspx?isbn={{ isbn }}
             {% endif %}
-        {% elseif 'Penguin Group' == publisher.name %} 
+        {% elseif 'Penguin Group' == publisher.name %}
             {% if edition.url %}
                 {{ edition.url }}
             {% else %}
                 http://www.penguin.com/book/{{ slug }}/{{ isbn }}
             {% endif %}
-{#
+
         {% elseif 'Random House Inc.' == publisher.name %}
             {% if edition.url %}
                 {{ edition.url }}
             {% else %}
                 http://www.randomhouse.com/book/search/search.php?isbn={{ isbn }}
             {% endif %}
-#}
-        {% elseif 'Simon & Schuster' == publisher.name %} 
+
+        {% elseif 'Simon & Schuster' == publisher.name %}
             {% if edition.url %}
                 {{ edition.url }}
             {% else %}
@@ -49,5 +51,8 @@
                 {{ edition.url }}
             {% endif %}
         {% endif %}
+
+#}
+
     {% endif %}
 {% endspaceless %}

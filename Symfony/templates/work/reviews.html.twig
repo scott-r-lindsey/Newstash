@@ -1,0 +1,102 @@
+{% if (review_count) == 0 %}
+    <div class="spacer"></div>
+    <div class="no-reviews">
+
+        <p>This book has not yet been reviewed</p>
+        <button class="fakelink" data-bstsh-object="eventThrower" data-event="bookster:workreviewrequest:{{ work_id }}">Review it First!</button>
+    </div>
+{% elseif reviews|length == 0 %}
+    <div class="spacer"></div>
+    <div class="no-reviews">
+
+        <p>No reviews match your search</p>
+    </div>
+{% else %}
+    {% for review in reviews %}
+        {% set starsclass = '' %}
+        {% if 1 == review.stars %}
+            {% set starsclass = 'onestar' %}
+        {% elseif 2 == review.stars %}
+            {% set starsclass = 'twostar' %}
+        {% elseif 3 == review.stars %}
+            {% set starsclass = 'threestar' %}
+        {% elseif 4 == review.stars %}
+            {% set starsclass = 'fourstar' %}
+        {% elseif 5 == review.stars %}
+            {% set starsclass = 'fivestar' %}
+        {% endif %}
+
+        <div class="review owner-{{review.user.id}} truncate {{ starsclass }}"  data-review-id="{{ review.id }}">
+            <div class="user">
+                <img src="{{ review.user.avatarUrl(60) }}" class="" height="60" width="60" /><br />
+                <span>{{ review.user.firstName }}</span>
+            </div>
+            <div class="info">
+                <div class="avg-stars stars" data-bstsh-object="starsWidget" data-fixed-value="{{ review.stars }}"></div>
+                <div class="data">
+                    <time datetime="{{ review.createdAt|date("c") }}">{{ review.createdAt|date("F j, Y \\a\\t g:i a") }}</time>
+                    <span class="bstsh-user-hide-{{ review.user.id }}"><button class="flag" title="Flag this review"><i class="fa fa-flag"></i></button></span>
+                    <span class="useredit bstsh-user-display-inline-block-{{ review.user.id }}"><button class="fakelink useredit" title="Edit your review" data-bstsh-object="anonGate eventThrower" data-event="bookster:workreviewrequest:{{ review.work.id }}">Edit</button></span>
+                </div>
+                <div class="readstatus">
+                    {% if review.finishedReadingAt %}
+                        Finished reading
+                        <time datetime="{{ review.finishedReadingAt|date("c") }}">{{ review.finishedReadingAt|date("F j, Y \\a\\t g:i a") }}</time>
+                    {% elseif review.startedReadingAt %}
+                        Started reading
+                        <time datetime="{{ review.startedReadingAt|date("c") }}">{{ review.startedReadingAt|date("F j, Y \\a\\t g:i a") }}</time>
+                    {% endif %}
+                </div>
+                <div class="title">
+                    <h4>{{ review.title }}</h4>
+                </div>
+            </div>
+            <div class="review-body-shell">
+                <div class="spacer"></div>
+
+                <div class="review-body">
+                    {{ review.text|raw }}
+                    <div class="readless">
+                        <button class="fakelink" data-bstsh-object="classModLink eventThrower" data-parent-selector=".review" data-toadd="truncate" data-cml-noprevent="true" data-event="bookstash:focus-reflow-request" title="Read Less">Read Less</button>
+                    </div>
+                </div><div class="readmore">
+                    <button class="fakelink" data-bstsh-object="classModLink eventThrower" data-cml-noprevent="true" data-event="bookstash:focus-reflow-request" data-parent-selector=".review" data-toremove="truncate" title="Read More">Read More</button>
+                </div>
+            </div>
+            <div class="likes">
+                <div class="likecount">
+                {% if 0 == review.likes %}
+                {% elseif 1 == review.likes %}
+                    <span >1 like</span>
+                {% else %}
+                    <span>{{ review.likes }} likes</span>
+                {% endif %}
+                </div>
+                <button class="fakelink reviewlike bstsh-user-hide-{{ review.user.id }} display-none-on-like-review-{{ review.id }}" data-review-id="{{ review.id }}" title="Like this Review" data-url="{{ path('stash_user_review_like', {'work_id': work_id, 'review_id': review.id }) }}">Like</button>
+                <button class="fakelink reviewunlike bstsh-user-hide-{{ review.user.id }} display-ib-on-like-review-{{ review.id }}" data-review-id="{{ review.id }}" title="Unlike this Review" data-url="{{ path('stash_user_review_like', {'work_id': work_id, 'review_id': review.id }) }}">Unlike</button>
+                <i class="fa fa-spinner fa-spin"></i>
+                <button class="fakelink showspoiler" title="Reveal spoilers in review"">Show Spoilers</button>
+                <button class="fakelink hidespoiler" title="Hide spoilers in review"">Hide Spoilers</button>
+            </div>
+        </div>
+    {% endfor %}
+    {% if hasmore %}
+        <div class="navigation" style="display:none;">
+            {% if user_id %}
+                {% if not stars %}
+                    {% set stars = 'any' %}
+                {% endif %}
+                <a href="{{ path('work_reviews_byuser', {'work_id': work_id, 'sort': sort, 'page': page +1, 'user_id': user_id, 'stars': stars }) }}" class="morelink"></a>
+            {% else %}
+                {% if stars %}
+                    <a href="{{ path('work_reviews_bystar', {'work_id': work_id, 'sort': sort, 'stars': stars, 'page': page +1}) }}" class="morelink"></a>
+                {% else %}
+                    <a href="{{ path('work_reviews', {'work_id': work_id, 'sort': sort, 'page': page +1}) }}" class="morelink"></a>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+{% endif %}
+
+

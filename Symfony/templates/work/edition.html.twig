@@ -1,0 +1,50 @@
+{% if edition.listPrice and '0.00' != edition.listPrice %}
+    {% set hasPubPrice = true %}
+{% else %}
+    {% set hasPubPrice = false %}
+{% endif %}
+{% if edition.amznPrice %}
+    {% set hasAmznPrice = true %}
+    {% set pricestring %}{{ edition.format.description }}: ${{ edition.amznPrice }} (as of {{ edition.amznUpdatedAt|date("F jS") }}){% endset %}
+{% else %}
+    {% set hasAmznPrice = false %}
+    {% set pricestring = "The price is hidden (because it is so low?)" %}
+{% endif %}
+
+    <div class="edition {{ selected }}" data-bstsh-asin="{{ edition.asin }}">
+        {{ edition.title }} |
+        {{ edition.format.description }}
+        {% if edition.pages %}| {{ edition.pages }} Pages, {% endif %}
+        {% if edition.isbn %}| ISBN: {{ edition.isbn }} {% endif %}<br />
+        Published {{ edition.publicationDate|date("F jS, Y ") }} by {{ edition.amznPublisher }}<br />
+
+        {% if hasPubPrice and hasAmznPrice %}
+            ${{ edition.listPrice }} |
+            <b>${{ edition.amznPrice }}*</b> at
+            <a href="{% spaceless %}{{ include( 'fragment/amznLink.html.twig', { 'asin': edition.asin  }) }}{% endspaceless %}" data-bstsh-object="outClickLogger" data-outlink-type="amazon">Amazon</a> 
+            <span class="disclaimer">(* as of {{ edition.amznUpdatedAt|date("F jS") }})</a></span>
+        {% elseif hasPubPrice and not hasAmznPrice %}
+            ${{ edition.listPrice }} (list price)
+        {% elseif not hasPubPrice and hasAmznPrice %}
+            <b>${{ edition.amznPrice }}*</b> at
+            <a href="{% spaceless %}{{ include( 'fragment/amznLink.html.twig', { 'asin': edition.asin  }) }}{% endspaceless %}" data-bstsh-object="outClickLogger" data-outlink-type="amazon">Amazon</a> 
+            <span class="disclaimer">(* as of {{ edition.amznUpdatedAt|date("F jS") }})</a></span>
+        {% else %}
+            {% if edition.format.description starts with 'Kindle' %}
+                <div class="mute">Visit Amazon to find the Kindle price</div>
+            {% else %}
+                <div class="mute">Price not available</div>
+            {% endif %}
+        {% endif %}
+
+        <div style="display:none" class="edition-description">
+            {{ edition.description|raw }}
+        </div>
+    </div>
+
+    <a href="{% spaceless %}{{ include( 'fragment/amznLink.html.twig', { 'asin': edition.asin  }) }}{% endspaceless %}" data-bstsh-object="outClickLogger" data-outlink-type="amazon">
+        <div class="amzn-link {{ selected }}" data-bstsh-asin="{{ edition.asin }}" title="{{ pricestring }}">
+            <span>Available at</span>
+            <img src="/img/amazon.svg" width="90" height="18" />
+        </div></a>
+

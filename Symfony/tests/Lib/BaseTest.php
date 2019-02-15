@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Tests\Lib;
 
 use App\Entity\Edition;
+use App\Entity\User;
 use App\Entity\Lead;
 use App\Entity\BrowseNode;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -268,6 +269,23 @@ abstract class BaseTest extends WebTestCase
         }
     }
 
+    public function createUser(): User
+    {
+        $em = self::$container->get('doctrine')->getManager();
+
+        $user = new User();
+
+        $user->setUsername('testuser')
+            ->setEmail('no@no.no')
+            ->setPassword('----locked----');
+
+        $em->persist($user);
+
+        $em->flush();
+
+        return $user;
+
+    }
 
 
 

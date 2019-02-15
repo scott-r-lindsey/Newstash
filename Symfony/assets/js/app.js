@@ -37,7 +37,9 @@ require('script-loader!./include/legacy/masonry.pkgd.min.js');
 require('jquery-visible');
 require('timeago');
 require('raty-js');
-require('picker');
+//require('picker');
+require('script-loader!./include/legacy/picker.js');
+require('script-loader!./include/legacy/picker.date.js');
 require('devbridge-autocomplete');
 
 require('script-loader!./include/modernizr-custom.js');

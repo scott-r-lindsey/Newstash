@@ -45,5 +45,29 @@ class BrowseNode
 
         return $nodes;
     }
+
+    public function findTopSellingWorks(
+        int $node_id,
+        int $count = 50
+    ): array
+    {
+
+        $mongodb            = $this->mongo->getDb();
+        $worksCollection    = $mongodb->works;
+
+        $cursor = $worksCollection->find([
+            'browse_node' => array('$in' => array((int)$node_id))
+        ]);
+
+        $cursor->sort(['amzn_salesrank' => 1]);
+        $cursor->limit($count);
+
+        $works = [];
+        foreach ($cursor as $work) {
+            $works[] = $work;
+        }
+
+        return $works;
+    }
 }
 

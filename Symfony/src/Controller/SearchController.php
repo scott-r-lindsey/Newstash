@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\Mongo\BrowseNode;
+use App\Service\Mongo\BrowseNode as MongoBrowseNode;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +13,67 @@ use App\Service\Mongo\Work;
 class SearchController extends AbstractController
 {
 
+    /**
+     * @Route("/search", name="search_index", methods={"GET"})
+     */
+    public function search(Request $request)
+    {
+        // stub for mobile site parity
+        return $this->redirect('/', 301);
+    }
+
+    /**
+     * @Route("/search/books", name="book_search", methods={"GET"})
+     * @Template()
+     */
+    public function titleSearch(Request $request)
+    {
+        //FIXME
+        /*
+        $workSearcher   = $this->container->get('bookstash.search.works');
+        return $workSearcher->doTitleSearch($request);
+        */
+    }
+
+    /**
+     * @Route("/search/author", name="author_search", methods={"GET"})
+     * @Template()
+     */
+    public function authorSearch(Request $request)
+    {
+        //FIXME
+        /*
+        $workSearcher   = $this->container->get('bookstash.search.works');
+        return $workSearcher->doAuthorSearch($request);
+        */
+    }
+
+
+
+
+
+    /**
+     * @Route("/browse/small/{node_id}", name="browse_node_small")
+     * @Template()
+     */
+    public function topSellingSmall(
+        MongoBrowseNode $mbn,
+        $node_id,
+        $count = 50
+    ): array
+    {
+        $works = $mbn->findTopSellingWorks((int)$node_id, (int)$count);
+
+        return compact('works');
+    }
+
+
+
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // non-routable
@@ -21,7 +82,7 @@ class SearchController extends AbstractController
      * @Template()
      */
     public function categoryMenu(
-        BrowseNode $bn,
+        MongoBrowseNode $mbn,
         $node_ids
     ): array
     {
@@ -35,11 +96,11 @@ class SearchController extends AbstractController
             $node_ids = $fixed;
         }
 
-        $nodes = $bn->findNodesById($node_ids);
+        $nodes = $mbn->findNodesById($node_ids);
 
-        return array(
+        return [
             'nodes' => $nodes
-        );
+        ];
     }
 
     /**

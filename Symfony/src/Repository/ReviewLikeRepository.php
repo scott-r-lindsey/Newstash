@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method ReviewLike[]    findAll()
  * @method ReviewLike[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RevieLikeRepository extends ServiceEntityRepository
+class ReviewLikeRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {

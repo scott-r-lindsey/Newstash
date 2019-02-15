@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RevieLikeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ReviewLikeRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(
  *      name="review_like"

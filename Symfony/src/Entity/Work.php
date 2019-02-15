@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
- * @ORM\HasLifecycleCallbacks * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Table(
  *      name="work",
  *      indexes={
@@ -55,9 +55,34 @@ class Work{
     private $superseded;
 
     /**
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="work")
+     */
+    private $reviews;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Rating", mappedBy="work")
+     */
+    private $ratings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Readit", mappedBy="work")
+     */
+    private $readit;
+
+    /**
+     * @ORM\OneToMany(targetEntity="StashWork", mappedBy="work")
+     */
+    private $stash_works;
+
+    /**
      * @ORM\OneToMany(targetEntity="SimilarWork", mappedBy="work")
      */
     private $similar_works;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Score", mappedBy="work", fetch="EXTRA_LAZY")
+     **/
+    private $score;
 
     // ------------------------------------------------------------------------
 
@@ -82,6 +107,10 @@ class Work{
         $this->editions = new ArrayCollection();
         $this->superseded = new ArrayCollection();
         $this->similar_works = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
+        $this->readit = new ArrayCollection();
+        $this->stash_works = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -248,6 +277,148 @@ class Work{
             // set the owning side to null (unless already changed)
             if ($similarWork->getWork() === $this) {
                 $similarWork->setWork(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getScore(): ?Score
+    {
+        return $this->score;
+    }
+
+    public function setScore(?Score $score): self
+    {
+        $this->score = $score;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newWork = $score === null ? null : $this;
+        if ($newWork !== $score->getWork()) {
+            $score->setWork($newWork);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setWork($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->contains($review)) {
+            $this->reviews->removeElement($review);
+            // set the owning side to null (unless already changed)
+            if ($review->getWork() === $this) {
+                $review->setWork(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rating[]
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setWork($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->contains($rating)) {
+            $this->ratings->removeElement($rating);
+            // set the owning side to null (unless already changed)
+            if ($rating->getWork() === $this) {
+                $rating->setWork(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Readit[]
+     */
+    public function getReadit(): Collection
+    {
+        return $this->readit;
+    }
+
+    public function addReadit(Readit $readit): self
+    {
+        if (!$this->readit->contains($readit)) {
+            $this->readit[] = $readit;
+            $readit->setWork($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReadit(Readit $readit): self
+    {
+        if ($this->readit->contains($readit)) {
+            $this->readit->removeElement($readit);
+            // set the owning side to null (unless already changed)
+            if ($readit->getWork() === $this) {
+                $readit->setWork(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StashWork[]
+     */
+    public function getStashWorks(): Collection
+    {
+        return $this->stash_works;
+    }
+
+    public function addStashWork(StashWork $stashWork): self
+    {
+        if (!$this->stash_works->contains($stashWork)) {
+            $this->stash_works[] = $stashWork;
+            $stashWork->setWork($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStashWork(StashWork $stashWork): self
+    {
+        if ($this->stash_works->contains($stashWork)) {
+            $this->stash_works->removeElement($stashWork);
+            // set the owning side to null (unless already changed)
+            if ($stashWork->getWork() === $this) {
+                $stashWork->setWork(null);
             }
         }
 

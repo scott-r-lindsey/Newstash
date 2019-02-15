@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\EditionRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(
  *      name="edition",
@@ -360,6 +360,82 @@ class Edition{
                 $this->getPublicationDate()
             )
         );
+    }
+
+    public function __toString(){
+        return $this->id . ' - ' . $this->title;
+    }
+
+    public function getNormalizedAmznSmallCoverX(){
+        return $this->getNormalizedCoverY('small', true);
+    }
+    public function getNormalizedAmznSmallCoverY(){
+        return $this->getNormalizedCoverY('small');
+    }
+    public function getNormalizedAmznMediumCoverX(){
+        return $this->getNormalizedCoverY('medium', true);
+    }
+    public function getNormalizedAmznMediumCoverY(){
+        return $this->getNormalizedCoverY('medium');
+    }
+    public function getNormalizedAmznLargeCoverX(){
+        return $this->getNormalizedCoverY('large', true);
+    }
+    public function getNormalizedAmznLargeCoverY(){
+        return $this->getNormalizedCoverY('large');
+    }
+
+    private function getNormalizedCoverY($size, $flip = false){
+        if ('small' == $size){
+            $memo = 'normalizedSmallY';
+            $max = 160;
+            $x = $this->getAmznMediumCoverX();
+            $y = $this->getAmznMediumCoverY();
+        }
+        else if ('medium' == $size){
+            $memo = 'normalizedMediumY';
+            $max = 160;
+            $x = $this->getAmznMediumCoverX();
+            $y = $this->getAmznMediumCoverY();
+        }
+        else if ('large' == $size){
+            $memo = 'normalizedLargeY';
+            $max = 500;
+            $x = $this->getAmznLargeCoverX();
+            $y = $this->getAmznLargeCoverY();
+        }
+        if ($flip){
+            //$x ^= $y ^= $x ^= $y;
+            list($x, $y) = array($y, $x);
+            $memo = rtrim($memo, 'Y') . 'X';
+        }
+        if (isset($this->$memo)){
+            //return $this->$memo;
+        }
+
+        if ((0 == $x) || (0 == $y)){
+            return 0;
+        }
+
+        if ($this->coverIsWrong($x, $y, $max)){
+            if (($x > $max) || ($y > $max)){
+                // punt for now FIXME
+                return $this->$memo = $x;
+            }
+
+            $factor = min( ($size / $x), ($size / $y));
+            return $this->$memo = round($y * $factor);
+        }
+        return $this->$memo = $y;
+    }
+    private function coverIsWrong($x, $y, $max){
+        if ($max == $x){
+            return false;
+        }
+        if ($max == $y){
+            return false;
+        }
+        return true;
     }
 
     public function getIsbn(): ?string

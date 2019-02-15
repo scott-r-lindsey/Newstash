@@ -3,11 +3,13 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(
  *      name="user",
@@ -27,6 +29,51 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="user")
+     */
+    private $reviews;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Rating", mappedBy="user")
+     */
+    private $ratings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Readit", mappedBy="user")
+     */
+    private $readit;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
+     */
+    private $posts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Stash", mappedBy="user")
+     */
+    private $stashs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Flag", mappedBy="user")
+     */
+    private $flags;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ReviewLike", mappedBy="user")
+     */
+    private $review_likes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Friendship", mappedBy="user")
+     **/
+    private $friendships;
 
     //-------------------------------------------------------------------------------
 
@@ -74,6 +121,20 @@ class User extends BaseUser
 
     /** @ORM\Column(type="array", nullable=true) */
     protected $display_prefs = array();
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->reviews = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
+        $this->readit = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->stashs = new ArrayCollection();
+        $this->flags = new ArrayCollection();
+        $this->review_likes = new ArrayCollection();
+        $this->friendships = new ArrayCollection();
+    }
 
     //-------------------------------------------------------------------------------
 
@@ -274,6 +335,285 @@ class User extends BaseUser
     public function setDisplayPrefs(?array $display_prefs): self
     {
         $this->display_prefs = $display_prefs;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->contains($review)) {
+            $this->reviews->removeElement($review);
+            // set the owning side to null (unless already changed)
+            if ($review->getUser() === $this) {
+                $review->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rating[]
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->contains($rating)) {
+            $this->ratings->removeElement($rating);
+            // set the owning side to null (unless already changed)
+            if ($rating->getUser() === $this) {
+                $rating->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Readit[]
+     */
+    public function getReadit(): Collection
+    {
+        return $this->readit;
+    }
+
+    public function addReadit(Readit $readit): self
+    {
+        if (!$this->readit->contains($readit)) {
+            $this->readit[] = $readit;
+            $readit->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReadit(Readit $readit): self
+    {
+        if ($this->readit->contains($readit)) {
+            $this->readit->removeElement($readit);
+            // set the owning side to null (unless already changed)
+            if ($readit->getUser() === $this) {
+                $readit->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            // set the owning side to null (unless already changed)
+            if ($post->getUser() === $this) {
+                $post->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stash[]
+     */
+    public function getStashs(): Collection
+    {
+        return $this->stashs;
+    }
+
+    public function addStash(Stash $stash): self
+    {
+        if (!$this->stashs->contains($stash)) {
+            $this->stashs[] = $stash;
+            $stash->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStash(Stash $stash): self
+    {
+        if ($this->stashs->contains($stash)) {
+            $this->stashs->removeElement($stash);
+            // set the owning side to null (unless already changed)
+            if ($stash->getUser() === $this) {
+                $stash->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Flag[]
+     */
+    public function getFlags(): Collection
+    {
+        return $this->flags;
+    }
+
+    public function addFlag(Flag $flag): self
+    {
+        if (!$this->flags->contains($flag)) {
+            $this->flags[] = $flag;
+            $flag->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFlag(Flag $flag): self
+    {
+        if ($this->flags->contains($flag)) {
+            $this->flags->removeElement($flag);
+            // set the owning side to null (unless already changed)
+            if ($flag->getUser() === $this) {
+                $flag->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ReviewLike[]
+     */
+    public function getReviewLikes(): Collection
+    {
+        return $this->review_likes;
+    }
+
+    public function addReviewLike(ReviewLike $reviewLike): self
+    {
+        if (!$this->review_likes->contains($reviewLike)) {
+            $this->review_likes[] = $reviewLike;
+            $reviewLike->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReviewLike(ReviewLike $reviewLike): self
+    {
+        if ($this->review_likes->contains($reviewLike)) {
+            $this->review_likes->removeElement($reviewLike);
+            // set the owning side to null (unless already changed)
+            if ($reviewLike->getUser() === $this) {
+                $reviewLike->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Friendship[]
+     */
+    public function getFriendships(): Collection
+    {
+        return $this->friendships;
+    }
+
+    public function addFriendship(Friendship $friendship): self
+    {
+        if (!$this->friendships->contains($friendship)) {
+            $this->friendships[] = $friendship;
+            $friendship->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFriendship(Friendship $friendship): self
+    {
+        if ($this->friendships->contains($friendship)) {
+            $this->friendships->removeElement($friendship);
+            // set the owning side to null (unless already changed)
+            if ($friendship->getUser() === $this) {
+                $friendship->setUser(null);
+            }
+        }
 
         return $this;
     }

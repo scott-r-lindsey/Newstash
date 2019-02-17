@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Repository\CommentRepository;
 use App\Repository\RatingRepository;
+use App\Repository\ReaditRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\WorkRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -23,7 +26,10 @@ class StashController extends AbstractController
      * Returns various lists, used for initial population of UI
      */
     public function getListsAction(
+        CommentRepository $commentRepository,
         RatingRepository $ratingRepository,
+        ReaditRepository $readitRepository,
+        ReviewRepository $reviewRepository,
         WorkRepository $workRepository,
         Request $request,
         $lists,
@@ -43,68 +49,22 @@ class StashController extends AbstractController
 
         foreach (explode(',', $lists) as $list){
             if ('readit' == $list){
+                foreach ( $ratingRepository->findArrayByUser($user) as $r) {
+                    $return['readit'][$r['work_id']] = $r['status'];
+                }
             }
             else if ('ratings' == $list){
-                $ratings = $ratingRepository->findArrayByUser($user);
-
-                foreach ($ratings as $r){
+                foreach ( $ratingRepository->findArrayByUser($user) as $r) {
                     $return['ratings'][$r['work_id']] = $r['stars'];
                 }
             }
             else if ('reviews' == $list){
-            }
-            else if ('comments' == $list){
-            }
-            else{
-                $list = intval($list);
-                // FIXME
-                // stash fetching not implemented
-            }
-        }
-
-
-
-
-
-        $response = new JsonResponse('');
-        return $response;
-
-
-
-/*
-
-        list($fail, $response, $em, $user, $work) = $this->setup();
-        if ($fail){
-            return $response;
-        }
-
-        $ret = array();
-
-        foreach (explode(',', $lists) as $list){
-            if ('readit' == $list){
-                $query = $em->getRepository('ScottDataBundle:Readit')
-                    ->createQueryBuilder('r')
-                    ->where('r.user = :user')
-                    ->setParameter('user', $user)
-                    ->getQuery()
-                    ->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true);
-                $readit = $query->getArrayResult();
-
-                $ar = array();
-                foreach ($readit as $r){
-                    $ar[$r['work_id']] = $r['status'];
+                foreach ($reviewRepository->findArrayByUser($user) as $r) {
+                    $return['reviews'][$r['work_id']] = 1;
                 }
-                $ret['readit'] = $ar;
-
-            }
-            else if ('ratings' == $list){
-                $ret['ratings'] = $this->getRatings();
-            }
-            else if ('reviews' == $list){
-                $ret['reviews'] = $this->getReviews($user);
             }
             else if ('comments' == $list){
-                $ret['comments'] = $this->getComments($user);
+                $return['comments'] = $commentRepository->findCommentCountByUser($user);
             }
             else{
                 $list = intval($list);
@@ -112,19 +72,9 @@ class StashController extends AbstractController
                 // stash fetching not implemented
             }
         }
-        $prefs = $user->getDisplayPrefs();
 
-        $response->setData(array(
-            'error'     => 0,
-            'result'    => 'Data',
-            'id'        => $user->getId(),
-            'lists'     => $ret,
-            'prefs'     => $prefs
-        ));
+        $response = new JsonResponse($return);
         return $response;
-
-        */
-
     }
 
 

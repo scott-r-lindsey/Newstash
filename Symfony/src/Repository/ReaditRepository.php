@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Readit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Readit|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +20,14 @@ class ReaditRepository extends ServiceEntityRepository
         parent::__construct($registry, Readit::class);
     }
 
-    // /**
-    //  * @return Readit[] Returns an array of Readit objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findArrayByUser(UserInterface $user): array
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Readit
-    {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('r.user = :user')
+            ->setParameter('user', $user)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)
+            ->getArrayResult();
     }
-    */
 }

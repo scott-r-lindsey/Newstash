@@ -44,4 +44,5 @@ class ReviewLikeRepository extends ServiceEntityRepository
 
         return $query->getArrayResult();
     }
+
 }

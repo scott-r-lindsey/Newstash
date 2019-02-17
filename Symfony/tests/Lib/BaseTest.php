@@ -10,6 +10,7 @@ use App\Entity\BrowseNode;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use \SimpleXMLElement;
+use DateTime;
 
 abstract class BaseTest extends WebTestCase
 {
@@ -287,6 +288,25 @@ abstract class BaseTest extends WebTestCase
 
     }
 
+    protected function validUnsetTimestamps(array &$incoming)
+    {
+        $this->validUnsetDates($incoming, ['updated_at', 'created_at']);
+    }
 
+    protected function validUnsetDates(array &$incoming, array $fields)
+    {
+        foreach ($fields as $field) {
+            $this->assertGreaterThan(
+                new DateTime('@1481832965'),
+                $incoming[$field]
+            );
+            $this->assertLessThan(
+                new DateTime('@1923596294'),
+                $incoming[$field]
+            );
+
+            unset($incoming[$field]);
+        }
+    }
 
 }

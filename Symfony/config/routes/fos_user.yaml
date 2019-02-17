@@ -1,2 +1,5 @@
+fos_override:
+    controller: App\Controller\RegistrationController:confirmed
+    path:   /register/confirmed
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"

@@ -139,6 +139,15 @@ class User extends BaseUser
     //-------------------------------------------------------------------------------
 
     /**
+     * @ORM\PrePersist
+     */
+    public function setUsernameFromEmail(){
+        if ((is_null($this->getFacebookId())) && (is_null($this->getGoogleId()))){
+            $this->setUserName(strtolower($this->getEmail()));
+        }
+    }
+
+    /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
@@ -148,6 +157,81 @@ class User extends BaseUser
         if(null == $this->getCreatedAt()) {
             $this->setCreatedAt(new \DateTime());
         }
+    }
+
+    //-------------------------------------------------------------------------------
+    public function setFirstName($firstName){
+        $this->first_name = ucfirst($firstName);
+
+        return $this;
+    }
+
+    public function setLastName($lastName){
+        $this->last_name = ucfirst($lastName);
+
+        return $this;
+    }
+
+    public function getEmail(){
+        list($email) = array_reverse(explode(':', $this->email));
+        return $email;
+    }
+
+    public function getEmailCanonical(){
+        list($emailCanonical) = array_reverse(explode(':', $this->emailCanonical));
+        return $emailCanonical;
+    }
+
+    public function setEmailCanonical($emailCanonical){
+
+        if ((!is_null($this->getFacebookId())) || (!(is_null($this->getGoogleId())))){
+            if (false === strpos($emailCanonical, ':')){
+                if (!is_null($this->getFacebookId())){
+                    $emailCanonical = 'f:' . $emailCanonical;
+                }
+                else if (!is_null($this->getGoogleId())){
+                    $emailCanonical = 'g:' . $emailCanonical;
+                }
+            }
+        }
+        $this->emailCanonical = $emailCanonical;
+
+        return $this;
+    }
+
+    public function getName(){
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    public function getAvatarUrl($size = 80){
+        $email = $this->getEmailCanonical();
+
+        if (!is_null($this->getFacebookId())){
+            return 
+                'https://graph.facebook.com/' . 
+                $this->getFacebookId() . 
+                "/picture?width=$size&height=$size";
+        }
+        else{
+            $md5 = md5($email);
+            return "http://www.gravatar.com/avatar/$md5?s=$size";
+        }
+
+        // FIXME no google pic?
+
+        return $email;
+    }
+    /**
+     * Get display_prefs
+     *
+     * @return array 
+     */
+    public function getDisplayPrefs(){
+        $prefs = $this->display_prefs;
+        if (!isset($prefs['hide'])){
+            $prefs['hide'] = array();
+        }
+        return $prefs;
     }
 
     //-------------------------------------------------------------------------------
@@ -224,23 +308,9 @@ class User extends BaseUser
         return $this->first_name;
     }
 
-    public function setFirstName(?string $first_name): self
-    {
-        $this->first_name = $first_name;
-
-        return $this;
-    }
-
     public function getLastName(): ?string
     {
         return $this->last_name;
-    }
-
-    public function setLastName(?string $last_name): self
-    {
-        $this->last_name = $last_name;
-
-        return $this;
     }
 
     public function getGender(): ?string
@@ -325,11 +395,6 @@ class User extends BaseUser
         $this->comment_count = $comment_count;
 
         return $this;
-    }
-
-    public function getDisplayPrefs(): ?array
-    {
-        return $this->display_prefs;
     }
 
     public function setDisplayPrefs(?array $display_prefs): self

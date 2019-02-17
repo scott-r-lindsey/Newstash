@@ -1,0 +1,37 @@
+.bstsh-user-avatar-30{
+    display:inline-block;
+    height:26px;
+    width:26px;
+    border-radius: 15px;
+    background-image:url('{{ app.user.avatarUrl(26) }}');
+    border:3px solid #21a7a7;
+}
+.bstsh-user-avatar-80{
+    display:inline-block;
+    height:80px;
+    width:80px;
+    border-radius: 8px;
+    background-image:url('{{ app.user.avatarUrl }}');
+}
+.bstsh-user-avatar-160{
+    display:inline-block;
+    height:160px;
+    width:160px;
+    border-radius: 8px;
+    background-image:url('{{ app.user.avatarUrl(160) }}');
+}
+.bstsh-user-name:before{
+    content:'{{ user.name }}';
+}
+.bstsh-user-login-or-first:before{
+    content:'{{ user.firstName }}';
+}
+.bstsh-user-hide-{{ user.id }}{
+    display:none;
+}
+.bstsh-user-display-inline-block-{{ user.id }}{
+    display:inline-block!important;
+}
+.bstsh-user-display-inline-{{ user.id }}{
+    display:inline!important;
+}

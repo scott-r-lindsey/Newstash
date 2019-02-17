@@ -1,0 +1,47 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}Password Reset{% endblock %}
+{% block description %}Password Reset{% endblock %}
+
+{% block focus %}
+{% trans_default_domain 'FOSUserBundle' %}
+    <section class="password-reset" data-bstsh-object="resetManager">
+        <div class="vert"></div>
+        <div class="password-reset">
+
+            <i class="fa fa-unlock"></i>
+            <h1>Hey {{ user.firstName }},</h1>
+            <h2>Just enter your new password right here and you'll be good to go.</h2>
+
+            <form class="password">
+                <input type="password" class="password" placeholder="New Password">
+
+                <button class="showpass" style="display:none" data-bstsh-object="eventThrower" data-event="bookster:resetPassordEyeClick"><i class="fa fa-eye"></i></button><button class="showpass" data-bstsh-object="eventThrower" data-event="bookster:resetPassordEyeClick"><i class="fa fa-eye-slash"></i></button><br />
+
+                <div class="nag"><i class="fa fa-arrow-up"></i> Please enter at least 6 characters</div>
+
+                <span class="control">
+                    <button class="cancel" data-bstsh-object="eventThrower" data-event="bookster:resetPasswordCancel">Cancel</button>
+                    <button class="submit" data-bstsh-object="eventThrower" data-event="bookster:resetPasswordSubmit">Update</button>
+                </span>
+            </form>
+
+            <div style="display:none">
+                <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+                    {{ form_widget(form) }}
+                </form>
+                <a href="/" class="home">booksta.sh</a>
+            </div>
+
+            <div class="ender">
+                <div class="message">
+                    <strong>You're all set!</strong><br />
+                    Your password has been updated.  <br />
+                </div>
+                <button class="submit" data-bstsh-object="eventThrower" data-event="bookster:resetPasswordCancel">Ok</button>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
+

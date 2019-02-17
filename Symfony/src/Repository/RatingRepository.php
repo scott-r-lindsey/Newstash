@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Rating;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Rating|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +19,18 @@ class RatingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Rating::class);
     }
+
+    public function findArrayByUser(UserInterface $user): array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)
+            ->getArrayResult();
+    }
+
+
 
     // /**
     //  * @return Rating[] Returns an array of Rating objects

@@ -12,7 +12,10 @@ class NewstashUserProvider extends BaseClass{
     /**
      * {@inheritDoc}
      */
-    public function connect(UserInterface $user, UserResponseInterface $response) {
+    public function connect(
+        UserInterface $user,
+        UserResponseInterface $response
+    ) {
         $property = $this->getProperty($response);
         $username = $response->getUsername();
 
@@ -40,33 +43,42 @@ class NewstashUserProvider extends BaseClass{
     /**
      * {@inheritdoc}
      */
-    public function loadUserByOAuthUserResponse(UserResponseInterface $responseInt) {
-        $username = $responseInt->getUsername();
-        $property = $this->getProperty($responseInt);
-        $response = $responseInt->getResponse();
+    public function loadUserByOAuthUserResponse(
+        UserResponseInterface $responseInt
+    )
+    {
+        $username   = $responseInt->getUsername();
+        $response   = $responseInt->getResponse();
+        $property   = $this->getProperty($responseInt);
 
-        $user = $this->userManager->findUserBy(array($this->getProperty($responseInt) => $username));
-        //when the user is registrating
+        $user = $this->userManager->findUserBy(
+            [$this->getProperty($responseInt) => $username]
+        );
+
+        // User initial registration
         if (null === $user) {
-            $service = $responseInt->getResourceOwner()->getName();
-            $setter = 'set'.ucfirst($service);
-            $setter_id = $setter.'Id';
-            $setter_token = $setter.'AccessToken';
 
-            $user = $this->userManager->createUser();
+            $service        = $responseInt->getResourceOwner()->getName();
+            $setter         = 'set'.ucfirst($service);
+            $setter_id      = $setter.'Id';
+            $setter_token   = $setter.'AccessToken';
+
+            $user           = $this->userManager->createUser();
+
             $user->$setter_id($username);
             $user->$setter_token($responseInt->getAccessToken());
 
             $user->setUsername($property . ':' . $username);
             $user->setEmail($responseInt->getEmail());
 
-            if (isset($response['first_name'])){ // FB way 
+            if (isset($response['first_name'])){ // FB way
                 $user->setFirstName($response['first_name']);
             }
             else if (isset($response['given_name'])){ // Google way
                 $user->setFirstName($response['given_name']);
             }
-            if (isset($response['last_name'])){ // FB way 
+
+            if (isset($response['last_name'])){ // FB way
                 $user->setLastName($response['last_name']);
             }
             else if (isset($response['family_name'])){ // Google way
@@ -90,6 +102,7 @@ class NewstashUserProvider extends BaseClass{
 
             $user->setEnabled(true);
             $this->userManager->updateUser($user);
+
             return $user;
         }
 
@@ -97,13 +110,13 @@ class NewstashUserProvider extends BaseClass{
         $user = parent::loadUserByOAuthUserResponse($responseInt);
 
         // always update first, last, email, profile pic
-        if (isset($response['first_name'])){ // FB way 
+        if (isset($response['first_name'])){ // FB way
             $user->setFirstName($response['first_name']);
         }
         else if (isset($response['given_name'])){ // Google way
             $user->setFirstName($response['given_name']);
         }
-        if (isset($response['last_name'])){ // FB way 
+        if (isset($response['last_name'])){ // FB way
             $user->setLastName($response['last_name']);
         }
         else if (isset($response['family_name'])){ // Google way
@@ -116,8 +129,8 @@ class NewstashUserProvider extends BaseClass{
             }
         }
 
-        $serviceName = $responseInt->getResourceOwner()->getName();
-        $setter = 'set' . ucfirst($serviceName) . 'AccessToken';
+        $serviceName    = $responseInt->getResourceOwner()->getName();
+        $setter         = 'set' . ucfirst($serviceName) . 'AccessToken';
 
         //update access token
         $user->$setter($responseInt->getAccessToken());

@@ -3,13 +3,131 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\RatingRepository;
+use App\Repository\WorkRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class StashController extends AbstractController
 {
+
+
+    /**
+     * @Route("/user/get/{lists}", methods={"GET"})
+     *
+     * Returns various lists, used for initial population of UI
+     */
+    public function getListsAction(
+        RatingRepository $ratingRepository,
+        WorkRepository $workRepository,
+        Request $request,
+        $lists,
+        UserInterface $user = null
+    ) {
+
+        if (!$user) {
+            return new JsonResponse('');
+        }
+
+        $return = [];
+
+        $return['ratings']      = [];
+        $return['reviews']      = [];
+        $return['comments']     = [];
+        $return['readit']       = [];
+
+        foreach (explode(',', $lists) as $list){
+            if ('readit' == $list){
+            }
+            else if ('ratings' == $list){
+                $ratings = $ratingRepository->findArrayByUser($user);
+
+                foreach ($ratings as $r){
+                    $return['ratings'][$r['work_id']] = $r['stars'];
+                }
+            }
+            else if ('reviews' == $list){
+            }
+            else if ('comments' == $list){
+            }
+            else{
+                $list = intval($list);
+                // FIXME
+                // stash fetching not implemented
+            }
+        }
+
+
+
+
+
+        $response = new JsonResponse('');
+        return $response;
+
+
+
+/*
+
+        list($fail, $response, $em, $user, $work) = $this->setup();
+        if ($fail){
+            return $response;
+        }
+
+        $ret = array();
+
+        foreach (explode(',', $lists) as $list){
+            if ('readit' == $list){
+                $query = $em->getRepository('ScottDataBundle:Readit')
+                    ->createQueryBuilder('r')
+                    ->where('r.user = :user')
+                    ->setParameter('user', $user)
+                    ->getQuery()
+                    ->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true);
+                $readit = $query->getArrayResult();
+
+                $ar = array();
+                foreach ($readit as $r){
+                    $ar[$r['work_id']] = $r['status'];
+                }
+                $ret['readit'] = $ar;
+
+            }
+            else if ('ratings' == $list){
+                $ret['ratings'] = $this->getRatings();
+            }
+            else if ('reviews' == $list){
+                $ret['reviews'] = $this->getReviews($user);
+            }
+            else if ('comments' == $list){
+                $ret['comments'] = $this->getComments($user);
+            }
+            else{
+                $list = intval($list);
+                // FIXME
+                // stash fetching not implemented
+            }
+        }
+        $prefs = $user->getDisplayPrefs();
+
+        $response->setData(array(
+            'error'     => 0,
+            'result'    => 'Data',
+            'id'        => $user->getId(),
+            'lists'     => $ret,
+            'prefs'     => $prefs
+        ));
+        return $response;
+
+        */
+
+    }
+
+
 
 
     /**
@@ -17,10 +135,12 @@ class StashController extends AbstractController
      *
      * Save user display prefs
      */
-    public function putUserDisplayPrefs(Request $request) 
+    public function putUserDisplayPrefs(Request $request)
     {
 
         // FIXME
+
+/*
 
         list($fail, $response, $em, $user, $work) = $this->setup();
         if ($fail){
@@ -47,6 +167,7 @@ class StashController extends AbstractController
             'prefs'     => $prefs
         ));
         return $response;
+*/
 
     }
 
@@ -58,7 +179,7 @@ class StashController extends AbstractController
      */
     public function putReviewFlagAction(Request $request) {
 
-        // FIXME 
+        // FIXME
 
 /*
         $message        = $request->request->get('message');

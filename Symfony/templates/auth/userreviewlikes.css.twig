@@ -1,0 +1,8 @@
+{% for like in reviewLikes %}
+    .display-none-on-like-review-{{like.review_id}}{
+        display:none!important;
+    }
+    .display-ib-on-like-review-{{like.review_id}}{
+        display:inline-block!important;
+    }
+{% endfor %}

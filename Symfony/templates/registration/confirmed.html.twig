@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}Welcome {{ user.firstName }}{% endblock %}
+{% block description %}Welcome {{ user.firstName }}{% endblock %}
+
+{% block focus %}
+    <section class="welcome" data-bstsh-object="welcomeManager">
+        <div class="shell" data-bstsh-object="historyCloseButton">
+            <div class="vert"></div>
+            <div class="b-hero">B
+                <div class="link">
+                    <a href="/" class="prompt">CLICK ANYWHERE TO CONTINUE</a>
+                </div>
+            </div>
+            <div class="welcome">
+                <h2>Welcome</h2><br />
+                <h2 class="middle">to</h2><br />
+                <h2>Booksta.sh!</h2>
+            </div>
+            <a class="escape force-hide-on-browse" href="{{redirect}}"></a>
+        </div>
+    </section>
+{% endblock %}
+

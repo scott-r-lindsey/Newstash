@@ -19,32 +19,29 @@ class ReviewLikeRepository extends ServiceEntityRepository
         parent::__construct($registry, ReviewLike::class);
     }
 
-    // /**
-    //  * @return ReviewLike[] Returns an array of ReviewLike objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?ReviewLike
+    public function findByUserAndWork(
+        int $work_id,
+        int $user_id
+    ): array
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+
+        $em = $this->getEntityManager();
+
+        $dql = '
+            SELECT rl
+            FROM
+                App\Entity\ReviewLike rl
+            JOIN rl.review r
+            WHERE
+                rl.user = :user AND
+                r.work = :work';
+
+        $query = $em->createQuery($dql);
+        $query->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)
+            ->setParameter('work', $work_id)
+            ->setParameter('user', $user_id);
+
+        return $query->getArrayResult();
     }
-    */
 }

@@ -1,0 +1,62 @@
+{% extends 'email/base.html.twig' %}
+
+{% block content %}
+            <tr>
+                <td valign="top">
+                <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+                    <tr>
+                        <td style="background-color:#444" height="50" colspan="3"><a href="http://{{ app.request.host }}/" title="Booksta.sh"><img valign="top" src="http://{{ app.request.host }}/img/email/bookstash.png" height="50" width="196" border="0" alt="Booksta.sh" style="background-color:#e64f48; color:white" /></a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            &nbsp;<br />
+                            &nbsp;<br />
+                            &nbsp;<br />
+                            &nbsp;<br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10%"></td>
+                        <td align="center" style="background-color:rgba(255,255,255,.6); -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px; text-align:left; font-size:140%; line-height:1.5em;" width="80%">
+                            <p style="margin:2em 2em;">
+                                <font style="font-size:140%; font-weight:bold">Hello {{ user.firstName }},</font><br />
+                                <br />
+                                Hi {{ user.firstName }},<br />
+                                Thank you for registering with Bookstash!
+                                To activate your email address, just follow the link below: <br />
+                                <br />
+                            </p>
+                            <p style="text-align:center">
+                                <a href="{{ confirmationUrl }}" style="display: inline-block; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px; padding:1em 2em; background-color:#E64F48; color:white; font-weight:bold; font-size:130%">Activate Account</a>
+                            </p>
+                            <p style="margin:2em 2em;">
+                                <br />
+                                <font style="font-size:120%; font-weight:bold">
+                                Thanks,<br />
+                                Bookstash</br></font>
+                            </p>
+                        </td>
+                        <td width="10%"></td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+                <br />
+                <br />
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color:#ddd" colspan="3">
+                    <br />
+                    <font style="size:80%; line-height:1.8em;">
+                        <center>
+                            This email was sent to {{ user.email }} as part of user registration<br />
+                            &copy; Bookstash |
+                            <a href="http://{{ app.request.host }}/privacy">Privacy Policy</a>
+                        </center>
+                    </font>
+                    <br />
+                </td>
+            </tr>
+
+{% endblock %}

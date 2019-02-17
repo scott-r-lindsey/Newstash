@@ -12,7 +12,7 @@ class DefaultController extends AbstractController
 {
 
     /**
-     * @Route("/sup", name="home", methods={"GET"})
+     * @Route("/", name="home", methods={"GET"})
      * @Template()
      */
     public function newsAction(Request $request): array

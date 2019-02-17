@@ -1,8 +1,33 @@
 # config/packages/fos_user.yaml
 fos_user:
+    service:
+        mailer: fos_user.mailer.twig_swift
+
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
     user_class: App\Entity\User
     from_email:
-        address: "test@domain.com"
-        sender_name: "test@domain.com"
+        address: DoNotReply@BooksTo.Love
+        sender_name: BooksTo.Love Registration
+
+    registration:
+        confirmation:
+            from_email:
+                address: DoNotReply@BooksTo.Love
+                sender_name: BooksTo.Love Registration
+            enabled: true
+            template: email/registration_email.email.twig
+
+        form:
+            validation_groups: [RegistrationBookster]
+
+#    resetting:
+#        email:
+#            template: email/resetting_email.email.twig
+#            from_email:
+#                address: DoNotReply@BooksTo.Love
+#                sender_name: BooksTo.Love Password Reset
+#        form:
+#            type: bookster_user_resetting
+#            validation_groups: [ResetPasswordBookster, Default]
+#

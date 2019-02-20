@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block title %}Privacy Policy{% endblock %}
+{% block description %}Booksta.sh's Privacy Policy{% endblock %}
+
+{% block focus %}
+    <section class="privacy">
+        <button class="close-focus close-button" data-bstsh-object="historyCloseButton"><i class="fa fa-times"></i></button>
+        <div class="shell">
+            {{ privacyhtml|raw }}
+        </div>
+    </section>
+{% endblock %}
+

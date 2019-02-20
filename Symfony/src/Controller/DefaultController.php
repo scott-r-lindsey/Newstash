@@ -36,14 +36,16 @@ class DefaultController extends AbstractController
      * @Route("/privacy", name="privacy", methods={"GET"})
      * @Template()
      */
-    public function privacyAction(): array
+    public function privacyAction(
+        string $projectDir
+    ): array
     {
 
         // FIXME
 
-        $privacy = file_get_contents($this->get('kernel')->getRootDir() . '/../web/privacy.html'); 
-        return array(
+        $privacy = file_get_contents($projectDir .'/privacy.html');
+        return [
             'privacyhtml'   => $privacy,
-        );
+        ];
     }
 }

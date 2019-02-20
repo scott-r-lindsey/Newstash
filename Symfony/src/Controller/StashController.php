@@ -46,6 +46,7 @@ class StashController extends AbstractController
         $return['reviews']      = [];
         $return['comments']     = [];
         $return['readit']       = [];
+        $return['prefs']        = $user->getDisplayPrefs();
 
         foreach (explode(',', $lists) as $list){
             if ('readit' == $list){

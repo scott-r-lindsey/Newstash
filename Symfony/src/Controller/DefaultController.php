@@ -18,9 +18,71 @@ class DefaultController extends AbstractController
     public function newsAction(Request $request): array
     {
 
+        /*
+        // FIXME
+
+        $idlt = $request->get('idlt', false);
+
+        $newsMaster = $this->container->get('bookster_news_master');
+
+        if ($idlt){
+            $items = $newsMaster->getNews(array('idlt' => $idlt ));
+        }
+        else{
+            $items = $newsMaster->getNews(array());  
+        }
+
+        return compact('items');
+
+        */
+
+
         $items = [];
 
         return compact('items');
+    }
+
+
+
+    /**
+     * @Route("/top", name="top", methods={"GET"})
+     * @Template()
+     */
+    public function indexAction(
+        Request $request)
+    {
+
+        /*
+        // FIXME
+
+        $page = $request->query->get('page', 1);
+        $page--;
+
+        $mongodb = $this->container->get('bookstash.search.mongodb_factory')->getMongoDB();
+
+        $works = $mongodb->works;
+        $count = 25;
+
+        $cursor = $works->find(array(
+            'amzn_salesrank' => array('$gt' => 0)
+        ));
+        $cursor->sort(array('amzn_salesrank' => 1));
+        $cursor->limit($count);
+        $cursor->skip(($page * $count) +1);
+
+        $works = array();
+        foreach ($cursor as $work) {
+            $works[] = $work;
+        }
+
+        return array(
+            'works'     => $works,
+            'count'     => $count,
+            'page'      => $page,
+        );
+        */
+
+        return [];
     }
 
     /**
@@ -29,7 +91,8 @@ class DefaultController extends AbstractController
      */
     public function aboutAction(): array
     {
-        return array();
+        // FIXME
+        return [];
     }
 
     /**
@@ -40,12 +103,48 @@ class DefaultController extends AbstractController
         string $projectDir
     ): array
     {
-
-        // FIXME
-
         $privacy = file_get_contents($projectDir .'/privacy.html');
         return [
             'privacyhtml'   => $privacy,
         ];
+    }
+
+    /**
+     * @Route("/tos", name="tos", methods={"GET"})
+     * @Template()
+     */
+    public function tosAction(
+        string $projectDir
+    ): array
+    {
+        $tos = file_get_contents($projectDir .'/tos.html');
+        return [
+            'tos'   => $tos,
+        ];
+    }
+
+    /**
+     * @Route("/badbrowser", methods={"GET"})
+     * @Template()
+     */
+    public function badbrowserAction(Request $request){
+        // FIXME
+        return [];
+    }
+    /**
+     * @Route("/badbrowser/about", methods={"GET"})
+     * @Template()
+     */
+    public function badbrowserAboutAction(Request $request){
+        // FIXME
+        return [];
+    }
+    /**
+     * @Route("/badbrowser/privacy", methods={"GET"})
+     * @Template()
+     */
+    public function badbrowserPrivacyAction(Request $request){
+        // FIXME
+        return $this->privacyAction();
     }
 }

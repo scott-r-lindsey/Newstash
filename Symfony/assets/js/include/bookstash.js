@@ -304,6 +304,7 @@ window.bookstash = bookstash;
                 blog:       RegExp('^/blog'),
                 book:       RegExp('^/book/'),
                 privacy:    RegExp('^/privacy'),
+                tos:        RegExp('^/tos'),
                 reset:      RegExp('^/resetting'),
                 welcome:    RegExp('^/register'),
                 test:       RegExp('^/test')

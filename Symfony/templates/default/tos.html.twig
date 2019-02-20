@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block title %}Terms of Service{% endblock %}
+{% block description %}Booksta.sh's Terms of Service{% endblock %}
+
+{% block focus %}
+    <section class="tos">
+        <button class="close-focus close-button" data-bstsh-object="historyCloseButton"><i class="fa fa-times"></i></button>
+        <div class="shell">
+            {{ tos|raw }}
+        </div>
+    </section>
+{% endblock %}
+

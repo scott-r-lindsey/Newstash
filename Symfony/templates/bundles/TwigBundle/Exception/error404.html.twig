@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block title %}Whoops!{% endblock %}
+{% block description %}Error 404!{% endblock %}
+
+{% block focus %}
+<section class="error">
+    <div class="pagedata" style="display:none" data-override-pagename="error"></div>
+
+    <div class="vert"></div>
+    <div class="container">
+        <div class="dummy"></div>
+        <div class="message">
+            <img src="/img/404.svg" alt="Oops, not found" />
+        </div>
+    </div>
+</section>
+{% endblock %}
+

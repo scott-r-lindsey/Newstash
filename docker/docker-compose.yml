@@ -1,5 +1,20 @@
 version: '3'
 services:
+
+    nginx-ssl-proxy:
+        container_name: newstash-ssl-proxy
+        image: danieldent/nginx-ssl-proxy
+
+        restart: always
+        environment:
+            UPSTREAM: nginx:80
+            SERVERNAME: dev.booksto.love
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - "/etc/letsencrypt"
+
     mysql:
         container_name: newstash-mysql-container
         image: mysql:8

@@ -1,5 +1,6 @@
 
 var bookstash = {};
+window.bookstash = bookstash;
 
 !function( $, undefined ){
     "use strict";
@@ -1563,8 +1564,7 @@ var bookstash = {};
 
                 FB.getLoginStatus(function(response) {
 
-                    var final_url = '/auth/socialreflector';
-                    var auth_url = '/login/facebook?_destination=' + final_url;
+                    var auth_url = '/connect/facebook';
 
                     if (('unknown' === response.status) || ('not_authorized' === response.status)){
                         var left  = ($(window).width()/2)-(430/2);
@@ -1585,7 +1585,7 @@ var bookstash = {};
             });
             $(document).on('bookster:gpluslogin', function(event){
                 var final_url = '/auth/socialreflector';
-                var auth_url = '/login/google?_destination=' + final_url;
+                var auth_url = '/connect/google?_destination=' + final_url;
 
                 var left  = ($(window).width()/2)-(430/2);
                 var top   = ($(window).height()/2)-(600/2);

@@ -21,13 +21,12 @@ fos_user:
         form:
             validation_groups: [RegistrationBookster]
 
-#    resetting:
-#        email:
-#            template: email/resetting_email.email.twig
-#            from_email:
-#                address: DoNotReply@BooksTo.Love
-#                sender_name: BooksTo.Love Password Reset
-#        form:
-#            type: bookster_user_resetting
-#            validation_groups: [ResetPasswordBookster, Default]
-#
+    resetting:
+        email:
+            from_email:
+                address: DoNotReply@BooksTo.Love
+                sender_name: BooksTo.Love Password Reset
+            template: email/resetting_email.email.twig
+        form:
+            validation_groups: [ResetPasswordBookster, Default]
+

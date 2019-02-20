@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+    <head><title>Login via Facebook complete</title>
+
+        <script>
+            if (window.opener){
+                window.opener.bookstash.loginManager.loginComplete();
+                window.close();
+            }
+            else if (window.parent){
+                window.parent.bookstash.loginManager.loginComplete();
+            }
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

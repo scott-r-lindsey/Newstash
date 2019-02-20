@@ -7,6 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
 
+
+$app_env = $_SERVER['APP_ENV'];
+//$app_env = 'prod';
+
+
+
 // The check is to ensure we don't use .env in production
 if (!isset($_SERVER['APP_ENV'])) {
     if (!class_exists(Dotenv::class)) {
@@ -15,7 +21,7 @@ if (!isset($_SERVER['APP_ENV'])) {
     (new Dotenv())->load(__DIR__.'/../.env');
 }
 
-if ($_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev'))) {
+if ($app_debug ?? ('prod' !== ($app_env ?? 'dev'))) {
     umask(0000);
 
     Debug::enable();
@@ -29,7 +35,7 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false) {
     Request::setTrustedHosts(explode(',', $trustedHosts));
 }
 
-$kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
+$kernel = new Kernel($app_env ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($app_env ?? 'dev')));
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();

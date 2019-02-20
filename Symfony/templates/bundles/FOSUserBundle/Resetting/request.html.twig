@@ -1,0 +1,6 @@
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+    {% if invalid_username is defined %}
+        <div class="flash-error">Hmmm, that email or username doesn't seem to be on file. Try again?</div>
+    {% endif %}
+    <input type="hidden" id="fos_user_resetting_form_username" name="username" required="required" />
+</form>

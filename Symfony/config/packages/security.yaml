@@ -6,7 +6,6 @@ security:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username_email
@@ -29,8 +28,10 @@ security:
                     facebook:           "/login/check-facebook"
                     google:             "/login/check-google"
 
-                login_path:        /login
-                failure_path:      /login
+                login_path:             /login
+                failure_path:           /login
+
+                default_target_path:    /auth/socialreflector
 
                 oauth_user_provider:
                     service: App\Service\Auth\NewstashUserProvider

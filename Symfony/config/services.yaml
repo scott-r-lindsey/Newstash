@@ -50,6 +50,6 @@ services:
     App\Service\Auth\NewstashUserProvider:
         arguments:
             $userManager: '@fos_user.user_manager'
-            $properties: {facebook: 'foo', google: 'bar'}
+            $properties: {facebook: 'facebookId', google: 'googleId'}
 
 

@@ -14,6 +14,7 @@ export AWS_SECRET_ACCESS_KEY=
 export AWS_ASSOCIATE_TAG=
 
 export FACEBOOK_APP_ID=fixme-fb-id
+export FACEBOOK_SECRET=fixme-fb-secret
 export GOOGLE_API_KEY=fixme-google-api-key
 export GOOGLE_APP_ID=fixme-google-app-id
 export GAQ_ID=fixme-gaq-id

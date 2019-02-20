@@ -142,9 +142,7 @@ class User extends BaseUser
      * @ORM\PrePersist
      */
     public function setUsernameFromEmail(){
-        if ((is_null($this->getFacebookId())) && (is_null($this->getGoogleId()))){
-            $this->setUserName(strtolower($this->getEmail()));
-        }
+        $this->setUserName(strtolower($this->getEmail()));
     }
 
     /**
@@ -172,9 +170,9 @@ class User extends BaseUser
         return $this;
     }
 
-    public function getEmail(){
-        list($email) = array_reverse(explode(':', $this->email));
-        return $email;
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     public function getEmailCanonical(){
@@ -182,19 +180,10 @@ class User extends BaseUser
         return $emailCanonical;
     }
 
-    public function setEmailCanonical($emailCanonical){
+    public function setEmailCanonical($emailCanonical)
+    {
 
-        if ((!is_null($this->getFacebookId())) || (!(is_null($this->getGoogleId())))){
-            if (false === strpos($emailCanonical, ':')){
-                if (!is_null($this->getFacebookId())){
-                    $emailCanonical = 'f:' . $emailCanonical;
-                }
-                else if (!is_null($this->getGoogleId())){
-                    $emailCanonical = 'g:' . $emailCanonical;
-                }
-            }
-        }
-        $this->emailCanonical = $emailCanonical;
+        $this->emailCanonical = strtolower($emailCanonical);
 
         return $this;
     }
@@ -207,14 +196,14 @@ class User extends BaseUser
         $email = $this->getEmailCanonical();
 
         if (!is_null($this->getFacebookId())){
-            return 
-                'https://graph.facebook.com/' . 
-                $this->getFacebookId() . 
+            return
+                'https://graph.facebook.com/' .
+                $this->getFacebookId() .
                 "/picture?width=$size&height=$size";
         }
         else{
             $md5 = md5($email);
-            return "http://www.gravatar.com/avatar/$md5?s=$size";
+            return "//www.gravatar.com/avatar/$md5?s=$size";
         }
 
         // FIXME no google pic?
@@ -224,7 +213,7 @@ class User extends BaseUser
     /**
      * Get display_prefs
      *
-     * @return array 
+     * @return array
      */
     public function getDisplayPrefs(){
         $prefs = $this->display_prefs;

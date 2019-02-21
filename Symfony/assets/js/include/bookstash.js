@@ -2723,6 +2723,7 @@ window.bookstash = bookstash;
         _cbUbdate: function(members){
             var rw = this;
             var found = false;
+
             $.each(members, function(index, status){
                 if (rw.work_id == index){
 

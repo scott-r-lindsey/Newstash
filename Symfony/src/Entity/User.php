@@ -122,6 +122,9 @@ class User extends BaseUser
     /** @ORM\Column(type="array", nullable=true) */
     protected $display_prefs = array();
 
+    /** @ORM\Column(type="boolean", options={"default":false}) */
+    private $locked = false;
+
     public function __construct()
     {
         parent::__construct();
@@ -671,6 +674,18 @@ class User extends BaseUser
                 $friendship->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocked(): ?bool
+    {
+        return $this->locked;
+    }
+
+    public function setLocked(bool $locked): self
+    {
+        $this->locked = $locked;
 
         return $this;
     }

@@ -35,7 +35,7 @@ class UserTest extends BaseTest{
         );
 
         $this->assertEquals(
-            'http://www.gravatar.com/avatar/badaf314d6ee982eac7e17411ff0f532?s=80',
+            '//www.gravatar.com/avatar/badaf314d6ee982eac7e17411ff0f532?s=80',
             $user->getAvatarUrl()
         );
 
@@ -91,7 +91,7 @@ class UserTest extends BaseTest{
         );
 
         $this->assertEquals(
-            'http://www.gravatar.com/avatar/badaf314d6ee982eac7e17411ff0f532?s=80',
+            '//www.gravatar.com/avatar/badaf314d6ee982eac7e17411ff0f532?s=80',
             $user->getAvatarUrl()
         );
 

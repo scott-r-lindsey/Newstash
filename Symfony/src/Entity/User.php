@@ -215,11 +215,14 @@ class User extends BaseUser
      *
      * @return array
      */
-    public function getDisplayPrefs(){
+    public function getDisplayPrefs()
+    {
         $prefs = $this->display_prefs;
-        if (!isset($prefs['hide'])){
+
+        if (!isset($prefs['hide'])) {
             $prefs['hide'] = array();
         }
+
         return $prefs;
     }
 

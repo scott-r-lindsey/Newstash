@@ -89,29 +89,6 @@ class NewstashUserProvider extends BaseClass{
         //if user exists - go with the HWIOAuth way
         $user = parent::loadUserByOAuthUserResponse($responseInt);
 
-/*
-
-        // always update first, last, email, profile pic
-        if (isset($response['first_name'])){ // FB way
-            $user->setFirstName($response['first_name']);
-        }
-        else if (isset($response['given_name'])){ // Google way
-            $user->setFirstName($response['given_name']);
-        }
-        if (isset($response['last_name'])){ // FB way
-            $user->setLastName($response['last_name']);
-        }
-        else if (isset($response['family_name'])){ // Google way
-            $user->setLastName($response['family_name']);
-        }
-        $user->setEmail($responseInt->getEmail());
-        if ('googleId' == $property){
-            if ($response['picture']){
-                $user->setGoogleProfilePic($response['picture']);
-            }
-        }
-*/
-
         $serviceName    = $responseInt->getResourceOwner()->getName();
         $setter         = 'set' . ucfirst($serviceName) . 'AccessToken';
 

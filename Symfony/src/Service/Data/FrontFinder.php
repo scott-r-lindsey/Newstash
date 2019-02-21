@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Service\Data;
 
 use App\Entity\Edition;
-use App\Service\FormatCache;
+use App\Service\Cache\FormatCache;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 

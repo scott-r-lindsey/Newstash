@@ -3,11 +3,16 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\ScoreManager;
+use App\Service\RatingManager;
+use App\Service\ReaditManager;
+use App\Entity\Work;
 use App\Repository\CommentRepository;
 use App\Repository\RatingRepository;
 use App\Repository\ReaditRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\WorkRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +30,7 @@ class StashController extends AbstractController
      *
      * Returns various lists, used for initial population of UI
      */
-    public function getListsAction(
+    public function getLists(
         CommentRepository $commentRepository,
         RatingRepository $ratingRepository,
         ReaditRepository $readitRepository,
@@ -40,87 +45,243 @@ class StashController extends AbstractController
             return new JsonResponse('');
         }
 
-        $return = [];
+        $ret = [];
 
-        $return['ratings']      = [];
-        $return['reviews']      = [];
-        $return['comments']     = [];
-        $return['readit']       = [];
-        $return['prefs']        = $user->getDisplayPrefs();
+        $ret['ratings']      = [];
+        $ret['reviews']      = [];
+        $ret['comments']     = [];
+        $ret['readit']       = [];
+        $ret['prefs']        = $user->getDisplayPrefs();
 
         foreach (explode(',', $lists) as $list){
             if ('readit' == $list){
-                foreach ( $ratingRepository->findArrayByUser($user) as $r) {
-                    $return['readit'][$r['work_id']] = $r['status'];
+                foreach ( $readitRepository->findArrayByUser($user) as $r) {
+                    $ret['readit'][$r['work_id']] = $r['status'];
                 }
             }
             else if ('ratings' == $list){
                 foreach ( $ratingRepository->findArrayByUser($user) as $r) {
-                    $return['ratings'][$r['work_id']] = $r['stars'];
+                    $ret['ratings'][$r['work_id']] = $r['stars'];
                 }
             }
             else if ('reviews' == $list){
                 foreach ($reviewRepository->findArrayByUser($user) as $r) {
-                    $return['reviews'][$r['work_id']] = 1;
+                    $ret['reviews'][$r['work_id']] = 1;
                 }
             }
             else if ('comments' == $list){
-                $return['comments'] = $commentRepository->findCommentCountByUser($user);
+                $ret['comments'] = $commentRepository->findCommentCountByUser($user);
             }
             else{
                 $list = intval($list);
-                // FIXME
-                // stash fetching not implemented
             }
         }
 
-        $response = new JsonResponse($return);
+        $response = new JsonResponse();
+        $response->setData(array(
+            'error'     => 0,
+            'result'    => 'Data',
+            'id'        => $user->getId(),
+            'lists'     => $ret,
+            'prefs'     => $user->getDisplayPrefs()
+        ));
         return $response;
     }
-
-
-
 
     /**
      * @Route("/user/displayprefs", name="user_displayprefs_save", methods={"POST"}))
      *
      * Save user display prefs
      */
-    public function putUserDisplayPrefs(Request $request)
+    public function putUserDisplayPrefs(
+        EntityManagerInterface $em,
+        Request $request,
+        UserInterface $user = null
+    ): JsonResponse
     {
+        $response = new JsonResponse('');
 
-        // FIXME
-
-/*
-
-        list($fail, $response, $em, $user, $work) = $this->setup();
-        if ($fail){
+        if (!$user) {
             return $response;
         }
 
-        $hide    = ($request->request->get('hide'));
-        $prefs = $user->getDisplayPrefs();
-        $prefs['hide'] = explode(',', $hide);
-        if ('' == $prefs['hide'][0]){
-            $prefs['hide'] = array();
-        }
+        $hide           = $request->request->get('hide');
+
+        $prefs          = $user->getDisplayPrefs();
+        $prefs['hide']  = explode(',', $hide);
 
         $user->setDisplayPrefs($prefs);
         $em->flush();
-
-        $prefs = $user->getDisplayPrefs();
 
         $response->setData(array(
             'error'     => 0,
             'result'    => 'Data',
             'id'        => $user->getId(),
             'lists'     => [],
-            'prefs'     => $prefs
+            'prefs'     => $user->getDisplayPrefs()
         ));
+
+        return $response;
+    }
+
+
+    /**
+     * @Route("/user/readit/{work}", requirements={"work" = "^\d+$"}, name="user_readit_save"), methods={"POST"}))
+     *
+     * Save read-it/reading/to-read state
+     */
+    public function putReadit(
+        ReaditManager $readitManager,
+        Request $request,
+        Work $work,
+        UserInterface $user = null
+    ): JsonResponse
+    {
+
+        if (!$user) {
+            throw $this->createAccessDeniedException('You are not logged in!');
+        }
+
+        $readitManager->setUserWorkReadit(
+            $user,
+            $work,
+            intval($request->request->get('status')),
+            $request->server->get('REMOTE_ADDR'),
+            $request->server->get('HTTP_USER_AGENT')
+        );
+
+        return $this->forward('App\Controller\StashController::getLists', [
+            'lists' => 'readit,rated'
+        ]);
+    }
+
+    /**
+     * @Route("/user/rating/{work_id}", requirements={"work_id" = "^\d+$"}, name="user_rating_save"), methods={"POST"}))
+     *
+     * save user's rating for book and returns ratings summary html
+     */
+    public function putRatingAction(
+        RatingManager $ratingManager,
+        Request $request,
+        Work $work,
+        UserInterface $user = null
+    ): JsonResponse
+    {
+
+
+/*
+        list($fail, $response, $em, $user, $work) = $this->setup($work_id);
+        if ($fail){
+            return $response;
+        }
+
+        $scoreMaker     = $this->get('bookster_score_maker');
+        $stars          = $request->request->get('stars');
+
+        $dql = '
+            DELETE FROM
+                Scott\DataBundle\Entity\Rating r
+            WHERE
+                r.work = :work AND
+                r.user = :user';
+
+        $query = $em->createQuery($dql);
+        $query->setParameter('work', $work_id);
+        $query->setParameter('user', $user);
+        $query->execute();
+
+        $stars = intval($stars);
+        if (($stars > 0) and ($stars < 6)){
+            $rating = new Rating();
+            $rating->setWork($work)
+                ->setUser($user)
+                ->setStars($stars);
+            $this->setWeb($request, $rating);
+
+            $em->persist($rating);
+            $em->flush();
+        }
+        else{
+            // delete reviews?  let's try laissez faire for a while
+        }
+        $scoreMaker->score($work);
+        $ratings = $this->getRatings();
+
+        // --------------------------------------------------------------------
+        // build ratings html -- copied from Work:ratings
+
+        $dbh = $em->getConnection();
+
+        $sql = '
+            SELECT
+                count(*) as count
+            FROM
+                review
+            WHERE
+                work_id = ?
+        ';
+
+        $sth = $dbh->prepare($sql);
+        $sth->execute(array($work_id));
+        $review_count = $sth->fetch();
+        $review_count = $review_count['count'];
+
+        $dql = '
+            SELECT s
+            FROM Scott\DataBundle\Entity\Score s
+            WHERE
+                s.work = :id
+        ';
+
+        $query = $em->createQuery($dql);
+        $query->setParameter('id', $work_id);
+        $score = $query->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
+        $root = dirname($this->get('kernel')->getRootDir());
+        $rhtml = $this->get('twig')->render(
+            $root . '/src/Scott/DataBundle/Resources/views/Work/ratings.html.twig',
+            compact('score', 'review_count', 'work_id'));
+
+        // --------------------------------------------------------------------
+        // update review stars
+
+        if (0 == $stars){
+            $stars = null;
+        }
+
+        $sql = '
+            UPDATE
+                review
+            SET
+                stars = ?
+            WHERE
+                work_id = ? AND
+                user_id = ?';
+
+        $sth = $dbh->prepare($sql);
+        $sth->execute(array($stars, $work_id, $user->getId()));
+
+        // --------------------------------------------------------------------
+        // save news
+
+        $newsMaster = $this->container->get('bookster_news_master');
+        $newsMaster->newRating($work, $stars, $user);
+
+        // --------------------------------------------------------------------
+        // should return all ratings plus ratings html
+
+        $response->setData(array(
+            'error'     => 0,
+            'result'    => 'Data',
+            'lists'     => array('ratings'  => $ratings),
+            'html'      => $rhtml,
+        ));
+
         return $response;
 */
-
     }
+
+
 
 
     /**

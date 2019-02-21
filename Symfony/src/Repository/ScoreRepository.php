@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Score;
+use App\Entity\Work;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,32 +20,20 @@ class ScoreRepository extends ServiceEntityRepository
         parent::__construct($registry, Score::class);
     }
 
-    // /**
-    //  * @return Score[] Returns an array of Score objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findWorkScore(
+        Work $work
+    ): Score
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $em = $this->getEntityManager();
 
-    /*
-    public function findOneBySomeField($value): ?Score
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $dql = '
+            SELECT s
+            FROM App\Entity\Score s
+            WHERE s.work = :work';
+
+        $query = $em->createQuery($dql);
+        $query->setParameter('work', $work->getId());
+
+        return $query->getSingleResult();
     }
-    */
 }

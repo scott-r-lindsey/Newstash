@@ -276,8 +276,10 @@ abstract class BaseTest extends WebTestCase
 
         $user = new User();
 
-        $user->setUsername('testuser')
-            ->setEmail('no@no.no')
+        $id = uniqid();
+
+        $user->setUsername('testuser-'. $id)
+            ->setEmail($id . '-no@no.no')
             ->setPassword('----locked----');
 
         $em->persist($user);

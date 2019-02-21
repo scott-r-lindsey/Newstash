@@ -5,8 +5,8 @@ namespace App\Service\Apa;
 
 use App\Entity\Edition;
 use App\Service\Apa\ProductRejector;
-use App\Service\FormatCache;
-use App\Service\BrowseNodeCache;
+use App\Service\Cache\FormatCache;
+use App\Service\Cache\BrowseNodeCache;
 use App\Service\IsbnConverter;
 use App\Service\PubFixer;
 use App\Service\EditionManager;

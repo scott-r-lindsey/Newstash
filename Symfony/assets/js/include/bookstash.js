@@ -2707,7 +2707,7 @@ window.bookstash = bookstash;
 
             $(rw.elm).find('button.remove').click(function(event){
                 event.preventDefault();
-                $(rw.form).find('input').attr('checked', false);
+                $(rw.form).find('input').prop('checked', false);
                 rw._handleChange();
             });
         },

@@ -25,4 +25,25 @@ class ApiController extends BaseApiController
         return $this->bundleResponse($data);
     }
 
+    public function handleException(\Exception $exception)
+    {
+        $data = [
+            'fail' => '100%'
+        ];
+
+        $code = 500;
+        $message = '';
+
+        if (method_exists($exception, 'getStatusCode')){
+            $code       = $exception->getStatusCode();
+            $message    = $exception->getMessage();
+        }
+
+        return $this->bundleResponse(
+            $data,
+            $code,
+            $message
+        );
+    }
+
 }

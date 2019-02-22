@@ -20,7 +20,8 @@ abstract class BaseApiController extends AbstractFOSRestController
         array $result,
         int $code = 200,
         string $message = 'Ok'
-    ): Response {
+    ): Response 
+    {
 
         $time = time();
 
@@ -35,6 +36,17 @@ abstract class BaseApiController extends AbstractFOSRestController
         ];
 
         $response = new JsonResponse($response_data);
+        $response->setStatusCode($code);
+        return $response;
+    }
+
+    protected function legacyResponse(
+        array $data,
+        int $code = 200,
+        string $message = 'Ok'
+    ): Response
+    {
+        $response = new JsonResponse($data);
         $response->setStatusCode($code);
         return $response;
     }

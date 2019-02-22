@@ -26,3 +26,4 @@ services:
     test.App\Service\Mongo: '@App\Service\Mongo'
     test.App\Service\Mongo\BrowseNode: '@App\Service\Mongo\BrowseNode'
     test.App\Service\Mongo\Work: '@App\Service\Mongo\Work'
+    test.App\Service\Mongo\News: '@App\Service\Mongo\News'

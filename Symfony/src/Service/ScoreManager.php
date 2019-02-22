@@ -29,7 +29,7 @@ class ScoreManager
     public function calculateWorkScore(
         Work $work,
         bool $flush = true
-    ): void
+    ): array
     {
 
         $em = $this->em;
@@ -94,8 +94,11 @@ class ScoreManager
             ->setFives($stats[5]);
 
         $em->persist($score);
+
         if ($flush) {
             $em->flush();
         }
+
+        return [$score, count($ratings)];
     }
 }

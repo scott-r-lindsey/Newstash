@@ -3,27 +3,30 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\ScoreManager;
-use App\Service\RatingManager;
-use App\Service\ReaditManager;
+use App\Controller\BaseApiController;
 use App\Entity\Work;
 use App\Repository\CommentRepository;
 use App\Repository\RatingRepository;
 use App\Repository\ReaditRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\WorkRepository;
+use App\Service\Mongo\News;
+use App\Service\RatingManager;
+use App\Service\ReaditManager;
+use App\Service\ScoreManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class StashController extends AbstractController
+class StashController extends BaseApiController
 {
-
 
     /**
      * @Route("/user/get/{lists}", methods={"GET"})
@@ -38,36 +41,22 @@ class StashController extends AbstractController
         WorkRepository $workRepository,
         Request $request,
         $lists,
-        UserInterface $user = null
+        UserInterface $user
     ) {
-
-        if (!$user) {
-            return new JsonResponse('');
-        }
 
         $ret = [];
 
-        $ret['ratings']      = [];
-        $ret['reviews']      = [];
-        $ret['comments']     = [];
-        $ret['readit']       = [];
         $ret['prefs']        = $user->getDisplayPrefs();
 
         foreach (explode(',', $lists) as $list){
             if ('readit' == $list){
-                foreach ( $readitRepository->findArrayByUser($user) as $r) {
-                    $ret['readit'][$r['work_id']] = $r['status'];
-                }
+                $ret['readit'] = $this->getReadit($readitRepository, $user);
             }
             else if ('ratings' == $list){
-                foreach ( $ratingRepository->findArrayByUser($user) as $r) {
-                    $ret['ratings'][$r['work_id']] = $r['stars'];
-                }
+                $ret['ratings'] = $this->getRatings($ratingRepository, $user);
             }
             else if ('reviews' == $list){
-                foreach ($reviewRepository->findArrayByUser($user) as $r) {
-                    $ret['reviews'][$r['work_id']] = 1;
-                }
+                $ret['reviews'] = $this->getReviews($reviewRepository, $user);
             }
             else if ('comments' == $list){
                 $ret['comments'] = $commentRepository->findCommentCountByUser($user);
@@ -77,15 +66,13 @@ class StashController extends AbstractController
             }
         }
 
-        $response = new JsonResponse();
-        $response->setData(array(
+        return $this->legacyResponse([
             'error'     => 0,
             'result'    => 'Data',
             'id'        => $user->getId(),
             'lists'     => $ret,
             'prefs'     => $user->getDisplayPrefs()
-        ));
-        return $response;
+        ]);
     }
 
     /**
@@ -96,15 +83,9 @@ class StashController extends AbstractController
     public function putUserDisplayPrefs(
         EntityManagerInterface $em,
         Request $request,
-        UserInterface $user = null
+        UserInterface $user
     ): JsonResponse
     {
-        $response = new JsonResponse('');
-
-        if (!$user) {
-            return $response;
-        }
-
         $hide           = $request->request->get('hide');
 
         $prefs          = $user->getDisplayPrefs();
@@ -113,17 +94,14 @@ class StashController extends AbstractController
         $user->setDisplayPrefs($prefs);
         $em->flush();
 
-        $response->setData(array(
+        return $this->legacyResponse([
             'error'     => 0,
             'result'    => 'Data',
             'id'        => $user->getId(),
-            'lists'     => [],
+            'lists'     => $ret,
             'prefs'     => $user->getDisplayPrefs()
-        ));
-
-        return $response;
+        ]);
     }
-
 
     /**
      * @Route("/user/readit/{work}", requirements={"work" = "^\d+$"}, name="user_readit_save"), methods={"POST"}))
@@ -134,14 +112,9 @@ class StashController extends AbstractController
         ReaditManager $readitManager,
         Request $request,
         Work $work,
-        UserInterface $user = null
+        UserInterface $user
     ): JsonResponse
     {
-
-        if (!$user) {
-            throw $this->createAccessDeniedException('You are not logged in!');
-        }
-
         $readitManager->setUserWorkReadit(
             $user,
             $work,
@@ -156,18 +129,97 @@ class StashController extends AbstractController
     }
 
     /**
-     * @Route("/user/rating/{work_id}", requirements={"work_id" = "^\d+$"}, name="user_rating_save"), methods={"POST"}))
+     * @Route("/user/rating/{work}", requirements={"work" = "^\d+$"}, name="user_rating_save"), methods={"POST"}))
      *
      * save user's rating for book and returns ratings summary html
      */
-    public function putRatingAction(
+    public function putRating(
+        News $news,
+        ReviewRepository $reviewRepository,
+        RatingRepository $ratingRepository,
+        ScoreManager $scoreManager,
         RatingManager $ratingManager,
         Request $request,
         Work $work,
-        UserInterface $user = null
+        UserInterface $user
+    ): JsonResponse
+    {
+        $stars          = intval($request->request->get('stars'));
+        $work_id        = $work->getId();
+
+        if (($stars < 0) or ($stars > 5)){
+            throw new BadRequestHttpException('Stars should be from zero to five');
+        }
+
+        list ($rating, $score, $rating_count) = $ratingManager->setUserWorkRating(
+            $user,
+            $work,
+            intval($request->request->get('stars')),
+            $request->server->get('REMOTE_ADDR'),
+            $request->server->get('HTTP_USER_AGENT')
+        );
+
+        $review_count       = $reviewRepository->count([
+            'work'      => $work_id,
+            'deleted'   => 0
+        ]);
+
+        $rhtml = $this->renderView(
+            'work/ratings.html.twig',
+            compact('score', 'review_count', 'work_id')
+        );
+
+        $news->newRating($rating);
+
+        $ratings = $this->getRatings($ratingRepository, $user);
+
+        return $this->legacyResponse([
+            'error'     => 0,
+            'result'    => 'Data',
+            'lists'     => ['ratings'  => $ratings],
+            'html'      => $rhtml,
+        ]);
+    }
+
+
+    /**
+     * @Route("/user/review/{work}", requirements={"work" = "^\d+$"}, methods={"GET"}))
+     *
+     * Returns user's review for a book, if it exists
+     */
+    public function getReviewAction(
+        ReviewRepository $reviewRepository,
+        Work $work,
+        UserInterface $user
     ): JsonResponse
     {
 
+        $review = $reviewRepository->findOneBy([
+            'work'  => $work,
+            'user'  => $user
+        ]);
+
+        return $this->legacyResponse([
+            'exists'        => $review ? true : false,
+            'error'         => 0,
+            'result'        => 'Data',
+            'lists'         => [],
+            'review'        => $review ? $review->getText() : '',
+            'title'         => $review ? $review->getTitle() : '',
+            'started_at'    => $review ? $review->getStartedAt()->format('M d, Y') : '',
+            'finished_at'   => $review ? $review->getFinishedAt()->format('M d, Y') : ''
+        ]);
+    }
+
+    /**
+     * @Route("/user/review/delete/{work}", requirements={"work" = "^\d+$"}, name="user_delete_review"), methods={"POST"})
+     *
+     * Deletes a user's review for a book, if it exists
+     */
+    public function deleteReviewAction(
+        Request $request,
+        Work $work
+    ) {
 
 /*
         list($fail, $response, $em, $user, $work) = $this->setup($work_id);
@@ -175,42 +227,29 @@ class StashController extends AbstractController
             return $response;
         }
 
-        $scoreMaker     = $this->get('bookster_score_maker');
-        $stars          = $request->request->get('stars');
-
         $dql = '
-            DELETE FROM
-                Scott\DataBundle\Entity\Rating r
+            SELECT r
+            FROM Scott\DataBundle\Entity\Review r
             WHERE
-                r.work = :work AND
-                r.user = :user';
+                r.work = :work_id AND
+                r.user = :user
+        ';
 
         $query = $em->createQuery($dql);
-        $query->setParameter('work', $work_id);
-        $query->setParameter('user', $user);
-        $query->execute();
+        $query->setParameter('work_id', $work_id)
+            ->setParameter('user', $user);
+        $review = $query->getOneOrNullResult();
 
-        $stars = intval($stars);
-        if (($stars > 0) and ($stars < 6)){
-            $rating = new Rating();
-            $rating->setWork($work)
-                ->setUser($user)
-                ->setStars($stars);
-            $this->setWeb($request, $rating);
-
-            $em->persist($rating);
+        if ($review){
+            $em->remove($review);
             $em->flush();
         }
-        else{
-            // delete reviews?  let's try laissez faire for a while
-        }
-        $scoreMaker->score($work);
-        $ratings = $this->getRatings();
 
         // --------------------------------------------------------------------
-        // build ratings html -- copied from Work:ratings
+        $newsMaster = $this->container->get('bookster_news_master');
+        $newsMaster->removeReview($user, $work);
 
-        $dbh = $em->getConnection();
+        // --------------------------------------------------------------------
 
         $sql = '
             SELECT
@@ -218,68 +257,203 @@ class StashController extends AbstractController
             FROM
                 review
             WHERE
-                work_id = ?
-        ';
+                deleted = 0 AND
+                work_id = ?';
 
+        $dbh = $em->getConnection();
         $sth = $dbh->prepare($sql);
         $sth->execute(array($work_id));
-        $review_count = $sth->fetch();
-        $review_count = $review_count['count'];
 
-        $dql = '
-            SELECT s
-            FROM Scott\DataBundle\Entity\Score s
-            WHERE
-                s.work = :id
-        ';
-
-        $query = $em->createQuery($dql);
-        $query->setParameter('id', $work_id);
-        $score = $query->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-
-        $root = dirname($this->get('kernel')->getRootDir());
-        $rhtml = $this->get('twig')->render(
-            $root . '/src/Scott/DataBundle/Resources/views/Work/ratings.html.twig',
-            compact('score', 'review_count', 'work_id'));
+        $result = $sth->fetch();
+        $count = $result['count'];
 
         // --------------------------------------------------------------------
-        // update review stars
-
-        if (0 == $stars){
-            $stars = null;
-        }
-
-        $sql = '
-            UPDATE
-                review
-            SET
-                stars = ?
-            WHERE
-                work_id = ? AND
-                user_id = ?';
-
-        $sth = $dbh->prepare($sql);
-        $sth->execute(array($stars, $work_id, $user->getId()));
-
-        // --------------------------------------------------------------------
-        // save news
-
-        $newsMaster = $this->container->get('bookster_news_master');
-        $newsMaster->newRating($work, $stars, $user);
-
-        // --------------------------------------------------------------------
-        // should return all ratings plus ratings html
+        $reviews = $this->getReviews($user);
 
         $response->setData(array(
-            'error'     => 0,
-            'result'    => 'Data',
-            'lists'     => array('ratings'  => $ratings),
-            'html'      => $rhtml,
+            'error'             => 0,
+            'result'            => 'Data',
+            'lists'             => compact('reviews'),
+            'work_review_count' => $count
         ));
 
         return $response;
 */
     }
+
+
+    /**
+     * @Route("/user/review/{work}", requirements={"work" = "^\d+$"}, methods={"POST"})
+     *
+     * Saves a user's review for a book
+     */
+    public function putReviewAction(
+        Request $request,
+        Work $work
+    ) {
+
+
+/*
+
+        list($fail, $response, $em, $user, $work) = $this->setup($work_id);
+        if ($fail){
+            return $response;
+        }
+
+        // enforce 20/20000 limits
+        $text           = $request->request->get('text');
+        $title          = $request->request->get('title');
+        $started        = $request->request->get('started');
+        $finished       = $request->request->get('finished');
+
+        if (20 > strlen($text)){
+            $response->setData(array(
+                'error'     => 5,
+                'result'    => 'Text is too short.',
+                'lists'     => []
+            ));
+            return $response;
+        }
+        else if (20000 < strlen($text)){
+            $response->setData(array(
+                'error'     => 5,
+                'result'    => 'Text is too long.',
+                'lists'     => []
+            ));
+            return $response;
+        }
+
+        $startedDate = $finishedDate = null;
+
+        if ($started = strtotime($started)){
+            $startedDate = new \DateTime('@' . $started);
+        }
+        if ($finished = strtotime($finished)){
+            $finishedDate = new \DateTime('@' . $finished);
+        }
+
+        // --------------------------------------------------------------------
+        $config = \HTMLPurifier_Config::createDefault();
+
+        $config->set('Cache.SerializerPath',
+            dirname(dirname($this->get('kernel')->getRootDir())) .'/htmlPureDefCache/');
+
+        $config->set('HTML.AllowedElements',
+            array('b', 'i', 'strike', 'u', 'p'));
+
+        $purifier = new \HTMLPurifier($config);
+        $text = $purifier->purify($text);
+
+        // --------------------------------------------------------------------
+        $dql = '
+            SELECT r
+            FROM Scott\DataBundle\Entity\Rating r
+            WHERE
+                r.work = :work_id AND
+                r.user = :user
+        ';
+
+        $query = $em->createQuery($dql);
+        $query->setParameter('work_id', $work_id)
+            ->setParameter('user', $user);
+        $rating = $query->getOneOrNullResult();
+
+        $stars = false;
+        if ($rating){
+            $stars = $rating->getStars();
+        }
+
+
+        // --------------------------------------------------------------------
+
+        if (20000 < strlen($text)){
+            $response->setData(array(
+                'error'     => 10,
+                'result'    => 'Text is too long.'
+            ));
+            return $response;
+        }
+
+        $dql = '
+            SELECT r
+            FROM Scott\DataBundle\Entity\Review r
+            WHERE
+                r.work = :work_id AND
+                r.user = :user
+        ';
+
+        $query = $em->createQuery($dql);
+        $query->setParameter('work_id', $work_id)
+            ->setParameter('user', $user);
+        $review = $query->getOneOrNullResult();
+
+        if (!$review){
+            $review = new Review();
+
+            if ($stars){
+                $review->setStars($stars);
+            }
+            $review->setUser($user)
+                ->setWork($work)
+                ->setTitle($title)
+                ->setText($text)
+                ->setStartedReadingAt($startedDate)
+                ->setFinishedReadingAt($finishedDate);
+            $this->setWeb($request, $review);
+            $em->persist($review);
+            $em->flush();
+
+            $newsMaster = $this->container->get('bookster_news_master');
+            $newsMaster->newReview($work, $review, $user, $stars);
+        }
+        else{
+            if ($stars){
+                $review->setStars($stars);
+            }
+            $review->setTitle($title)
+                ->setStartedReadingAt($startedDate)
+                ->setFinishedReadingAt($finishedDate)
+                ->setText($text);
+            $this->setWeb($request, $review);
+            $em->flush();
+        }
+
+        // --------------------------------------------------------------------
+
+        $sql = '
+            SELECT
+                count(*) as count
+            FROM
+                review
+            WHERE
+                deleted = 0 AND
+                work_id = ?';
+
+        $dbh = $em->getConnection();
+        $sth = $dbh->prepare($sql);
+        $sth->execute(array($work_id));
+
+        $result = $sth->fetch();
+        $count = $result['count'];
+
+        // --------------------------------------------------------------------
+
+        $reviews = $this->getReviews($user);
+
+        $response->setData(array(
+            'error'             => 0,
+            'result'            => 'Data',
+            'lists'             => compact('reviews'),
+            'review'            => $text,
+            'work_review_count' => $count
+        ));
+        return $response;
+*/
+    }
+
+
+
+
 
 
 
@@ -430,4 +604,42 @@ class StashController extends AbstractController
         */
     }
 
+    private function getReadit(
+        ReaditRepository $readitRepository,
+        UserInterface $user
+    ): array
+    {
+        $ret = [];
+        foreach ( $readitRepository->findArrayByUser($user) as $r) {
+            $ret[$r['work_id']] = $r['status'];
+        }
+
+        return $ret;
+    }
+
+    private function getRatings(
+        RatingRepository $ratingRepository,
+        UserInterface $user
+    ): array
+    {
+        $ret = [];
+        foreach ( $ratingRepository->findArrayByUser($user) as $r) {
+            $ret[$r['work_id']] = $r['stars'];
+        }
+
+        return $ret;
+    }
+
+    private function getReviews(
+        ReviewRepository $reviewRepository,
+        UserInterface $user
+    ): array
+    {
+        $ret = [];
+        foreach ($reviewRepository->findArrayByUser($user) as $r) {
+            $ret[$r['work_id']] = 1;
+        }
+
+        return $ret;
+    }
 }

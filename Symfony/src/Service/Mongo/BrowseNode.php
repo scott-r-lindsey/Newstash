@@ -8,8 +8,8 @@ use Psr\Log\LoggerInterface;
 
 class BrowseNode
 {
+    private $logger;
     private $em;
-    private $mongodb;
 
     public function __construct(
         LoggerInterface $logger,

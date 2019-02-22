@@ -10,6 +10,14 @@ use App\Entity\Work;
 use App\Tests\Lib\BaseTest;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers App\Entity\Rating
+ * @covers App\Entity\Score
+ * @covers App\Repository\RatingRepository
+ * @covers App\Repository\ScoreRepository
+ * @covers App\Service\RatingManager
+ * @covers App\Service\ScoreManager
+ */
 class ScoreManagerTest extends BaseTest
 {
     protected $DBSetup = true;
@@ -17,22 +25,26 @@ class ScoreManagerTest extends BaseTest
     public function setUp()
     {
         parent::setup();
-        $this->em           = self::$container->get('doctrine')->getManager();
-        $this->manager      = self::$container->get('test.App\Service\ScoreManager');
+        $this->em               = self::$container->get('doctrine')->getManager();
+        $this->manager          = self::$container->get('test.App\Service\ScoreManager');
+        $this->ratingManager    = self::$container->get('test.App\Service\RatingManager');
+        $this->scoreRepo        = $this->em->getRepository(Score::class);
     }
 
     public function testBasic()
     {
+        $scoreRepo          = $this->scoreRepo;
 
         $em                 = self::$container->get('doctrine')->getManager();
         $workGroomer        = self::$container->get('test.App\Service\Data\WorkGroomer');
-        $scoreRepo          = $em->getRepository(Score::class);
 
         // build up some sample data ------------------------------------------
         $edition        = $this->loadEditionFromXML('product-sample.xml');
         $workGroomer->workGroomLogic('0674979850');
 
         $user           = $this->createUser();
+        $another_user   = $this->createUser();
+        $ya_user        = $this->createUser();
         $locked_user    = $this->createUser();
         $locked_user->setLocked(true);
 
@@ -48,31 +60,26 @@ class ScoreManagerTest extends BaseTest
 
         // - add an invalid rating --------------------------------------------
         $this->addRating($work, $user, 0);
-        $this->manager->calculateWorkScore($work);
         $score = $scoreRepo->findWorkScore($work);
         $this->validateScore($score,'0',0,0,0,0,0,0);
 
         // - add a locked users rating to ignore ------------------------------
         $this->addRating($work, $locked_user, 0);
-        $this->manager->calculateWorkScore($work);
         $score = $scoreRepo->findWorkScore($work);
         $this->validateScore($score,'0',0,0,0,0,0,0);
 
         // - add one five star rating -----------------------------------------
         $this->addRating($work, $user, 5);
-        $this->manager->calculateWorkScore($work);
         $score = $scoreRepo->findWorkScore($work);
         $this->validateScore($score,'5',1,0,0,0,0,1);
 
         // - add one two star rating -----------------------------------------
-        $this->addRating($work, $user, 2);
-        $this->manager->calculateWorkScore($work);
+        $this->addRating($work, $another_user, 2);
         $score = $scoreRepo->findWorkScore($work);
         $this->validateScore($score,'3.5',2,0,1,0,0,1);
 
         // - add a three star rating -----------------------------------------
-        $this->addRating($work, $user, 3);
-        $this->manager->calculateWorkScore($work);
+        $this->addRating($work, $ya_user, 3);
         $score = $scoreRepo->findWorkScore($work);
         $this->validateScore($score,'3.33',3,0,1,1,0,1);
     }
@@ -83,17 +90,13 @@ class ScoreManagerTest extends BaseTest
         int $stars
     ): void
     {
-        $em = $this->em;
-
-        $rating = new Rating();
-        $rating->setWork($work)
-            ->setUser($user)
-            ->setStars($stars)
-            ->setIpaddr('123.456')
-            ->setUseragent('IE 12; like Blink');
-
-        $em->persist($rating);
-        $em->flush();
+        $this->ratingManager->setUserWorkRating(
+            $user,
+            $work,
+            $stars,
+            '123.456',
+            'IE 12; like Blink'
+        );
     }
 
     private function validateScore(

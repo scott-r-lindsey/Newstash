@@ -72,8 +72,8 @@
                     <span>{{ review.likes }} likes</span>
                 {% endif %}
                 </div>
-                <button class="fakelink reviewlike bstsh-user-hide-{{ review.user.id }} display-none-on-like-review-{{ review.id }}" data-review-id="{{ review.id }}" title="Like this Review" data-url="{{ path('stash_user_review_like', {'work_id': work_id, 'review_id': review.id }) }}">Like</button>
-                <button class="fakelink reviewunlike bstsh-user-hide-{{ review.user.id }} display-ib-on-like-review-{{ review.id }}" data-review-id="{{ review.id }}" title="Unlike this Review" data-url="{{ path('stash_user_review_like', {'work_id': work_id, 'review_id': review.id }) }}">Unlike</button>
+                <button class="fakelink reviewlike bstsh-user-hide-{{ review.user.id }} display-none-on-like-review-{{ review.id }}" data-review-id="{{ review.id }}" title="Like this Review" data-url="{{ path('stash_user_review_like', {'work': work_id, 'review': review.id }) }}">Like</button>
+                <button class="fakelink reviewunlike bstsh-user-hide-{{ review.user.id }} display-ib-on-like-review-{{ review.id }}" data-review-id="{{ review.id }}" title="Unlike this Review" data-url="{{ path('stash_user_review_like', {'work': work_id, 'review': review.id }) }}">Unlike</button>
                 <i class="fa fa-spinner fa-spin"></i>
                 <button class="fakelink showspoiler" title="Reveal spoilers in review"">Show Spoilers</button>
                 <button class="fakelink hidespoiler" title="Hide spoilers in review"">Hide Spoilers</button>

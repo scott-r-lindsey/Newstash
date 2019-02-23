@@ -52,4 +52,10 @@ services:
             $userManager: '@fos_user.user_manager'
             $properties: {facebook: 'facebookId', google: 'googleId'}
 
+    App\Service\RatingManager:
+        calls:
+            - [setReviewManager, ['@App\Service\ReviewManager']]
 
+    App\Service\ReviewManager:
+        calls:
+            - [setRatingManager, ['@App\Service\RatingManager']]

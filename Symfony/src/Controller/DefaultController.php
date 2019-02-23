@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\Mongo\News;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,29 +16,19 @@ class DefaultController extends AbstractController
      * @Route("/", name="home", methods={"GET"})
      * @Template()
      */
-    public function newsAction(Request $request): array
+    public function news(
+        Request $request,
+        News $news
+    ): array
     {
-
-        /*
-        // FIXME
-
         $idlt = $request->get('idlt', false);
 
-        $newsMaster = $this->container->get('bookster_news_master');
-
         if ($idlt){
-            $items = $newsMaster->getNews(array('idlt' => $idlt ));
+            $items = $news->getNews(['idlt' => $idlt ]);
         }
         else{
-            $items = $newsMaster->getNews(array());  
+            $items = $news->getNews([]);
         }
-
-        return compact('items');
-
-        */
-
-
-        $items = [];
 
         return compact('items');
     }
@@ -48,7 +39,7 @@ class DefaultController extends AbstractController
      * @Route("/top", name="top", methods={"GET"})
      * @Template()
      */
-    public function indexAction(
+    public function top(
         Request $request)
     {
 

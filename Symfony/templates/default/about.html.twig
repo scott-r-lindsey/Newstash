@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block title %}About Us{% endblock %}
+{% block description %}About Booksta.sh{% endblock %}
+
+{% block focus %}
+<section class="about">
+
+    <div class="splash">
+        <div class="dummy"></div>
+        <div class="content">
+            <button class="close-focus close-button" data-bstsh-object="historyCloseButton"><i class="fa fa-times"></i></button>
+
+            <div class="logo">
+                <h1>BookSta.sh</h1>
+
+                <p>
+                    We believe that book discovery should not be boring!
+                </p>
+            </div>
+
+            <div class="links">
+                <a href="/">Home</a>
+                <a href="{{ path('blog') }}">Blog</a>
+                <a href="{{ path('privacy') }}">Privacy</a>
+                <a href="{{ path('tos') }}">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="more_content">
+        <div class="scott">
+            <img src="/img/photo/scott200.jpeg" height="100" width="100" />
+            <div style="display:inline-block">
+                <p>
+                    Booksta.sh is created and solely operated by Scott Lindsey<br />
+                    <a href="mailto:scott@booksta.sh">Scott@BookSta.sh</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="amazon">
+            CERTAIN CONTENT THAT APPEARS ON THIS SITE COMES FROM AMAZON SERVICES LLC. THIS CONTENT IS PROVIDED 'AS IS' AND IS SUBJECT TO CHANGE OR REMOVAL AT ANY TIME.
+        </div>
+
+        <div class="copyright">
+            Copyright &copy;{{"now"|date('Y')}} Awesome Sauce Web Sites Incorporated
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+

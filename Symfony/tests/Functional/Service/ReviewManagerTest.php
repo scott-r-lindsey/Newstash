@@ -19,14 +19,6 @@ class ReviewManagerTest extends BaseTest
         $this->manager      = self::$container->get('test.App\Service\ReviewManager');
     }
 
-    public function testBasic()
-    {
-
-        $this->assertTrue(true);
-
-
-    }
-
     public function testSetUserWorkReview(): void
     {
 

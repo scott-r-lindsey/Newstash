@@ -1,0 +1,12 @@
+<div style="display:none" data-bstsh-function="extra-update" data-bstsh-target="h2.comments-title > span">
+    {{ include ('blog/commentsTitle.html.twig', {'comments': comments} ) }}
+</div>
+<div style="display:none" data-bstsh-function="extra-update" data-bstsh-target=".top-comments-total > span">
+    {{ include ('blog/commentsTitle.html.twig', {'comments': comments} ) }}
+</div>
+
+{% for comment in comments %}
+    {% if comment.parent is null %}
+        {{ include ('blog/commentLevel.html.twig', {'comment': comment} ) }}
+    {% endif %}
+{% endfor %}

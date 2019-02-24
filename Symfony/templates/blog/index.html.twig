@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+{% block title %}Bookstash Blog{% endblock %}
+{% block description %}The Booksta.sh Blog{% endblock %}
+
+{% block focus %}
+<section class="blog">
+
+    <button class="close-focus close-button" data-bstsh-object="historyCloseButton"><i class="fa fa-times"></i></button>
+
+    <div class="top">
+        <h1>Booksta.sh</h1>
+        <h2>Behind the Stash</h2>
+    </div>
+
+    <div class="blog-content">
+
+        {% for post in posts %}
+            {% if post.image %}
+                {% set post_image %}{{ app.request.schemeAndHttpHost }}/img/blog/{{ post.image }}{% endset %}
+            {% endif %}
+            {% set post_url %}{{ path('blog_post', {'post_id': post.id, 'slug': post.slug}) }}{% endset %}
+            <div class="blog-entry">
+                <div class="post-head">
+                    <div class="avatar"><img src="{{ post.user.avatarUrl(60) }}" height="60" width="60" title="{{ post.user.username }}" /></div>
+                    <h2>{{ post.title }}</h2>
+                    <span><i class="fa fa-clock-o"></i>{{ post.publishedAt|date("F jS @ g:ia") }}</span>
+                    <span><i class="fa fa-comments-o"></i>
+                        {% set count = post_comment_counts[post.id] %}
+                        {% if 0 == count %}
+                            No comments
+                        {% elseif 1 == count %}
+                            1 Comment
+                        {% else %}
+                            {{ count }} Comments
+                        {% endif %}
+                    </span>
+                </div>
+                {% if post.image %}
+                    <div class="post-thumb" style="background-image: {{ post_image }}"></div>
+                {% endif %}
+                <div class="post-content">
+                    {{ post.lead|raw }}
+                </div>
+                <div class="post-bottom">
+                    <a href="{{ post_url }}">Read More</a>
+                    <div class="social">
+                        <button data-bstsh-object="shareButton" data-share-type="facebook" data-url="{{ app.request.schemeAndHttpHost }}{{ post_url }}"><i class="fa fa-facebook"></i></button>
+                        <button data-bstsh-object="shareButton" data-share-type="pinterest" data-url="{{ app.request.schemeAndHttpHost }}{{ post_url }}" data-description="{{ post.description }}" data-image="{{ post_image|default('') }}"><i class="fa fa-pinterest"></i></button>
+                        <button data-bstsh-object="shareButton" data-share-type="google" data-url="{{ app.request.schemeAndHttpHost }}{{ post_url }}"><i class="fa fa-google-plus"></i></button>
+                        <button data-bstsh-object="shareButton" data-share-type="twitter" data-url="{{ app.request.schemeAndHttpHost }}{{ post_url }}" data-description="{{ post.description }}"><i class="fa fa-twitter"></i></button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="blog-footer">
+            Booksta.sh is copyright &copy;{{"now"|date('Y')}} Awesome Sauce Web Sites Incorporated.
+            <div>
+                <a href="{{ path('about') }}">About</a> |
+                <a href="{{ path('blog') }}">Blog</a> | 
+                <a href="{{ path('privacy') }}">Privacy Policy</a>
+            </div> 
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+

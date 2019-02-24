@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\PostManager;
+use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,14 +17,12 @@ class BlogController extends AbstractController
      * @Route("/blog", name="blog", methods={"GET"})
      * @Template()
      */
-    public function indexAction(Request $request){
-        // FIXME pagination
-        // only exposes last ten posts
-
-        /*
-        $postManager = $this->get('bookstash.blog.post_manager');
-        return $postManager->frontPosts();
-        */
+    public function indexAction(
+        Request $request,
+        PostManager $postManager
+    ): array
+    {
+        return $postManager->findFrontPosts();
     }
 
     /**

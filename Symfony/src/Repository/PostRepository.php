@@ -19,32 +19,43 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    // /**
-    //  * @return Post[] Returns an array of Post objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findPreviousPost(
+        Post $post
+    ): ?Post
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $em = $this->getEntityManager();
 
-    /*
-    public function findOneBySomeField($value): ?Post
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $query = $em->createQuery(
+            'SELECT p
+            FROM App\Entity\Post p
+            WHERE
+                p.active = 1 AND
+                p.id < :id
+            ORDER BY
+                p.id DESC')->setMaxResults(1);
+
+        $query->setParameter('id', $post->getId());
+
+        return $query->getOneOrNullResult();
     }
-    */
+
+    public function findNextPost(
+        $post
+    ): ?Post
+    {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            'SELECT p
+            FROM App\Entity\Post p
+            WHERE
+                p.active = 1 AND
+                p.id > :id
+            ORDER BY
+                p.id DESC')->setMaxResults(1);
+
+        $query->setParameter('id', $post->getId());
+
+        return $query->getOneOrNullResult();
+    }
 }

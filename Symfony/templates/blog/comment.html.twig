@@ -1,0 +1,80 @@
+
+<li class="comment-wrap" mode="reading">
+    {% if comment.deleted %}
+        {% if comment.replies|length > 0 %}
+            <article class="comment deleted" id="comment-{{ comment.id }}">
+                <header class="comment-meta comment-author">
+                    <img src="/img/avatar-unknown.svg" class="avatar-80" height="80" width="80" />
+                </header>
+
+                <section class="comment-content comment">
+                    <p>This comment has been deleted.</p>
+                </section>
+            </article>
+        {% endif %}
+
+    {% elseif comment.questioned %}
+        <article class="comment questioned" id="comment-{{ comment.id }}" data-comment-id="{{ comment.id }}">
+            <header class="comment-meta comment-author">
+                <img src="/img/avatar-unknown.svg" class="avatar-80" height="80" width="80" />
+            </header>
+
+            <section class="comment-content comment">
+                <p>This comment awaits moderation.  <button class="show" data-bstsh-new="new">Show comment</button>.
+            </section>
+
+            <div style="display:none" class="hidden-comment">
+                <article class="comment" id="comment-{{ comment.id }}">
+                    <header class="comment-meta comment-author">
+                        <img src="{{ comment.user.avatarUrl }}" class="avatar-80" height="80" width="80" />
+                        <cite class="fn">{{ comment.user.name }}</a> </cite>
+                        <button class="flag" data-bstsh-new="new"><i class="fa fa-flag"></i></button>
+                        <time datetime="{{ comment.createdAt|date("c") }}">{{ comment.createdAt|date("F j, Y \\a\\t g:i a") }}</time></a>
+                    </header>
+
+                    <section class="comment-content comment">
+                        <p>{{ comment.text|nl2br }}</p>
+                    </section>
+
+                </article>
+            </div>
+        </article>
+    {% else %}
+        <article class="comment" id="comment-{{ comment.id }}" data-comment-id="{{ comment.id }}">
+            <header class="comment-meta comment-author">
+                <img src="{{ comment.user.avatarUrl }}" class="avatar-80" height="80" width="80" />
+                <cite class="fn">{{ comment.user.name }}</a> </cite>
+                <button class="flag" data-bstsh-new="new"><i class="fa fa-flag"></i></button>
+                <time datetime="{{ comment.createdAt|date("c") }}">{{ comment.createdAt|date("F j, Y \\a\\t g:i a") }}</time></a>
+            </header>
+
+            <section class="comment-content comment">
+                <p>{{ comment.text|nl2br }}</p>
+            </section>
+
+            <div class="reply">
+                <button class="reply" data-bstsh-new="new">Reply <i class="fa fa-level-down"></i></button>
+            </div>
+        </article>
+
+        <div class="reply-box" data-bstsh-comment-id="{{ comment.id }}">
+            <div class="compose">
+                <div class="bstsh-user-avatar-80"></div>
+                <span><textarea data-bstsh-object="textCounter" maxlength="1000"></textarea><div class="countdown"></div></span>
+                <span class="flash"></span>
+                <span class="right">    
+                    <div class="progress"><i></i><i></i><i></i><i></i></div>
+                    <button class="cancel" data-bstsh-new="new">Cancel</button>
+                    <button class="submit" data-bstsh-new="new">Reply</button>
+                </span>
+            </div>
+        </div>
+    {% endif %}
+</li>
+
+{% for reply in comment.replies %}
+<li>    
+    {{ include ('blog/commentLevel.html.twig', {'comment': reply} ) }}
+</li>
+{% endfor %}
+

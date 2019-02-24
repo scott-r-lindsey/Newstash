@@ -17,6 +17,7 @@ services:
     test.App\Service\EditionManager: '@App\Service\EditionManager'
     test.App\Service\ReviewManager: '@App\Service\ReviewManager'
     test.App\Service\RatingManager: '@App\Service\RatingManager'
+    test.App\Service\PostManager: '@App\Service\PostManager'
     test.App\Service\ScoreManager: '@App\Service\ScoreManager'
     test.App\Service\ReviewLikeManager: '@App\Service\ReviewLikeManager'
     test.App\Service\ReaditManager: '@App\Service\ReaditManager'

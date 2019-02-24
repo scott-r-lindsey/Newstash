@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block description %}The BookSta.sh Blog{% endblock %}
+
+{% block meta %}
+    <meta property="og:type" content="website" /> 
+    <meta property="og:url" content="{{ app.request.schemeAndHttpHost }}{{ path('blog_post', {'post_id': post.id, 'slug': post.slug}) }}" /> 
+    <meta property="og:title" content="{{ post.title }}" /> 
+    <meta property="og:description" content="{{ post.description }}" /> 
+    {% if post.image %}
+        <meta property="og:image" content="{{ app.request.schemeAndHttpHost }}/img/blog/{{ post.image }}" /> 
+    {% endif %}
+{% endblock %}
+
+{% block focus %}
+<section class="blog">
+
+    <button class="close-focus close-button" data-bstsh-object="historyCloseButton"><i class="fa fa-times"></i></button>
+
+    <div class="top">
+        <h1>Booksta.sh</h1>
+        <h2>Behind the Stash</h2>
+    </div>
+
+    <div class="blog-content" data-bstsh-object="blogCommentManager">
+
+        <div class="blog-entry">
+            <div class="post-head">
+                <div class="avatar"><img src="{{ post.user.avatarUrl(60) }}" height="60" width="60" title="{{ post.user.username }}" /></div>
+                <h2>{{ post.title }}</h2>
+                <span><i class="fa fa-clock-o"></i>{{ post.publishedAt|date("F jS @ g:ia") }}</span>
+                <span class="top-comments-total"><i class="fa fa-comments-o"></i>
+                    <span>{{ include ('blog/commentsTitle.html.twig', {'comments': comments} ) }}</span>
+                </span>
+            </div>
+            {% if post.image %}
+                <div class="post-thumb">
+                    <img src="/img/blog/{{ post.image }}" />
+                </div>
+            {% endif %}
+            <div class="post-content">
+                {{ post.lead|raw }}
+                {{ post.fold|raw }}
+            </div>
+            <div class="post-bottom">
+                <div class="social">
+                    {% if post.image %}
+                        {% set post_image %}{{ app.request.schemeAndHttpHost }}/img/blog/{{ post.image }}{% endset %}
+                    {% endif %}
+
+                    <button data-bstsh-object="shareButton" data-share-type="facebook"><i class="fa fa-facebook"></i></button>
+                    <button data-bstsh-object="shareButton" data-share-type="pinterest" data-description="{{ post.description }}" data-image="{{ post_image|default('') }}"><i class="fa fa-pinterest"></i></button>
+                    <button data-bstsh-object="shareButton" data-share-type="google"><i class="fa fa-google-plus"></i></button>
+                    <button data-bstsh-object="shareButton" data-share-type="twitter" data-description="{{ post.description }}"><i class="fa fa-twitter"></i></button>
+                </div>
+                <div class="nextprev">
+                    {% if prev_post %}
+                        <a href="{{ path('blog_post', {'post_id': prev_post.id, 'slug': prev_post.slug}) }}" title="Previous Post: {{ prev_post.title }}">Previous</a>
+                    {% endif %}
+                    {% if prev_post and next_post %} | {% endif %}
+                    {% if next_post %}
+                        <a href="{{ path('blog_post', {'post_id': next_post.id, 'slug': next_post.slug}) }}">Next</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="blog-comments">
+            {% if count != 0 %}
+            <h2 class="comments-title">
+                <span>{{ include ('blog/commentsTitle.html.twig', {'comments': comments, 'count': count} ) }}</span>
+                <button class="reload" data-bstsh-object="partialReloadButton" data-bstsh-target=".comments-shell"><i class="fa fa-refresh"></i></button>
+            </h2>
+            {% endif %}
+
+            <span class="comments-shell" data-bstsh-source="{{ path('blog_post_comments', {'post_id': post.id}) }}">
+            {{ include ('blog/comments.html.twig', {'comments': comments} ) }}
+            </span>
+        </div>
+
+        <div class="blog-reply">
+            <div class="bstsh-user-avatar-80"></div>
+
+            {% if count == 0 %}
+                <h2>Be the first to reply!</h2>
+            {% else %}
+                <h2>Leave a reply</h2>
+            {% endif %}
+            <p class="hint">Your email address will not be shared.</p>
+
+            <div class="reply-box">
+                <textarea name="comment" data-bstsh-object="textCounter" maxlength="1000"></textarea><div class="countdown"></div>
+                <span>
+                    <div class="flash"></div>
+                    <div class="progress"><i></i><i></i><i></i><i></i></div>
+                    <button class="submit" data-bstsh-new="new">Reply</button>
+                </span>
+            </div>
+            
+            <div style="display:none" class="hidden-reply-form">
+                <form class="reply" method="post" action="{{ path('blog_new_comment', {'post_id': post.id}) }}">
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <input type="hidden" name="parent_id" value="0">
+                    <input type="hidden" name="comment" value=""/>
+                </form>
+            </div>
+        </div>
+
+        <div class="blog-flag-comment" style="display:none">
+            <form action="{{ path('blog_new_flag') }}" method="post">
+                <input type="hidden" name="comment_id" value="{{ '{{ comment_id }}' }}" />
+
+                <blockquote>
+                    <input type="radio" name="reason_id" id="blog-comment-reason-spam-{{ '{{ comment_id }}' }}" value="1" />
+                    <label for="blog-comment-reason-spam-{{ '{{ comment_id }}' }}" class="magic">Spam</label><br />
+                    <input type="radio" name="reason_id" id="blog-comment-reason-rude-{{ '{{ comment_id }}' }}" value="2" />
+                    <label for="blog-comment-reason-rude-{{ '{{ comment_id }}' }}" class="magic">Trolling or rude</label><br />
+                    <input type="radio" name="reason_id" id="blog-comment-reason-offtopic-{{ '{{ comment_id }}' }}" value="3" />
+                    <label for="blog-comment-reason-offtopic-{{ '{{ comment_id }}' }}" class="magic">Off-topic or not constructive</label><br />
+                    <input type="radio" name="reason_id" id="blog-comment-reason-other-{{ '{{ comment_id }}' }}" value="0" />
+                    <label for="blog-comment-reason-other-{{ '{{ comment_id }}' }}" class="magic">Other...</label><br />
+                </blockquote>
+
+                <div class="reason-text">
+                    <textarea name="message" placeholder="please explain..." class="hidden"></textarea>
+                    <div class="text-nag"></div>
+                </div>
+
+                <div class="nag"></div>
+            </form>
+        </div>
+
+        <div class="blog-footer">
+            Booksta.sh is copyright &copy;{{"now"|date('Y')}} Awesome Sauce Web Sites Incorporated.
+            <div>
+                <a href="{{ path('about') }}">About</a> |
+                <a href="{{ path('blog') }}">Blog</a> |
+                <a href="{{ path('privacy') }}">Privacy Policy</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

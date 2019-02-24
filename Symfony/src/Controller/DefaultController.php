@@ -33,49 +33,6 @@ class DefaultController extends AbstractController
         return compact('items');
     }
 
-
-
-    /**
-     * @Route("/top", name="top", methods={"GET"})
-     * @Template()
-     */
-    public function top(
-        Request $request)
-    {
-
-        /*
-        // FIXME
-
-        $page = $request->query->get('page', 1);
-        $page--;
-
-        $mongodb = $this->container->get('bookstash.search.mongodb_factory')->getMongoDB();
-
-        $works = $mongodb->works;
-        $count = 25;
-
-        $cursor = $works->find(array(
-            'amzn_salesrank' => array('$gt' => 0)
-        ));
-        $cursor->sort(array('amzn_salesrank' => 1));
-        $cursor->limit($count);
-        $cursor->skip(($page * $count) +1);
-
-        $works = array();
-        foreach ($cursor as $work) {
-            $works[] = $work;
-        }
-
-        return array(
-            'works'     => $works,
-            'count'     => $count,
-            'page'      => $page,
-        );
-        */
-
-        return [];
-    }
-
     /**
      * @Route("/about", name="about", methods={"GET"})
      * @Template()

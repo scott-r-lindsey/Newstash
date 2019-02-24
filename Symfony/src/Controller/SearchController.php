@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Service\Mongo\BrowseNode as MongoBrowseNode;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\Mongo\Work;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\Mongo\Work;
 
 class SearchController extends AbstractController
 {
@@ -48,9 +49,61 @@ class SearchController extends AbstractController
         */
     }
 
+    /**
+     * @Route("/search/json/typeahead", methods={"GET"});
+     */
+    public function jsonTypeahead(
+        Request $request
+    ): Response
+    {
 
+        //FIXME
+/*
+        $text = strtolower($request->get('query'));
 
+        $typeahead = $this->container->get('bookstash.search.typeahead');
+        $suggestions = $typeahead->suggestions($text);
 
+        foreach ($suggestions as &$s){
+            if ('author' == $s['type']){
+                $s['url'] = $this->generateUrl('author_search', ['query' => $s['value']]);
+            }
+            else if ('book' == $s['type']){
+                $s['url'] = $this->generateUrl('book_search', [
+                    'query' => $s['value'],
+                    'work_id' => $s['data']['work_id']
+                ]);
+            }
+        }
+
+        $ret = array(
+            'suggestions'   => $suggestions
+        );
+
+        $response = new Response(json_encode($ret));
+        $response->headers->set('Content-Type', 'text/javascript');
+        return $response;
+*/
+    }
+
+    /**
+     * @Route("/browse/category/{node_id}/{slug}", requirements={"node_id" = "^\d+$"}, name="search_browse_category", methods={"GET"})
+     * @Template()
+     */
+    public function browseCategoryAction(
+        Work $workSearcher,
+        Request $request,
+        $node_id,
+        $slug
+    ){
+
+        $page           = $request->query->get('page', 1);
+        $results        = $workSearcher->byCategory((int)$node_id, (int)$page);
+
+        $results['slug'] = $slug;
+
+        return $results;
+    }
 
     /**
      * @Route("/browse/small/{node_id}", name="browse_node_small")
@@ -66,14 +119,6 @@ class SearchController extends AbstractController
 
         return compact('works');
     }
-
-
-
-
-
-
-
-
 
     // ------------------------------------------------------------------------
     // non-routable
@@ -102,24 +147,4 @@ class SearchController extends AbstractController
             'nodes' => $nodes
         ];
     }
-
-    /**
-     * @Route("/browse/category/{node_id}/{slug}", requirements={"node_id" = "^\d+$"}, name="search_browse_category", methods={"GET"})
-     * @Template()
-     */
-    public function browseCategoryAction(
-        Work $workSearcher,
-        Request $request,
-        $node_id,
-        $slug
-    ){
-
-        $page           = $request->query->get('page', 1);
-        $results        = $workSearcher->byCategory((int)$node_id, (int)$page);
-
-        $results['slug'] = $slug;
-
-        return $results;
-    }
-
 }

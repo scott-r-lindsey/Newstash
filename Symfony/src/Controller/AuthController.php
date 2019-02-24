@@ -35,7 +35,6 @@ class AuthController extends AbstractController
      * @Template()
      */
     public function socialReflectorAction(){
-        // FIXME
         return [];
     }
 

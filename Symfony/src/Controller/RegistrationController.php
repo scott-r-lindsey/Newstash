@@ -19,7 +19,8 @@ class RegistrationController extends AbstractController
      */
     public function confirmed(
         UserInterface $user,
-        Request $request): array
+        Request $request
+    ): array
     {
 
         if (!is_object($user) || !$user instanceof UserInterface) {
@@ -38,6 +39,4 @@ class RegistrationController extends AbstractController
             'redirect'  => $redirect
         ];
     }
-
-
 }

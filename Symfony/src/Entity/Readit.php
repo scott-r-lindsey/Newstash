@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(
  *      name="readit",
  *      indexes={
+ *          @ORM\Index(name="idx_created_at", columns={"created_at"}),
  *      }
  * )
  */

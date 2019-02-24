@@ -11,7 +11,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity(repositoryClass="App\Repository\ReviewRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(
- *      name="review"
+ *      name="review",
+ *      indexes={
+ *          @ORM\Index(name="idx_created_at", columns={"created_at"}),
+ *      }
  * )
  */
 

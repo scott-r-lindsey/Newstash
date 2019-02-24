@@ -107,7 +107,7 @@ class StashController extends BaseApiController
             'error'     => 0,
             'result'    => 'Data',
             'id'        => $user->getId(),
-            'lists'     => $ret,
+            'lists'     => [],
             'prefs'     => $user->getDisplayPrefs()
         ]);
     }
@@ -333,7 +333,7 @@ class StashController extends BaseApiController
      *
      * Toggles user's like for a given review
      */
-    public function putReviewLikeAction(
+    public function putReviewLike(
         Request $request,
         ReviewLikeRepository $reviewLikeRepository,
         ReviewLikeManager $reviewLikeManager,
@@ -438,146 +438,6 @@ class StashController extends BaseApiController
             'error'     => 0,
             'result'    => 'Flag accepted'
         ]);
-    }
-
-    /**
-     * @Route("/user/tabcontent/{type}", name="user_tabcontent", methods={"GET"});
-     * @Template()
-     *
-     * User's tab bar
-     */
-    public function getTabContentAction(
-        Request $request,
-        string $type
-    ): array
-    {
-
-
-/*
-        list($fail, $response, $em, $user, $work) = $this->setup();
-        if ($fail){
-            return $response;
-        }
-
-        $page       = $request->query->get('page', 1);
-        $sort       = $request->query->get('sort', 'added');
-        $reverse    = $request->query->get('reverse', false);
-        $reverse    = $reverse ? 1 : 0;
-        $perpage    = 20;
-
-        // toread/reading/readit reviewed rated
-        $statuses = array(
-            'toread'        => 1,
-            'reading'       => 2,
-            'readit'        => 3 );
-
-        $descriptions = array(
-            'toread'        => 'To Read',
-            'reading'       => 'Reading',
-            'readit'        => 'Read It',
-            'reviews'       => 'Reviewed',
-            'ratings'       => 'Rated');
-
-        $description = $descriptions[$type];
-
-        $params = array( 'user'  => $user);
-        $added = '';
-
-        if (in_array($type, array_keys($statuses))){
-            $dql = '
-                FROM Scott\DataBundle\Entity\Work w
-                JOIN w.readit r
-                JOIN w.front_edition e
-                WHERE
-                    r.user = :user AND
-                    w.deleted = 0 AND
-                    r.status = :status';
-
-            $params['status'] = $statuses[$type];
-            $added = 'r.created_at';
-        }
-        else if ('reviews' == $type){
-            $dql = '
-                FROM Scott\DataBundle\Entity\Work w
-                JOIN w.reviews r
-                JOIN w.front_edition e
-                WHERE
-                    r.user = :user AND
-                    w.deleted = 0 AND
-                    r.deleted = 0';
-            $added = 'r.created_at';
-        }
-        else if ('ratings' == $type){
-            $dql = '
-                FROM Scott\DataBundle\Entity\Work w
-                JOIN w.ratings r
-                JOIN w.front_edition e
-                WHERE
-                    r.user = :user AND
-                    w.deleted = 0';
-            $added = 'r.created_at';
-        }
-        else{
-            throw $this->createNotFoundException('This list does not exist');
-        }
-
-
-        // --------------------------------------------------------------------
-        // get count
-
-        $query = $em->createQuery('SELECT count(w.id) ' . $dql);
-        foreach ($params as $k => $v){
-            $query->setParameter($k, $v);
-        };
-
-        $total = $query->getSingleScalarResult();
-
-        // --------------------------------------------------------------------
-        // get works
-
-        if ('alpha' == $sort){
-            $ord = $reverse ? 'DESC' : 'ASC';
-            $order_by = " ORDER BY w.title $ord";
-        }
-        else if ('bestseller' == $sort){
-            $ord = $reverse ? 'DESC' : 'ASC';
-            $order_by = "  ORDER BY e.amzn_salesrank $ord";
-        }
-        else if ('added' == $sort){
-            $ord = $reverse ? 'ASC' : 'DESC';
-            $order_by = "  ORDER BY $added $ord";
-        }
-        else if ('pubdate' == $sort){
-            $ord = $reverse ? 'ASC' : 'DESC';
-            $order_by = "  ORDER BY e.publication_date $ord";
-        }
-
-        $query = $em->createQuery('SELECT w, e ' . $dql . $order_by);
-
-        // workaround for poor one-to-one query performance on Score
-        $query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
-
-        foreach ($params as $k => $v){
-            $query->setParameter($k, $v);
-        };
-
-        $query->setMaxResults($perpage)
-            ->setFirstResult($perpage * ($page-1));
-
-
-        $works = $query->getResult();
-*/
-
-        return compact(
-            'total',
-            'works',
-            'page',
-            'perpage',
-            'sort',
-            'reverse',
-            'description',
-            'type'
-        );
     }
 
     // ------------------------------------------------------------------------

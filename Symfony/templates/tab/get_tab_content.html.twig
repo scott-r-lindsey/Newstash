@@ -1,0 +1,103 @@
+<span data-bstsh-object="userTab" data-listname="{{ type }}" >
+    <div class="book-box">
+        {% if (works|length) > 0 %}
+            <div class="side-scroll">
+                {% set book_width = 40 %}
+                {% set flow_width = (book_width * (works|length)) + 90 %}
+                <div class="flowbox" style="width:{{ flow_width }}px">
+
+                    {% set left = 0 %}
+                    {% for work in works %}
+                        {% set frontEdition = work.frontEdition %}
+                        {% set margintop = '' %}
+                        {% if 160 > frontEdition.NormalizedAmznMediumCoverY %}
+                            {% set margintop %}style="margin-top: {{ (80 - frontEdition.NormalizedAmznMediumCoverY/2)|number_format}}px"{% endset %}
+                        {% endif %}
+                        <div class="book" style="left:{{left}}px; width:{{ frontEdition.NormalizedAmznMediumCoverX }}px">
+                            <div class="box" {{ margintop }}>
+                                <div class="shadowbehind" style="width:{{ frontEdition.NormalizedAmznMediumCoverX}}px; height:{{ frontEdition.NormalizedAmznMediumCoverY }}px""  >
+                                </div>
+                                <div class="fcover">
+                                    <a href="{{ path('work', {'work_id': work.id, 'slug': frontEdition.slug}) }}">
+                                        <img src="{{ frontEdition.AmznMediumCover}}" height="{{ frontEdition.NormalizedAmznMediumCoverY }}" width="{{ frontEdition.NormalizedAmznMediumCoverX}}" class="format" data-bstsh-lgcover="{{ frontEdition.AmznMediumCover }}" /></a>
+                                </div>
+                                <div class="spine" style="height:{{ frontEdition.NormalizedAmznMediumCoverY }}px">
+                                    <img src="{{ frontEdition.AmznMediumCover}}" height="{{ frontEdition.NormalizedAmznMediumCoverY }}" width="{{ frontEdition.NormalizedAmznMediumCoverX }}" class="format" data-bstsh-lgcover="{{ frontEdition.AmznMediumCover }}" />
+                                </div>
+                                <div class="shadowbelow" style="width:{{ frontEdition.NormalizedAmznMediumCoverX }}px;">
+                                </div>
+                            </div>
+
+                            {% set descLeft = left + 100 %}
+
+                            <div class="title-description" style="left:-{{ descLeft }}px; width:1000px">
+                                <span>
+                                    {{ work.title }}
+                                </span>
+                            </div>
+                        </div>
+                        {% set left = left + book_width %}
+                    {% endfor %}
+                    <div class="description" style="left:-{{ 160 - flow_width/2 }}px">
+                        <span>
+                        </span>
+                    </div>
+
+                </div>
+                <div class="page-data">
+                    Showing {{ ((page-1) * perpage) +1 }} to 
+                    {{ min(total, (page * perpage)) }} of {{ total }}
+                </div>
+                <div class="pagination">
+                    {% if page > 1 %}
+                        <button data-url="{{ path('user_tabcontent', {'type': type}) }}?page={{ page-1 }}&amp;reverse={{ reverse }}&amp;sort={{ sort }}" class="paginate">
+                            <i class="fa fa-caret-left"></i> Previous 20
+                        </button>
+                    {% endif %}
+                    {% if page > 1 and total > page * perpage %}
+                        | 
+                    {% endif %}
+                    {% if total > page * perpage %}
+                        <button data-url="{{ path('user_tabcontent', {'type': type}) }}?page={{ page+1 }}&amp;reverse={{ reverse }}&amp;sort={{ sort }}" class="paginate">
+                            {% if total > (page * perpage) + perpage %}
+                                Next 20 <i class="fa fa-caret-right"></i>
+                            {% else %}
+                                {{ total - (page * perpage) }} More <i class="fa fa-caret-right"></i>
+                            {% endif %}
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class="empty-list">
+                <em>This list is currently empty.</em>
+            </div>
+        {% endif %}
+
+    </div>
+    <div class="controls">
+        <span class="name">
+            <em>Sort by...</em>
+        </span>
+        <button class="sort" data-sort="alpha">
+            Alphabetical
+        </button>
+        <button class="sort" data-sort="bestseller">
+            Bestselling
+        </button>
+        <button class="sort selected" data-sort="added">
+            Recently Added
+        </button><br />
+        <button class="sort" data-sort="pubdate">
+            Recently Published
+        </button><br />
+        <span class="reverse">
+            <form>
+                <input type="checkbox" class="magic reverse" id="reverse-tab-{{type}}">
+                <label class="magic" for="reverse-tab-{{type}}">Reverse</label>
+            </form>
+        
+        </span>
+   </div>
+</span>
+

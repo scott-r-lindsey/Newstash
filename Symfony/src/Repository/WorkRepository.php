@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Work;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Work|null find($id, $lockMode = null, $lockVersion = null)
@@ -170,4 +172,114 @@ class WorkRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findUserStatusCountAndWorks(
+        UserInterface $user,
+        string $type,
+        int $page,
+        int $perpage,
+        string $sort,
+        bool $reverse
+    ): array
+    {
+        // --------------------------------------------------------------------
+        // this exists to efficiently service the user tabs
+
+        $em             = $this->getEntityManager();
+
+        $params         = ['user'  => $user];
+        $added          = '';
+
+        $statuses = [
+            'toread'        => 1,
+            'reading'       => 2,
+            'readit'        => 3
+        ];
+
+        // find count of books being read
+        if (in_array($type, array_keys($statuses))){
+            $dql = '
+                FROM App\Entity\Work w
+                JOIN w.readit r
+                JOIN w.front_edition e
+                WHERE
+                    r.user = :user AND
+                    w.deleted = 0 AND
+                    r.status = :status';
+
+            $params['status'] = $statuses[$type];
+            $added = 'r.created_at';
+        }
+        // find count of books reviewed
+        else if ('reviews' == $type){
+            $dql = '
+                FROM App\Entity\Work w
+                JOIN w.reviews r
+                JOIN w.front_edition e
+                WHERE
+                    r.user = :user AND
+                    w.deleted = 0 AND
+                    r.deleted = 0';
+            $added = 'r.created_at';
+        }
+        // find count of books rated
+        else if ('ratings' == $type){
+            $dql = '
+                FROM App\Entity\Work w
+                JOIN w.ratings r
+                JOIN w.front_edition e
+                WHERE
+                    r.user = :user AND
+                    w.deleted = 0';
+            $added = 'r.created_at';
+        }
+        else{
+            throw new \Exception('This list does not exist');
+        }
+
+        // --------------------------------------------------------------------
+        // get count
+
+        $query = $em->createQuery('SELECT count(w.id) ' . $dql);
+        foreach ($params as $k => $v){
+            $query->setParameter($k, $v);
+        };
+
+        $total = $query->getSingleScalarResult();
+
+        // --------------------------------------------------------------------
+        // get works associated with above count, paginated
+
+        if ('alpha' == $sort){
+            $ord = $reverse ? 'DESC' : 'ASC';
+            $order_by = " ORDER BY w.title $ord";
+        }
+        else if ('bestseller' == $sort){
+            $ord = $reverse ? 'DESC' : 'ASC';
+            $order_by = "  ORDER BY e.amzn_salesrank $ord";
+        }
+        else if ('added' == $sort){
+            $ord = $reverse ? 'ASC' : 'DESC';
+            $order_by = "  ORDER BY $added $ord";
+        }
+        else if ('pubdate' == $sort){
+            $ord = $reverse ? 'ASC' : 'DESC';
+            $order_by = "  ORDER BY e.publication_date $ord";
+        }
+
+        $query = $em->createQuery('SELECT w, e ' . $dql . $order_by);
+
+        // workaround for poor one-to-one query performance on Score
+        $query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
+
+        foreach ($params as $k => $v){
+            $query->setParameter($k, $v);
+        };
+
+        $query->setMaxResults($perpage)
+            ->setFirstResult($perpage * ($page-1));
+
+        $works = $query->getResult();
+
+        return [$total, $works];
+    }
 }

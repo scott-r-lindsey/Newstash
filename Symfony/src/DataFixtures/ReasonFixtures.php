@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-use App\Entity\Format;
+use App\Entity\Reason;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 

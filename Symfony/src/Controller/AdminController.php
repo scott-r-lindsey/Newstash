@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Repository\FlagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,29 +17,13 @@ class AdminController extends AbstractController
      * @Template()
      */
     public function index(
-        Request $request
+        Request $request,
+        FlagRepository $flagRepository
     )
     {
-        // FIXME
-        /*
-        $this->checkSecurity();
-        $em      = $this->getDoctrine()->getManager();
-
-        $dql = '
-            SELECT f, r, c
-            FROM Scott\DataBundle\Entity\Flag f
-            LEFT JOIN f.comment r
-            LEFT JOIN f.review c
-            WHERE
-                f.sorted = 0
-            ORDER BY f.created_at ASC
-        ';
-
-        $query = $em->createQuery($dql);
-        $flags = $query->getResult();
+        $flags = $flagRepository->findOutstandingFlags();
 
         return compact('flags');
-        */
     }
 
     /**

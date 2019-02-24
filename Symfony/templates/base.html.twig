@@ -53,35 +53,6 @@
               ga('send', 'pageview');
         </script>
 
-
-
-{#
-        {% if app.debug %}
-            <link rel="stylesheet" href="/css/less/style.php" />
-            <script type="text/javascript" src="/js/dev/masonry.pkgd.min.js"></script>
-            <script type="text/javascript" src="/js/dev/modernizr.custom.js"></script>
-            <script type="text/javascript" src="/js/dev/jquery.infinitescroll.js"></script>
-            <script type="text/javascript" src="/js/dev/jquery.visible.min.js"></script>
-            <script type="text/javascript" src="/js/dev/jquery.autocomplete.min.js"></script>
-            <script type="text/javascript" src="/js/dev/jquery.timeago.js"></script>
-            <script type="text/javascript" src="/js/dev/jquery.raty.js"></script>
-            <script type="text/javascript" src="/js/dev/picker.js"></script>
-            <script type="text/javascript" src="/js/dev/picker.date.js"></script>
-            <script type="text/javascript" src="/js/dev/js.js"></script>
-        {% else %}
-            <link rel="stylesheet" href="/css/style.css" />
-            <link rel="stylesheet" href="/css/raty/jquery.raty.css" />
-            <script type="text/javascript" src="/js/js.js"></script>
-        {% endif %}
-
-
-#}
-
-
-
-
-
-
     </head>
 {% if app.user.username is defined %}
     <body auth="auth">

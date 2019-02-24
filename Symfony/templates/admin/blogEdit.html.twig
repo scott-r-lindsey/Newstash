@@ -1,0 +1,65 @@
+{% extends 'admin.html.twig' %}
+{% block title %}Create Blog Post{% endblock %}
+{% block description %}The Booksta.sh Blog{% endblock %}
+
+{% block focus %}
+<section class="admin blog">
+
+    <script src="//cdn.ckeditor.com/4.4.4/standard/ckeditor.js"></script>
+
+    <div class="shell">
+        <nav>
+            <a href="{{ path('admin') }}">Top</a> |
+            <a href="{{ path('admin_blog_index') }}">Blog Posts</a>
+        </nav>
+        <h1>Admin</h1>
+        <h2>New blog post</h2>
+
+        {% if flash|default('') %}
+            <div class="flash">
+                {{ flash }}
+            </div>
+        {% endif %}
+
+        <form method="post" action="{{ path('admin_blog_edit', {'post_id': post.id|default('') }) }}">
+            <span class="slugomatic">
+                <label>Title:</label>
+                <input type="text" name="title" value="{{ title|default('') }}" class="slugmaster" /><br />
+
+                <label>Slug:</label>
+                <input type="text" name="slug" value="{{ slug|default('') }}" class="slugchild" /><br />
+            </span>
+
+            <label>Image:</label>
+            <input type="text" name="image" value="{{ image|default('') }}"/><br />
+
+            <label>Description:</label>
+            <input type="text" name="description" value="{{ description|default('') }}"/><br />
+
+            <label>Lead</label>
+            <div class="editor">
+                <textarea id="blog-post" class="ckeditor" name="lead">{{ lead|default('') }}</textarea><br />
+            </div>
+
+            <label>Fold</label>
+            <div class="editor">
+                <textarea id="blog-post" class="ckeditor" name="fold">{{ fold|default('') }}</textarea><br />
+            </div>
+
+            <div class="control">
+                <input type="submit" name="submit" value="Save" />
+                {% if post is defined %}
+                    <input type="submit" name="submit" value="Preview" data-bstsh-object="previewLauncher" data-url="{{path('admin_blog_preview', {'post_id': post.id})}}" />
+                {% endif %}
+                {% if post.active|default(false) %}
+                    <input type="submit" name="submit" value="Unpublish" />
+                {% else %}
+                    <input type="submit" name="submit" value="Publish" />
+                {% endif %}
+            </div>
+        </form>
+
+    </div>
+</section>
+{% endblock %}
+

@@ -6,6 +6,7 @@ Encore
     .setPublicPath('/build')
 
     .addEntry('app', './assets/js/app.js')
+    .addEntry('admin', './assets/js/admin.js')
 
     //.autoProvidejQuery()
     .enableSingleRuntimeChunk()
@@ -45,7 +46,7 @@ config.resolve.alias = {
     'picker': 'pickadate/lib/picker'
 };
 
-console.log(config.module);
+//console.log(config.module);
 
 
 module.exports = config;

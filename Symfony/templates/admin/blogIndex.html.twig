@@ -1,0 +1,50 @@
+{% extends 'admin.html.twig' %}
+{% block title %}Admin{% endblock %}
+{% block description %}The Booksta.sh Blog{% endblock %}
+
+{% block focus %}
+<section class="admin">
+
+    <div class="shell">
+        
+        <nav>
+            <a href="{{ path('admin') }}">Top</a> |
+            <a href="{{ path('admin_blog_index') }}">Blog Posts</a> |
+            <a href="{{ path('admin_blog_create') }}">New Post</a> 
+        </nav>
+        <h1>Admin</h1>
+        <h2>All blog posts</h2>
+
+        <div class="posts">
+            {% for post in posts %}
+                <div class="post">
+                    {% if post.active %}
+                        <a href="{{ path('blog_post', {'post_id': post.id, 'slug': post.slug}) }}">{{ post.title }}</a>
+                    {% else %}
+                        {{ post.title }}
+                    {% endif %}
+                    <span>
+                        by {{ post.user.username }}
+                    </span>
+                    <div class="control">
+                        <em>{{ post.createdAt|date("F jS. g:ia") }}</em>
+                        {% if post.active %}
+                            <i class="fa fa-eye"></i>
+                        {% else %}
+                            <i class="fa fa-eye mute"></i>
+                        {% endif %}
+                        <a href="{{ path('admin_blog_edit', {'post_id': post.id }) }}">Edit</a> 
+                        <form method="POST" action="{{ path('admin_blog_delete', {'post_id': post.id }) }}">
+                            <span class="fauxa" data-bstsh-object="modalGeneral" data-modal-type="confirm" data-headline="Whoa are you sure???" data-subhead="">
+                                <input type="submit" style="display:none" onclick="$(this).parents('form').submit();">Delete
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+

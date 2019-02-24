@@ -1,0 +1,177 @@
+{% extends 'admin.html.twig' %}
+{% block title %}Admin{% endblock %}
+{% block description %}The Booksta.sh Blog{% endblock %}
+
+{% block focus %}
+<section class="admin">
+
+    <div class="shell">
+        <nav>
+            <a href="{{ path('admin_blog_index') }}">Blog Posts</a> |
+            <a href="{{ path('admin_blog_create') }}">New Post</a>
+        </nav>
+        <h1>Admin</h1>
+    
+        {% if flags|length == 0 %}
+            <h2>No flags outstanding</h2>
+            <hr>
+        {% else %}
+            <h2>{{ flags|length }} flags outstanding</h2>
+            <hr>
+            {% for flag in flags %}
+                <div class="flag-shell">
+                    {% if flag.review.id is defined %}
+                        <div class="review-flag">
+                            <h3>Review Flag</h3>
+                            <div class="quartered">
+                                <span>
+                                    <a href="{{ path('work', {'work_id': flag.review.work.id, 'slug': 'slug'}) }}#reviews-marker">Review #{{flag.review.id}}</a> 
+                                </span><span>
+                                {% if flag.comment.user.id is defined %}
+                                    {{ flag.review.user.firstname }}
+                                    {{ flag.review.user.lastname }}
+                                    ({{ flag.review.user.username }})
+                                {% else %}
+                                    (Anon)
+                                {% endif %}
+                                </span><span>
+                                    IP: {{ flag.review.ipaddr }}
+                                </span><span>
+                                    {{ flag.review.createdat|date("F jS \\a\\t g:ia") }}
+                                </span>
+                            </div>
+                            <div class="comment-text">
+                                <em>Review text:</em><br />
+                                <b>{{ flag.review.title }}</b><br />
+                                {{ flag.review.text|raw }}
+                            </div>
+
+                            <div class="useragent">
+                                Useragent:
+                                {{ flag.useragent }}
+                            </div>
+
+                            <hr />
+
+                            <div class="quartered">
+                                <span>
+                                    Reason:
+                                    {% if flag.reason.id is defined %}
+                                        {{ flag.reason.description }}
+                                    {% else %}
+                                        Other
+                                    {% endif %}
+                                </span><span>
+                                    {% if flag.user.id is defined %}
+                                        {{ flag.user.firstname }}
+                                        {{ flag.user.lastname }}
+                                        ({{ flag.user.username }})
+                                    {% else %}
+                                        (Anon)
+                                    {% endif %}
+                                </span><span>
+                                    IP: {{ flag.ipaddr }}
+                                </span><span>
+                                    {{ flag.createdat|date("F jS \\a\\t g:ia") }}
+                                </span>
+                            </div>
+                            {% if flag.reason.id is not defined %}
+                                <div class="review-text">
+                                    <em>Reason:</em><br />
+                                    {{ flag.message }}
+                                </div>
+                            {% endif %}
+                            <div class="useragent">
+                                Useragent:
+                                {{ flag.useragent }}
+                            </div>
+                            <form method="post" action="{{ path('admin_handle_review_flag', {'work_id': flag.review.work.id} ) }}">
+                                <input type="hidden" name="flag_id" value="{{flag.id}}">
+                                <input type="submit" name="submit" value="Vindicate">
+                                <input type="submit" name="submit" value="Obliterate">
+                            </form>
+                        </div>
+                    {% elseif flag.comment.id is defined %}
+                        <div class="comment-flag">
+                            <h3>Comment Flag</h3>
+                            <div class="quartered">
+                                <span>
+                                    <a href="{{ path('blog_post', {'post_id': flag.comment.post.id, 'slug': flag.comment.post.slug}) }}#comment-{{ flag.comment.id }}">Comment #{{ flag.comment.id }}</a>
+                                </span><span>
+                                {% if flag.comment.user.id is defined %}
+                                    {{ flag.comment.user.firstname }}
+                                    {{ flag.comment.user.lastname }}
+                                    ({{ flag.comment.user.username }})
+                                {% else %}
+                                    (Anon)
+                                {% endif %}
+                                </span><span>
+                                    IP: {{ flag.comment.ipaddr }}
+                                </span><span>
+                                    {{ flag.comment.createdat|date("F jS \\a\\t g:ia") }}
+                                </span>
+                            </div>
+                            <div class="comment-text">
+                                <em>Comment text:</em><br />
+                                {{ flag.comment.text }}
+                            </div>
+
+                            <div class="useragent">
+                                Useragent:
+                                {{ flag.useragent }}
+                            </div>
+
+                            <hr />
+
+                            <div class="quartered">
+                                <span>
+                                    Reason:
+                                    {% if flag.reason.id is defined %}
+                                        {{ flag.reason.description }}
+                                    {% else %}
+                                        Other
+                                    {% endif %}
+                                </span><span>
+                                    {% if flag.user.id is defined %}
+                                        {{ flag.user.firstname }}
+                                        {{ flag.user.lastname }}
+                                        ({{ flag.user.username }})
+                                    {% else %}
+                                        (Anon)
+                                    {% endif %}
+                                </span><span>
+                                    IP: {{ flag.ipaddr }}
+                                </span><span>
+                                    {{ flag.createdat|date("F jS \\a\\t g:ia") }}
+                                </span>
+                            </div>
+                            {% if flag.reason.id is not defined %}
+                                <div class="comment-text">
+                                    <em>Reason:</em><br />
+                                    {{ flag.message }}
+                                </div>
+                            {% endif %}
+                            <div class="useragent">
+                                Useragent:
+                                {{ flag.useragent }}
+                            </div>
+                            <form method="post" action="{{ path('admin_handle_comment_flag', {'post_id': flag.comment.post.id}) }}">
+                                <input type="hidden" name="flag_id" value="{{flag.id}}">
+                                <input type="submit" name="submit" value="Vindicate">
+                                <input type="submit" name="submit" value="Obliterate">
+                            </form>
+                        </div>
+                    {% else %}
+                        <h3>Broken Flag</h3>
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+        {% endif %}
+        
+
+
+    </div>
+</section>
+{% endblock %}
+

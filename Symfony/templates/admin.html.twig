@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--[if IE]><html class="ie" lang="en"> <![endif]-->
+<!--[if !(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link href='//fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps:400,700|Titillium+Web:400,700' rel='stylesheet' type='text/css'>
+
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        {{ encore_entry_script_tags('admin') }}
+        <link rel="stylesheet" href="/build/app.css" />
+
+    </head>
+    <body auth="auth">
+        <div class="focus visible">
+            {% block focus %}{% endblock %}
+        </div>
+        <div id="modalGeneral">
+            <div class="vert"></div>
+            <div class="message">
+
+                <h1></h1>
+                <p></p>
+
+                <div class="form-body">
+                </div>
+
+                <div class="control">
+                    <button class="cancel">Cancel</button>
+                    <button class="confirm">Submit</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

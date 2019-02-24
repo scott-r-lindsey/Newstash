@@ -19,32 +19,22 @@ class FlagRepository extends ServiceEntityRepository
         parent::__construct($registry, Flag::class);
     }
 
-    // /**
-    //  * @return Flag[] Returns an array of Flag objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findOutstandingFlags(): array
     {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $em = $this->getEntityManager();
 
-    /*
-    public function findOneBySomeField($value): ?Flag
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $dql = '
+            SELECT f, r, c
+            FROM App\Entity\Flag f
+            LEFT JOIN f.comment r
+            LEFT JOIN f.review c
+            WHERE
+                f.sorted = 0
+            ORDER BY f.created_at ASC
+        ';
+
+        $query = $em->createQuery($dql);
+
+        return $query->getResult();
     }
-    */
 }

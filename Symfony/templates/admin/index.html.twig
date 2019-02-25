@@ -96,7 +96,7 @@
                             <h3>Comment Flag</h3>
                             <div class="quartered">
                                 <span>
-                                    <a href="{{ path('blog_post', {'post': flag.comment.post.id, 'slug': flag.comment.post.slug}) }}#comment-{{ flag.comment.id }}">Comment #{{ flag.comment.id }}</a>
+                                    <a href="{{ path('blog_post', {'post_id': flag.comment.post.id, 'slug': flag.comment.post.slug}) }}#comment-{{ flag.comment.id }}">Comment #{{ flag.comment.id }}</a>
                                 </span><span>
                                 {% if flag.comment.user.id is defined %}
                                     {{ flag.comment.user.firstname }}

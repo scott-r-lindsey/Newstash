@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Comment;
 use App\Entity\Flag;
 use App\Entity\Reason;
 use App\Entity\Review;
@@ -56,6 +57,44 @@ class FlagManager
             $flag
                 ->setUser($user)
                 ->setReview($review)
+            ;
+            $this->em->persist($flag);
+        }
+
+        $flag
+            ->setReason($reason)
+            ->setMessage($message)
+            ->setIpaddr($ipaddr)
+            ->setUseragent($useragent)
+        ;
+
+        $this->em->flush();
+
+        return $flag;
+    }
+
+    public function createUserCommentFlag(
+        UserInterface $user,
+        Comment $comment,
+        string $message,
+        string $useragent,
+        string $ipaddr,
+        Reason $reason = null
+
+    ): Flag
+    {
+
+        $flag = $this->repo->findOneBy([
+            'comment'   => $comment,
+            'user'      => $user
+        ]);
+
+        if (!$flag) {
+
+            $flag = new Flag();
+            $flag
+                ->setUser($user)
+                ->setComment($comment)
             ;
             $this->em->persist($flag);
         }

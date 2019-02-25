@@ -4,8 +4,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
+use App\Repository\ReasonRepository;
 use App\Service\CommentManager;
+use App\Service\FlagManager;
 use App\Service\Mongo\News;
 use App\Service\PostManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -94,13 +97,15 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/blog/comment/{post_id}", requirements={"post_id" = "^\d+$"}, name="blog_new_comment", methods={"POST"})
+     *
+     * this route is firewalled
      */
     public function newCommentAction(
         Request $request,
         CommentManager $commentManager,
         PostRepository $postRepository,
         int $post_id,
-        UserInterface $user = null
+        UserInterface $user
     ): JsonResponse
     {
 
@@ -114,14 +119,6 @@ class BlogController extends AbstractController
         }
 
         $response = new JsonResponse();
-
-        if(!$user) {
-            $response->setData([
-                'error' => 1,
-                'result' => 'You\'re not logged in.'
-            ]);
-            return $response;
-        }
 
         // check text for content ---------------------------------------------
         $text = strip_tags($text);
@@ -165,78 +162,50 @@ class BlogController extends AbstractController
         return $response;
     }
 
-
     /**
      * @Route("/blog/comment/flag", name="blog_new_flag", methods={"POST"})
+     *
+     * this route is firewalled
      */
     public function flag(
-        Request $request
-    ): array
+        Request $request,
+        FlagManager $flagManager,
+        PostRepository $postRepository,
+        CommentRepository $commentRepository,
+        ReasonRepository $reasonRepository,
+        UserInterface $user
+    ): jsonResponse
     {
-
-        // FIXME
-        /*
-
-        $em         = $this->getDoctrine()->getManager();
-
-        $reason_id  = $request->request->get('reason_id');
         $response   = new JsonResponse();
 
-        if (0 == $reason_id){
-            $reason = false;
-        }
-        else{
-            $reason = $em->getRepository('ScottDataBundle:Reason')
-                        ->findOneById($reason_id);
-
-            if (!$reason){
-                $response->setData(array(
-                    'error'     => 1,
-                    'result'    => 'The reason does not exist'
-                ));
-                return $response;
-            }
-        }
-
         $comment_id     = $request->request->get('comment_id');
-        $comment        = $em->getRepository('ScottDataBundle:Comment')
-                            ->findOneById($comment_id);
+        $reason_id      = $request->request->get('reason_id');
+        $comment        = $commentRepository->findOneById($comment_id);
+        $message        = $request->request->get('message', '');
 
-        if (!$comment_id){
-            $response->setData(array(
-                'error'     => 1,
-                'result'    => 'The comment does not exist'
-            ));
-            return $response;
+        if ($reason_id) {
+            // nullable
+            $reason = $reasonRepository->findOneById($reason_id);
         }
 
-        $message        = $request->request->get('message');
-        $ipaddr         = $request->server->get('REMOTE_ADDR');
-        $useragent      = $request->server->get('HTTP_USER_AGENT');
-
-        $flag = new Flag();
-        $flag->setComment($comment);
-        $flag->setMessage($message);
-        $flag->setUseragent($useragent);
-        $flag->setIpaddr($ipaddr);
-
-        if ($reason){
-            $flag->setReason($reason);
+        if (!$comment) {
+            throw $this->createNotFoundException('That comment does not exist');
         }
 
-        if (($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ) ||
-            ( $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') )){
-            $flag->setUser($this->get('security.context')->getToken()->getUser());
-        }
-
-        $em->persist($flag);
-        $em->flush();
+        $flag = $flagManager->createUserCommentFlag(
+            $user,
+            $comment,
+            $message,
+            $request->headers->get('User-Agent'),
+            $request->getClientIp(),
+            $reason
+        );
 
         $response->setData(array(
             'error'     => 0,
             'result'    => 'Flag accepted'
         ));
+
         return $response;
-        */
     }
 }

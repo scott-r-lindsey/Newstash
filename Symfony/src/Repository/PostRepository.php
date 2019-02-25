@@ -58,4 +58,14 @@ class PostRepository extends ServiceEntityRepository
 
         return $query->getOneOrNullResult();
     }
+
+    public function findActivePost(
+        int $post_id
+    ): Post
+    {
+        return $this->findOneBy([
+            'id'        => $post_id,
+            'active'    => 1
+        ]);
+    }
 }

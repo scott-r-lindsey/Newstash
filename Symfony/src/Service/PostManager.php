@@ -85,5 +85,69 @@ class PostManager
         return compact('posts', 'post_comment_counts');
     }
 
+    public function postCommentsAsTree(
+        Post $post
+    ): array
+    {
+        // --------------------------------------------------------------------
+        // turn the comments into a tree manually
+        // because doctrine is not efficient in this case
 
+        $em = $this->em;
+
+        $query = $em->createQuery(
+            'SELECT c, u
+            FROM App\Entity\Comment c
+            JOIN c.user u
+            WHERE
+                c.post = :post');
+
+        $comments = $query
+            ->setParameter('post', $post)
+            ->getResult();
+
+        $comments_by_id = array();
+        $comments_array = array();
+        $count = 0;
+
+        foreach ($comments as $c){
+            $count++;
+            $comment = array(
+                'id'            => $c->getId(),
+                'user'          => $c->getUser(),
+                'text'          => $c->getText(),
+                'ipaddr'        => $c->getIpaddr(),
+                'useragent'     => $c->getUseragent(),
+                'createdAt'     => $c->getCreatedAt(),
+                'updatedAt'     => $c->getUpdatedAt(),
+                'parent'        => null,
+                'parent_id'     => 0,
+                'deleted'       => $c->getDeleted(),
+                'approved'      => $c->getApproved(),
+                'questioned'    => $c->getQuestioned(),
+                'replies'       => array(),
+            );
+
+            $parent = $c->getParent();
+            if (isset($parent)){
+                $comment['parent'] = true;
+                $comment['parent_id'] = $parent->getId();
+            }
+            $comments_by_id[$comment['id']] = $comment;
+        }
+
+        $comments_array = array();
+        foreach ($comments_by_id as $id => &$comment) {
+            if (null == $comment['parent']){
+                $comments_array[] = &$comment;
+            }
+            else{
+                $pid = $comment['parent_id'];
+                $comments_by_id[$pid]['replies'][] = &$comment;
+            }
+        }
+
+        $comments = $comments_array;
+        return [$comments, $count];
+    }
 }

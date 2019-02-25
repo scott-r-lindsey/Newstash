@@ -3,12 +3,18 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\PostManager;
+use App\Entity\Comment;
 use App\Repository\PostRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\CommentManager;
+use App\Service\Mongo\News;
+use App\Service\PostManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class BlogController extends AbstractController
 {
@@ -31,33 +37,34 @@ class BlogController extends AbstractController
      */
     public function postAction(
         Request $request,
-        $post_id,
-        $slug
+        PostRepository $postRepository,
+        PostManager $postManager,
+        int $post_id,
+        string $slug
     ): array
     {
 
-        // FIXME
-        /*
+        $post = $postRepository->findActivePost($post_id);
 
-        $em = $this->getDoctrine()->getManager();
+        if (!$post) {
+            throw $this->createNotFoundException();
+        }
 
-        $postManager    = $this->get('bookstash.blog.post_manager');
-        $post           = $postManager->getPost($post_id);
         $correct_slug   = $post->getSlug();
 
         if ($slug != $correct_slug){
-            $url = $this->generateUrl('blog_post', array(
+            $url = $this->generateUrl('blog_post', [
                 'post_id'   => $post_id,
-                'slug'      => $correct_slug));
+                'slug'      => $correct_slug
+            ]);
             return $this->redirect($url, 301);
         }
 
         list ($comments, $count) = $postManager->postCommentsAsTree($post);
-        $prev_post = $postManager->findPreviousPost($post);
-        $next_post = $postManager->findNextPost($post);
+        $prev_post = $postRepository->findPreviousPost($post);
+        $next_post = $postRepository->findNextPost($post);
 
         return compact('prev_post', 'next_post', 'comments', 'count', 'post');
-        */
     }
 
 
@@ -66,22 +73,20 @@ class BlogController extends AbstractController
      * @Template()
      */
     public function commentsAction(
+        PostRepository $postRepository,
+        PostManager $postManager,
         Request $request,
-        $post_id
+        int $post_id
     ): array
     {
+        $post = $postRepository->findActivePost($post_id);
 
-        // FIXME
-        /*
-
-        $em = $this->getDoctrine()->getManager();
-
-        $postManager    = $this->get('bookstash.blog.post_manager');
-        $post           = $postManager->getPost($post_id);
+        if (!$post) {
+            throw $this->createNotFoundException();
+        }
 
         list ($comments, $count) = $postManager->postCommentsAsTree($post);
         return compact('comments', 'count', 'post');
-        */
     }
 
     // ------------------------------------------------------------------------
@@ -92,39 +97,30 @@ class BlogController extends AbstractController
      */
     public function newCommentAction(
         Request $request,
-        $post_id
-    ): array
+        CommentManager $commentManager,
+        PostRepository $postRepository,
+        int $post_id,
+        UserInterface $user = null
+    ): JsonResponse
     {
 
-        // FIXME
-        /*
+        $text       = $request->request->get('comment');
+        $parent_id  = (int)$request->request->get('parent_id');
+        $parent_id  = $parent_id ? $parent_id : null;
 
-        $em             = $this->getDoctrine()->getManager();
-        $user           = $this->get('security.context')->getToken()->getUser();
-        $postManager    = $this->get('bookstash.blog.post_manager');
-        $post           = $postManager->getPost($post_id);
-
-        // FIXME
-        // prevent replies to deleted
-
-        // FIXME refactor to service
-
-        $response = new JsonResponse();
-        if(! $this->get('security.context')->isGranted('ROLE_USER') ) {
-            $response->setData(array(
-                'error' => 1,
-                'result' => 'You\'re not logged in.'
-            ));
-            return $response;
+        $post       = $postRepository->findActivePost($post_id);
+        if (!$post) {
+            throw $this->createNotFoundException();
         }
 
-        $text       = $request->request->get('comment');
-        $parent_id  = $request->request->get('parent_id');
+        $response = new JsonResponse();
 
-        $parent = false;
-        if ($parent_id){
-            $parent = $em->getRepository('ScottDataBundle:Comment')
-                ->findOneById($parent_id);
+        if(!$user) {
+            $response->setData([
+                'error' => 1,
+                'result' => 'You\'re not logged in.'
+            ]);
+            return $response;
         }
 
         // check text for content ---------------------------------------------
@@ -145,39 +141,28 @@ class BlogController extends AbstractController
             return $response;
         }
 
-        // --------------------------------------------------------------------
-        $comment = new Comment();
-        $comment->setText($text)
-            ->setIpaddr($request->getClientIp())
-            ->setUseragent($request->headers->get('User-Agent'))
-            ->setUser($user)
-            ->setPost($post);
-
-        if ($parent){
-            $comment->setParent($parent);
-        }
-
-        $user->setCommentCount($user->getCommentCount() +1);
-
-        $em->persist($comment);
-        $em->flush();
-
-        $newsMaster = $this->container->get('bookster_news_master');
-        $newsMaster->newComment($comment, $post, $user);
-
-        $reply = $this->container->get('templating')->render(
-            'ScottDataBundle:Blog:comment.html.twig',
-            array('comment' => $comment)
+        $comment = $commentManager->createNewComment(
+            $post,
+            $user,
+            $request->getClientIp(),
+            $request->headers->get('User-Agent'),
+            $text,
+            $parent_id
         );
 
-        $response->setData(array(
+        $reply = $this->renderView(
+            'blog/comment.html.twig',
+            compact('comment')
+        );
+
+        $response->setData([
             'error'         => 0,
             'text'          => $text,
             'comment_id'    => $comment->getId(),
             'reply'         => $reply
-        ));
+        ]);
+
         return $response;
-        */
     }
 
 

@@ -43,7 +43,7 @@ class WorkController extends AbstractController
             'slug'      => $correct_slug));
 
         if ($slug != $correct_slug){
-            return $this->redirect($url, 301);
+            $this->redirect($url, 301);
         }
 
         $similar_works  = $workRepository->getSimilarWorks($work_id);

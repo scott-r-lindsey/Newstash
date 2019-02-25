@@ -175,11 +175,13 @@ class AdminController extends AbstractController
                     $post->setActive(true);
                     $post->setPublishedAt(new \DateTime());
                     $flash = 'The post has been published.';
+                    $em->flush();
                     $news->newPost($post);
                 }
                 else if ('unpublish' == strtolower($submit)){
                     $post->setActive(false);
                     $flash = 'The post has been unpublished.';
+                    $news->removePost($post);
                 }
                 else{
                     $flash = 'The post has been saved.';

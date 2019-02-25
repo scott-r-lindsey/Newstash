@@ -6,8 +6,8 @@ framework:
 
     # uncomment this entire section to enable sessions
     session:
-        # With this config, PHP's native session handling is used
         handler_id: ~
+#        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
 
     #esi: ~
     #fragments: ~
@@ -16,3 +16,4 @@ framework:
 
     templating:
         engines: ['twig', 'php']
+

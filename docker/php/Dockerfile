@@ -28,6 +28,9 @@ RUN apk upgrade --update && \
 # Copy shell commands
 COPY run.sh wait.sh /var/run/
 
+# Copy PHP tuning
+COPY perf.ini /usr/local/etc/php/conf.d/
+
 # Fix web user permissions
 RUN sed -i "s/82:82/1000:1000/g" /etc/passwd && \
     sed -i "s/:82:/:1000:/g" /etc/group

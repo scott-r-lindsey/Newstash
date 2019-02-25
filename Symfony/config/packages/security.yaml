@@ -15,21 +15,6 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        user:
-
-            # FOS REST handling of access denied exceptions is BROKEN
-            # https://github.com/FriendsOfSymfony/FOSRestBundle/issues/1538
-
-            pattern: ^/user/
-
-            form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-                check_path: /user/notused
-                use_forward: true
-
-            context: the_security_context
-
         main:
             pattern: ^/
             form_login:
@@ -51,8 +36,6 @@ security:
 
                 oauth_user_provider:
                     service: App\Service\Auth\NewstashUserProvider
-
-            context: the_security_context
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

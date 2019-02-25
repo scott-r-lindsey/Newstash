@@ -180,4 +180,33 @@ class WorkRepositoryTest extends BaseTest
             $works
         );
     }
+
+    public function testFindByIsbn(): void
+    {
+        $em                 = self::$container->get('doctrine')->getManager();
+        $workGroomer        = self::$container->get('test.App\Service\Data\WorkGroomer');
+        $workRepository     = $em->getRepository(Work::class);
+
+        // build up some sample data ------------------------------------------
+        $edition            = $this->loadEditionFromXML('product-sample.xml');
+        $workGroomer->workGroomLogic('0674979850');
+
+        // --------------------------------------------------------------------
+
+        $work = $workRepository->findByIsbn('9780674979857');
+
+        $this->assertEquals(
+            '0674979850',
+            $work->getFrontEdition()->getAsin()
+        );
+
+        // --------------------------------------------------------------------
+
+        $work = $workRepository->findByIsbn('0000000000000');
+
+        $this->assertEquals(
+            null,
+            $work
+        );
+    }
 }

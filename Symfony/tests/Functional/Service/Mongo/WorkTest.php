@@ -13,7 +13,7 @@ class WorkTest extends BaseTest
 {
     protected $DBSetup = true;
 
-    public function testBasic(): void
+    public function testCategorySearch(): void
     {
 
         $em                 = self::$container->get('doctrine')->getManager();
@@ -53,5 +53,25 @@ class WorkTest extends BaseTest
             2,
             $ret['children']
         );
+    }
+
+    public function testTitleSearch(): void
+    {
+
+        $em                 = self::$container->get('doctrine')->getManager();
+        $exporter           = self::$container->get('test.App\Service\Export');
+        $workGroomer        = self::$container->get('test.App\Service\Data\WorkGroomer');
+        $ws                 = self::$container->get('test.App\Service\Mongo\Work');
+
+        // build up some sample data ------------------------------------------
+        $edition = $this->loadEditionFromXML('product-sample.xml');
+        $workGroomer->workGroomLogic('0674979850');
+        $exporter->export();
+
+        // --------------------------------------------------------------------
+
+
+
+
     }
 }

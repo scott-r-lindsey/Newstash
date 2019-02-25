@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block browse %}
+
+    {% if 0 ==  works|length %}
+        <div class="no-results">
+            No books were found by an author named "{{ query_raw }}".
+        </div>
+
+        {{ include( 'fragment/searchfooter.html.twig') }}
+
+    {% else %}
+        <div class="books">
+            {% if 1 == page %}
+                <div class="item double category" style="width:520px">
+                    <div class="current">
+                        <div class="flourish"></div>
+                        <span>Showing {{ matches }} books by: <br />
+                        <em>{{ query_raw }}</em></span>
+                    </div>
+                </div>
+            {% endif %}
+            {% for work in works %}
+                {{ include( 'search/work.html.twig', { 'work': work }) }}
+            {% endfor %}
+        </div>
+
+        {% if hasmore %}
+            <div class="navigation" style="display:none;">
+                {% set wq = '' %}
+                <a href="{{ path('author_search') }}?query={{ query|url_encode }}&amp;page={{ page+1 }}" class="morelink" style="display:none"></a>
+            </div>
+        {% else %}
+            {{ include( 'fragment/searchfooter.html.twig') }}
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+
+

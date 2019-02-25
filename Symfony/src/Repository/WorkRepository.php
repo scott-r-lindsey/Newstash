@@ -172,6 +172,25 @@ class WorkRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findByIsbn(
+        string $isbn
+    ): ?Work
+    {
+        $em = $this->getEntityManager();
+
+        $dql = '
+            SELECT w, e
+            FROM App\Entity\Work w
+            JOIN w.editions e
+            WHERE
+                e.isbn = :isbn';
+
+        $query = $em->createQuery($dql);
+        $query->setParameter('isbn', $isbn);
+
+        return $query->getOneOrNullResult();
+    }
+
     public function findUserStatusCountAndWorks(
         UserInterface $user,
         string $type,

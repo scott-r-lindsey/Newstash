@@ -5,20 +5,52 @@ namespace App\Service\Mongo;
 
 use App\Service\Mongo;
 use Psr\Log\LoggerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class Work
 {
     private $em;
-    private $mongodb;
+    private $logger;
+    private $mongo;
+
+    const SEARCH_LIMIT = 25;
 
     public function __construct(
+        EntityManagerInterface $em,
         LoggerInterface $logger,
         Mongo $mongo
     )
     {
+        $this->em                   = $em;
         $this->logger               = $logger;
         $this->mongo                = $mongo;
     }
+
+    private function titleSearch(
+        int $work_id,
+        string $query_raw,
+        int $page = 1
+    )
+    {
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+    // title search
+
+    // author search
+
+    // isbn search
 
     public function byCategory(
         int $node_id,
@@ -48,15 +80,14 @@ class Work
         // --------------------------------------------------------------------
         // books in category
 
-        $count = 25;
 
         $cursor = $worksCollection->find([
             'browse_node' => ['$in' => [$node_id]]
         ]);
 
         $cursor->sort(['amzn_salesrank' => 1]);
-        $cursor->limit($count);
-        $cursor->skip($page * $count);
+        $cursor->limit(self::SEARCH_LIMIT);
+        $cursor->skip($page * self::SEARCH_LIMIT);
 
         $works = [];
         foreach ($cursor as $work) {
@@ -73,4 +104,5 @@ class Work
 
         return compact('node_id', 'works', 'page', 'node', 'matches', 'hasmore', 'children');
     }
+
 }

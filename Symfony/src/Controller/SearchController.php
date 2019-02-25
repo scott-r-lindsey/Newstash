@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Service\Mongo\BrowseNode as MongoBrowseNode;
 use App\Service\Mongo\Work;
+use App\Service\Mongo\Typeahead;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -53,16 +54,13 @@ class SearchController extends AbstractController
      * @Route("/search/json/typeahead", methods={"GET"});
      */
     public function jsonTypeahead(
-        Request $request
-    ): Response
+        Request $request,
+        Typeahead $typeahead
+    ): JsonResponse
     {
-
-        //FIXME
-/*
         $text = strtolower($request->get('query'));
 
-        $typeahead = $this->container->get('bookstash.search.typeahead');
-        $suggestions = $typeahead->suggestions($text);
+        $suggestions = $typeahead->findSuggestions($text);
 
         foreach ($suggestions as &$s){
             if ('author' == $s['type']){
@@ -80,10 +78,7 @@ class SearchController extends AbstractController
             'suggestions'   => $suggestions
         );
 
-        $response = new Response(json_encode($ret));
-        $response->headers->set('Content-Type', 'text/javascript');
-        return $response;
-*/
+        return  new JsonResponse($ret);
     }
 
     /**

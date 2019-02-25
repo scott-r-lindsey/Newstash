@@ -11,7 +11,7 @@
             <a href="{{ path('admin_blog_create') }}">New Post</a>
         </nav>
         <h1>Admin</h1>
-    
+
         {% if flags|length == 0 %}
             <h2>No flags outstanding</h2>
             <hr>
@@ -96,7 +96,7 @@
                             <h3>Comment Flag</h3>
                             <div class="quartered">
                                 <span>
-                                    <a href="{{ path('blog_post', {'post_id': flag.comment.post.id, 'slug': flag.comment.post.slug}) }}#comment-{{ flag.comment.id }}">Comment #{{ flag.comment.id }}</a>
+                                    <a href="{{ path('blog_post', {'post': flag.comment.post.id, 'slug': flag.comment.post.slug}) }}#comment-{{ flag.comment.id }}">Comment #{{ flag.comment.id }}</a>
                                 </span><span>
                                 {% if flag.comment.user.id is defined %}
                                     {{ flag.comment.user.firstname }}
@@ -155,7 +155,7 @@
                                 Useragent:
                                 {{ flag.useragent }}
                             </div>
-                            <form method="post" action="{{ path('admin_handle_comment_flag', {'post_id': flag.comment.post.id}) }}">
+                            <form method="post" action="{{ path('admin_handle_comment_flag', {'post': flag.comment.post.id}) }}">
                                 <input type="hidden" name="flag_id" value="{{flag.id}}">
                                 <input type="submit" name="submit" value="Vindicate">
                                 <input type="submit" name="submit" value="Obliterate">
@@ -168,10 +168,8 @@
 
             {% endfor %}
         {% endif %}
-        
 
 
     </div>
 </section>
 {% endblock %}
-

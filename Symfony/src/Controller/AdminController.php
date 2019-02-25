@@ -3,21 +3,28 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Post;
+use App\Entity\Work;
 use App\Repository\FlagRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\PostRepository;
+use App\Service\Mongo\News;
+use App\Service\PostManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdminController extends AbstractController
 {
-
     /**
      * @Route("/admin", name="admin", methods={"GET"})
      * @Template()
      */
     public function index(
-        Request $request,
         FlagRepository $flagRepository
     )
     {
@@ -27,85 +34,69 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/comment-flag/handle/{post_id}", requirements={"post_id" = "^\d+$"}, name="admin_handle_comment_flag", methods={"POST"})
+     * @Route("/admin/comment-flag/handle/{post}", requirements={"post" = "^\d+$"}, name="admin_handle_comment_flag", methods={"POST"})
      */
     public function handleCommentFlag(
-        Request $request
+        Request $request,
+        FlagRepository $flagRepository,
+        EntityManagerInterface $em,
+        News $news
     )
     {
-        // FIXME
-        /*
-        $this->checkSecurity();
-        $em      = $this->getDoctrine()->getManager();
-
         $flag_id    = $request->request->get('flag_id');
         $action     = $request->request->get('submit');
 
-        $flag = $em->getRepository('ScottDataBundle:Flag')
-            ->findOneById($flag_id);
+        $flag = $flagRepository->findOneById($flag_id);
 
         $comment = $flag->getComment();
 
         if ('Obliterate' == $action){
             $comment->setDeleted(true);
-            $newsMaster = $this->container->get('bookster_news_master');
-            $newsMaster->removeComment($comment);
+            $news->removeComment($comment);
         }
 
         $flag->setSorted(true);
         $em->flush();
 
         return $this->redirect($this->generateUrl('admin'), 302);
-        */
     }
 
     /**
      * @Route("/admin/review-flag/handle/{work_id}", requirements={"work_id" = "^\d+$"},  name="admin_handle_review_flag", methods={"POST"})
      */
     public function handleReviewFlag(
-        Request $request
+        Request $request,
+        FlagRepository $flagRepository,
+        EntityManagerInterface $em,
+        News $news
     )
     {
-        // FIXME
-        /*
-        $this->checkSecurity();
-        $em      = $this->getDoctrine()->getManager();
-
         $flag_id    = $request->request->get('flag_id');
         $action     = $request->request->get('submit');
 
-        $flag = $em->getRepository('ScottDataBundle:Flag')
-            ->findOneById($flag_id);
+        $flag = $flagRepository->findOneById($flag_id);
 
         $review = $flag->getReview();
 
         if ('Obliterate' == $action){
             $review->setDeleted(true);
-            $newsMaster = $this->container->get('bookster_news_master');
-            $newsMaster->removeReview($review->getUser(), $review->getWork());
+            $news->removeReview($review);
         }
 
         $flag->setSorted(true);
         $em->flush();
 
         return $this->redirect($this->generateUrl('admin'), 302);
-        */
     }
 
     /**
      * @Route("/admin/blog/create", name="admin_blog_create", methods={"GET"})
+     * @Template("admin/blog_edit.html.twig")
      */
     public function blogCreate(
-        Request $request
-    )
+    ): array
     {
-        // FIXME
-        /*
-        $this->checkSecurity();
-        $em      = $this->getDoctrine()->getManager();
-
-        return array();
-        */
+        return [];
     }
 
     /**
@@ -113,39 +104,28 @@ class AdminController extends AbstractController
      * @Template()
      */
     public function blogIndex(
-        Request $request
-    )
+        PostRepository $postRepository
+    ): array
     {
-        // FIXME
-        /*
-        $this->checkSecurity();
-        $em      = $this->getDoctrine()->getManager();
-
-        $posts = $em->getRepository('ScottDataBundle:Post')
-            ->findAll();
-
-        return compact('posts');
-        */
+        return ['posts' => $postRepository->findAll()];
     }
 
     /**
-     * @Route("/admin/blog/edit/{post_id}", name="admin_blog_edit", methods={"GET", "POST"})
+     * @Route("/admin/blog/edit/{post}", name="admin_blog_edit", methods={"GET", "POST"})
      * @Template()
      */
     public function blogEdit(
+        UserInterface $user,
+        EntityManagerInterface $em,
+        PostRepository $postRepository,
+        News $news,
         Request $request,
-        $post_id = false
+        Post $post = null
     )
     {
-        // FIXME
-        /*
-        $this->checkSecurity();
-        $user       = $this->get('security.context')->getToken()->getUser();
-        $em         = $this->getDoctrine()->getManager();
-        $newsMaster = $this->container->get('bookster_news_master');
 
-        $return = array();
-        $flash = '';
+        $return     = [];
+        $flash      = '';
 
         if ('POST' == $request->getMethod()){
             $title          = $request->request->get('title');
@@ -165,13 +145,9 @@ class AdminController extends AbstractController
             else if (!$lead){
                 $flash = "Please enter a lead\n";
             }
-            if (!$flash){
 
-                if ($post_id){
-                    $post = $em->getRepository('ScottDataBundle:Post')
-                        ->findOneById($post_id);
-                }
-                else{
+            if (!$flash){
+                if (!$post){
                     $post = new Post();
                     $em->persist($post);
                 }
@@ -199,7 +175,7 @@ class AdminController extends AbstractController
                     $post->setActive(true);
                     $post->setPublishedAt(new \DateTime());
                     $flash = 'The post has been published.';
-                    $newsMaster->newPost($post);
+                    $news->newPost($post);
                 }
                 else if ('unpublish' == strtolower($submit)){
                     $post->setActive(false);
@@ -209,94 +185,67 @@ class AdminController extends AbstractController
                     $flash = 'The post has been saved.';
                 }
                 $em->flush();
+
             }
 
-            $newsMaster = $this->container->get('bookster_news_master');
-            $newsMaster->newPost($post);
-
-            $return = compact('title', 'slug', 'image', 'lead',
-                'fold', 'flash', 'post', 'description');
-        }
-        else{
-            $post = $em->getRepository('ScottDataBundle:Post')
-                ->findOneById($post_id);
-
-            $return = array(
-                'title'         => $post->getTitle(),
-                'slug'          => $post->getSlug(),
-                'image'         => $post->getImage(),
-                'description'   => $post->getDescription(),
-                'lead'          => $post->getLead(),
-                'fold'          => $post->getFold(),
-                'post'          => $post,
+            return compact(
+                'description',
+                'flash',
+                'fold',
+                'image',
+                'lead',
+                'post',
+                'slug',
+                'title'
             );
         }
 
-        return $return;
-        */
+        return [
+            'description'   => $post->getDescription(),
+            'fold'          => $post->getFold(),
+            'image'         => $post->getImage(),
+            'lead'          => $post->getLead(),
+            'post'          => $post,
+            'slug'          => $post->getSlug(),
+            'title'         => $post->getTitle(),
+        ];
     }
 
     /**
-     * @Route("/admin/blog/preview/{post_id}", name="admin_blog_preview", methods={"GET"})
-     * @Template("ScottDataBundle:Blog:post.html.twig")
+     * @Route("/admin/blog/preview/{post}", name="admin_blog_preview", methods={"GET"})
+     * @Template("blog/post.html.twig")
      */
     public function blogPreview(
-        Request $request,
-        $post_id
-    )
+        PostRepository $postRepository,
+        Post $post
+    ): array
     {
-        // FIXME
-        /*
-        $this->checkSecurity();
-        $em      = $this->getDoctrine()->getManager();
-        $post    = $em->getRepository('ScottDataBundle:Post')->findOneById($post_id);
-
-        return array(
+        return [
             'post'      => $post,
             'next_post' => 0,
             'prev_post' => 0,
-            'post'      => $post,
-            'comments'  => array(),
+            'comments'  => [],
             'count'     => 0
-        );
-        */
+        ];
     }
 
     /**
-     * @Route("/admin/blog/delete/{post_id}", name="admin_blog_delete", methods={"POST"})
+     * @Route("/admin/blog/delete/{post}", name="admin_blog_delete", methods={"POST"})
      */
     public function blogDelete(
+        EntityManagerInterface $em,
+        News $news,
         Request $request,
-        $post_id
+        Post $post
     )
     {
-        // FIXME
-        /*
-        $this->checkSecurity();
         $em      = $this->getDoctrine()->getManager();
 
-        $post = $em->getRepository('ScottDataBundle:Post')
-            ->findOneById($post_id);
-
-        $newsMaster = $this->container->get('bookster_news_master');
-        $newsMaster->removePost($post);
+        $news->removePost($post);
 
         $em->remove($post);
         $em->flush();
 
         return $this->redirect($this->generateUrl('admin_blog_index'), 302);
-        */
     }
-
-    //-------------------------------------------------------------------------
-
-    private function checkSecurity(){
-        if(! $this->get('security.context')->isGranted('ROLE_ADMIN') ) {
-            throw new AccessDeniedException();
-        }
-    }
-
-
-
-
 }

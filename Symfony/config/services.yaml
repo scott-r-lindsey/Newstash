@@ -30,10 +30,15 @@ services:
         tags: ['controller.service_arguments']
 
 
-    Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
+    MongoDB\Client:
+        class: MongoDB\Client
         arguments:
-            - !service { class: PDO, factory: 'database_connection:getWrappedConnection' }
-            - { db_table: 'sessions' }
+            - '%env(resolve:MONGODB_URL)%'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler:
+        arguments:
+            - '@MongoDB\Client'
+            - {database: 'dbSession', collection: 'session'}
 
 
     # -------------------------------------------------------------------------

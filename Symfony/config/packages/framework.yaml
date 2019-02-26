@@ -6,8 +6,9 @@ framework:
 
     # uncomment this entire section to enable sessions
     session:
-        handler_id: ~
-#        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+        cookie_lifetime: 2592000 # 30 days
+        gc_maxlifetime: 2592000 # 30 days
+        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
 
     #esi: ~
     #fragments: ~

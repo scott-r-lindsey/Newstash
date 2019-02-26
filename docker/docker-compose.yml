@@ -1,19 +1,9 @@
 version: '3'
 services:
 
-    nginx-ssl-proxy:
-        container_name: newstash-ssl-proxy
-        image: danieldent/nginx-ssl-proxy
-
-        restart: always
-        environment:
-            UPSTREAM: nginx:80
-            SERVERNAME: dev.booksto.love
-        ports:
-            - "80:80"
-            - "443:443"
-        volumes:
-            - "/etc/letsencrypt"
+    mongo:
+        container_name: newstash-mongo-container
+        image: mongo:4
 
     mysql:
         container_name: newstash-mysql-container
@@ -65,6 +55,7 @@ services:
 
         depends_on:
             - mysql
+            - mongo
 
     nginx:
         container_name: newstash-nginx-container
@@ -77,7 +68,18 @@ services:
         depends_on:
             - php
 
-    mongo:
-        container_name: newstash-mongo-container
-        image: mongo:4
+    nginx-ssl-proxy:
+        container_name: newstash-ssl-proxy
+        image: danieldent/nginx-ssl-proxy
 
+        restart: always
+        environment:
+            UPSTREAM: nginx:80
+            SERVERNAME: dev.booksto.love
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - "/etc/letsencrypt"
+        depends_on:
+            - nginx

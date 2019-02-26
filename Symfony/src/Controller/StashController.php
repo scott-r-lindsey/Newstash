@@ -134,8 +134,8 @@ class StashController extends BaseApiController
             $user,
             $work,
             intval($request->request->get('status')),
-            $request->server->get('REMOTE_ADDR'),
-            $request->server->get('HTTP_USER_AGENT')
+            $request->getClientIp(),
+            $request->headers->get('User-Agent'),
         );
 
         return $this->forward('App\Controller\StashController::getLists', [
@@ -169,8 +169,8 @@ class StashController extends BaseApiController
             $user,
             $work,
             intval($request->request->get('stars')),
-            $request->server->get('REMOTE_ADDR'),
-            $request->server->get('HTTP_USER_AGENT')
+            $request->getClientIp(),
+            $request->headers->get('User-Agent'),
         );
 
         $review_count       = $reviewRepository->count([
@@ -317,8 +317,8 @@ class StashController extends BaseApiController
             $work,
             $title,
             $text,
-            $request->server->get('REMOTE_ADDR'),
-            $request->server->get('HTTP_USER_AGENT'),
+            $request->getClientIp(),
+            $request->headers->get('User-Agent'),
             $startedDate,
             $finishedDate
         );
@@ -373,8 +373,8 @@ class StashController extends BaseApiController
             $reviewLikeManager->createUserReviewLike(
                 $user,
                 $review,
-                $request->server->get('REMOTE_ADDR'),
-                $request->server->get('HTTP_USER_AGENT')
+                $request->getClientIp(),
+                $request->headers->get('User-Agent'),
             );
         }
 
@@ -435,8 +435,8 @@ class StashController extends BaseApiController
             $user,
             $review,
             $message,
-            $request->server->get('HTTP_USER_AGENT'),
-            $request->server->get('REMOTE_ADDR'),
+            $request->headers->get('User-Agent'),
+            $request->getClientIp(),
             $reason
         );
 

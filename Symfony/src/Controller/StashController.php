@@ -96,9 +96,15 @@ class StashController extends BaseApiController
     ): JsonResponse
     {
         $hide           = $request->request->get('hide');
-
         $prefs          = $user->getDisplayPrefs();
-        $prefs['hide']  = explode(',', $hide);
+
+
+        if ($hide) {
+            $prefs['hide']  = explode(',', $hide);
+        }
+        else{
+            $prefs['hide']  = [];
+        }
 
         $user->setDisplayPrefs($prefs);
         $em->flush();

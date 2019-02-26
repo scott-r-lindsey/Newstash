@@ -43,7 +43,14 @@ class SearchController extends AbstractController
         $query_raw      = trim($request->query->get('query'));
         $count          = 50;
 
-        if ($work = $workRepository->findByIsbn($query_raw)){
+        if (preg_match('/^97\d\d\d\d\d\d\d\d\d\d\d$/', $query_raw)) {
+            $work = $workRepository->findByIsbn($query_raw);
+        }
+        else if ((10 === strlen($query_raw)) && (preg_match('/^[A-Za-z0-9]+$/', $query_raw))) {
+            $work = $workRepository->findByAsin($query_raw);
+        }
+
+        if ($work) {
             $front_edition  = $work->getFrontEdition();
             $correct_slug   = $front_edition->updateSlug();
 
@@ -54,6 +61,7 @@ class SearchController extends AbstractController
 
             return $this->redirect($url);
         }
+
 
         return $mongoWork->titleSearch($work_id, $query_raw, $count, $page);
     }

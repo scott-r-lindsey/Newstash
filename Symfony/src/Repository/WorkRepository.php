@@ -191,6 +191,25 @@ class WorkRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
+    public function findByAsin(
+        string $asin
+    ): ?Work
+    {
+        $em = $this->getEntityManager();
+
+        $dql = '
+            SELECT w, e
+            FROM App\Entity\Work w
+            JOIN w.editions e
+            WHERE
+                e.asin = :asin';
+
+        $query = $em->createQuery($dql);
+        $query->setParameter('asin', $asin);
+
+        return $query->getOneOrNullResult();
+    }
+
     public function findUserStatusCountAndWorks(
         UserInterface $user,
         string $type,

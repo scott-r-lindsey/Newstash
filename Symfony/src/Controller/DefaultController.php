@@ -39,7 +39,6 @@ class DefaultController extends AbstractController
      */
     public function aboutAction(): array
     {
-        // FIXME
         return [];
     }
 
@@ -75,24 +74,32 @@ class DefaultController extends AbstractController
      * @Route("/badbrowser", methods={"GET"})
      * @Template()
      */
-    public function badbrowserAction(Request $request){
-        // FIXME
+    public function badbrowserAction(
+        Request $request
+    ): array
+    {
         return [];
     }
+
     /**
      * @Route("/badbrowser/about", methods={"GET"})
      * @Template()
      */
-    public function badbrowserAboutAction(Request $request){
-        // FIXME
+    public function badbrowserAboutAction(
+        Request $request
+    ): array
+    {
         return [];
     }
     /**
      * @Route("/badbrowser/privacy", methods={"GET"})
      * @Template()
      */
-    public function badbrowserPrivacyAction(Request $request){
-        // FIXME
-        return $this->privacyAction();
+    public function badbrowserPrivacyAction(
+        Request $request,
+        string $projectDir
+    ): array
+    {
+        return $this->privacyAction($projectDir);
     }
 }

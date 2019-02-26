@@ -1,8 +1,15 @@
 <ul>
     {% for child in nodes[0].children %}
         <li>
-            <a href="{{ path('search_browse_category', {'node_id': child.id, 'slug': child.slug} ) }}" title="{{ child.count }} books in {{ child.name }}">
-                {{ child.name }}
+            {% if 'Lesbian, Gay, Bisexual & Transgender Books' == child.name %}
+                <a href="{{ path('search_browse_category', {'node_id': child.id, 'slug': child.slug} ) }}" title="{{ child.count }} books in {{ child.name }}">
+                    LGBT Books
+                </a>
+            {% else %}
+                <a href="{{ path('search_browse_category', {'node_id': child.id, 'slug': child.slug} ) }}" title="{{ child.count }} books in {{ child.name }}">
+                    {{ child.name }}
+                </a>
+            {% endif %}
             </a>
         </li>
     {% endfor %}

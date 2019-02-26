@@ -423,8 +423,8 @@ class Edition{
                 return $this->$memo = $x;
             }
 
-            $factor = min( ($size / $x), ($size / $y));
-            return $this->$memo = round($y * $factor);
+            $factor = min( ($max / $x), ($max / $y));
+            return $this->$memo = (int)round($y * $factor);
         }
         return $this->$memo = $y;
     }

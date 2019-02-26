@@ -262,4 +262,22 @@ class EntityEditionTest extends BaseTest{
             $edition->getGroomed()
         );
     }
+
+    public function testNormalizedCoverProblem(): void
+    {
+
+        $edition = new Edition();
+
+        $edition
+            ->setAmznLargeCoverX(225)
+            ->setAmznLargeCoverY(225)
+        ;
+
+        $size = $edition->getNormalizedAmznLargeCoverY();
+
+        $this->assertEquals(
+            500,
+            $size
+        );
+    }
 }

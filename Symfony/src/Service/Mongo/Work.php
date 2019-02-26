@@ -28,7 +28,7 @@ class Work
     }
 
     public function titleSearch(
-        int $work_id,
+        ?int $work_id,
         string $query_raw,
         int $count,
         int $page = 1

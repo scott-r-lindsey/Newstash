@@ -14,7 +14,7 @@ while ($tries < 20) {
     $tries ++;
     try {
 
-        $client      = new Client(getenv('MONGODB_URL')); 
+        $client      = new Client(getenv('MONGODB_URL'));
         $client->dbSession->session->createIndex(["expires_at" => 1], ["expireAfterSeconds" => 0 ]);
         exit;
 

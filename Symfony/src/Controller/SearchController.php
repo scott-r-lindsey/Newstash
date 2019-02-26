@@ -3,12 +3,15 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Repository\WorkRepository;
 use App\Service\Mongo\BrowseNode as MongoBrowseNode;
+use App\Service\Mongo\Work as MongoWork;
 use App\Service\Mongo\Work;
 use App\Service\Mongo\Typeahead;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -28,26 +31,49 @@ class SearchController extends AbstractController
      * @Route("/search/books", name="book_search", methods={"GET"})
      * @Template()
      */
-    public function titleSearch(Request $request)
+    public function titleSearch(
+        MongoWork $mongoWork,
+        WorkRepository $workRepository,
+        Request $request
+    )
     {
-        //FIXME
-        /*
-        $workSearcher   = $this->container->get('bookstash.search.works');
-        return $workSearcher->doTitleSearch($request);
-        */
+        $work_id        = (int)$request->query->get('work_id');
+        $work_id        = $work_id ? $work_id : null;
+        $page           = (int)$request->query->get('page', 1);
+        $query_raw      = trim($request->query->get('query'));
+        $count          = 50;
+
+        if ($work = $workRepository->findByIsbn($query_raw)){
+            $front_edition  = $work->getFrontEdition();
+            $correct_slug   = $front_edition->updateSlug();
+
+            $url = $this->generateUrl('work', [
+                'work_id'   => $work->getId(),
+                'slug'      => $correct_slug
+            ]);
+
+            return $this->redirect($url);
+        }
+
+        return $mongoWork->titleSearch($work_id, $query_raw, $count, $page);
     }
+
 
     /**
      * @Route("/search/author", name="author_search", methods={"GET"})
      * @Template()
      */
-    public function authorSearch(Request $request)
+    public function authorSearch(
+        MongoWork $mongoWork,
+        WorkRepository $workRepository,
+        Request $request
+    )
     {
-        //FIXME
-        /*
-        $workSearcher   = $this->container->get('bookstash.search.works');
-        return $workSearcher->doAuthorSearch($request);
-        */
+        $page           = (int)$request->query->get('page', 1);
+        $query_raw      = trim($request->query->get('query'));
+        $count          = 50;
+
+        return $mongoWork->authorSearch($query_raw, $count, $page);
     }
 
     /**

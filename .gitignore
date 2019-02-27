@@ -26,3 +26,5 @@
 /data/
 
 Symfony/public/googlede*
+
+Symfony/public/img/blog/*

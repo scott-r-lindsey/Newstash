@@ -120,6 +120,7 @@ class AdminController extends AbstractController
         PostRepository $postRepository,
         News $news,
         Request $request,
+        string $projectDir,
         Post $post = null
     )
     {
@@ -160,8 +161,7 @@ class AdminController extends AbstractController
                     ->setUser($user);
 
                 if ($image){
-                    $root = dirname($this->get('kernel')->getRootDir());
-                    $path = $root . '/web/img/blog/' . $image;
+                    $path = $projectDir . '/web/img/blog/' . $image;
 
                     if (file_exists($path)){
                         list($width, $height, $type, $attr) = getimagesize($path);

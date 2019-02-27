@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ post.title }}{% endblock %}
-{% block description %}The BookSta.sh Blog{% endblock %}
+{% block description %}The Books to Love Blog{% endblock %}
 
 {% block meta %}
-    <meta property="og:type" content="website" /> 
-    <meta property="og:url" content="{{ app.request.schemeAndHttpHost }}{{ path('blog_post', {'post_id': post.id, 'slug': post.slug}) }}" /> 
-    <meta property="og:title" content="{{ post.title }}" /> 
-    <meta property="og:description" content="{{ post.description }}" /> 
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ app.request.schemeAndHttpHost }}{{ path('blog_post', {'post_id': post.id, 'slug': post.slug}) }}" />
+    <meta property="og:title" content="{{ post.title }}" />
+    <meta property="og:description" content="{{ post.description }}" />
     {% if post.image %}
-        <meta property="og:image" content="{{ app.request.schemeAndHttpHost }}/img/blog/{{ post.image }}" /> 
+        <meta property="og:image" content="{{ app.request.schemeAndHttpHost }}/img/blog/{{ post.image }}" />
     {% endif %}
 {% endblock %}
 
@@ -18,8 +18,8 @@
     <button class="close-focus close-button" data-bstsh-object="historyCloseButton"><i class="fa fa-times"></i></button>
 
     <div class="top">
-        <h1>Booksta.sh</h1>
-        <h2>Behind the Stash</h2>
+        <h1>Books to Love</h1>
+        <h2>The Blog</h2>
     </div>
 
     <div class="blog-content" data-bstsh-object="blogCommentManager">
@@ -96,7 +96,7 @@
                     <button class="submit" data-bstsh-new="new">Reply</button>
                 </span>
             </div>
-            
+
             <div style="display:none" class="hidden-reply-form">
                 <form class="reply" method="post" action="{{ path('blog_new_comment', {'post_id': post.id}) }}">
                     <input type="hidden" name="post_id" value="{{ post.id }}">
@@ -131,7 +131,7 @@
         </div>
 
         <div class="blog-footer">
-            Booksta.sh is copyright &copy;{{"now"|date('Y')}} Awesome Sauce Web Sites Incorporated.
+            Books to Love is copyright &copy;{{"now"|date('Y')}} Awesome Sauce Web Sites Incorporated.
             <div>
                 <a href="{{ path('about') }}">About</a> |
                 <a href="{{ path('blog') }}">Blog</a> |

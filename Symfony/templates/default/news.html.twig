@@ -50,7 +50,7 @@
             {% elseif 'comment' == item.type %}
                 <div class="item news comment">
                     <div class="head">
-                        <a href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}" title="Behind the Stash: {{ item.post.title|escape('html_attr') }}">Booksta.sh Blog</a>
+                        <a href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}" title="The Blog: {{ item.post.title|escape('html_attr') }}">Books to Love Blog</a>
                     </div>
                     <div class="body">
                     {% if item.parent is defined %}
@@ -98,7 +98,7 @@
             {% elseif 'post' == item.type %}
                 <div class="item news post">
                     <div class="head">
-                        <a href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}" title="Behind the Stash: {{ item.post.title|escape('html_attr') }}">Booksta.sh Blog</a>
+                        <a href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}" title="The Blog: {{ item.post.title|escape('html_attr') }}">Books to Love Blog</a>
                     </div>
                     {% if item.post.image is defined %}
                         {% set factor = 520 / item.post.imageX %}
@@ -117,7 +117,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class="over" href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}" title="Behind the Stash: {{ item.post.title|escape('html_attr') }}"></a>
+                            <a class="over" href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}" title="The Blog: {{ item.post.title|escape('html_attr') }}"></a>
                         </div>
                     {% endif %}
                 </div>

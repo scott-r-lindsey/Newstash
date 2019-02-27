@@ -43,6 +43,7 @@ class SearchController extends AbstractController
         $query_raw      = trim($request->query->get('query'));
         $count          = 50;
 
+        $work = null;
         if (preg_match('/^97\d\d\d\d\d\d\d\d\d\d\d$/', $query_raw)) {
             $work = $workRepository->findByIsbn($query_raw);
         }

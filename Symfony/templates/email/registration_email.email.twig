@@ -1,16 +1,16 @@
-{% block subject %}Booksta.sh Account Confirmation{% endblock %}
+{% block subject %}Books to Love Account Confirmation{% endblock %}
 
 {% block body_text %}
 {% autoescape false %}
 Hello {{ user.firstName }},
 
-Thank you for registering with Bookstash!
+Thank you for registering with Books to Love!
 To activate your email address, just follow this link:
 
 {{ confirmationUrl }}
 
 Thanks,
-Bookstash
+Books to Love
 
 {% endautoescape %}
 {% endblock %}

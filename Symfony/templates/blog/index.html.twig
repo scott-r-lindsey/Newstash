@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
-{% block title %}Bookstash Blog{% endblock %}
-{% block description %}The Booksta.sh Blog{% endblock %}
+{% block title %}Books to Love Blog{% endblock %}
+{% block description %}The Books to Love Blog{% endblock %}
 
 {% block focus %}
 <section class="blog">
@@ -8,8 +8,8 @@
     <button class="close-focus close-button" data-bstsh-object="historyCloseButton"><i class="fa fa-times"></i></button>
 
     <div class="top">
-        <h1>Booksta.sh</h1>
-        <h2>Behind the Stash</h2>
+        <h1>Books to Love</h1>
+        <h2>The Blog</h2>
     </div>
 
     <div class="blog-content">
@@ -54,7 +54,7 @@
         {% endfor %}
 
         <div class="blog-footer">
-            Booksta.sh is copyright &copy;{{"now"|date('Y')}} Awesome Sauce Web Sites Incorporated.
+            Books to Love is copyright &copy;{{"now"|date('Y')}} Awesome Sauce Web Sites Incorporated.
             <div>
                 <a href="{{ path('about') }}">About</a> |
                 <a href="{{ path('blog') }}">Blog</a> | 

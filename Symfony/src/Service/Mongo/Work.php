@@ -159,7 +159,7 @@ class Work
 
         $hasmore = true;
 
-        if (($page * ($count +1)) >= $matches){
+        if (($page * (self::SEARCH_LIMIT +1)) >= $matches){
             $hasmore = false;
         }
 

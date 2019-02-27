@@ -82,7 +82,7 @@ body > #loginoverlay{
                     border: 1px solid #ddd;
                     text-align: center;
                     background-color: #e75851;
-                }   
+                }
                 p{
                     text-shadow: 0px 0px 6px darken(@firebrick,20%);
                     font-size:18px;
@@ -212,11 +212,13 @@ body > #loginoverlay{
                 }
                 .sociallog.bookstash:after{
                     content:'B';
-                    font-family: 'Oleo Script Swash Caps', cursive;
-                    font-size:50px;
+                    font-family: @fancy_font;
+                    font-size:56px;
                     text-shadow: 2px 1px 2px darken(@firebrick, 5%);
                     .transition(~"all 0.8s ease-in-out");
                     display:inline-block;
+                    font-weight:bold;
+                    line-height:66px;
                 }
                 .tooltips{
                     position:relative;
@@ -233,7 +235,7 @@ body > #loginoverlay{
                         .border-radius(3px);
                         .transition(~"opacity 0.2s linear");
                         text-shadow: 2px 1px 2px white;
-                        
+
                         > div{
                             position:relative;
                             > div{

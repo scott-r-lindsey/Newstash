@@ -1580,7 +1580,7 @@ window.bookstash = bookstash;
                         $('body').append(i);
                     }
                     else{
-                        console.log('FB auth fail :(');
+                        //console.log('FB auth fail :(');
                     }
                 });
             });
@@ -1874,7 +1874,6 @@ window.bookstash = bookstash;
                 url: $(log).find('form').attr('action'),
                 data: $(log).find('form').serialize(),
                 success: function(data){
-                    console.log(data);
                     var scratch = lc.createElement('div');
                     $(scratch).html(data);
                     var error = $(scratch).find('.error')[0];
@@ -1982,11 +1981,10 @@ window.bookstash = bookstash;
             var wm = this;
 
             wm.box      = conf.elm;
-            console.log('hey');
 
             setTimeout(function(){
                 $(wm.box).find('h2').each(function(i, elem){
-                    console.log(elem);
+                    //console.log(elem);
                     setTimeout(function(){
                         $(elem).addClass('visible');
                     }, 800*i);
@@ -4094,7 +4092,6 @@ window.bookstash = bookstash;
                     ut._setMode('');
                 }
                 else{
-                    console.log('expand');
                     ut._setMode('expanded');
                     ut._setTab(event.currentTarget);
                     ut._drawContent(500);

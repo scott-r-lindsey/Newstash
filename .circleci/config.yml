@@ -9,8 +9,28 @@ jobs:
         <<: *job-defaults
 
         steps:
+            - setup_remote_docker:
+                docker_layer_caching: true
             - checkout
             - run: 'echo "what up!"'
+            - run: |
+                node install yarn -G
+            - run: |
+                cd Symfony && \
+                yarn encore production
+            - run: |
+                cd Symfony && \
+                composer \
+                    --classmap-authoritative \
+                    --ignore-platform-reqs \
+                    --no-scripts \
+                    install
+
+# composer install
+# yarm install
+# build php
+# build nginx
+# store to workspace
 
 
     # ---------> TEST <---------

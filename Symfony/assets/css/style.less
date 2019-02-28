@@ -407,12 +407,12 @@ body{
     from { opacity: .4; }
     50% { opacity: .9; }
     to { opacity: .4; }
-} 
+}
 @keyframes fadeInOut {
     from { opacity: .4; }
     50% { opacity: .9; }
     to { opacity: .4; }
-} 
+}
 @-webkit-keyframes blowup{
    0% {opacity:0; transform: scale(1,1) }
    1% {opacity:1; transform: scale(1,1) }
@@ -608,20 +608,30 @@ body[auth=anon] .trim .dropdowns .menu.user .shell .profile{
                         a:nth-of-type(odd){
                         }
                         a:before{
+
+                            -moz-osx-font-smoothing: grayscale;
+                            -webkit-font-smoothing: antialiased;
+                            display: inline-block;
+                            font-style: normal;
+                            font-variant: normal;
+                            text-rendering: auto;
+                            line-height: 1;
+
                             color:white;
                             display: inline-block;
                             font-weight:normal;
                             vertical-align: top;
                             height: 20px;
                             line-height: 20px;
-                            content: "\f149";
-                            font: normal normal normal 12px/1 FontAwesome;
+                            content: "\f3bf";
+                            content: "\f100";
+                            font: normal normal normal 12px/1 'Font Awesome 5 Free';
                             margin: 6px 1px 0 10px;
                             -webkit-transform: rotate(90deg) scaleY(-1);
                             transform: rotate(90deg) scaleY(-1);
                         }
                         a:hover{
-                            opacity:1; 
+                            opacity:1;
                             background-color:#555;
                         }
                     }
@@ -723,7 +733,7 @@ body[auth=anon] .trim .dropdowns .menu.user .shell .profile{
                         .transition(~'max-height .2s linear');
                         overflow:hidden;
                         p{
-                            display:block;  
+                            display:block;
                             height:30px;
                         }
                     }
@@ -772,7 +782,7 @@ body[auth=anon] .trim .dropdowns .menu.user .shell .profile{
                                 display:block;
                                 padding-top:25px;
                                 text-align:right;
-                
+
                                 button{
                                     vertical-align: top;
                                     height: 47px;
@@ -850,7 +860,7 @@ body[auth=anon] .trim .dropdowns .menu.user .shell .profile{
                             display:inline-block;
                             padding:0;
                             button{
-                                background:transparent; 
+                                background:transparent;
                                 color:white;
                                 .firebrick-light-text-shadow();
                                 font-weight:bold;
@@ -1059,7 +1069,6 @@ body[pagename=welcome] .trim{
                 max-width:300px;
                 input{
                     visibility:visible;
-    
                 }
             }
             .label{
@@ -1713,14 +1722,14 @@ body[pagename=welcome] .trim{
                                 color:white;
                                 font-size:12px;
                                 text-shadow: 2px 1px 2px darken(@slate,0%);
-                                opacity:.8; 
+                                opacity:.8;
                             }
                             button:hover{
                                 opacity:1;
                                 text-decoration:underline;
                             }
                         }
-                        
+
                         .flowbox{
                             position:relative;
                             height:180px;
@@ -2056,7 +2065,7 @@ body {
                     .border-radius(4px);
                     background-image:url('/img/zoom-overlay.svgz');
                     background-repeat: no-repeat;
-                    background-position: center; 
+                    background-position: center;
                     background-size:1px 1px;
                 }
                 a:hover{
@@ -2085,7 +2094,7 @@ body {
                         .border-radius(4px);
                         background-image:url('/img/zoom-overlay.svgz');
                         background-repeat: no-repeat;
-                        background-position: center; 
+                        background-position: center;
                         background-size:1px 1px;
                     }
                     a:hover{
@@ -2142,7 +2151,7 @@ body {
                         .border-radius(4px);
                         background-image:url('/img/zoom-overlay.svgz');
                         background-repeat: no-repeat;
-                        background-position: center; 
+                        background-position: center;
                         background-size:1px 1px;
                     }
                     a:hover{
@@ -2311,7 +2320,7 @@ body {
                                 letter-spacing: 0.2em;
                                 color:@slate;
                             }
-                            
+
                         }
                         .text{
                             padding:10px;
@@ -2671,7 +2680,7 @@ body > #modalGeneral{
                 padding-right:4px;
                 padding-left:4px;
                 margin-left:4px;
-                
+
             }
             input[type="radio"]:checked + label.magic{
                 text-decoration:none;

@@ -26,10 +26,10 @@ RUN apk upgrade --update && \
     rm -rf /tmp/*
 
 # Copy shell commands
-COPY run.sh wait.sh /var/run/
+COPY docker/php/run.sh docker/php/wait.sh /var/run/
 
 # Copy PHP tuning
-COPY perf.ini /usr/local/etc/php/conf.d/
+COPY docker/php/perf.ini /usr/local/etc/php/conf.d/
 
 # Fix web user permissions
 RUN sed -i "s/82:82/1000:1000/g" /etc/passwd && \

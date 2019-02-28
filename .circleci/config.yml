@@ -14,6 +14,8 @@ jobs:
             - checkout
             - run: 'echo "what up!"'
             - run: |
+                mkdir workspace
+            - run: |
                 sudo apt-get install yarn
             - run: |
                 cd Symfony && \
@@ -26,13 +28,14 @@ jobs:
                     --ignore-platform-reqs \
                     --no-scripts \
                     install
-
-# composer install
-# yarm install
-# build php
-# build nginx
-# store to workspace
-
+            - run: |
+                docker build -t newstash-php-image -f docker/php/Dockerfile .
+            - run: |
+                docker build -t newstash-nginx-image -f docker/nginx/Dockerfile .
+            - run:
+                command: |
+                  docker save newstash-php-image >workspace/newstash-php-image.tar &&
+                  docker save newstash-nginx-image >workspace/newstash-nginx-image.tar
 
     # ---------> TEST <---------
     test:

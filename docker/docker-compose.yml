@@ -5,6 +5,10 @@ services:
         container_name: newstash-mongo-container
         image: mongo:4
 
+        build:
+            context: ../
+            dockerfile: docker/nginx/Dockerfile
+
     mysql:
         container_name: newstash-mysql-container
         image: mysql:8
@@ -24,8 +28,11 @@ services:
 
     php:
         container_name: newstash-php-container
-        build: ../docker/php
         image: newstash-php-image
+
+        build:
+            context: ../
+            dockerfile: docker/php/Dockerfile
 
         volumes:
             - "${APP_PATH}:/var/www/html/phpapp"

@@ -14,7 +14,7 @@ jobs:
             - checkout
             - run: 'echo "what up!"'
             - run: |
-                apt-get install yarn
+                sudo apt-get install yarn
             - run: |
                 cd Symfony && \
                 yarn encore production

@@ -17,6 +17,7 @@ jobs:
                 sudo apt-get install yarn
             - run: |
                 cd Symfony && \
+                yarn install &&
                 yarn encore production
             - run: |
                 cd Symfony && \

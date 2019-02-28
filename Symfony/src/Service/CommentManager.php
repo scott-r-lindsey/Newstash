@@ -60,7 +60,8 @@ class CommentManager
         $this->em->persist($comment);
         $this->em->flush();
 
-        $this->news->newComment($comment, $post, $user);
+        // too noisy
+        // $this->news->newComment($comment, $post, $user);
 
         return $comment;
     }

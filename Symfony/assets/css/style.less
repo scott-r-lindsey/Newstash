@@ -38,11 +38,8 @@
 @brand_pinterest:#cb2028;
 @brand_linkedin:#0977b6;
 @brand_bookstash:@firebrick;
+@brand_google_dark:#4285F4;
 
-//@fancy_font: 'Nanum Pen Script', cursive;
-//@fancy_font: 'Covered By Your Grace', cursive;
-//@fancy_font: 'Kalam', cursive;
-//@fancy_font: 'Oleo Script Swash Caps', cursive;
 @fancy_font: 'Amatic SC', cursive;
 
 
@@ -492,15 +489,15 @@ body{
             text-decoration:underline;
             opacity:1;
         }
-    
+
     }
     .autocomplete-suggestions:before{
         content:' ';
         position:absolute;
         top:-10px;
         left:50px;
-        width: 0; 
-        height: 0; 
+        width: 0;
+        height: 0;
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
         border-bottom: 10px solid @slate;
@@ -1267,6 +1264,139 @@ body[pagename=welcome] .trim{
                 }
                 .persuader{
                     position:absolute;
+                    top:8px;
+                    bottom:16px;
+                    right:8px;
+                    left:300px;
+
+                    background: white;
+                    background:
+                        radial-gradient(ellipse at 65% 50%,  rgba(255,255,255,.7) 0%, rgba(255,255,255,.25) 100%),
+                        linear-gradient(to bottom, #267fc160, #7fbce060, #59C17360),
+                        linear-gradient(to right,  rgba(255,255,255,.5) 0%, rgba(75,75,75,.5) 100%),
+                        linear-gradient(to bottom, fade(white,80%) 0%, fade(white,80%) 100%);
+
+                    border-radius:4px;
+                    span.message{
+                        text-shadow: 2px 1px 2px white;
+                        display:inline-block;
+                        width:100%;
+                        font-family: @fancy_font;
+                        margin-top:40px;
+                        text-align:center;
+                        font-size:38px;
+                        font-size:3.5vw;
+                        font-weight:bold;
+                    }
+                    span.social{
+                        width:100%;
+                        margin-top:34px;
+                        text-align:center;
+
+                        .sbutton{
+                            .box-shadow(1px 1px 14px rgba(50, 50, 50, 0.75));
+                            display:inline-block;
+                            border-radius:3px;
+                            margin: 10px 20px;
+                            line-height:0;
+                            vertical-align:middle;
+                            i{
+                                display:inline-block;
+                            }
+                            span{
+                                display:inline-block;
+                            }
+                        }
+                        .sbutton:hover{
+                            opacity:.8;
+                        }
+
+                        .sbutton.fb-signin{
+                            color:white;
+                            background-color:@brand_facebook;
+                            padding:8px 8px 8px 8px;
+                            vertical-align:middle;
+                            cursor:pointer;
+                            line-height:0;
+                            i{
+                                overflow:hidden;
+                                color:white;
+                                font-size:22px;
+                                margin-right:4px;
+                            }
+                            span{
+                                padding: 0 10px;
+                                display:inline-block;
+                                overflow:hidden;
+                                line-height:21px;
+                                font-size:16px;
+                            }
+                        }
+
+                        .sbutton.google-signin{
+                            .box-sizing(border-box);
+                            border:1px solid @brand_google_dark;
+                            padding:0;
+                            vertical-align:middle;
+                            display:inline-block;
+                            cursor:pointer;
+                            line-height:0;
+                            i{
+                                background-position:center;
+                                background-image:url('/img/google-logo.svg');
+                                width:35px;
+                                height:35px;
+                                background-size:100%;
+                                background-color:white;
+                            }
+                            span{
+                                font-family: 'Roboto', sans-serif;
+                                color:white;
+                                background-color:@brand_google_dark;
+                                padding: 0 10px;
+                                display:inline-block;
+                                overflow:hidden;
+                                line-height:36px;
+                                font-size:16px;
+                            }
+                        }
+                        .sbutton.bookstolove{
+                            font-family: @fancy_font;
+                            border:1px solid @firebrick;
+
+                            i{
+                                overflow:hidden;
+                                font-family: @fancy_font;
+                                font-style:normal;
+                                font-weight:bold;
+                                font-size:24px;
+                                font-weight:bold;
+                                background-color:@firebrick;
+                                color:white;
+                                width:36px;
+                                height:36px;
+                                line-height:35px;
+                            }
+                            span{
+                                font-family: @fancy_font;
+                                font-weight:bold;
+                                overflow:hidden;
+                                padding: 0 10px;
+                                overflow:hidden;
+                                line-height:36px;
+                                font-size:20px;
+                                color: @firebrick;
+                                background-color:white;
+                            }
+
+                        }
+                    }
+
+
+                }
+/*
+                .persuader{
+                    position:absolute;
                     top:40px;
                     left:350px;
                     width:300px;
@@ -1281,7 +1411,6 @@ body[pagename=welcome] .trim{
                         i{
                             height:40px;
                             width:40px;
-                            border-radius:20px;
                             display:inline-block;
                             text-align:center;
                             background-color:pink;
@@ -1290,14 +1419,17 @@ body[pagename=welcome] .trim{
                             cursor:pointer;
                             overflow:hidden;
                             vertical-align:middle;
+                            border-radius:2px;
                         }
                         i.fa-facebook{
                             background-color:@brand_facebook;
                         }
-                        i.fa-google-plus{
-                            background-color:@brand_google;
+                        i.google-plus{
+                            background-color:white;
+                            background-image:url('/img/google-logo.svg');
                         }
                         i.bookstash{
+                            border-radius:20px;
                             background-color:@firebrick;
                             font-family: @fancy_font;
                             font-style:normal;
@@ -1327,6 +1459,7 @@ body[pagename=welcome] .trim{
                         }
                     }
                 }
+*/
             }
             div.content.my-lists{
                 .left{

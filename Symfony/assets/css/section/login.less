@@ -111,14 +111,13 @@ body > #loginoverlay{
         .close{
             position:absolute;
             z-index:101;
-            top:-25px;
-            right:-25px;
+            top:4px;
+            right:4px;
             width:50px;
             height:50px;
-            border:1px solid lighten(@slate, 15%);
-            background-color:@slate;
+            background-color:@firebrick;
+            border-radius:2px;
             .transition(~"all 0.1s linear");
-            .border-radius(25px);
             div{
                 position:absolute;
             }
@@ -141,9 +140,10 @@ body > #loginoverlay{
             }
         }
         .close:hover{
-            .transform(~'scale(1.15, 1.15)');
-            border:1px solid lighten(@slate, 25%);
-            .box-shadow(1px 1px 14px rgba(0, 0, 0, 0.25));
+            //.transform(~'scale(1.15, 1.15)');
+            //border:1px solid lighten(@slate, 25%);
+            //.box-shadow(1px 1px 14px rgba(0, 0, 0, 0.25));
+            background-color:lighten(@firebrick, 5%);
         }
         .shell{
             .box-shadow(1px 1px 14px rgba(50, 50, 50, 0.75));
@@ -176,7 +176,6 @@ body > #loginoverlay{
                 }
                 .sociallog{
                     width:70px;
-                    .border-radius(35px);
                     background-size:cover;
                     color:white;
                     font-size:43px;
@@ -188,10 +187,14 @@ body > #loginoverlay{
                 }
                 .sociallog.facebook{
                     background-color:@brand_facebook;
+                    border-radius:3px;
                 }
                 .sociallog.gplus{
-                    background-color:@brand_google;
-                    background-position:-70px 0%;
+                    background-color:white;
+                    background-image:url('/img/google-logo.svg');
+                    border: 2px solid #4285F4;
+                    border-radius:3px;
+                    box-sizing: border-box;
                 }
                 .blocker{
                     position:absolute;
@@ -207,6 +210,7 @@ body > #loginoverlay{
                     background-color:#ccc;
                 }
                 .sociallog.bookstash{
+                    .border-radius(35px);
                     background-image:none;
                     background-color:@brand_bookstash;
                 }

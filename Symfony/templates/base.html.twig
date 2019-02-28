@@ -24,14 +24,10 @@
         <meta property="fb:app_id" content="{{ facebook_app_id }}" />
         {{ _meta }}
 
-        <link href='//fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps:400,700|Titillium+Web:400,700' rel='stylesheet' type='text/css'>
-        <link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Covered+By+Your+Grace" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Kalam:400,700" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700" rel="stylesheet">
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Roboto|Titillium+Web" rel="stylesheet">
         <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+        <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
 
         {{ encore_entry_script_tags('app') }}
         <link rel="stylesheet" href="/build/app.css" />
@@ -191,12 +187,27 @@
                             </span>
                         </div>
                         <div class="persuader">
-                            <span class="message">To start <b>your</b> stash, log in now!</span>
+                            <span class="message">To start collecting books to love, sign in for free.</span>
                             <span class="social">
-                                <strong>Log in via: </strong>
-                                <i class="fa fa-facebook" data-bstsh-object="eventThrower" data-event="bookster:facebooklogin"></i>
-                                <i class="fa fa-google-plus" data-bstsh-object="eventThrower" data-event="bookster:gpluslogin"></i>
+
+                                <span class="sbutton fb-signin" data-bstsh-object="eventThrower" data-event="bookster:facebooklogin">
+                                    <i class="fab fa-facebook"></i><span>Facebook</span>
+                                </span>
+
+                                <span class="sbutton google-signin" data-bstsh-object="eventThrower" data-event="bookster:gpluslogin">
+                                    <i></i><span>Google</span>
+                                </span>
+
+                                <span class="sbutton bookstolove" data-bstsh-object="eventThrower" data-event="bookster:loginrequest,bookster:bookstashlogin">
+                                    <i>B</i><span>Books to Love</span>
+                                </span>
+
+{#
+                                <strong>Sign in via: </strong>
+                                <i class="fab fa-facebook" data-bstsh-object="eventThrower" data-event="bookster:facebooklogin"></i>
+                                <i class="google-plus" data-bstsh-object="eventThrower" data-event="bookster:gpluslogin"></i>
                                 <i class="bookstash" data-bstsh-object="eventThrower" data-event="bookster:loginrequest,bookster:bookstashlogin">B</i>
+#}
                             </span>
                         </div>
                     </div>
@@ -275,29 +286,29 @@
                 <div class="shell">
 
                     <div class="loginmain">
-                        <span class="big">Log In</span>
+                        <span class="big">Sign In</span>
 
-                        <div class="facebook sociallog" data-social="facebook" data-bstsh-object="eventThrower" data-event="bookster:facebooklogin"><i class="fa fa-facebook"></i></div>
-                        <div class="gplus sociallog" data-social="gplus" data-bstsh-object="eventThrower" data-event="bookster:gpluslogin"><i class="fa fa-google-plus"></i></div>
+                        <div class="facebook sociallog" data-social="facebook" data-bstsh-object="eventThrower" data-event="bookster:facebooklogin"><i class="fab fa-facebook"></i></div>
+                        <div class="gplus sociallog" data-social="gplus" data-bstsh-object="eventThrower" data-event="bookster:gpluslogin"><i class="google-logo"></i></div>
                         <div class="sep"></div>
                         <div class="bookstash sociallog" data-social="bookstash" data-bstsh-object="eventThrower" data-event="bookster:bookstashlogin"></div>
                         <div class="blocker"></div>
                         <div class="tooltips">
                             <div class="tooltip facebook">
                                 <div><div></div></div>
-                                Login or create an account with Facebook
+                                Sign in with Facebook
                             </div>
                             <div class="tooltip gplus">
                                 <div><div></div></div>
-                                Login or create an account with Google+
+                                Sign in with Google
                             </div>
                             <div class="tooltip bookstash">
                                 <div><div></div></div>
-                                Login or create a Books to Love account
+                                Sign in or create a Books to Love account
                             </div>
                         </div>
                         <div class="fauxtip">
-                            You can log in via Facebook, Google, or Books to Love
+                            You can sign in via Facebook, Google, or Books to Love
                         </div>
 
                         <div class="locallog">

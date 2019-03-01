@@ -156,7 +156,7 @@ workflows:
             - build:
                 filters:
                     branches:
-                        only: /.*/
+                        ignore: /^master$/
             - test:
                 requires:
                     - build

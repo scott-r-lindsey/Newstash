@@ -24,7 +24,8 @@ MYSQL_PORT=33306
 export APP_PATH=$__root
 export MYSQL_PORT APP_PORT
 
-$__here/bin/devify_container.sh &
+$__here/bin/devify-mysql-container.sh &
+$__here/bin/devify-php-container.sh &
 
 cd $__root/docker
 

@@ -9,8 +9,9 @@ run-load-image-artifacts: &load-image-artifacts
         docker load <workspace/newstash-php-image.tar &&
         docker load <workspace/newstash-nginx-image.tar
 
+# -----------------------------------------------------------------------------
+
 jobs:
-    # ---------> BUILD <---------
     build:
         <<: *job-defaults
 
@@ -18,9 +19,10 @@ jobs:
             - setup_remote_docker:
                 docker_layer_caching: true
             - checkout
-            - run: 'echo "what up!"'
             - run: |
                 mkdir workspace
+
+            # DEPENDENCIES
             - run: |
                 sudo apt-get install yarn
             - run: |
@@ -34,6 +36,7 @@ jobs:
                     --ignore-platform-reqs \
                     --no-scripts \
                     install
+            # BUILD
             - run: |
                 docker build -t newstash-php-image -f docker/php/Dockerfile .
             - run: |
@@ -43,13 +46,14 @@ jobs:
                   docker save newstash-php-image >workspace/newstash-php-image.tar &&
                   docker save newstash-nginx-image >workspace/newstash-nginx-image.tar
 
+            - run: ls -l workspace
+
             - persist_to_workspace:
                 root: workspace
                 paths:
                     - newstash-php-image.tar
                     - newstash-nginx-image.tar
 
-    # ---------> TEST <---------
     test:
         <<: *job-defaults
 
@@ -57,6 +61,9 @@ jobs:
             - setup_remote_docker:
                 docker_layer_caching: true
             - checkout
+
+            - attach_workspace:
+                at: workspace
 
             - run:
                 <<: *load-image-artifacts
@@ -68,26 +75,37 @@ jobs:
                 command: |
                   docker run \
                     --net=host \
-                    --name newstash-php \
+                    --name newstash-php-container \
                     --detach \
                     --entrypoint sh \
-                    ziraabs_newstash-php \
+                    ziraabs_newstash-php-image \
                       -c 'sleep 10000000'
 
+            - run: ./developer/bin/devify-php-container.sh
 
 
 
+
+
+    deploy:
+        <<: *job-defaults
+
+        steps:
+            - setup_remote_docker:
+                docker_layer_caching: true
+            - checkout
+
+            - attach_workspace:
+                at: workspace
+
+            - run: echo "deploy by tag stub"
 
 
 # -----------------------------------------------------------------------------
+
 workflows:
     version: 2
 
-
-
-
-  # ---------------------------------------------------------------------------
-  # test only path for random commits
     commit_test:
         jobs:
             - build:
@@ -97,4 +115,25 @@ workflows:
             - test:
                 requires:
                     - build
+
+    deploy_by_tag:
+        jobs:
+            - build:
+                filters:
+                    tags:
+                        only: /^[0-9]+\.[0-9]+\.[0-9]+$/
+                    branches:
+                        only: /.*/
+            - test:
+                requires:
+                    - build
+                filters:
+                    branches:
+                        only: /.*/
+            - deploy:
+                requires:
+                    - test
+                filters:
+                    branches:
+                        only: /.*/
 

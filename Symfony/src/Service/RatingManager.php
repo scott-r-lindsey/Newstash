@@ -62,7 +62,7 @@ class RatingManager
             'user'  => $user
         ]);
 
-        if (0 === $stars) {
+        if (($rating ) and (0 === $stars)) {
             $this->em->remove($rating);
         }
         else{

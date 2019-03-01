@@ -77,7 +77,6 @@ jobs:
                         --env "MYSQL_DATABASE=bookstash" \
                         --env "MYSQL_USER=bookstash" \
                         --env "MYSQL_PASSWORD=bookstash" \
-                        --env-file=docker/cicd-testing.env \
                         -p 3306:3306 \
                         -d mysql:8
 
@@ -130,7 +129,6 @@ jobs:
                         newstash-php-container \
                             sh -c 'composer install && \
                                 ./bin/phpunit --verbose --debug --coverage-text'
-
 
 
     deploy:

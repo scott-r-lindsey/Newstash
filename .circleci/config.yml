@@ -172,7 +172,13 @@ workflows:
             - test:
                 requires:
                     - build
+                filters:
+                    tags:
+                        only: /.*/
+
             - deploy:
                 requires:
                     - test
-
+                filters:
+                    tags:
+                        only: /.*/

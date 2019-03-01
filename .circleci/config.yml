@@ -111,6 +111,22 @@ jobs:
                     docker exec \
                         --interactive \
                         --tty \
+                        --env "APP_ENV=dev" \
+                        --env "MAILER_URL=stub-mailer-url" \
+                        --env "MONGODB_URL=mongodb://mongo:27017" \
+                        --env "MONGODB_DB=newstash" \
+                        --env "DATABASE_URL=mysql://bookstash:bookstash@mysql:3306/bookstash" \
+                        --env "APP_PORT=8080" \
+                        --env "AWS_REGION=us-east-1" \
+                        --env "AWS_ACCESS_KEY_ID=stub-aws-key-id" \
+                        --env "AWS_SECRET_ACCESS_KEY=stub-aws-access-key" \
+                        --env "AWS_ASSOCIATE_TAG=stub-assoc-key" \
+                        --env "FACEBOOK_APP_ID=stub-fb-id" \
+                        --env "FACEBOOK_SECRET=stub-fb-secret" \
+                        --env "GOOGLE_CLIENT_ID=stub-google-id" \
+                        --env "GOOGLE_CLIENT_SECRET=stub-google-secret" \
+                        --env "GAQ_ID=stub-gaq-id" \
+                        --env "AMZN_AFFILIATE=stub-amzn-affil" \
                         newstash-php-container \
                             sh -c 'composer install && \
                                 ./bin/phpunit --verbose --debug --coverage-text'

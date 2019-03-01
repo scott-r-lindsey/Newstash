@@ -3,6 +3,12 @@ defaults: &job-defaults
   docker:
     - image: circleci/php:7.3-fpm-node-browsers-legacy
 
+run-load-image-artifacts: &load-image-artifacts
+    name: Load Images
+    command: |
+        docker load <workspace/newstash-php-image.tar &&
+        docker load <workspace/newstash-nginx-image.tar
+
 jobs:
     # ---------> BUILD <---------
     build:
@@ -37,6 +43,12 @@ jobs:
                   docker save newstash-php-image >workspace/newstash-php-image.tar &&
                   docker save newstash-nginx-image >workspace/newstash-nginx-image.tar
 
+            - persist_to_workspace:
+                root: workspace
+                paths:
+                    - newstash-php-image.tar
+                    - newstash-nginx-image.tar
+
     # ---------> TEST <---------
     test:
         <<: *job-defaults
@@ -46,7 +58,22 @@ jobs:
                 docker_layer_caching: true
             - checkout
 
-            - run: 'echo "what up!"'
+            - run:
+                <<: *run-load-image-artifacts
+
+            # boot the php container and have it just hang out
+
+            - run:
+                name: Start PHP-FPM
+                command: |
+                  docker run \
+                    --net=host \
+                    --name newstash-php \
+                    --detach \
+                    --entrypoint sh \
+                    ziraabs_newstash-php \
+                      -c 'sleep 10000000'
+
 
 
 

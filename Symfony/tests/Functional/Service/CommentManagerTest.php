@@ -54,6 +54,7 @@ class CommentManagerTest extends BaseTest
 
         // --------------------------------------------------------------------
 
+
         $comment = $commentManager->createNewComment(
             $post,
             $user,
@@ -64,12 +65,16 @@ class CommentManagerTest extends BaseTest
 
         // --------------------------------------------------------------------
 
+        /*
+        // comments are no longer news
+
         $news = $mongoNews->getNews([]);
 
         $this->assertCount(
             1,
             $news
         );
+        */
 
         $this->assertEquals(
             1,
@@ -90,12 +95,14 @@ class CommentManagerTest extends BaseTest
 
         // --------------------------------------------------------------------
 
+        /*
         $news = $mongoNews->getNews([]);
 
         $this->assertCount(
             2,
             $news
         );
+        */
 
         $this->assertEquals(
             2,

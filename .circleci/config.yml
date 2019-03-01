@@ -59,7 +59,7 @@ jobs:
             - checkout
 
             - run:
-                <<: *run-load-image-artifacts
+                <<: *load-image-artifacts
 
             # boot the php container and have it just hang out
 
@@ -81,21 +81,20 @@ jobs:
 
 # -----------------------------------------------------------------------------
 workflows:
-  version: 2
+    version: 2
 
 
 
 
   # ---------------------------------------------------------------------------
   # test only path for random commits
-  commit_test:
-    jobs:
-
-    - build:
-        filters:
-          branches:
-            only: /.*/
-    - test:
-        requires:
-        - build
+    commit_test:
+        jobs:
+            - build:
+                filters:
+                    branches:
+                        only: /.*/
+            - test:
+                requires:
+                    - build
 

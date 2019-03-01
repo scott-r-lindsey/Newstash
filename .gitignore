@@ -6,17 +6,17 @@
 *.config
 *.pid
 
+/Symfony/app/config/developer-*-public.pem
+/Symfony/app/config/parameters.yml
+/Symfony/app/config/vendor/
 /Symfony/coverage_report/
-/Symfony/vendor/
-/Symfony/web/bundles/
-/Symfony/web/release.txt
 /Symfony/var/bootstrap*
 /Symfony/var/cache/*
 /Symfony/var/chunks/*
 /Symfony/var/logs/*
-/Symfony/app/config/parameters.yml
-/Symfony/app/config/vendor/
-/Symfony/app/config/developer-*-public.pem
+/Symfony/vendor/
+/Symfony/web/bundles/
+/Symfony/web/release.txt
 
 /docker/php/Symfony
 /docker/nginx/Symfony

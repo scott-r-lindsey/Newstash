@@ -78,7 +78,7 @@ jobs:
                     --name newstash-php-container \
                     --detach \
                     --entrypoint sh \
-                    ziraabs_newstash-php-image \
+                    newstash-php-image \
                       -c 'sleep 10000000'
 
             - run: ./developer/bin/devify-php-container.sh

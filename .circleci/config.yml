@@ -111,7 +111,7 @@ jobs:
                     docker exec \
                         --interactive \
                         --tty \
-                        newstash-php-image \
+                        newstash-php-container \
                             sh -c 'cd Symfony && \
                                 composer install && \
                                 ./bin/phpunit --verbose --debug --coverage-text'

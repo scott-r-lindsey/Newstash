@@ -112,15 +112,8 @@ jobs:
                         --interactive \
                         --tty \
                         newstash-php-container \
-                            sh -c '
-                                env && \
-                                ls -la && \
-                                whoami && \
-                                composer install && \
+                            sh -c 'composer install && \
                                 ./bin/phpunit --verbose --debug --coverage-text'
-
-
-
 
 
 

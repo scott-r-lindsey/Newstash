@@ -34,7 +34,6 @@ jobs:
                 composer \
                     --classmap-authoritative \
                     --ignore-platform-reqs \
-                    --no-scripts \
                     install
             # BUILD
             - run: |

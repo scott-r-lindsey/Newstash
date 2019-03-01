@@ -32,7 +32,6 @@ jobs:
             - run: |
                 cd Symfony && \
                 composer \
-                    --classmap-authoritative \
                     --ignore-platform-reqs \
                     install
             # BUILD

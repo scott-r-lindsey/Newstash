@@ -108,7 +108,7 @@ jobs:
                     docker exec \
                         --interactive \
                         --tty \
-                        --env "APP_ENV=dev" \
+                        --env "APP_ENV=test" \
                         --env "MAILER_URL=stub-mailer-url" \
                         --env "MONGODB_URL=mongodb://mongo:27017" \
                         --env "MONGODB_DB=newstash" \
@@ -127,8 +127,7 @@ jobs:
                         newstash-php-container \
                             sh -c 'composer install && \
                                 ./bin/console cache:clear && \
-                                ls -l vendor &&
-                                ls -l vendor/symfony &&
+                                ./bin/console debug:container --env=test | grep test.client && \
                                 ./bin/phpunit --verbose --debug --coverage-text'
 
 

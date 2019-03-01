@@ -70,7 +70,7 @@ jobs:
                 name: Run Mysql
                 command: |
                     docker run \
-                        --name mysql \
+                        --name newstash-mysql-container \
                         --env "MYSQL_ROOT_PASSWORD=bookstash" \
                         --env "MYSQL_DATABASE=bookstash" \
                         --env "MYSQL_USER=bookstash" \
@@ -100,6 +100,7 @@ jobs:
                         newstash-php-image \
                             -c 'sleep 10000000'
 
+            - run: TERM=xterm ./developer/bin/devify-mysql-container.sh
             - run: TERM=xterm ./developer/bin/devify-php-container.sh
 
             - run:

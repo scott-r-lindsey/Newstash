@@ -68,13 +68,34 @@ jobs:
             - run:
                 <<: *load-image-artifacts
 
-            # boot the php container and have it just hang out
+            - run:
+                name: Run Mysql
+                command: |
+                  docker run \
+                      --name mysql \
+                      --env "MYSQL_ROOT_PASSWORD=bookstash" \
+                      --env "MYSQL_DATABASE=bookstash" \
+                      --env "MYSQL_USER=bookstash" \
+                      --env "MYSQL_PASSWORD=bookstash" \
+                      -p 3306:3306 \
+                      -d mysql:8
 
+            - run:
+                name: Run Mongo
+                command: |
+                  docker run \
+                      --name mongo \
+                      -p 27017:27017 \
+                      -d mongo:4
+
+            # boot the php container and have it just hang out
             - run:
                 name: Start PHP-FPM
                 command: |
                   docker run \
                     --net=host \
+                    --add-host="mysql:127.0.0.1" \
+                    --add-host="mongo:127.0.0.1" \
                     --name newstash-php-container \
                     --detach \
                     --entrypoint sh \
@@ -82,6 +103,19 @@ jobs:
                       -c 'sleep 10000000'
 
             - run: TERM=xterm ./developer/bin/devify-php-container.sh
+
+            - run:
+                name: Run Unit Tests
+                command: |
+                    docker exec \
+                        --interactive \
+                        --tty \
+                        --env-file=docker/cicd-testing.env \
+                        newstash-php-image \
+                            sh -c 'cd Symfony && \
+                                composer install && \
+                                ./bin/phpunit --verbose --debug --coverage-text'
+
 
 
 

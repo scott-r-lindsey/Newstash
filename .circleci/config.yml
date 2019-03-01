@@ -126,6 +126,8 @@ jobs:
                         --env "AMZN_AFFILIATE=stub-amzn-affil" \
                         newstash-php-container \
                             sh -c 'composer install && \
+                                ls -l vendor &&
+                                ls -l vendor/symfony &&
                                 ./bin/phpunit --verbose --debug --coverage-text'
 
 

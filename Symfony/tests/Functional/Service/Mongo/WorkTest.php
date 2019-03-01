@@ -71,7 +71,10 @@ class WorkTest extends BaseTest
         // --------------------------------------------------------------------
 
 
+        // FIXME 
+        // STUB
 
+        $this->assertTrue(true);
 
     }
 }

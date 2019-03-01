@@ -128,8 +128,6 @@ jobs:
                         --env "AMZN_AFFILIATE=stub-amzn-affil" \
                         newstash-php-container \
                             sh -c 'composer install && \
-                                ./bin/console cache:clear && \
-                                ./bin/console debug:container --env=test | grep test.client && \
                                 ./bin/phpunit --verbose --debug --coverage-text'
 
 

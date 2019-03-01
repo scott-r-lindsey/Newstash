@@ -5,10 +5,6 @@ services:
         container_name: newstash-mongo-container
         image: mongo:4
 
-        build:
-            context: ../
-            dockerfile: docker/nginx/Dockerfile
-
     mysql:
         container_name: newstash-mysql-container
         image: mysql:8
@@ -66,8 +62,13 @@ services:
 
     nginx:
         container_name: newstash-nginx-container
-        build: ../docker/nginx
+
         image: newstash-nginx-image
+
+        build:
+            context: ../
+            dockerfile: docker/nginx/Dockerfile
+
         ports:
             - "${APP_PORT}:80"
         volumes:

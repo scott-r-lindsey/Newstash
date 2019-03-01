@@ -81,7 +81,7 @@ jobs:
                     newstash-php-image \
                       -c 'sleep 10000000'
 
-            - run: ./developer/bin/devify-php-container.sh
+            - run: TERM=xterm ./developer/bin/devify-php-container.sh
 
 
 
@@ -123,17 +123,11 @@ workflows:
                     tags:
                         only: /^[0-9]+\.[0-9]+\.[0-9]+$/
                     branches:
-                        only: /.*/
+                        ignore: /.*/
             - test:
                 requires:
                     - build
-                filters:
-                    branches:
-                        only: /.*/
             - deploy:
                 requires:
                     - test
-                filters:
-                    branches:
-                        only: /.*/
 

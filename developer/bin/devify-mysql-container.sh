@@ -26,6 +26,7 @@ docker exec -i \
     --env MYSQL_PWD=bookstash \
     newstash-mysql-container \
     mysql \
+        --host mysql \
         --user root bookstash \
         --execute "ALTER USER 'bookstash'@'%' IDENTIFIED WITH mysql_native_password BY 'bookstash'";
 
@@ -34,6 +35,7 @@ docker exec -i \
     --env MYSQL_PWD=bookstash \
     newstash-mysql-container \
     mysql \
+        --host mysql \
         --user root bookstash \
         --execute "CREATE DATABASE IF NOT EXISTS bookstash_test"
 
@@ -42,6 +44,7 @@ docker exec -i \
     --env MYSQL_PWD=bookstash \
     newstash-mysql-container \
     mysql \
+        --host mysql \
         --user root bookstash \
         --execute "GRANT ALL PRIVILEGES ON bookstash_test.* TO bookstash@\"%\""
 

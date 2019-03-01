@@ -71,6 +71,7 @@ jobs:
                 command: |
                     docker run \
                         --name newstash-mysql-container \
+                        --add-host="mysql:127.0.0.1" \
                         --env "MYSQL_ROOT_PASSWORD=bookstash" \
                         --env "MYSQL_DATABASE=bookstash" \
                         --env "MYSQL_USER=bookstash" \

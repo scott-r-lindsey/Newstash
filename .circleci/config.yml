@@ -113,6 +113,7 @@ jobs:
                         --tty \
                         newstash-php-container \
                             sh -c 'composer install && \
+                                ls -la && \
                                 ./bin/phpunit --verbose --debug --coverage-text'
 
 

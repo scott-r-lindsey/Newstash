@@ -1,3 +1,4 @@
+version: 2
 
 defaults: &job-defaults
   docker:
@@ -130,9 +131,7 @@ jobs:
                             sh -c 'composer install && \
                                 SYMFONY_DEPRECATIONS_HELPER=weak \
                                 ./bin/phpunit --verbose --debug --coverage-text'
-
-
-    deploy:
+    push:
         <<: *job-defaults
 
         steps:
@@ -143,7 +142,43 @@ jobs:
             - attach_workspace:
                 at: workspace
 
-            - run: echo "deploy by tag stub"
+            - run: echo "stub push container here"
+
+
+    deploy:
+        <<: *job-defaults
+
+        steps:
+            - setup_remote_docker:
+                docker_layer_caching: true
+            - checkout
+
+            - run:
+                name: Download and install Terraform
+                command: |
+                    mkdir tmp && cd tmp && \
+                    curl -o tf.zip https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip && \
+                    unzip tf.zip && rm tf.zip && \
+                    sudo mv /home/circleci/project/tmp/terraform /usr/local/bin
+
+            - run:
+                command: |
+                    cd terraform && \
+                    TF_VAR_aws_access_key="$AWS_ACCESS_KEY_ID" \
+                    TF_VAR_aws_secret_key="$AWS_SECRET_ACCESS_KEY" \
+                    terraform init \
+                        -backend-config="bucket=awesome-state-bucket" \
+                        -backend-config="key=newstash/prod.tfstate" \
+                        -backend-config="region=us-east-1"
+
+            - run:
+                command: |
+                    cd terraform && \
+                    TF_VAR_aws_access_key="$AWS_ACCESS_KEY_ID" \
+                    TF_VAR_aws_secret_key="$AWS_SECRET_ACCESS_KEY" \
+                    TF_VAR_environment="prod" \
+                    terraform apply -auto-approve
+
 
 
 # -----------------------------------------------------------------------------
@@ -175,10 +210,16 @@ workflows:
                 filters:
                     tags:
                         only: /.*/
+            - push:
+                requires:
+                    - test
+                filters:
+                    tags:
+                        only: /.*/
 
             - deploy:
                 requires:
-                    - test
+                    - push
                 filters:
                     tags:
                         only: /.*/

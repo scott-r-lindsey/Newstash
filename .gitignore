@@ -28,3 +28,6 @@
 Symfony/public/googlede*
 
 Symfony/public/img/blog/*
+
+/terraform/credentials.sh
+/terraform/.terraform/

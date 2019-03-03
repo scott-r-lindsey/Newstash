@@ -3,6 +3,7 @@
 
 variable project                        { default = "newstash" }
 variable environment                    { }
+variable app_version                    { }
 
 variable aws_access_key                 { }
 variable aws_secret_key                 { }
@@ -14,10 +15,36 @@ variable hostname                       { default = "booksto.love" }
 
 variable zone_id                        { default = "Z1MH9O4CHWQAX8" }
 
+variable vpc_cidr                       { default = "10.0.0.0/16" }
+variable public_cidr                    { default = "10.0.1.0/24" }
+variable private_cidr                   { default = "10.0.2.0/24" }
+
+variable fargate_cpu_units              { default = "2048" }
+variable fargate_memory                 { default = "4096" }
+variable min_cluser_size                { default = "1" }
+variable max_cluser_size                { default = "5" }
+variable cpu_usage_down_trigger         { default = "40" }
+variable cpu_usage_up_trigger           { default = "30" }
+
 #------------------------------------------------------------------------------
 
 # data
-data "aws_caller_identity" "current"            { }
+data "aws_caller_identity" "the-aws-caller-identity" { }
+
+data "template_file" "the-task-definition" {
+    template = "${file("./task.json.tpl")}"
+    vars {
+        project                     = "${var.project}"
+        environment                 = "${var.environment}"
+
+        app_version                 = "${var.app_version}"
+
+        aws_account_id              = "${data.aws_caller_identity.the-aws-caller-identity.account_id}"
+        region                      = "${var.region}"
+
+
+    }
+}
 
 #------------------------------------------------------------------------------
 # services
@@ -40,6 +67,9 @@ module "the-vpc" {
     project                         = "${var.project}"
     environment                     = "${var.environment}"
     az                              = "${var.az}"
+    vpc_cidr                        = "${var.vpc_cidr}"
+    public_cidr                     = "${var.public_cidr}"
+    private_cidr                    = "${var.private_cidr}"
 }
 
 module "the-nginx-ecr" {
@@ -130,22 +160,58 @@ module "the-ecs-task-role" {
     policy_attachment_name          = "${var.project}-${var.environment}-ECSTaskPolicyAttachement"
 }
 
-# sg to allow mysql from private
-# sg to allow mongo from private
-# sg to allow 80 from public vpc
-# sg to allow 443 from public vpc
+resource "aws_security_group" "the-private-mongo-sg" {
+    name                            = "${var.project}-${var.environment}-allow-mongo-from-private"
+    description                     = "Allow web from world"
+    vpc_id                          = "${module.the-vpc.vpc_id}"
+
+    ingress {
+        from_port                   = 27017
+        to_port                     = 27017
+        protocol                    = "tcp"
+        cidr_blocks                 = ["0.0.0.0/0"]
+    }
+
+    egress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["${var.private_cidr}"]
+    }
+
+    tags = {
+        name                        = "${var.project}-${var.environment}-allow-mongo-from-private"
+    }
+}
+
+resource "aws_security_group" "the-private-mysql-sg" {
+    name                            = "${var.project}-${var.environment}-allow-mysql-from-private"
+    description                     = "Allow web from world"
+    vpc_id                          = "${module.the-vpc.vpc_id}"
+
+    ingress {
+        from_port                   = 3306
+        to_port                     = 3306
+        protocol                    = "tcp"
+        cidr_blocks                 = ["0.0.0.0/0"]
+    }
+
+    egress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["${var.private_cidr}"]
+    }
+
+    tags = {
+        name                        = "${var.project}-${var.environment}-allow-mysql-from-private"
+    }
+}
 
 resource "aws_security_group" "the-public-web-sg" {
     name                            = "${var.project}-${var.environment}-allow-web-from-world"
     description                     = "Allow web from world"
     vpc_id                          = "${module.the-vpc.vpc_id}"
-
-    ingress {
-        from_port                   = 80
-        to_port                     = 80
-        protocol                    = "tcp"
-        cidr_blocks                 = ["0.0.0.0/0"]
-    }
 
     ingress {
         from_port                   = 80
@@ -162,7 +228,7 @@ resource "aws_security_group" "the-public-web-sg" {
     }
 
     tags = {
-        name                        = "${var.project}-${var.environment}-allow-ssh-from-world"
+        name                        = "${var.project}-${var.environment}-allow-web-from-world"
     }
 }
 
@@ -192,28 +258,22 @@ resource "aws_security_group" "the-public-ssh-sg" {
 
 /*
 module "autoscaling_fargate" {
-    source                          = "./modules/autoscaling_fargate"
+    source                          = "./modules/ecs-fargate"
 
     project                         = "${var.project}"
     environment                     = "${var.environment}"
-    app_version                     = "${var.app_version}"
-    region                          = "${var.region}"
 
+    # App
     task_definition                 = "${data.template_file.the-task-definition.rendered}"
-
-    ssl_certificate_arns            = "${var.fargate_ssl_cert_arns}"
+    logging_bucket                  = "${module.the-s3-log-bucket.bucket}"
+    logging_prefix                  = "alb"
 
     # VPC
     vpc_id                          = "${module.the-vpc.vpc_id}"
-    alb_security_groups             = 
-    alb_subnet                      = "${module.the-vpc.public_subnet
-    ecs_security_groups             = 
-    ecs_subnet                      = 
-
-    # IAM
-    ecs_autoscaling_role_arn        = "${module.the-ecs-autoscaling-role.role_arn}"
-    ecs_execution_role_arn          = "${module.the-ecs-execution-role.role_arn}"
-    ecs_task_role_arn               = "${module.the-ecs-task-role.role_arn}"
+    alb_security_groups             = []
+    alb_subnets                     = ["${module.the-vpc.private_subnet
+    ecs_security_groups             = []
+    ecs_subnets                     = []
 
     # Fargate
     fargate_cpu_units               = "${var.fargate_cpu_units}"

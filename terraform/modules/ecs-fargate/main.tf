@@ -1,10 +1,30 @@
 variable environment                        { }
 variable project                            { }
 
+# app
+variable task_definition                    { }
+variable logging_bucket                     { }
+variable logging_prefix                     { }
+
+# VPC
+variable vpc_id                             { }
+variable alb_security_groups                { type = "list" }
+variable alb_subnets                        { type = "list" }
+variable ecs_security_groups                { type = "list" }
+variable ecs_subnets                        { type = "list" }
+
 # IAM
 variable ecs_autoscaling_role_arn           { }
 variable ecs_task_role_arn                  { }
 variable ecs_execution_role_arn             { }
+
+# Fargate
+variable fargate_cpu_units                  { }
+variable fargate_memory                     { }
+variable min_cluser_size                    { }
+variable max_cluser_size                    { }
+variable cpu_usage_down_trigger             { }
+variable cpu_usage_up_trigger               { }
 
 #------------------------------------------------------------------------------
 
@@ -12,6 +32,7 @@ resource "aws_ecs_cluster" "the-ecs-cluster" {
     name = "${var.project}-${var.environment}-ECSCluster"
 }
 
+/*
 resource "aws_alb_target_group" "the-alb-target-group" {
     name                 = "${var.project}-${var.environment}-TG"
     port                 = 80
@@ -41,11 +62,6 @@ resource "aws_alb" "the-alb" {
         prefix = "alb"
     }
 
-    tags {
-        CostCenter      = "${var.costcenter_id}"
-        ProjectName     = "${var.project}"
-        Environment     = "${var.environment}"
-        Platform        = "${var.turbot_account}"
-    }
 }
 
+*/

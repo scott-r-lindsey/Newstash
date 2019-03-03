@@ -31,3 +31,4 @@ Symfony/public/img/blog/*
 
 /terraform/credentials.sh
 /terraform/.terraform/
+terraform/terraform.tfstate.*

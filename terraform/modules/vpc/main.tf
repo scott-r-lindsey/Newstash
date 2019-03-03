@@ -62,3 +62,16 @@ resource "aws_route_table_association" "the-route-table-assoc" {
     subnet_id = "${aws_subnet.the-public-subnet.id}"
     route_table_id = "${aws_route_table.the-public-route-table.id}"
 }
+
+#------------------------------------------------------------------------------
+
+output "vpc_id" {
+    value = "${aws_vpc.the-aws-vpc.id}"
+}
+output "public_subnet_id" {
+    value = "${aws_subnet.the-public-subnet.id}"
+}
+output "public_subnet_arn" {
+    value = "${aws_subnet.the-public-subnet.arn}"
+}
+

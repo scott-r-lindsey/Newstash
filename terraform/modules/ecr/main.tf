@@ -6,7 +6,7 @@ variable image                              { }
 #------------------------------------------------------------------------------
 
 resource "aws_ecr_repository" "the-ecr-repository" {
-    name = "${var.project}-${var.environment}-${var.image}"
+    name = "${var.project}-${var.image}-${var.environment}"
 }
 
 #------------------------------------------------------------------------------

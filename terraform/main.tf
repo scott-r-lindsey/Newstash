@@ -7,24 +7,24 @@ variable app_version                    { }
 
 variable aws_access_key                 { }
 variable aws_secret_key                 { }
-variable region                         { default = "us-east-1" }
-variable az                             { default = "us-east-1a" }
+variable region                         { }
+variable az                             { }
 
-variable ssl_cert_arn                   { default = "arn:aws:acm:us-east-1:685394013264:certificate/bcfc303a-a1b4-4c82-a29b-7bf95c16cab7"}
-variable hostname                       { default = "booksto.love" }
+variable ssl_cert_arn                   { }
+variable hostname                       { }
 
-variable zone_id                        { default = "Z1MH9O4CHWQAX8" }
+variable zone_id                        { }
 
 variable vpc_cidr                       { default = "10.0.0.0/16" }
 variable public_cidr                    { default = "10.0.1.0/24" }
 variable private_cidr                   { default = "10.0.2.0/24" }
 
-variable fargate_cpu_units              { default = "2048" }
-variable fargate_memory                 { default = "4096" }
-variable min_cluser_size                { default = "1" }
-variable max_cluser_size                { default = "5" }
-variable cpu_usage_down_trigger         { default = "40" }
-variable cpu_usage_up_trigger           { default = "30" }
+variable fargate_cpu_units              { }
+variable fargate_memory                 { }
+variable min_cluser_size                { }
+variable max_cluser_size                { }
+variable cpu_usage_down_trigger         { }
+variable cpu_usage_up_trigger           { }
 
 #------------------------------------------------------------------------------
 

@@ -10,6 +10,10 @@ run-load-image-artifacts: &load-image-artifacts
         docker load <workspace/newstash-php-image.tar &&
         docker load <workspace/newstash-nginx-image.tar
 
+fetch-tf-tfvars: &fetch-tf-tfvars
+    name: Fetch terraform vars
+    command: aws s3 cp s3://awesome-secret-bucket/newstash/prod/tf.tfvars ./
+
 # -----------------------------------------------------------------------------
 
 jobs:
@@ -142,7 +146,24 @@ jobs:
             - attach_workspace:
                 at: workspace
 
-            - run: echo "stub push container here"
+            - run:
+                <<: *load-image-artifacts
+
+            - run:
+                name: Push Containers
+                command: |
+                    login=`aws ecr get-login --region ${AWS_REGION} | sed -e 's/-e none//g'` && \
+                    eval $login && \
+                    docker tag \
+                        newstash-php-image \
+                        $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/newstash-php-prod:$CIRCLE_TAG && \
+                    docker push \
+                        $AWS_ACCOUNT_ID.dkr.ecr.${AWS_REGION}.amazonaws.com/newstash-php-prod:$CIRCLE_TAG && \
+                    docker tag \
+                        newstash-nginx-image \
+                        $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/newstash-nginx-prod:$CIRCLE_TAG && \
+                    docker push \
+                        $AWS_ACCOUNT_ID.dkr.ecr.${AWS_REGION}.amazonaws.com/newstash-nginx-prod:$CIRCLE_TAG
 
 
     deploy:
@@ -152,6 +173,9 @@ jobs:
             - setup_remote_docker:
                 docker_layer_caching: true
             - checkout
+
+            - run:
+                <<: *fetch-tf-tfvars
 
             - run:
                 name: Download and install Terraform
@@ -175,13 +199,12 @@ jobs:
             - run:
                 name: terraform apply
                 command: |
-                    cd terraform && \
                     TF_VAR_aws_access_key="$AWS_ACCESS_KEY_ID" \
                     TF_VAR_aws_secret_key="$AWS_SECRET_ACCESS_KEY" \
                     TF_VAR_environment="prod" \
-                    terraform apply -auto-approve
-
-
+                    terraform apply \
+                        -auto-approve \
+                        -var-file=tf.tfvars
 
 # -----------------------------------------------------------------------------
 

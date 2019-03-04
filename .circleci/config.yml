@@ -150,6 +150,14 @@ jobs:
                 <<: *load-image-artifacts
 
             - run:
+                name: Install AWS CLI
+                commaind: |
+                    curl -O https://bootstrap.pypa.io/get-pip.py && \
+                    python3 get-pip.py --user && \
+                    pip3 install awscli --upgrade --user &&
+                    aws --version
+
+            - run:
                 name: Push Containers
                 command: |
                     login=`aws ecr get-login --region ${AWS_REGION} | sed -e 's/-e none//g'` && \

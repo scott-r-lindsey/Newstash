@@ -7,5 +7,5 @@ twig:
         facebook_app_id: '%env(resolve:FACEBOOK_APP_ID)%'
         google_client_id: '%env(resolve:GOOGLE_CLIENT_ID)%'
         gaq_id: '%env(resolve:GAQ_ID)%'
-        amzn_affiliate: '%env(resolve:AMZN_AFFILIATE)%'
+        amzn_affiliate: '%env(resolve:AWS_ASSOCIATE_TAG)%'
 

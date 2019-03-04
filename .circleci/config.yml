@@ -1,8 +1,8 @@
 version: 2
 
 defaults: &job-defaults
-  docker:
-    - image: circleci/php:7.3-fpm-node-browsers-legacy
+    docker:
+        - image: circleci/php:7.3-fpm-node-browsers-legacy
 
 run-load-image-artifacts: &load-image-artifacts
     name: Load Images

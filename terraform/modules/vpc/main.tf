@@ -2,9 +2,9 @@
 variable environment                        { }
 variable project                            { }
 variable az                                 { }
-variable vpc_cidr                           { default = "10.0.0.0/16" }
-variable public_cidr                        { default = "10.0.1.0/24" }
-variable private_cidr                       { default = "10.0.2.0/24" }
+variable vpc_cidr                           { }
+variable public_cidr                        { }
+variable private_cidr                       { }
 
 #------------------------------------------------------------------------------
 
@@ -62,3 +62,22 @@ resource "aws_route_table_association" "the-route-table-assoc" {
     subnet_id = "${aws_subnet.the-public-subnet.id}"
     route_table_id = "${aws_route_table.the-public-route-table.id}"
 }
+
+#------------------------------------------------------------------------------
+
+output "vpc_id" {
+    value = "${aws_vpc.the-aws-vpc.id}"
+}
+output "public_subnet_id" {
+    value = "${aws_subnet.the-public-subnet.id}"
+}
+output "public_subnet_arn" {
+    value = "${aws_subnet.the-public-subnet.arn}"
+}
+output "private_subnet_id" {
+    value = "${aws_subnet.the-private-subnet.id}"
+}
+output "private_subnet_arn" {
+    value = "${aws_subnet.the-private-subnet.arn}"
+}
+

@@ -156,8 +156,7 @@ jobs:
             - run:
                 name: Install AWS CLI
                 command: |
-                    pip install awscli --upgrade --user && \
-                    aws --version
+                    sudo pip install awscli --upgrade
 
             - run:
                 name: Push Containers

@@ -136,7 +136,8 @@ jobs:
                                 SYMFONY_DEPRECATIONS_HELPER=weak \
                                 ./bin/phpunit --verbose --debug --coverage-text'
     push:
-        <<: *job-defaults
+        docker:
+            - circleci/python:3.6.1
 
         steps:
             - setup_remote_docker:
@@ -152,9 +153,7 @@ jobs:
             - run:
                 name: Install AWS CLI
                 command: |
-                    curl -O https://bootstrap.pypa.io/get-pip.py && \
-                    python3 get-pip.py --user && \
-                    pip3 install awscli --upgrade --user &&
+                    pip install awscli --upgrade --user &&
                     aws --version
 
             - run:

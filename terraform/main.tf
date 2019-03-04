@@ -26,6 +26,21 @@ variable max_cluser_size                { }
 variable cpu_usage_down_trigger         { }
 variable cpu_usage_up_trigger           { }
 
+# app vars
+variable mongodb_url                    { }
+variable mongodb_db                     { }
+variable mailer_url                     { }
+
+variable app_secret                     { }
+variable database_url                   { }
+
+variable facebook_app_id                { }
+variable facebook_secret                { }
+variable google_client_id               { }
+variable google_client_secret           { }
+variable gaq_id                         { }
+variable amzn_affiliate                 { }
+
 #------------------------------------------------------------------------------
 
 # data

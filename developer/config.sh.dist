@@ -18,5 +18,3 @@ export FACEBOOK_SECRET=fixme-fb-secret
 export GOOGLE_CLIENT_ID=fixme-google-client-id
 export GOOGLE_CLIENT_SECRET=fixme-google-client-secret
 export GAQ_ID=fixme-gaq-id
-export AMZN_AFFILIATE=fixme-amzn-affiliate
-

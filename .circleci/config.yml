@@ -16,7 +16,7 @@ run-load-image-artifacts: &load-image-artifacts
 
 fetch-tf-tfvars: &fetch-tf-tfvars
     name: Fetch terraform vars
-    command: aws s3 cp s3://awesome-secret-bucket/newstash/prod/tf.tfvars ./
+    command: aws s3 cp s3://awesome-secret-bucket/newstash/prod/tf.tfvars ./terraform
 
 # -----------------------------------------------------------------------------
 
@@ -213,6 +213,7 @@ jobs:
             - run:
                 name: terraform apply
                 command: |
+                    cd terraform && \
                     TF_VAR_aws_access_key="$AWS_ACCESS_KEY_ID" \
                     TF_VAR_aws_secret_key="$AWS_SECRET_ACCESS_KEY" \
                     TF_VAR_environment="prod" \

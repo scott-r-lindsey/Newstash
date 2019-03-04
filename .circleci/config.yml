@@ -1,8 +1,12 @@
 version: 2
 
-defaults: &job-defaults
+php-image: &php-image
     docker:
         - image: circleci/php:7.3-fpm-node-browsers-legacy
+
+python-image: &python-image
+    docker:
+        - image: circleci/python:3.6.1
 
 run-load-image-artifacts: &load-image-artifacts
     name: Load Images
@@ -18,7 +22,7 @@ fetch-tf-tfvars: &fetch-tf-tfvars
 
 jobs:
     build:
-        <<: *job-defaults
+        <<: *php-image
 
         steps:
             - setup_remote_docker:
@@ -58,7 +62,7 @@ jobs:
                     - newstash-nginx-image.tar
 
     test:
-        <<: *job-defaults
+        <<: *php-image
 
         steps:
             - setup_remote_docker:
@@ -136,8 +140,7 @@ jobs:
                                 SYMFONY_DEPRECATIONS_HELPER=weak \
                                 ./bin/phpunit --verbose --debug --coverage-text'
     push:
-        docker:
-            - circleci/python:3.6.1
+        <<: *python-image
 
         steps:
             - setup_remote_docker:
@@ -153,7 +156,7 @@ jobs:
             - run:
                 name: Install AWS CLI
                 command: |
-                    pip install awscli --upgrade --user &&
+                    pip install awscli --upgrade --user && \
                     aws --version
 
             - run:
@@ -174,7 +177,7 @@ jobs:
 
 
     deploy:
-        <<: *job-defaults
+        <<: *php-image
 
         steps:
             - setup_remote_docker:

@@ -176,12 +176,17 @@ jobs:
 
 
     deploy:
-        <<: *php-image
+        <<: *python-image
 
         steps:
             - setup_remote_docker:
                 docker_layer_caching: true
             - checkout
+
+            - run:
+                name: Install AWS CLI
+                command: |
+                    sudo pip install awscli --upgrade
 
             - run:
                 <<: *fetch-tf-tfvars

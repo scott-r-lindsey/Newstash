@@ -30,7 +30,7 @@ services:
 
     ssh:
         container_name: newstash-ssh-container
-        image: "newstash-ssh-image
+        image: newstash-ssh-image
         build: ../docker/ssh
 
         environment:

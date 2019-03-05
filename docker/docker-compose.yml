@@ -41,7 +41,6 @@ services:
 
             APP_ENV: dev
             APP_SECRET: devsecretdevsecretdevsecret
-            DATABASE_URL: "mysql://bookstash:bookstash@mysql:3306/bookstash"
             DATABASE_URL: "${DATABASE_URL}"
 
             AWS_REGION: "${AWS_REGION}"

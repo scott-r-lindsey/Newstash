@@ -175,6 +175,8 @@ module "the-ecs-task-role" {
     policy_attachment_name          = "${var.project}-${var.environment}-ECSTaskPolicyAttachement"
 }
 
+/*
+
 resource "aws_security_group" "the-private-mongo-sg" {
     name                            = "${var.project}-${var.environment}-allow-mongo-from-private"
     description                     = "Allow web from world"
@@ -192,6 +194,13 @@ resource "aws_security_group" "the-private-mongo-sg" {
         to_port     = 0
         protocol    = "-1"
         cidr_blocks = ["${var.private_cidr}"]
+    }
+
+    ingress {
+        from_port   = -1
+        to_port     = -1
+        protocol    = "icmp"
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     tags = {
@@ -218,6 +227,13 @@ resource "aws_security_group" "the-private-mysql-sg" {
         cidr_blocks = ["${var.private_cidr}"]
     }
 
+    ingress {
+        from_port   = -1
+        to_port     = -1
+        protocol    = "icmp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
     tags = {
         name                        = "${var.project}-${var.environment}-allow-mysql-from-private"
     }
@@ -242,34 +258,52 @@ resource "aws_security_group" "the-public-web-sg" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 
+    ingress {
+        from_port   = -1
+        to_port     = -1
+        protocol    = "icmp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
     tags = {
         name                        = "${var.project}-${var.environment}-allow-web-from-world"
     }
 }
+*/
 
 resource "aws_security_group" "the-public-ssh-sg" {
     name                            = "${var.project}-${var.environment}-allow-ssh-from-world"
     description                     = "Allow ssh from world"
-    vpc_id                          = "${module.the-vpc.vpc_id}"
 
     ingress {
         from_port                   = 22
         to_port                     = 22
-        protocol                    = "tcp"
+        protocol                    = "-1"
         cidr_blocks                 = ["0.0.0.0/0"]
     }
 
-    egress {
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
+    ingress {
+        from_port   = -1
+        to_port     = -1
+        protocol    = "icmp"
         cidr_blocks = ["0.0.0.0/0"]
     }
+
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    vpc_id                          = "${module.the-vpc.vpc_id}"
 
     tags = {
         name                        = "${var.project}-${var.environment}-allow-ssh-from-world"
     }
 }
+
+
 
 /*
 module "autoscaling_fargate" {

@@ -26,6 +26,7 @@ resource "aws_subnet" "the-public-subnet" {
     }
 }
 
+/*
 resource "aws_subnet" "the-private-subnet" {
     vpc_id              = "${aws_vpc.the-aws-vpc.id}"
     cidr_block          = "${var.private_cidr}"
@@ -35,6 +36,7 @@ resource "aws_subnet" "the-private-subnet" {
         Name = "${var.project}-${var.environment}-private-subnet"
     }
 }
+*/
 
 resource "aws_internet_gateway" "the-aws-internet-gateway" {
     vpc_id = "${aws_vpc.the-aws-vpc.id}"
@@ -74,6 +76,7 @@ output "public_subnet_id" {
 output "public_subnet_arn" {
     value = "${aws_subnet.the-public-subnet.arn}"
 }
+/*
 output "private_subnet_id" {
     value = "${aws_subnet.the-private-subnet.id}"
 }
@@ -81,3 +84,4 @@ output "private_subnet_arn" {
     value = "${aws_subnet.the-private-subnet.arn}"
 }
 
+*/

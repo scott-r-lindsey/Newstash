@@ -10,6 +10,11 @@ services:
             - "${APP_PATH}:/var/www/html/phpapp"
 
         environment:
+            MONGODB_URL: "${MONGODB_URL}"
+            MONGODB_DB: "${MONGODB_DB}"
+
+            MAILER_URL: "${MAILER_URL}"
+
             APP_ENV: dev
             APP_SECRET: devsecretdevsecretdevsecret
             DATABASE_URL: "mysql://bookstash:bookstash@mysql:3306/bookstash"

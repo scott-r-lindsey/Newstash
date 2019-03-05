@@ -36,8 +36,8 @@ RUN sed -i "s/82:82/1000:1000/g" /etc/passwd && \
     sed -i "s/:82:/:1000:/g" /etc/group
 
 # Copy project code
-COPY Symfony /var/www/html/phpapp/Symfony
-RUN chown -R www-data:www-data /var/www/html/phpapp/Symfony /home/www-data
+COPY --chown=1000:1000 Symfony /var/www/html/phpapp/Symfony
+RUN chown -R www-data:www-data /home/www-data
 
 # ----------------------------------
 USER www-data

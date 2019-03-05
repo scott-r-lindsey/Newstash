@@ -29,8 +29,8 @@ services:
             - newstash
 
     ssh:
-        container_name: newstash-ssh-container-${ENV}"
-        image: "newstash-ssh-image-${ENV}"
+        container_name: newstash-ssh-container
+        image: "newstash-ssh-image
         build: ../docker/ssh
 
         environment:

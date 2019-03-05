@@ -33,6 +33,3 @@ services:
             GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET}"
             GAQ_ID: "${GAQ_ID}"
 
-        depends_on:
-            - mysql
-            - mongo

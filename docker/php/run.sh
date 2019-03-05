@@ -11,8 +11,10 @@ set -e
 
 #------------------------------------------------------------------------------
 
-echo -n "run.sh executed, release "
-echo `cat release.txt`
+if [ -f release.txt ]; then
+    echo -n "run.sh executed, release "
+    echo `cat release.txt`
+else
 
 #------------------------------------------------------------------------------
 # make sure mongo session has indexes

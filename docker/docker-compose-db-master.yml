@@ -5,6 +5,9 @@ services:
         container_name: newstash-mongo-container
         image: mongo:4
 
+        networks:
+            - newstash
+
     mysql:
         container_name: newstash-mysql-container
         image: mysql:8
@@ -22,6 +25,9 @@ services:
             - "${MYSQL_BINLOG_PATH}:/var/lib/mysql-binlogs"
             - "${APP_PATH}/data/conf.d:/etc/mysql/conf.d"
 
+        networks:
+            - newstash
+
     ssh:
         container_name: newstash-ssh-container-${ENV}"
         image: "newstash-ssh-image-${ENV}"
@@ -38,5 +44,9 @@ services:
             - "~/.ssh:/home/tunnel/.ssh"
 
         networks:
-            - bookstash
+            - newstash
+
+networks:
+    newstash:
+        name: "newstash"
 

@@ -51,13 +51,26 @@ data "template_file" "the-task-definition" {
     vars {
         project                     = "${var.project}"
         environment                 = "${var.environment}"
+        aws_region                  = "${var.region}"
 
         app_version                 = "${var.app_version}"
 
         aws_account_id              = "${data.aws_caller_identity.the-aws-caller-identity.account_id}"
         region                      = "${var.region}"
 
+        mongodb_url                 = "${var.mongodb_url}"
+        mongodb_db                  = "${var.mongodb_db}"
+        mailer_url                  = "${var.mailer_url}"
 
+        app_secret                  = "${var.app_secret}"
+        database_url                = "${var.database_url}"
+
+        facebook_app_id             = "${var.facebook_app_id}"
+        facebook_secret             = "${var.facebook_secret}"
+        google_client_id            = "${var.google_client_id}"
+        google_client_secret        = "${var.google_client_secret}"
+        gaq_id                      = "${var.gaq_id}"
+        amzn_affiliate              = "${var.amzn_affiliate}"
     }
 }
 
@@ -175,135 +188,64 @@ module "the-ecs-task-role" {
     policy_attachment_name          = "${var.project}-${var.environment}-ECSTaskPolicyAttachement"
 }
 
-/*
+module "mysql-from-private-security-group" {
+    source                          = "./modules/security_group"
 
-resource "aws_security_group" "the-private-mongo-sg" {
-    name                            = "${var.project}-${var.environment}-allow-mongo-from-private"
-    description                     = "Allow web from world"
+    allowed_port                    = "3306"
+
+    project                         = "${var.project}"
+    environment                     = "${var.environment}"
+    name                            = "mysql-from-private"
     vpc_id                          = "${module.the-vpc.vpc_id}"
 
-    ingress {
-        from_port                   = 27017
-        to_port                     = 27017
-        protocol                    = "tcp"
-        cidr_blocks                 = ["0.0.0.0/0"]
-    }
-
-    egress {
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
-        cidr_blocks = ["${var.private_cidr}"]
-    }
-
-    ingress {
-        from_port   = -1
-        to_port     = -1
-        protocol    = "icmp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    tags = {
-        name                        = "${var.project}-${var.environment}-allow-mongo-from-private"
-    }
+    allowed_security_groups         = ["${module.ecs-cluster-security-group.id}"]
 }
 
-resource "aws_security_group" "the-private-mysql-sg" {
-    name                            = "${var.project}-${var.environment}-allow-mysql-from-private"
-    description                     = "Allow web from world"
+module "mongo-from-private-security-group" {
+    source                          = "./modules/security_group"
+
+    allowed_port                    = "27017"
+
+    project                         = "${var.project}"
+    environment                     = "${var.environment}"
+    name                            = "mongo-from-private"
     vpc_id                          = "${module.the-vpc.vpc_id}"
 
-    ingress {
-        from_port                   = 3306
-        to_port                     = 3306
-        protocol                    = "tcp"
-        cidr_blocks                 = ["0.0.0.0/0"]
-    }
-
-    egress {
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
-        cidr_blocks = ["${var.private_cidr}"]
-    }
-
-    ingress {
-        from_port   = -1
-        to_port     = -1
-        protocol    = "icmp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    tags = {
-        name                        = "${var.project}-${var.environment}-allow-mysql-from-private"
-    }
+    allowed_security_groups         = ["${module.ecs-cluster-security-group.id}"]
 }
 
-resource "aws_security_group" "the-public-web-sg" {
-    name                            = "${var.project}-${var.environment}-allow-web-from-world"
-    description                     = "Allow web from world"
+module "ecs-cluster-security-group" {
+    source                          = "./modules/security_group"
+
+    allowed_port                    = "80"
+
+    project                         = "${var.project}"
+    environment                     = "${var.environment}"
+    name                            = "ecs-cluster"
     vpc_id                          = "${module.the-vpc.vpc_id}"
-
-    ingress {
-        from_port                   = 80
-        to_port                     = 80
-        protocol                    = "tcp"
-        cidr_blocks                 = ["0.0.0.0/0"]
-    }
-
-    egress {
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    ingress {
-        from_port   = -1
-        to_port     = -1
-        protocol    = "icmp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    tags = {
-        name                        = "${var.project}-${var.environment}-allow-web-from-world"
-    }
 }
-*/
 
-resource "aws_security_group" "the-public-ssh-sg" {
-    name                            = "${var.project}-${var.environment}-allow-ssh-from-world"
-    description                     = "Allow ssh from world"
+module "alb-security-group" {
+    source                          = "./modules/security_group"
 
-    ingress {
-        from_port                   = 22
-        to_port                     = 22
-        protocol                    = "-1"
-        cidr_blocks                 = ["0.0.0.0/0"]
-    }
+    allowed_port                    = "80"
 
-    ingress {
-        from_port   = -1
-        to_port     = -1
-        protocol    = "icmp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    egress {
-        from_port = 0
-        to_port = 0
-        protocol = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-
+    project                         = "${var.project}"
+    environment                     = "${var.environment}"
+    name                            = "alb"
     vpc_id                          = "${module.the-vpc.vpc_id}"
-
-    tags = {
-        name                        = "${var.project}-${var.environment}-allow-ssh-from-world"
-    }
 }
 
+module "ssh-security-group" {
+    source                          = "./modules/security_group"
 
+    allowed_port                    = "22"
+
+    project                         = "${var.project}"
+    environment                     = "${var.environment}"
+    name                            = "ssh-from-world"
+    vpc_id                          = "${module.the-vpc.vpc_id}"
+}
 
 /*
 module "autoscaling_fargate" {
@@ -334,11 +276,3 @@ module "autoscaling_fargate" {
 }
 */
 
-
-
-
-# security groups
-# s3 assets
-# autoscaling ecs fargate
-# cloudfront
-# route 53 record

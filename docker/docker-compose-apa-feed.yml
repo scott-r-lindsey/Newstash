@@ -1,18 +1,25 @@
-version: '3'
+version: '3.5'
 services:
 
-    php-apa-auto-feed:
-        container_name: newstash-php-apa-feed-container
-        build: ../docker/php
-        image: newstash-php-apa-feed-image
+    php:
+        container_name: newstash-php-container
+        image: newstash-php-image
+
+        build:
+            context: ../
+            dockerfile: docker/php/Dockerfile
 
         volumes:
             - "${APP_PATH}:/var/www/html/phpapp"
 
         environment:
+            MONGODB_URL: "${MONGODB_URL}"
+            MONGODB_DB: "${MONGODB_DB}"
+
+            MAILER_URL: "${MAILER_URL}"
+
             APP_ENV: dev
             APP_SECRET: devsecretdevsecretdevsecret
-            DATABASE_URL: "mysql://bookstash:bookstash@mysql:3306/bookstash"
             DATABASE_URL: "${DATABASE_URL}"
 
             AWS_REGION: "${AWS_REGION}"
@@ -21,10 +28,8 @@ services:
             AWS_ASSOCIATE_TAG: "${AWS_ASSOCIATE_TAG}"
 
             FACEBOOK_APP_ID: "${FACEBOOK_APP_ID}"
-            GOOGLE_API_KEY: "${GOOGLE_API_KEY}"
-            GOOGLE_APP_ID: "${GOOGLE_APP_ID}"
+            FACEBOOK_SECRET: "${FACEBOOK_SECRET}"
+            GOOGLE_CLIENT_ID: "${GOOGLE_CLIENT_ID}"
+            GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET}"
             GAQ_ID: "${GAQ_ID}"
-            AMZN_AFFILIATE: "${AMZN_AFFILIATE}"
 
-        entrypoint: /usr/local/bin/php
-        command: ./bin/console newstash:apa-auto-feed --env=prod --fork -vv

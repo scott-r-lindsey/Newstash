@@ -18,7 +18,7 @@ createTunnel() {
     /usr/bin/ssh \
         -f \
         -N \
-        -R 3306:mysql:3306
+        -R *:33306:mysql:3306 \
         -L *:19922:localhost:22 \
         "$TUNNEL_USER@$TUNNEL_TARGET"
 

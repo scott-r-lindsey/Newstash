@@ -4,6 +4,8 @@ services:
     mongo:
         container_name: newstash-mongo-container
         image: mongo:4
+        ports:
+            - "27017:27017"
 
     mysql:
         container_name: newstash-mysql-container
@@ -15,7 +17,7 @@ services:
             MYSQL_USER: bookstash
             MYSQL_PASSWORD: bookstash
         ports:
-            - "${MYSQL_PORT}:3306"
+            - "3306:3306"
 
         volumes:
             - "${MYSQL_DATA_PATH}:/var/lib/mysql"

@@ -31,15 +31,12 @@ services:
     ssh:
         container_name: newstash-ssh-container
         image: newstash-ssh-image
-        build: ../docker/ssh
+        build: ../docker/ssh-mysql-tunnel
 
         environment:
             TUNNEL_TARGET: "${TUNNEL_TARGET}"
             TUNNEL_USER: "${TUNNEL_USER}"
-            TUNNEL_PORT: "${TUNNEL_PORT}"
 
-        expose:
-            - "3306"
         volumes:
             - "~/.ssh:/home/tunnel/.ssh"
 

@@ -24,3 +24,6 @@ services:
             - "${MYSQL_BINLOG_PATH}:/var/lib/mysql-binlogs"
             - "${APP_PATH}/data/conf.d:/etc/mysql/conf.d"
 
+        extra_hosts:
+            - "thehost:172.17.0.1"
+

@@ -8,6 +8,9 @@ services:
         networks:
             - newstash
 
+        ports:
+            - "27017:27017"
+
     mysql:
         container_name: newstash-mysql-container
         image: mysql:8

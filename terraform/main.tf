@@ -8,16 +8,17 @@ variable app_version                    { }
 variable aws_access_key                 { }
 variable aws_secret_key                 { }
 variable region                         { }
-variable az                             { }
+variable public_az                      { }
+variable private_azs                    { }
 
 variable ssl_cert_arn                   { }
 variable hostname                       { }
 
 variable zone_id                        { }
 
-variable vpc_cidr                       { default = "10.0.0.0/16" }
-variable public_cidr                    { default = "10.0.1.0/24" }
-variable private_cidr                   { default = "10.0.2.0/24" }
+variable vpc_cidr                       { }
+variable public_cidr                    { }
+variable private_cidrs                  { }
 
 variable fargate_cpu_units              { }
 variable fargate_memory                 { }
@@ -40,6 +41,8 @@ variable google_client_id               { }
 variable google_client_secret           { }
 variable gaq_id                         { }
 variable amzn_affiliate                 { }
+
+variable log_retention_in_days          { default = "30" }
 
 #------------------------------------------------------------------------------
 
@@ -71,6 +74,9 @@ data "template_file" "the-task-definition" {
         google_client_secret        = "${var.google_client_secret}"
         gaq_id                      = "${var.gaq_id}"
         amzn_affiliate              = "${var.amzn_affiliate}"
+
+        php-log-group               = "${local.php-log-group}"
+        nginx-log-group             = "${local.nginx-log-group}"
     }
 }
 
@@ -90,14 +96,34 @@ terraform {
 
 #------------------------------------------------------------------------------
 
+locals {
+    php-log-group           = "${var.project}-${var.environment}-php"
+    nginx-log-group         = "${var.project}-${var.environment}-nginx"
+}
+
+#------------------------------------------------------------------------------
+
+resource "aws_cloudwatch_log_group" "nginx" {
+    name              = "${local.nginx-log-group}"
+    retention_in_days = "${var.log_retention_in_days}"
+}
+
+resource "aws_cloudwatch_log_group" "php" {
+    name              = "${local.php-log-group}"
+    retention_in_days = "${var.log_retention_in_days}"
+}
+
 module "the-vpc" {
     source                          = "./modules/vpc"
     project                         = "${var.project}"
     environment                     = "${var.environment}"
-    az                              = "${var.az}"
+
+    public_az                       = "${var.public_az}"
+    private_azs                     = "${split(",", var.private_azs)}"
+
     vpc_cidr                        = "${var.vpc_cidr}"
     public_cidr                     = "${var.public_cidr}"
-    private_cidr                    = "${var.private_cidr}"
+    private_cidrs                   = "${split(",", var.private_cidrs)}"
 }
 
 module "the-nginx-ecr" {
@@ -143,7 +169,7 @@ module "main_cloudfront_distribution" {
     ssl_cert_arn                    = "${var.ssl_cert_arn}"
     hostname                        = "${var.hostname}"
 
-//    origin_alb_domain_name          = "${var.host_name}"
+    alb_domain_name                 = "${module.autoscaling_fargate.alb_dns_name}"
 }
 
 module "the-cname" {
@@ -247,12 +273,16 @@ module "ssh-security-group" {
     vpc_id                          = "${module.the-vpc.vpc_id}"
 }
 
-/*
 module "autoscaling_fargate" {
     source                          = "./modules/ecs-fargate"
 
     project                         = "${var.project}"
     environment                     = "${var.environment}"
+
+    # IAM
+    ecs_autoscaling_role_arn        = "${module.the-ecs-autoscaling-role.role_arn}"
+    ecs_execution_role_arn          = "${module.the-ecs-execution-role.role_arn}"
+    ecs_task_role_arn               = "${module.the-ecs-task-role.role_arn}"
 
     # App
     task_definition                 = "${data.template_file.the-task-definition.rendered}"
@@ -261,10 +291,10 @@ module "autoscaling_fargate" {
 
     # VPC
     vpc_id                          = "${module.the-vpc.vpc_id}"
-    alb_security_groups             = []
-    alb_subnets                     = ["${module.the-vpc.private_subnet
-    ecs_security_groups             = []
-    ecs_subnets                     = []
+    alb_security_groups             = ["${module.alb-security-group.id}"]
+    alb_subnets                     = ["${module.the-vpc.private_subnet_ids}"]
+    ecs_security_groups             = ["${module.ecs-cluster-security-group.id}"]
+    ecs_subnets                     = ["${module.the-vpc.private_subnet_ids}"]
 
     # Fargate
     fargate_cpu_units               = "${var.fargate_cpu_units}"
@@ -274,5 +304,4 @@ module "autoscaling_fargate" {
     cpu_usage_down_trigger          = "${var.cpu_usage_down_trigger}"
     cpu_usage_up_trigger            = "${var.cpu_usage_up_trigger}"
 }
-*/
 

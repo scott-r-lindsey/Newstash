@@ -59,23 +59,27 @@
             }
         ],
         "essential": true,
-        "image": "${aws_account_id}.dkr.ecr.${region}.amazonaws.com/${project}-${environment}-php:${app_version}",
+        "image": "${aws_account_id}.dkr.ecr.${region}.amazonaws.com/${project}-php-${environment}:${app_version}",
         "memoryReservation": 512,
         "name": "php",
         "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
-                "awslogs-group": "${project}-${environment}-php",
+                "awslogs-group": "${php-log-group}",
                 "awslogs-region": "${region}",
-                "awslogs-stream-prefix": "php/"
+                "awslogs-stream-prefix": "php"
             }
         }
     },
     {
         "environment": [
+            {
+                "name": "RUNTIME",
+                "value": "fargate"
+            }
         ],
         "essential": true,
-        "image": "${aws_account_id}.dkr.ecr.${region}.amazonaws.com/${project}-${environment}-nginx:${app_version}",
+        "image": "${aws_account_id}.dkr.ecr.${region}.amazonaws.com/${project}-nginx-${environment}:${app_version}",
         "memoryReservation": 512,
         "name": "nginx",
         "portMappings": [
@@ -86,9 +90,9 @@
         "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
-                "awslogs-group": "${project}-${environment}-nginx",
+                "awslogs-group": "${nginx-log-group}",
                 "awslogs-region": "us-east-1",
-                "awslogs-stream-prefix": "nginx/"
+                "awslogs-stream-prefix": "nginx"
             }
         }
     }

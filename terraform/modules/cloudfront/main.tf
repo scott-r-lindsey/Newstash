@@ -2,6 +2,7 @@
 variable environment                        { }
 variable project                            { }
 
+variable alb_domain_name                    { }
 variable s3_domain_name                     { }
 variable s3_origin_access_identity          { }
 
@@ -11,9 +12,9 @@ variable hostname                           { }
 variable logging_bucket                     { }
 variable logging_prefix                     { }
 
-
 locals {
     s3_origin_id = "the-s3-origin"
+    alb_origin_id = "the-alb-origin"
 }
 
 #------------------------------------------------------------------------------
@@ -52,11 +53,25 @@ resource "aws_cloudfront_distribution" "the-cloudfront-distribution" {
         }
     }
 
+    origin {
+        domain_name = "${var.alb_domain_name}"
+        origin_id   = "${local.alb_origin_id}"
+
+        custom_origin_config {
+            http_port                   = 80
+            https_port                  = 443
+            origin_ssl_protocols        = ["TLSv1.2"]
+            origin_protocol_policy      = "http-only"
+            origin_read_timeout         = 30
+            origin_keepalive_timeout    = 5
+        }
+    }
 
     default_cache_behavior {
-        target_origin_id        = "${local.s3_origin_id}"
-        allowed_methods         = ["GET", "HEAD", "OPTIONS"],
+        target_origin_id        = "${local.alb_origin_id}"
+        allowed_methods         = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
         cached_methods          = ["GET", "HEAD", "OPTIONS"]
+
         viewer_protocol_policy  = "redirect-to-https"
 
         compress                = true
@@ -64,6 +79,76 @@ resource "aws_cloudfront_distribution" "the-cloudfront-distribution" {
         forwarded_values {
             query_string = false
             headers      = ["Access-Control-Request-Headers", "Access-Control-Request-Method", "Origin"]
+
+            cookies {
+                forward = "whitelist"
+                whitelisted_names  = ["PHPSESSID"]
+            }
+        }
+    }
+
+    ordered_cache_behavior {
+        target_origin_id        = "${local.s3_origin_id}"
+        path_pattern            = "/robots.txt"
+
+        allowed_methods         = ["GET", "HEAD"]
+        cached_methods          = ["GET", "HEAD"]
+        viewer_protocol_policy  = "https-only"
+        min_ttl                 = 0
+        default_ttl             = 86400
+        max_ttl                 = 31536000
+        compress                = "true"
+
+        forwarded_values {
+            query_string            = "false"
+            headers                 = []
+            query_string_cache_keys = []
+
+            cookies {
+                forward = "none"
+            }
+        }
+    }
+
+    ordered_cache_behavior {
+        target_origin_id        = "${local.s3_origin_id}"
+        path_pattern            = "/sitemap.xml"
+
+        allowed_methods         = ["GET", "HEAD"]
+        cached_methods          = ["GET", "HEAD"]
+        viewer_protocol_policy  = "https-only"
+        min_ttl                 = 0
+        default_ttl             = 86400
+        max_ttl                 = 31536000
+        compress                = "true"
+
+        forwarded_values {
+            query_string            = "false"
+            headers                 = []
+            query_string_cache_keys = []
+
+            cookies {
+                forward = "none"
+            }
+        }
+    }
+
+    ordered_cache_behavior {
+        target_origin_id        = "${local.s3_origin_id}"
+        path_pattern            = "/img/blog/*"
+
+        allowed_methods         = ["GET", "HEAD"]
+        cached_methods          = ["GET", "HEAD"]
+        viewer_protocol_policy  = "https-only"
+        min_ttl                 = 0
+        default_ttl             = 86400
+        max_ttl                 = 31536000
+        compress                = "true"
+
+        forwarded_values {
+            query_string            = "false"
+            headers                 = []
+            query_string_cache_keys = []
 
             cookies {
                 forward = "none"

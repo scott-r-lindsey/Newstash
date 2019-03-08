@@ -99,6 +99,7 @@ resource "aws_ecs_service" "the-ecs-service" {
     network_configuration {
         security_groups = ["${var.ecs_security_groups}"]
         subnets         = ["${var.ecs_subnets}"]
+        assign_public_ip = true
     }
 }
 

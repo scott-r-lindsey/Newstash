@@ -33,3 +33,28 @@ services:
             GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET}"
             GAQ_ID: "${GAQ_ID}"
 
+        networks:
+            - newstash
+
+    ssh:
+        container_name: newstash-ssh-container
+        image: newstash-ssh-image
+        build: ../docker/ssh-mongo-tunnel
+
+        environment:
+            TUNNEL_TARGET: "${TUNNEL_TARGET}"
+            TUNNEL_USER: "${TUNNEL_USER}"
+
+        volumes:
+            - "~/.ssh:/home/tunnel/.ssh"
+
+        networks:
+            - newstash
+
+        expose:
+            - "27017"
+
+
+networks:
+    newstash:
+        name: "newstash"

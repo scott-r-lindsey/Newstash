@@ -8,7 +8,7 @@ variable app_version                    { }
 variable aws_access_key                 { }
 variable aws_secret_key                 { }
 variable region                         { }
-variable public_az                      { }
+variable public_azs                     { }
 variable private_azs                    { }
 
 variable ssl_cert_arn                   { }
@@ -17,7 +17,7 @@ variable hostname                       { }
 variable zone_id                        { }
 
 variable vpc_cidr                       { }
-variable public_cidr                    { }
+variable public_cidrs                   { }
 variable private_cidrs                  { }
 
 variable fargate_cpu_units              { }
@@ -118,12 +118,12 @@ module "the-vpc" {
     project                         = "${var.project}"
     environment                     = "${var.environment}"
 
-    public_az                       = "${var.public_az}"
-    private_azs                     = "${split(",", var.private_azs)}"
+    public_azs                      = "${split(",",var.public_azs)}"
+    //private_azs                     = "${split(",", var.private_azs)}"
 
     vpc_cidr                        = "${var.vpc_cidr}"
-    public_cidr                     = "${var.public_cidr}"
-    private_cidrs                   = "${split(",", var.private_cidrs)}"
+    public_cidrs                    = "${split(",",var.public_cidrs)}"
+    //private_cidrs                   = "${split(",", var.private_cidrs)}"
 }
 
 module "the-nginx-ecr" {
@@ -214,27 +214,27 @@ module "the-ecs-task-role" {
     policy_attachment_name          = "${var.project}-${var.environment}-ECSTaskPolicyAttachement"
 }
 
-module "mysql-from-private-security-group" {
+module "mysql-from-ecs-security-group" {
     source                          = "./modules/security_group"
 
     allowed_port                    = "3306"
 
     project                         = "${var.project}"
     environment                     = "${var.environment}"
-    name                            = "mysql-from-private"
+    name                            = "mysql-from-ecs"
     vpc_id                          = "${module.the-vpc.vpc_id}"
 
     allowed_security_groups         = ["${module.ecs-cluster-security-group.id}"]
 }
 
-module "mongo-from-private-security-group" {
+module "mongo-from-ecs-security-group" {
     source                          = "./modules/security_group"
 
     allowed_port                    = "27017"
 
     project                         = "${var.project}"
     environment                     = "${var.environment}"
-    name                            = "mongo-from-private"
+    name                            = "mongo-from-ecs"
     vpc_id                          = "${module.the-vpc.vpc_id}"
 
     allowed_security_groups         = ["${module.ecs-cluster-security-group.id}"]
@@ -292,9 +292,9 @@ module "autoscaling_fargate" {
     # VPC
     vpc_id                          = "${module.the-vpc.vpc_id}"
     alb_security_groups             = ["${module.alb-security-group.id}"]
-    alb_subnets                     = ["${module.the-vpc.private_subnet_ids}"]
+    alb_subnets                     = ["${module.the-vpc.public_subnet_ids}"]
     ecs_security_groups             = ["${module.ecs-cluster-security-group.id}"]
-    ecs_subnets                     = ["${module.the-vpc.private_subnet_ids}"]
+    ecs_subnets                     = ["${module.the-vpc.public_subnet_ids}"]
 
     # Fargate
     fargate_cpu_units               = "${var.fargate_cpu_units}"

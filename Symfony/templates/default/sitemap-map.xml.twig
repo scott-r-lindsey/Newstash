@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <sitemap>
+      <loc>https://{{hostname}}/sitemaps/sitemap-static.xml.gz</loc>
+      <lastmod>{{ 'now'|date('c') }}</lastmod>
+   </sitemap>
+{% for file in files %}
+   <sitemap>
+      <loc>https://{{hostname}}/sitemaps/sitemap-urls-{{ file }}.xml.gz</loc>
+      <lastmod>{{ 'now'|date('c') }}</lastmod>
+   </sitemap>
+{% endfor %}
+</sitemapindex>

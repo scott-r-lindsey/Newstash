@@ -77,7 +77,7 @@ resource "aws_cloudfront_distribution" "the-cloudfront-distribution" {
         compress                = true
 
         forwarded_values {
-            query_string = false
+            query_string = true
             headers      = ["Access-Control-Request-Headers", "Access-Control-Request-Method", "Origin"]
 
             cookies {
@@ -89,7 +89,7 @@ resource "aws_cloudfront_distribution" "the-cloudfront-distribution" {
 
     ordered_cache_behavior {
         target_origin_id        = "${local.s3_origin_id}"
-        path_pattern            = "/robots.txt"
+        path_pattern            = "/sitemap*"
 
         allowed_methods         = ["GET", "HEAD"]
         cached_methods          = ["GET", "HEAD"]
@@ -112,7 +112,7 @@ resource "aws_cloudfront_distribution" "the-cloudfront-distribution" {
 
     ordered_cache_behavior {
         target_origin_id        = "${local.s3_origin_id}"
-        path_pattern            = "/sitemap.xml"
+        path_pattern            = "/robots.txt"
 
         allowed_methods         = ["GET", "HEAD"]
         cached_methods          = ["GET", "HEAD"]

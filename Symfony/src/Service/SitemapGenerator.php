@@ -83,12 +83,12 @@ class SitemapGenerator
         $mongodb            = $this->mongo->getDb();
         $workCollection     = $mongodb->works;
 
-        $this->output->writeln('clearing old content...');
+        $this->writeln('clearing old content...');
         $this->clearOld();
 
         // sitemap-static.xml -------------------------------------------------
 
-        $this->output->writeln('writing sitemap-static.xml');
+        $this->writeln('writing sitemap-static.xml');
         $this->filesystem->dumpFile(
             $this->dir . '/sitemap-static.xml', self::STATIC_XML);
 
@@ -99,7 +99,7 @@ class SitemapGenerator
         $works      = [];
         $i = $ii    = 0;
 
-        $this->output->writeln('fetching from works');
+        $this->writeln('fetching from works');
         foreach ($cursor as $work) {
             $ii++;
 
@@ -123,7 +123,7 @@ class SitemapGenerator
         }
 
         $i++;
-        $this->output->writeln("Writing file $i");
+        $this->writeln("Writing file $i");
         $this->writeSitemapFile($i, $urls);
 
         // sitemap.xml -------------------------------------------------------
@@ -136,13 +136,13 @@ class SitemapGenerator
             ]
         );
 
-        $this->output->writeln("Writing sitemap.xml");
+        $this->writeln("Writing sitemap.xml");
         $this->filesystem->dumpFile(
             $this->dir . '/sitemap.xml', $rendered);
 
         // gzip each file
 
-        $this->output->writeln("gzipping files");
+        $this->writeln("gzipping files");
         $this->gzipFiles();
 
         // return array -------------------------------------------------------

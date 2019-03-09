@@ -14,7 +14,7 @@ use Psr\Log\LoggerInterface;
 class News{
 
     private $logger;
-    private $em;
+    private $mongo;
 
     public function __construct(
         LoggerInterface $logger,

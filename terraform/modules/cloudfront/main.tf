@@ -78,7 +78,7 @@ resource "aws_cloudfront_distribution" "the-cloudfront-distribution" {
 
         forwarded_values {
             query_string = true
-            headers      = ["Access-Control-Request-Headers", "Access-Control-Request-Method", "Origin", "Host"]
+            headers      = ["Access-Control-Request-Headers", "Access-Control-Request-Method", "Host", "Origin"]
 
             cookies {
                 forward = "whitelist"

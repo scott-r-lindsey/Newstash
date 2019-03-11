@@ -1,5 +1,9 @@
 <?php
 
+$_SERVER['REQUEST_SCHEME'] = 'on';
+$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
+$_SERVER['REQUEST_SCHEME'] = 'https';
+
 use App\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;

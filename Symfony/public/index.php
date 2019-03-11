@@ -1,8 +1,11 @@
 <?php
 
-$_SERVER['REQUEST_SCHEME'] = 'on';
-$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
-$_SERVER['REQUEST_SCHEME'] = 'https';
+$_ENV['HTTP_X_FORWARDED_PROTO']         = 'https';
+$_ENV['HTTP_X_FORWARDED_PORT']          = '443';
+$_ENV['REQUEST_SCHEME']                 = 'https';
+$_SERVER['REQUEST_SCHEME']              = 'on';
+$_SERVER['HTTP_X_FORWARDED_PROTO']      = 'https';
+$_SERVER['REQUEST_SCHEME']              = 'https';
 
 use App\Kernel;
 use Symfony\Component\Debug\Debug;

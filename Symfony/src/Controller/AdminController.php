@@ -10,6 +10,9 @@ use App\Repository\PostRepository;
 use App\Service\Mongo\News;
 use App\Service\PostManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Http\Message\MessageFactory;
+use Http\Message\ResponseFactory;
+use Http\Client\HttpAsyncClient;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -115,6 +118,8 @@ class AdminController extends AbstractController
      * @Template()
      */
     public function blogEdit(
+        MessageFactory $messageFactory,
+        HttpAsyncClient $client,
         UserInterface $user,
         EntityManagerInterface $em,
         PostRepository $postRepository,
@@ -161,14 +166,22 @@ class AdminController extends AbstractController
                     ->setUser($user);
 
                 if ($image){
-                    $path = $projectDir . '/web/img/blog/' . $image;
 
-                    if (file_exists($path)){
-                        list($width, $height, $type, $attr) = getimagesize($path);
+                    $url = "https://" . $request->getHost() . '/img/blog/' . $image;
+
+                    $imageRequest       = $messageFactory->createRequest('GET', $url);
+                    $imageResponse      = $client->sendRequest($imageRequest);
+
+                    if (200 === $imageResponse->getStatusCode()) {
+                        $body = $imageResponse->getBody();
+
+                        list($width, $height, $type, $attr) = getimagesizefromstring((string)$body);
+
                         $post->setImage($image);
                         $post->setImageX($width);
                         $post->setImageY($height);
                     }
+
                 }
 
                 if ('publish' == strtolower($submit)){

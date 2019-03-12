@@ -70,7 +70,7 @@
                                 </strong>
                             </div>
                             <div class="text">
-                                &#8220;{{ item.comment.text | truncate(100, true) }}&#8221;
+                                {{ item.comment.text | truncate(100, true) }}
                             </div>
                             <div class="out">
                                 <a href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}#comment-{{ item.comment.id }}">VIEW IN CONVERSATION</a>
@@ -83,8 +83,7 @@
                             <img class="avatar" src="{{ item.user.avatarUrl80 }}" />
                             <strong>{{ item.user.first_name }} <br />commented </strong><br />
                             <div class="text">
-                                &#8220;
-                                {{ item.comment.text | truncate(100, true) }}&#8221;
+                                {{ item.comment.text | truncate(100, true) }}
                             </div>
                             <div class="out">
                                 <a href="{{ path('blog_post', {'post_id': item.post.id, 'slug': item.post.slug}) }}#comment-{{ item.comment.id }}">VIEW IN CONVERSATION</a>
@@ -113,7 +112,7 @@
                                         blogged
                                     </div>
                                     <div class="title">
-                                        &#8220;{{ item.post.title }}&#8221;
+                                        {{ item.post.title }}
                                     </div>
                                 </div>
                             </div>

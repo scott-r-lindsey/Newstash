@@ -21,13 +21,13 @@
         {% if hasPubPrice and hasAmznPrice %}
             ${{ edition.listPrice }} |
             <b>${{ edition.amznPrice }}*</b> at
-            <a href="{% spaceless %}{{ include( 'fragment/amznLink.html.twig', { 'asin': edition.asin  }) }}{% endspaceless %}" data-bstsh-object="outClickLogger" data-outlink-type="amazon">Amazon</a> 
+            <a href="{% spaceless %}{{ include( 'fragment/amznLink.html.twig', { 'asin': edition.asin  }) }}{% endspaceless %}" data-bstsh-object="outClickLogger" data-outlink-type="amazon" target="_blank">Amazon</a> 
             <span class="disclaimer">(* as of {{ edition.amznUpdatedAt|date("F jS") }})</a></span>
         {% elseif hasPubPrice and not hasAmznPrice %}
             ${{ edition.listPrice }} (list price)
         {% elseif not hasPubPrice and hasAmznPrice %}
             <b>${{ edition.amznPrice }}*</b> at
-            <a href="{% spaceless %}{{ include( 'fragment/amznLink.html.twig', { 'asin': edition.asin  }) }}{% endspaceless %}" data-bstsh-object="outClickLogger" data-outlink-type="amazon">Amazon</a> 
+            <a href="{% spaceless %}{{ include( 'fragment/amznLink.html.twig', { 'asin': edition.asin  }) }}{% endspaceless %}" data-bstsh-object="outClickLogger" data-outlink-type="amazon" target="_blank">Amazon</a> 
             <span class="disclaimer">(* as of {{ edition.amznUpdatedAt|date("F jS") }})</a></span>
         {% else %}
             {% if edition.format.description starts with 'Kindle' %}
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <a href="{% spaceless %}{{ include( 'fragment/amznLink.html.twig', { 'asin': edition.asin  }) }}{% endspaceless %}" data-bstsh-object="outClickLogger" data-outlink-type="amazon">
+    <a href="{% spaceless %}{{ include( 'fragment/amznLink.html.twig', { 'asin': edition.asin  }) }}{% endspaceless %}" data-bstsh-object="outClickLogger" data-outlink-type="amazon" target="_blank">
         <div class="amzn-link {{ selected }}" data-bstsh-asin="{{ edition.asin }}" title="{{ pricestring }}">
             <span>Available at</span>
             <img src="/img/amazon.svg" width="90" height="18" />

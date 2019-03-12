@@ -249,17 +249,32 @@ window.bookstash = bookstash;
                     });
                 }
                 else{
-                    var url = this.href;
-                    event.preventDefault();
-                    ga('send', {
-                        'hitType': 'event',          // Required.
-                        'eventCategory': 'link',     // Required.
-                        'eventAction': 'click',      // Required.
-                        'eventLabel': $(conf.elm).attr('data-outlink-type'),
-                        'hitCallback': function() {
-                            document.location = url;
-                        }
-                    });
+                    // if the link has was not going to open in a new window,
+                    // we handle the loading after our GAQ call
+
+                    if ($(conf.elm).attr('target')) {
+                        var url = this.href;
+                        ga('send', {
+                            'hitType': 'event',          // Required.
+                            'eventCategory': 'link',     // Required.
+                            'eventAction': 'click',      // Required.
+                            'eventLabel': $(conf.elm).attr('data-outlink-type')
+                        });
+                    }
+                    else{
+                        var url = this.href;
+                        event.preventDefault();
+                        ga('send', {
+                            'hitType': 'event',          // Required.
+                            'eventCategory': 'link',     // Required.
+                            'eventAction': 'click',      // Required.
+                            'eventLabel': $(conf.elm).attr('data-outlink-type'),
+                            'hitCallback': function() {
+                                document.location = url;
+                            }
+                        });
+                    }
+
                 }
             });
         }

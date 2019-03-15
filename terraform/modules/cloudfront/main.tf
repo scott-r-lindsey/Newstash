@@ -7,7 +7,7 @@ variable s3_domain_name                     { }
 variable s3_origin_access_identity          { }
 
 variable ssl_cert_arn                       { }
-variable hostname                           { }
+variable hostnames                          { type = "list" }
 
 variable logging_bucket                     { }
 variable logging_prefix                     { }
@@ -29,7 +29,7 @@ resource "aws_cloudfront_distribution" "the-cloudfront-distribution" {
 
     enabled = true
 
-    aliases = ["${var.hostname}"]
+    aliases = ["${var.hostnames}"]
 
     viewer_certificate {
         acm_certificate_arn             = "${var.ssl_cert_arn}"

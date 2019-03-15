@@ -13,6 +13,7 @@ variable private_azs                    { }
 
 variable ssl_cert_arn                   { }
 variable hostname                       { }
+variable legacy_hostname                { default = "bookstash.scott.to" }
 
 variable zone_id                        { }
 
@@ -167,7 +168,7 @@ module "main_cloudfront_distribution" {
     logging_prefix                  = "cloudfront"
 
     ssl_cert_arn                    = "${var.ssl_cert_arn}"
-    hostname                        = "${var.hostname}"
+    hostnames                       = ["${var.hostname}", "${var.legacy_hostname}"]
 
     alb_domain_name                 = "${module.autoscaling_fargate.alb_dns_name}"
 }

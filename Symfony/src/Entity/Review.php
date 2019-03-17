@@ -105,6 +105,20 @@ class Review{
         }
     }
 
+    public function getSlug(): string
+    {
+        $title      = $this->getTitle();
+        $slug       = mb_strimwidth(trim(strtolower($title ?? '')), 0, 150);
+
+        $slug = preg_replace('/[^a-zA-Z0-9 ]/', '', $slug);
+        $slug = strtolower($slug);
+        $slug = str_replace(' ', '-', $slug);
+
+        return $slug;
+    }
+
+    //-------------------------------------------------------------------------------
+
     public function getId(): ?int
     {
         return $this->id;

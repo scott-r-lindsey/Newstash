@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Review;
+use App\Entity\Work;
 use App\Repository\ReviewRepository;
 use App\Repository\ScoreRepository;
 use App\Repository\WorkRepository;
 use App\Service\ReviewManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +17,34 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WorkController extends AbstractController
 {
+
+    // /book/review/{work}/{review}/{slug} // GET
+    /**
+     * @Route("/book/{work}/{review}/{slug}", requirements={"work" = "^\d+$", "review" = "^\d+$"}, name="work_review",  methods={"GET"})
+     * @Template()
+     */
+    public function workReview(
+        Work $work,
+        Review $review,
+        string $slug
+    ): array
+    {
+
+        $correct_slug = $review->getSlug();
+
+        $url = $this->generateUrl('work_review', [
+            'work'      => $work->getId(),
+            'review'    => $review->getId(),
+            'slug'      => $correct_slug
+        ]);
+
+        if ($slug != $correct_slug){
+            $this->redirect($url, 301);
+        }
+
+
+        return [];
+    }
 
     /**
      * @Route("/book/{work_id}/{slug}", requirements={"work_id" = "^\d+$"}, name="work",  methods={"GET"})
@@ -63,6 +94,8 @@ class WorkController extends AbstractController
      * @Route("/book/reviews/{work_id}/{sort}/{page}/{stars}", requirements={"work_id" = "^\d+$", "sort" = "^new|old|liked$", "page" = "^\d+$", "stars" = "^\d+|any$"}, name="work_reviews_bystar", methods={"GET"})
      * @Route("/book/reviews/{work_id}/{sort}/{page}/{stars}/{user_id}", requirements={"work_id" = "^\d+$", "sort" = "^new|old|liked$", "page" = "^\d+$", "stars" = "^\d+|any$", "user_id" = "^\d+$"}, name="work_reviews_byuser", methods={"GET"})
      * @Template()
+     *
+     *
      */
     public function reviews(
         ReviewManager $reviewManager,

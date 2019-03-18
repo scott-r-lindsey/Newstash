@@ -1,7 +1,7 @@
 # Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
 fos_rest:
     exception:
-        enabled: true
+        enabled: false
         exception_controller: 'App\Controller\ApiController::handleException'
 
     access_denied_listener:

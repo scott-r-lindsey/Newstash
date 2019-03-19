@@ -4,19 +4,42 @@ const path = require('path');
 Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
-
-    .addEntry('app', './assets/js/app.js')
-    .addEntry('admin', './assets/js/admin.js')
-
-    //.autoProvidejQuery()
-    .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
-    .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
+    .enableLessLoader()
+    .enableSassLoader()
+
+    .enableSingleRuntimeChunk()
+    .enableBuildNotifications()
+
+    // suggested in
+    // https://medium.com/@lmatte7/how-to-use-react-with-symfony-4-88fb27abf5e5
+    //.enablePostCssLoader()
+
+    // regular site
+    .addEntry('app', './assets/js/desktop/app.js')
+    .addEntry('admin', './assets/js/desktop/admin.js')
+
+    // mobile
+    .enableReactPreset()
+    .addEntry('mobileApp', './assets/js/mobile/clientSideEntryPoint.js')
+
+
+/*
+
+    .configureBabel(function(babelConfig) {
+      // add additional presets
+//      babelConfig.presets.push('es2015');
+//      babelConfig.presets.push('stage-0');
+      //babelConfig.presets.push('@babel/preset-stage-0')
+      //babelConfig.presets.push('@babel/plugin-proposal-function-bind')
+      babelConfig.presets.push('@babel/plugin-proposal-function-bind')
+    })
+*/
+
 ;
 
-Encore.enableLessLoader()
 
 let config = Encore.getWebpackConfig();
 

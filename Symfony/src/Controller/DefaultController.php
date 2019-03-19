@@ -11,6 +11,30 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
+    /**
+     * @Route(
+     *      "/",
+     *      name="mobile_home",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template()
+     */
+    public function mobile_news(
+        Request $request,
+        News $news
+    ): array
+    {
+        $idlt = $request->get('idlt', false);
+
+        if ($idlt){
+            $items = $news->getNews(['idlt' => $idlt ]);
+        }
+        else{
+            $items = $news->getNews([]);
+        }
+
+        return compact('items');
+    }
 
     /**
      * @Route("/", name="home", methods={"GET"})

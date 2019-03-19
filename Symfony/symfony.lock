@@ -146,11 +146,20 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "limenius/react-bundle": {
+        "version": "v3.0.1"
+    },
+    "limenius/react-renderer": {
+        "version": "v3.0.0"
+    },
     "misterion/ko-process": {
         "version": "v0.5.3"
     },
     "mongodb/mongodb": {
         "version": "1.4.2"
+    },
+    "nacmartin/phpexecjs": {
+        "version": "v2.0.0"
     },
     "nikic/php-parser": {
         "version": "v4.2.0"

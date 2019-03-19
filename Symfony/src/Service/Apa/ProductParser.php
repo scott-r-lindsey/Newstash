@@ -79,7 +79,7 @@ class ProductParser
         $edition    = $this->parseMetaData($sxe, $edition);
         $asin       = $edition->getAsin();
 
-        $valid = $this->rejector->evaluate($sxe, $edition);
+//        $valid = $this->rejector->evaluate($sxe, $edition);
 
         $this->em->flush();
 
@@ -215,36 +215,45 @@ class ProductParser
         }
 
         // --------------------------------------------------------------------
-        // alternative versions
+        // check if this is a product we want
+        $valid = $this->rejector->evaluate($sxe, $edition);
 
-        $foundAsins = [];
-        if (isset($sxe->AlternateVersions)){
-            $foundAsins = [];
-
-            foreach ($sxe->AlternateVersions->AlternateVersion as $a){
-                $foundAsins[]    = (string)$a->ASIN;
-            }
-
-            $edition->setAmznAlternatives(implode(',', $foundAsins));
-            $this->editionManager->stubEditions(($foundAsins));
-        }
         // --------------------------------------------------------------------
-        // similar products
+        // we do not add alternate or similar products if rejected
+        if ($valid) {
 
-        $foundAsins = [];
-        if (($sxe->SimilarProducts) && ($sxe->SimilarProducts->SimilarProduct)){
+            // ----------------------------------------------------------------
+            // alternative versions
 
-            foreach ($sxe->SimilarProducts->SimilarProduct as $a){
-                $foundAsins[]    = (string)$a->ASIN;
+            $foundAsins = [];
+            if (isset($sxe->AlternateVersions)){
+                $foundAsins = [];
+
+                foreach ($sxe->AlternateVersions->AlternateVersion as $a){
+                    $foundAsins[]    = (string)$a->ASIN;
+                }
+
+                $edition->setAmznAlternatives(implode(',', $foundAsins));
+                $this->editionManager->stubEditions(($foundAsins));
             }
-        }
+            // ----------------------------------------------------------------
+            // similar products
 
-        if (count($foundAsins)) {
-            $this->editionManager->stubEditions(($foundAsins));
-            $this->editionManager->similarUpdate(
-                $edition->getAsin(),
-                $foundAsins
-            );
+            $foundAsins = [];
+            if (($sxe->SimilarProducts) && ($sxe->SimilarProducts->SimilarProduct)){
+
+                foreach ($sxe->SimilarProducts->SimilarProduct as $a){
+                    $foundAsins[]    = (string)$a->ASIN;
+                }
+            }
+
+            if (count($foundAsins)) {
+                $this->editionManager->stubEditions(($foundAsins));
+                $this->editionManager->similarUpdate(
+                    $edition->getAsin(),
+                    $foundAsins
+                );
+            }
         }
 
         // --------------------------------------------------------------------

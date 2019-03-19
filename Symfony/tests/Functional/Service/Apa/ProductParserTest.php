@@ -71,19 +71,41 @@ class ProductParserTest extends BaseTest
 
     public function testRejectedNullFormat(): void
     {
+        $em                 = self::$container->get('doctrine')->getManager();
+        $dbh                = $em->getConnection();
+
         $edition = $this->loadEdition('product-sample-no-binding.xml');
 
         $this->assertTrue(
             $edition->getRejected()
         );
+
+        // validate similar edition count
+        $count = $dbh->query('SELECT COUNT(*) as c FROM similar_edition')->fetchAll()[0]['c'];
+
+        $this->assertEquals(
+            0,
+            $count
+        );
     }
 
     public function testRejectedUnknownFormat(): void
     {
+        $em                 = self::$container->get('doctrine')->getManager();
+        $dbh                = $em->getConnection();
+
         $edition = $this->loadEdition('product-sample-weird-format.xml');
 
         $this->assertTrue(
             $edition->getRejected()
+        );
+
+        // validate similar edition count
+        $count = $dbh->query('SELECT COUNT(*) as c FROM similar_edition')->fetchAll()[0]['c'];
+
+        $this->assertEquals(
+            0,
+            $count
         );
     }
 

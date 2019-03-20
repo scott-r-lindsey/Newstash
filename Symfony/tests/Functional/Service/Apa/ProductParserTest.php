@@ -80,6 +80,14 @@ class ProductParserTest extends BaseTest
             $edition->getRejected()
         );
 
+        // validate edition count
+        $count = $dbh->query('SELECT COUNT(*) as c FROM edition')->fetchAll()[0]['c'];
+
+        $this->assertEquals(
+            1,
+            $count
+        );
+
         // validate similar edition count
         $count = $dbh->query('SELECT COUNT(*) as c FROM similar_edition')->fetchAll()[0]['c'];
 
@@ -98,6 +106,14 @@ class ProductParserTest extends BaseTest
 
         $this->assertTrue(
             $edition->getRejected()
+        );
+
+        // validate edition count
+        $count = $dbh->query('SELECT COUNT(*) as c FROM edition')->fetchAll()[0]['c'];
+
+        $this->assertEquals(
+            1,
+            $count
         );
 
         // validate similar edition count

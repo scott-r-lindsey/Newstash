@@ -18,10 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class WorkController extends AbstractController
 {
 
-    // /book/review/{work}/{review}/{slug} // GET
     /**
      * @Route("/book/{work}/{review}/{slug}", requirements={"work" = "^\d+$", "review" = "^\d+$"}, name="work_review",  methods={"GET"})
      * @Template()
+     *
+     * // STUB for future work review page
      */
     public function workReview(
         Work $work,
@@ -47,6 +48,26 @@ class WorkController extends AbstractController
     }
 
     /**
+     * @Route(
+     *      "/book/{work}/{slug}",
+     *      name="mobile_work",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template()
+     */
+    public function mobile_work(
+        Work $work
+    ): array
+    {
+
+
+        return ['props' => []];
+    }
+
+
+
+
+    /**
      * @Route("/book/{work_id}/{slug}", requirements={"work_id" = "^\d+$"}, name="work",  methods={"GET"})
      * @Template()
      */
@@ -66,6 +87,7 @@ class WorkController extends AbstractController
             throw $this->createNotFoundException('The book does not exist');
         }
 
+        // automatically correct slug if wrong via 301
         $front_edition = $work->getFrontEdition();
         $correct_slug = $front_edition->updateSlug();
 

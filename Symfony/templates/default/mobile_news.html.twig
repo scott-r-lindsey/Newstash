@@ -1,6 +1,12 @@
+
 {% extends 'mobile_base.html.twig' %}
 
+{% set books = react_component_array('BooksApp', {'props': props}) %}
+
+{% block title %}
+{{ books.title is defined ? books.title | raw : '' }}
+{% endblock title %}
+
 {% block body %}
-{{ redux_store('recipesStore', initialState) }}
-{{ react_component('RecipesAppRedux') }}
+{{ books.componentHtml | raw }}
 {% endblock %}

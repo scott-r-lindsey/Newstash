@@ -33,7 +33,7 @@ class DefaultController extends AbstractController
             $items = $news->getNews([]);
         }
 
-        return compact('items');
+        return ['props' => compact('items')];
     }
 
     /**

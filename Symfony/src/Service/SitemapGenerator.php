@@ -37,7 +37,7 @@ class SitemapGenerator
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>http://booksto.love/</loc>
-        <changefreq>weekly</changefreq>
+        <changefreq>hourly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>

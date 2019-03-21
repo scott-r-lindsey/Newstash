@@ -25,18 +25,14 @@ Encore
     .enableReactPreset()
     .addEntry('mobileApp', './assets/js/mobile/clientSideEntryPoint.js')
 
-
-/*
-
     .configureBabel(function(babelConfig) {
-      // add additional presets
 //      babelConfig.presets.push('es2015');
+      babelConfig.plugins.push("@babel/plugin-proposal-class-properties");
 //      babelConfig.presets.push('stage-0');
-      //babelConfig.presets.push('@babel/preset-stage-0')
-      //babelConfig.presets.push('@babel/plugin-proposal-function-bind')
-      babelConfig.presets.push('@babel/plugin-proposal-function-bind')
+//      babelConfig.presets.push('@babel/preset-stage-0')
+//      babelConfig.presets.push('@babel/plugin-proposal-function-bind')
+//      babelConfig.presets.push('@babel/plugin-proposal-function-bind')
     })
-*/
 
 ;
 

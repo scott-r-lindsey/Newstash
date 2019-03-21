@@ -27,3 +27,40 @@ services:
         extra_hosts:
             - "thehost:172.17.0.1"
 
+    php:
+        container_name: newstash-php-container
+        image: newstash-php-image
+
+        build:
+            context: ../
+            dockerfile: docker/php/Dockerfile
+
+        volumes:
+            - "${APP_PATH}:/var/www/html/phpapp"
+
+        environment:
+            MONGODB_URL: "${MONGODB_URL}"
+            MONGODB_DB: "${MONGODB_DB}"
+
+            MAILER_URL: "${MAILER_URL}"
+
+            APP_ENV: dev
+            APP_SECRET: devsecretdevsecretdevsecret
+            DATABASE_URL: "${DATABASE_URL}"
+
+            AWS_REGION: "${AWS_REGION}"
+            AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+            AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+            AWS_ASSOCIATE_TAG: "${AWS_ASSOCIATE_TAG}"
+
+            FACEBOOK_APP_ID: "${FACEBOOK_APP_ID}"
+            FACEBOOK_SECRET: "${FACEBOOK_SECRET}"
+            GOOGLE_CLIENT_ID: "${GOOGLE_CLIENT_ID}"
+            GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET}"
+            GAQ_ID: "${GAQ_ID}"
+
+        depends_on:
+            - mysql
+            - mongo
+
+        command: sleep infinity

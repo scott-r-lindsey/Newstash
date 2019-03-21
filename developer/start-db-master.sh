@@ -32,7 +32,7 @@ start_teal
 echo ""
 echo " To shell into the running php instance:"
 echo ""
-teal "  docker exec -u www-data -it newstash-php-apa-feed-container sh"
+teal "  docker exec -u www-data -it newstash-php-container sh"
 echo ""
 end_color
 green "-------------------------------------------------------------------------------"

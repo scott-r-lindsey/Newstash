@@ -1,0 +1,9 @@
+body{
+    height: 100vh;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 65% 50%,hsla(0,0%,100%,.4) 0,hsla(0,0%,100%,0) 100%),linear-gradient(90deg,hsla(0,0%,100%,.5) 0,rgba(75,75,75,.5)),linear-gradient(180deg,#17e243 0,#1789e2)
+}
+
+header{
+    box-shadow: 1px 1px 14px rgba(50,50,50,.75);
+}

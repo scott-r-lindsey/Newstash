@@ -28,6 +28,21 @@ class SearchController extends AbstractController
     }
 
     /**
+     * @Route(
+     *      "/search/books",
+     *      name="mobile_book_search",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template()
+     */
+    public function mobileTitleSearch(
+        Request $request
+    ): array
+    {
+        return ['props' => []];
+    }
+
+    /**
      * @Route("/search/books", name="book_search", methods={"GET"})
      * @Template()
      */
@@ -67,6 +82,20 @@ class SearchController extends AbstractController
         return $mongoWork->titleSearch($work_id, $query_raw, $count, $page);
     }
 
+    /**
+     * @Route(
+     *      "/search/author",
+     *      name="mobile_author_search",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template()
+     */
+    public function mobileAuthorSearch(
+        Request $request
+    ): array
+    {
+        return ['props' => []];
+    }
 
     /**
      * @Route("/search/author", name="author_search", methods={"GET"})
@@ -85,6 +114,10 @@ class SearchController extends AbstractController
         return $mongoWork->authorSearch($query_raw, $count, $page);
     }
 
+
+
+
+
     /**
      * @Route("/search/json/typeahead", methods={"GET"});
      */
@@ -94,8 +127,15 @@ class SearchController extends AbstractController
     ): JsonResponse
     {
         $text = strtolower($request->get('query'));
+        $limit = $request->get('limit', null);
+        if ($limit) {
+            $limit = (int)$limit;
+            if ($limit > 20) {
+                $limit = 20;
+            }
+        }
 
-        $suggestions = $typeahead->findSuggestions($text);
+        $suggestions = $typeahead->findSuggestions($text, $limit);
 
         foreach ($suggestions as &$s){
             if ('author' == $s['type']){

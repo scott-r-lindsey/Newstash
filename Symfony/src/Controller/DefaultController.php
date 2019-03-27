@@ -15,7 +15,7 @@ class DefaultController extends AbstractController
      * @Route(
      *      "/",
      *      name="mobile_home",
-     *      condition="context.getMethod() in ['GET']"
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
      * )
      * @Template()
      */
@@ -57,6 +57,21 @@ class DefaultController extends AbstractController
         return compact('items');
     }
 
+
+
+
+    /**
+     * @Route("/about",
+     *      name="mobile_about",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template()
+     */
+    public function mobileAboutAction(): array
+    {
+        return ['props' => []];
+    }
+
     /**
      * @Route("/about", name="about", methods={"GET"})
      * @Template()
@@ -64,6 +79,28 @@ class DefaultController extends AbstractController
     public function aboutAction(): array
     {
         return [];
+    }
+
+
+
+
+
+
+    /**
+     * @Route("/privacy",
+     *      name="mobile_privacy",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template()
+     */
+    public function mobilePrivacyAction(
+        string $projectDir
+    ): array
+    {
+        $privacy = file_get_contents($projectDir .'/privacy.html');
+        return [
+            'privacyhtml'   => $privacy,
+        ];
     }
 
     /**
@@ -80,6 +117,24 @@ class DefaultController extends AbstractController
         ];
     }
 
+
+
+    /**
+     * @Route("/tos",
+     *      name="mobile_tos",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template()
+     */
+    public function mobileTosAction(
+        string $projectDir
+    ): array
+    {
+        $tos = file_get_contents($projectDir .'/tos.html');
+        return [
+            'tos'   => $tos,
+        ];
+    }
     /**
      * @Route("/tos", name="tos", methods={"GET"})
      * @Template()
@@ -93,6 +148,9 @@ class DefaultController extends AbstractController
             'tos'   => $tos,
         ];
     }
+
+
+
 
     /**
      * @Route("/badbrowser", methods={"GET"})

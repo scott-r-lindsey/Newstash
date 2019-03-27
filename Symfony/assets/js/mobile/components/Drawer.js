@@ -42,6 +42,9 @@ const styles = theme => ({
     textShadow: '2px 1px 2px #323232',
     marginBottom: '-4px',
   },
+  offset: {
+    paddingLeft: '30px',
+  }
 });
 
 class Drawer extends React.Component {
@@ -79,6 +82,7 @@ class Drawer extends React.Component {
         disableDiscovery={iOS}
       >
         <List disablePadding={true}>
+
           <ListItem button key="Logo Item" className={classes.logo}>
               <Typography variant="h1" className={classes.logoTypo} >
                 <Link to="/"
@@ -96,18 +100,38 @@ class Drawer extends React.Component {
 
           <Collapse in={this.state.info} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button>
-                <ListItemText primary="Blog" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="About" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="TOS" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Privacy" />
-              </ListItem>
+
+              <Link to="/blog"
+                onClick={this.props.toggle(false)}
+              >
+                <ListItem button className={classes.offset}>
+                  <ListItemText primary="Blog" />
+                </ListItem>
+              </Link>
+
+              <Link to="/about"
+                onClick={this.props.toggle(false)}
+              >
+                <ListItem button className={classes.offset}>
+                  <ListItemText primary="About" />
+                </ListItem>
+              </Link>
+
+              <Link to="/tos"
+                onClick={this.props.toggle(false)}
+              >
+                <ListItem button className={classes.offset}>
+                  <ListItemText primary="TOS" />
+                </ListItem>
+              </Link>
+
+              <Link to="/privacy"
+                onClick={this.props.toggle(false)}
+              >
+                <ListItem button className={classes.offset}>
+                  <ListItemText primary="Privacy" />
+                </ListItem>
+              </Link>
             </List>
           </Collapse>
 

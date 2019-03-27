@@ -28,11 +28,12 @@ class Typeahead
     }
 
     public function findSuggestions(
-        string $query
+        string $query,
+        $limit = null
     ): Array
     {
-        $work_suggestions       = $this->workSuggestions($query);
-        $author_suggestions     = $this->authorSuggestions($query);
+        $work_suggestions       = $this->workSuggestions($query, $limit);
+        $author_suggestions     = $this->authorSuggestions($query, $limit);
 
         $suggestions = array_merge($author_suggestions, $work_suggestions);
 
@@ -40,14 +41,15 @@ class Typeahead
             return strnatcmp( $a['value'], $b['value']);
         });
 
-        return $suggestions;
+        return array_slice($suggestions, 0, $limit);
     }
 
     public function authorSuggestions(
-        string $query
+        string $query,
+        $limit = null
     ): array
     {
-        $limit              = 20;
+        ($limit) || ($limit = 20);
         $minlen             = 3;
         $mongodb            = $this->mongo->getDb();
         $typeahead_author   = $mongodb->typeahead_author;
@@ -80,11 +82,12 @@ class Typeahead
     }
 
     public function workSuggestions(
-        string $query
+        string $query,
+        $limit = null
     ): array
     {
 
-        $limit              = 20;
+        ($limit) || ($limit = 20);
         $mongodb            = $this->mongo->getDb();
         $typeahead_work     = $mongodb->typeahead_work;
 

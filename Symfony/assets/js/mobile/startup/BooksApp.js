@@ -2,9 +2,15 @@ import React from "react";
 import { Route } from "react-router-dom";
 import classNames from 'classnames';
 
-import Home from "../components/Home";
-import Work from "../components/Work";
+import About from "../components/About";
+import Autocomplete from "../components/Autocomplete";
 import Drawer from "../components/Drawer";
+import Home from "../components/Home";
+import Privacy from "../components/Privacy";
+import SearchAuthor from "../components/SearchAuthor";
+import SearchTitle from "../components/SearchTitle";
+import Tos from "../components/Tos";
+import Work from "../components/Work";
 
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,6 +19,10 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import SearchIcon from '@material-ui/icons/Search';
+
+import InputBase from '@material-ui/core/InputBase';
+
 
 import theme from "./theme";
 import layout from '../../../css/mobile/layout.scss';
@@ -20,6 +30,14 @@ import layout from '../../../css/mobile/layout.scss';
 
 const styles = theme => ({
   appBarSpacer: theme.mixins.toolbar,
+
+  grow: {
+    flexGrow: 1,
+  },
+  inputRoot: {
+  },
+  inputInput: {
+  },
 });
 
 class BooksApp extends React.Component {
@@ -58,14 +76,20 @@ class BooksApp extends React.Component {
               >
                 <MenuIcon />
               </IconButton>
+              <Autocomplete />
             </Toolbar>
+
           </AppBar>
 
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
 
             <Route path="/" exact component={Home} />
-            <Route path="/book/:id/:slug" exact component={Work} />
+            <Route path="/about" exact component={About} />
+            <Route path="/privacy" exact component={Privacy} />
+            <Route path="/tos" exact component={Tos} />
+            <Route path="/search/books" exact component={SearchTitle} />
+            <Route path="/search/author" exact component={SearchAuthor} />
 
           </main>
         </MuiThemeProvider>

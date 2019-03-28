@@ -54,7 +54,7 @@ class BooksApp extends React.Component {
 
   render() {
 
-    const { classes } = this.props;
+    const { classes, initialProps } = this.props;
 
     return (
       <div>
@@ -90,6 +90,7 @@ class BooksApp extends React.Component {
             <Route path="/tos" exact component={Tos} />
             <Route path="/search/books" exact component={SearchTitle} />
             <Route path="/search/author" exact component={SearchAuthor} />
+            <Route path="/work/yada" exact render={(props) => <Home {...props} initialProps={initialProps} />} />
 
           </main>
         </MuiThemeProvider>

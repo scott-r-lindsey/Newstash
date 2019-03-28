@@ -104,6 +104,7 @@ class SearchAutosuggest extends React.Component {
     if (this.state.search.length > 2){
       this.props.history.push(default_search + this.state.search);
       this.setState({search: ''});
+
       document.activeElement.blur();
     }
   };

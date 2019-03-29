@@ -17,6 +17,69 @@ class NewsTest extends BaseTest
 {
     protected $DBSetup = true;
 
+    public function testGetNews(): void
+    {
+
+        $mongo              = self::$container->get('test.App\Service\Mongo');
+        $mongodb            = $mongo->getDb();
+        $em                 = self::$container->get('doctrine')->getManager();
+        $workGroomer        = self::$container->get('test.App\Service\Data\WorkGroomer');
+        $news               = self::$container->get('test.App\Service\Mongo\News');
+
+        // clear out old data -------------------------------------------------
+        $mongodb->news->drop();
+
+        // build up some sample data ------------------------------------------
+        $edition            = $this->loadEditionFromXML('product-sample.xml');
+        $workGroomer->workGroomLogic('0674979850');
+
+        $em->refresh($edition);
+        $work = $edition->getWork();
+
+        $user               = $this->createUser();
+        $user
+            ->setFirstName('joe')
+            ->setLastName('blow')
+        ;
+
+        $review = new Review();
+        $review
+            ->setUser($user)
+            ->setWork($work)
+            ->setStars(2)
+            ->setTitle('good book')
+            ->setText('meh')
+            ->setIpaddr('123.456')
+            ->setUseragent('IE 12; like Blink')
+        ;
+
+        $post = $this->samplePost($user);
+        $post->setPinned(true);
+
+        $em->persist($post);
+        $em->persist($review);
+        $em->flush();
+
+
+        // --------------------------------------------------------------------
+
+        $news->newPost($post); // post is older
+        $news->newReview($review);
+
+        $results = $news->getNews([]);
+
+        // --------------------------------------------------------------------
+
+        $this->assertEquals(
+            'review',
+            $results[1]['type']
+        );
+        $this->assertEquals(
+            'post',
+            $results[0]['type']
+        );
+    }
+
     public function testEmpty(): void
     {
         $mongo              = self::$container->get('test.App\Service\Mongo');
@@ -56,6 +119,7 @@ class NewsTest extends BaseTest
         ;
 
         $post = $this->samplePost($user);
+        $post->setPinned(true);
         $em->persist($post);
 
         $em->flush();
@@ -98,7 +162,8 @@ class NewsTest extends BaseTest
                   "image"           => "some-pic.png",
                   "imageX"          => 16,
                   "imageY"          => 9,
-                ]
+                ],
+                'pinned'        => true
             ],
             $result
         );
@@ -399,7 +464,7 @@ class NewsTest extends BaseTest
         );
     }
 
-
+    // ------------------------------------------------------------------------
 
     private function samplePost(
         $user

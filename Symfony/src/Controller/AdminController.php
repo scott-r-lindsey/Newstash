@@ -141,6 +141,7 @@ class AdminController extends AbstractController
             $lead           = $request->request->get('lead');
             $fold           = $request->request->get('fold');
             $submit         = $request->request->get('submit');
+            $pinned         = $request->request->getBoolean('pinned');
 
             if (!$title){
                 $flash = "Please enter a title\n";
@@ -162,6 +163,7 @@ class AdminController extends AbstractController
                     ->setSlug($slug)
                     ->setDescription($description)
                     ->setLead($lead)
+                    ->setPinned($pinned)
                     ->setFold($fold)
                     ->setUser($user);
 
@@ -211,6 +213,7 @@ class AdminController extends AbstractController
                 'lead',
                 'post',
                 'slug',
+                'pinned',
                 'title'
             );
         }
@@ -221,6 +224,7 @@ class AdminController extends AbstractController
             'image'         => $post->getImage(),
             'lead'          => $post->getLead(),
             'post'          => $post,
+            'pinned'        => false,
             'slug'          => $post->getSlug(),
             'title'         => $post->getTitle(),
         ];

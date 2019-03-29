@@ -17,8 +17,19 @@ class Masonry extends React.Component {
       items: Array(20).fill(),
       itemWidth: this.findTargetWidth(server),
       server: server,
-      initialItems: props.initialItems,
+      items: props.initialItems,
     }
+  }
+
+  fetchAdditionalItems = () => {
+    this.props.fetchAdditionalItems(
+      items => {
+        console.log(items);
+        this.setState({
+          'items': [...this.state.items, ...items]
+        });
+      }
+    );
   }
 
   findTargetWidth(server) {
@@ -56,11 +67,17 @@ class Masonry extends React.Component {
 
   render() {
 
+    const { fetchAdditionalItems } = this.props;
+
+
     return (
       <div className="App">
 
         <MasonryLayout
           id="masonry-layout"
+          infiniteScrollContainer="main-container"
+          infiniteScroll={this.fetchAdditionalItems}
+          infiniteScrollDistance={700}
           sizes={ [
             { columns: 2, gutter: 20 },
             { mq: '768px', columns: 3, gutter: 20 },
@@ -72,7 +89,7 @@ class Masonry extends React.Component {
           }}
         >
 
-          {this.state.initialItems.map(item  => {
+          {this.state.items.map(item  => {
               let height= 100;
 
               return (

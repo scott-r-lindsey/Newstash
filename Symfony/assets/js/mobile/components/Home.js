@@ -15,22 +15,67 @@ export default class Home extends React.Component {
 
   state = {
     initialNews: [],
+    lastFetched: '',
+    hasmore: true,
   };
 
+  loading = false;
 
   componentDidMount() {
+
     if (this.state.initialNews.length == 0){
 
       fetch(api)
         .then(response => response.json())
-        .then(data => this.setState({ initialNews: data.result.items }));
+        .then(data =>
+          this.setState({
+            initialNews: this.fixPostItems(data.result.items),
+            lastFetched: data.result.items[data.result.items.length -1]._id.$id,
+            hasmore: data.result.hasmore,
+        }));
     }
   }
 
-  fetchMoreNews() {
-    return [];
+  generateRandom = () => {
+    return Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
   }
 
+  fixPostItems = (items) => {
+
+    let itemsWithSpacers = [];
+
+    for (var item of items) {
+      itemsWithSpacers.push(item);
+      if (item.type === 'post') {
+        itemsWithSpacers.push({
+          type: 'post-spacer',
+          sig: this.generateRandom(),
+        });
+      }
+    }
+
+    console.log(itemsWithSpacers);
+    return itemsWithSpacers;
+  }
+
+  fetchMoreNews = (handler) => {
+
+    if (this.state.hasmore && !this.loading) {
+      this.loading = true;
+      fetch(api + '?idlt=' + this.state.lastFetched)
+        .then(response => response.json())
+        .then(data => {
+          this.loading = false;
+          this.setState({
+            lastFetched: data.result.items[data.result.items.length -1]._id.$id,
+            hasmore: data.result.hasmore,
+          });
+          let items = this.fixPostItems(data.result.items);
+          handler(items);
+        })
+    }
+  }
 
   render() {
 
@@ -45,12 +90,20 @@ export default class Home extends React.Component {
             ? <b>All the loading</b>
             : <Masonry
                 initialItems={this.state.initialNews}
-                fetchAdditionalItems={this.fetchMoreNews.bind()}
+                fetchAdditionalItems={this.fetchMoreNews}
             />
+        }
+        { this.state.hasmore ||
+          <div style={{
+              textAlign: 'center',
+              padding: '60px 0',
+              opacity: '.5',
+          }}>
+            <em> Copyright &copy; { new Date().getFullYear() } Books to Love</em>
+          </div>
         }
       </div>
     );
-
   }
 }
 

@@ -97,7 +97,6 @@ class MasonryItem extends React.Component {
     if (item.work) {
       factor = this.findImgFactor(item.work.coverX);
     }
-    console.log(item);
 
     switch(item.type) {
       case 'rating':
@@ -172,26 +171,6 @@ class MasonryItem extends React.Component {
       default:
         return null;
     }
-
-
-
-    let height = 100;
-
-    return (
-      <div
-        key={item.sig}
-        style={{
-          width: `${this.props.width}px`,
-          height: `${height}px`,
-          lineHeight: `${height}px`,
-          color: 'white',
-          fontSize: '32px',
-          display: 'block',
-          background: 'rgba(0,0,0,0.7)'
-        }}>
-        x
-      </div>
-    );
   }
 }
 

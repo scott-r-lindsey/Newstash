@@ -40,7 +40,7 @@ class News{
         $mongodb            = $this->mongo->getDb();
         $newsCollection     = $mongodb->news;
 
-        $count      = isset($args['count']) ? $args['count'] : 100;
+        $count      = isset($args['count']) ? $args['count'] : 10;
         $and        = [];
 
         if (isset($args['idlt'])){

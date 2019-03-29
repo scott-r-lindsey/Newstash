@@ -35,19 +35,26 @@ class ApiController extends BaseApiController
         News $news
     ): JsonResponse
     {
+
+        $count = 10;
+
         $idlt = $request->get('idlt', false);
 
         if ($idlt){
-            $items = $news->getNews(['idlt' => $idlt ]);
+            $items = $news->getNews(['idlt' => $idlt, 'count' => $count +1 ]);
         }
         else{
-            $items = $news->getNews([]);
+            $items = $news->getNews(['count' => $count +1 ]);
         }
 
-        return $this->bundleResponse(compact('items'));
+        $hasmore = false;
+        if (count($items) > $count) {
+            $count = array_pop($items);
+            $hasmore = true;
+        }
+
+        return $this->bundleResponse(compact('items', 'hasmore'));
     }
-
-
 
     public function handleException(\Exception $exception)
     {

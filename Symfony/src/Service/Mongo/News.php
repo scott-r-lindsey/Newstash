@@ -70,7 +70,7 @@ class News{
         }
 
         $cursor = $newsCollection->find($args)
-            ->sort(array('_id' => -1))
+            ->sort(['pinned' => -1,'_id' => -1])
             ->limit($count);
 
         $items = [];
@@ -96,6 +96,7 @@ class News{
 
         $record = array(
             'type'          => 'post',
+            'pinned'        => $post->getPinned(),
             'sig'           => $sig,
             'user'          => array(
                 'id'            => $user->getId(),

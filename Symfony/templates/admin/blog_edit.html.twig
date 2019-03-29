@@ -36,6 +36,8 @@
             <label>Description:</label>
             <input type="text" name="description" value="{{ description|default('') }}"/><br />
 
+            <input type="checkbox" name="pinned" {% if pinned %} checked="checked" {% endif %}>&nbsp;Pinned<br />
+
             <label>Lead</label>
             <div class="editor">
                 <textarea id="blog-post" class="ckeditor" name="lead">{{ lead|default('') }}</textarea><br />

@@ -46,6 +46,9 @@ class Post{
     /** @ORM\Column(type="boolean") */
     private $active = false;
 
+    /** @ORM\Column(type="boolean") */
+    private $pinned = false;
+
     /** @ORM\Column(type="string", length=255, nullable=false) */
     private $title;
 
@@ -87,6 +90,8 @@ class Post{
         $this->comments = new ArrayCollection();
     }
 
+    //-------------------------------------------------------------------------------
+    // ./bin/console make:entity --regenerate
     //-------------------------------------------------------------------------------
 
     /**
@@ -302,6 +307,18 @@ class Post{
                 $comment->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPinned(): ?bool
+    {
+        return $this->pinned;
+    }
+
+    public function setPinned(bool $pinned): self
+    {
+        $this->pinned = $pinned;
 
         return $this;
     }

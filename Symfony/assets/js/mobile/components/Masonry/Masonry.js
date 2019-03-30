@@ -2,6 +2,7 @@ import React from 'react';
 import MasonryLayout from 'react-masonry-layout';
 import PropTypes from 'prop-types';
 import MasonryItem from "./MasonryItem";
+import PinnedPost from "./PinnedPost";
 
 const gutter = 20;
 
@@ -24,7 +25,7 @@ class Masonry extends React.Component {
   fetchAdditionalItems = () => {
     this.props.fetchAdditionalItems(
       items => {
-        console.log(items);
+        //console.log(items);
         this.setState({
           'items': [...this.state.items, ...items]
         });
@@ -42,10 +43,10 @@ class Masonry extends React.Component {
   updateDimensions() {
 
     if (!this.state.server) {
-
-      this.setState( {
-          itemWidth: (window.innerWidth / 2) - (( gutter * 3 )/2),
-      });
+      this.setState( 
+        { itemWidth: (window.innerWidth / 2) - (( gutter * 3 )/2) },
+        () => console.log(this.layoutRef.current.getBricksInstance().pack())
+      );
     }
     else{
       // server side?
@@ -57,6 +58,7 @@ class Masonry extends React.Component {
     if (!this.state.server) {
       window.addEventListener("resize", this.updateDimensions.bind(this));
     }
+    console.log('sup');
   }
 
   componentWillUnmount() {
@@ -68,13 +70,33 @@ class Masonry extends React.Component {
   render() {
 
     const { fetchAdditionalItems } = this.props;
+    this.layoutRef = React.createRef();
 
+    let width = this.state.itemWidth;
+    let pinned = [];
+    let i = 0;
+
+    while (this.state.items[i].pinned) {
+      pinned.push(this.state.items[i]);
+      i++;
+    }
 
     return (
       <div className="App">
 
+        {pinned.map(item => {
+          return (
+            <PinnedPost
+              item={item}
+              width={width + gutter + width}
+              key={item.sig}
+            />
+          )
+        })}
+
         <MasonryLayout
           id="masonry-layout"
+          ref={this.layoutRef}
           infiniteScrollContainer="main-container"
           infiniteScroll={this.fetchAdditionalItems}
           infiniteScrollDistance={700}
@@ -89,15 +111,15 @@ class Masonry extends React.Component {
           }}
         >
 
-          {this.state.items.map(item  => {
-              let height= 100;
-
-              return (
-                <MasonryItem
-                  item={item}
-                  width={this.state.itemWidth}
-                  key={item.sig} />
-              )
+          {this.state.items.filter((item, i) => {
+            return (i >= pinned.length) ? true : false;
+          }).map(item  => {
+            return (
+              <MasonryItem
+                item={item}
+                width={width}
+                key={item.sig} />
+            )
           }, this)}
 
         </MasonryLayout>

@@ -2,15 +2,16 @@ import React from "react";
 import { Route } from "react-router-dom";
 import classNames from 'classnames';
 
-import About from "../components/About";
-import Autocomplete from "../components/Autocomplete";
-import Drawer from "../components/Drawer";
-import Home from "../components/Home";
-import Privacy from "../components/Privacy";
-import SearchAuthor from "../components/SearchAuthor";
-import SearchTitle from "../components/SearchTitle";
-import Tos from "../components/Tos";
-import Work from "../components/Work";
+import Autocomplete from "../components/Trim/Autocomplete";
+import Drawer from "../components/Trim/Drawer";
+
+import About from "../components/Pages/About";
+import Home from "../components/Pages/Home";
+import Privacy from "../components/Pages/Privacy";
+import SearchAuthor from "../components/Pages/SearchAuthor";
+import SearchTitle from "../components/Pages/SearchTitle";
+import Tos from "../components/Pages/Tos";
+import Work from "../components/Pages/Work";
 
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';

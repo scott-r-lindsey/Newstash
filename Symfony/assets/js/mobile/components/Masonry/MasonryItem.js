@@ -3,8 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
-import { fiveStars } from "../util.js";
-import * as Constants from '../constants'
+import { fiveStars } from "../../util.js";
+import * as Constants from '../../constants'
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
@@ -29,7 +29,7 @@ const styles = theme => ({
     fontSize: 'calc(5vw - 5px)',
     lineHeight: '31px',
     textTransform: 'uppercase',
-    fontFamily: 'Titillium Web,sans-serif',
+    fontFamily: Constants.BoringFont,
     whiteSpace: "nowrap",
   },
   stars: {
@@ -86,7 +86,6 @@ class MasonryItem extends React.Component {
   generateWorkLink(work) {
     return '/book/' + work.id + '/' + work.slug;
   }
-
 
   render() {
 

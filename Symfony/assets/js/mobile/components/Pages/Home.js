@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-import Masonry from "./Masonry";
+import Masonry from "../Masonry/Masonry";
 
 const api = '/api/v1/news';
 
@@ -29,7 +29,7 @@ export default class Home extends React.Component {
         .then(response => response.json())
         .then(data =>
           this.setState({
-            initialNews: this.fixPostItems(data.result.items),
+            initialNews: data.result.items,
             lastFetched: data.result.items[data.result.items.length -1]._id.$id,
             hasmore: data.result.hasmore,
         }));
@@ -39,24 +39,6 @@ export default class Home extends React.Component {
   generateRandom = () => {
     return Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
-  }
-
-  fixPostItems = (items) => {
-
-    let itemsWithSpacers = [];
-
-    for (var item of items) {
-      itemsWithSpacers.push(item);
-      if (item.type === 'post') {
-        itemsWithSpacers.push({
-          type: 'post-spacer',
-          sig: this.generateRandom(),
-        });
-      }
-    }
-
-    console.log(itemsWithSpacers);
-    return itemsWithSpacers;
   }
 
   fetchMoreNews = (handler) => {
@@ -71,8 +53,7 @@ export default class Home extends React.Component {
             lastFetched: data.result.items[data.result.items.length -1]._id.$id,
             hasmore: data.result.hasmore,
           });
-          let items = this.fixPostItems(data.result.items);
-          handler(items);
+          handler(data.result.items);
         })
     }
   }

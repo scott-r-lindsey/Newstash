@@ -21,7 +21,7 @@ import Icon from '@material-ui/core/Icon';
 
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 
-import * as Constants from '../constants'
+import * as Constants from '../../constants'
 
 
 const styles = theme => ({

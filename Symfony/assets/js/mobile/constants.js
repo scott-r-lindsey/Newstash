@@ -5,3 +5,4 @@ export const DarkGray = '#444';
 
 // fonts
 export const FancyFont = 'Amatic SC,cursive';
+export const BoringFont = 'Titillium Web,sans-serif';

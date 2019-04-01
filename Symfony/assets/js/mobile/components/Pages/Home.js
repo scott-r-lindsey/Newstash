@@ -11,29 +11,27 @@ export default class Home extends React.Component {
 
   constructor(props, context) {
     super(props, context);
+
+    this.state = {
+      initialNews: [],
+      lastFetched: '',
+      hasmore: true,
+    };
   }
 
-  state = {
-    initialNews: [],
-    lastFetched: '',
-    hasmore: true,
-  };
 
   loading = false;
 
   componentDidMount() {
 
-    if (this.state.initialNews.length == 0){
+    let items = this.props.initialProps.items;
 
-      fetch(api)
-        .then(response => response.json())
-        .then(data =>
-          this.setState({
-            initialNews: data.result.items,
-            lastFetched: data.result.items[data.result.items.length -1]._id.$id,
-            hasmore: data.result.hasmore,
-        }));
-    }
+    this.setState({
+      initialNews: items,
+      lastFetched: items[items.length -1]._id.$id,
+      hasmore: true,
+    });
+
   }
 
   generateRandom = () => {
@@ -89,6 +87,6 @@ export default class Home extends React.Component {
 }
 
 Home.propTypes = {
-//  initialProps: PropTypes.object.isRequired,
+  initialProps: PropTypes.object.isRequired,
 };
 

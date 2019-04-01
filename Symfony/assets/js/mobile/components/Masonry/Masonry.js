@@ -20,17 +20,33 @@ class Masonry extends React.Component {
       server: server,
       items: props.initialItems,
     }
+
+    this.scrollables = [];
   }
 
   fetchAdditionalItems = () => {
     this.props.fetchAdditionalItems(
       items => {
-        //console.log(items);
         this.setState({
           'items': [...this.state.items, ...items]
         });
       }
     );
+  }
+
+  addScrollableItem = (element, callback) => {
+    this.scrollables.push({element, callback});
+  }
+
+  checkScrollableItems = () => {
+
+    this.scrollables.map( ( {element, callback} ) => {
+
+      let elTop = element.getBoundingClientRect().top -100;
+      if (elTop < window.innerHeight) {
+        callback();
+      }
+    });
   }
 
   findTargetWidth(server) {
@@ -43,9 +59,9 @@ class Masonry extends React.Component {
   updateDimensions() {
 
     if (!this.state.server) {
-      this.setState( 
+      this.setState(
         { itemWidth: (window.innerWidth / 2) - (( gutter * 3 )/2) },
-        () => console.log(this.layoutRef.current.getBricksInstance().pack())
+        () => this.layoutRef.current.getBricksInstance().pack()
       );
     }
     else{
@@ -53,17 +69,28 @@ class Masonry extends React.Component {
     }
   }
 
+  handleScroll = (event) => {
+    this.layoutRef.current.handleScroll(event);
+    this.checkScrollableItems();
+  }
+
   componentDidMount() {
     this.updateDimensions();
     if (!this.state.server) {
       window.addEventListener("resize", this.updateDimensions.bind(this));
+      document.addEventListener("touchmove", this.handleScroll);
+      document.addEventListener("scroll", this.handleScroll);
+      document.addEventListener("orientationchange", this.handleScroll);
     }
-    console.log('sup');
+    this.checkScrollableItems();
   }
 
   componentWillUnmount() {
     if (!this.state.server) {
       window.removeEventListener("resize", this.updateDimensions.bind(this));
+      document.removeEventListener("touchmove", this.handleScroll);
+      document.removeEventListener("scroll", this.handleScroll);
+      document.removeEventListener("orientationchange", this.handleScroll);
     }
   }
 
@@ -102,7 +129,7 @@ class Masonry extends React.Component {
           infiniteScrollDistance={700}
           sizes={ [
             { columns: 2, gutter: 20 },
-            { mq: '768px', columns: 3, gutter: 20 },
+            // { mq: '768px', columns: 3, gutter: 20 },
             //{ mq: '1024px', columns: 6, gutter: 20 }
           ] }
           style={{
@@ -116,6 +143,7 @@ class Masonry extends React.Component {
           }).map(item  => {
             return (
               <MasonryItem
+                addScrollableItem={this.addScrollableItem}
                 item={item}
                 width={width}
                 key={item.sig} />

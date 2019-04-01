@@ -13,11 +13,23 @@ const styles = theme => ({
   },
   itemDiv: {
     display: 'block',
+    position: 'relative',
+  },
+  itemWrapper: {
+    position:'absolute',
+    top: 0,
+    bottom: 0,
+    right:0,
+    left: 0,
     borderRadius: '5px',
     overflow: 'hidden',
     boxShadow: '1px 1px 14px rgba(50,50,50,.75)',
     backgroundColor: 'hsla(0,0%,93.3%,.95)',
-    position: 'relative',
+    transition: 'opacity .3s, transform .3s',
+  },
+  itemWrapperHidden: {
+    transform: 'translate3d(0px, 100px, 0px)',
+    opacity:'.1',
   },
   footer: {
     position:'relative',
@@ -68,6 +80,31 @@ const styles = theme => ({
       content: "'\\201D'",
     },
   },
+  postHead: {
+    backgroundColor: Constants.FireBrick,
+    color: 'white',
+    fontFamily: Constants.FancyFont,
+    fontSize: '9vw',
+    fontWeight: 'bold',
+    textShadow: '2px 1px 2px #af1b14',
+    paddingLeft:'10px',
+  },
+  postFoot: {
+    fontSize: '5vw',
+    fontFamily: Constants.BoringFont,
+    textAlign:'right',
+    marginRight: '15px',
+    lineHeight:'29px',
+    color:'#222',
+    textShadow: '2px 1px 2px #fff',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    paddingLeft:'10px',
+  },
+  link: {
+    textDecoration: 'none',
+  },
 });
 
 class MasonryItem extends React.Component {
@@ -79,78 +116,122 @@ class MasonryItem extends React.Component {
     }
   }
 
-  findImgFactor(width) {
-    return this.props.width / width;
+  get factor() {
+    if (this.props.item.work) {
+      return this.props.width / this.props.item.work.coverX;
+    }
+    else if (this.props.item.post) {
+      return this.props.width / this.props.item.post.imageX;
+    }
+    return null;
   }
 
   generateWorkLink(work) {
     return '/book/' + work.id + '/' + work.slug;
   }
 
+  generatePostLink(post) {
+    return '/blog/' + post.id + '/' + post.slug;
+  }
+
+  componentDidMount() {
+    const { classes } = this.props;
+
+    this.props.addScrollableItem(
+      this.layoutRef.current,
+      () => { this.layoutRef.current.className = classes.itemWrapper }
+    );
+  }
+
+  findItemHeight(item) {
+    switch(item.type) {
+      case 'rating':
+        return ((item.work.coverY * this.factor) + 70) + 'px';
+      case 'post':
+        return ((item.post.imageY * this.factor) + 80) + 'px';
+      case 'review':
+        return ((item.work.coverY * this.factor) + 100) + 'px';
+      case 'work':
+        return (item.work.coverY * this.factor) + 'px';
+      default:
+        return null;
+    }
+  }
+
   render() {
 
     const { classes, item } = this.props;
+    this.layoutRef = React.createRef();
 
-    let factor = null;
+    return (
+      <div
+        key={item.sig}
+        className={classes.itemDiv}
+        style={{
+          width: `${this.props.width}px`,
+          height: this.findItemHeight(item),
+        }}>
+        <div
+          className={classes.itemWrapper + ' ' + classes.itemWrapperHidden}
+          ref={this.layoutRef}
+        >
+          { this.renderItem(item) }
+        </div>
+      </div>
+    );
+  }
 
-    if (item.work) {
-      factor = this.findImgFactor(item.work.coverX);
-    }
+  renderItem(item) {
+    const { classes } = this.props;
 
     switch(item.type) {
       case 'rating':
         return (
-          <div
-            key={item.sig}
-            className={classes.itemDiv}
-            style={{
-              width: `${this.props.width}px`,
-              height: ((item.work.coverY * factor) + 70) + 'px',
-            }}>
-            <Link to={this.generateWorkLink(item.work)} title={item.work.title}>
-              <img
-                className={classes.coverImg}
-                src={item.work.cover}
-                height={item.work.coverY * factor}
-                width={this.props.width} />
-              {item.work.height}
-            </Link>
+          <Link to={this.generateWorkLink(item.work)} title={item.work.title}>
+            <img
+              className={classes.coverImg}
+              src={item.work.cover}
+              height={item.work.coverY * this.factor}
+              width={this.props.width} />
+            {item.work.height}
             <div className={classes.footer}>
               <img src={item.user.avatarUrl80} className={classes.avatarImg} />
               <strong className={classes.user}>Rated:</strong><br />
               <span className={classes.stars}>{fiveStars(item.stars)}</span>
             </div>
-          </div>
+          </Link>
         );
       case 'post':
         return (
-          <div
-            key={item.sig}
-            className={classes.itemDiv}
-            style={{
-              width: (this.props.width *2) + 'px',
-              height: '100px',
-            }}>
-            This is a post
-          </div>
+
+          <Link
+            className={classes.link}
+            to={this.generatePostLink(item.post)}
+            title={item.post.title}>
+
+            <div className={classes.postHead}>
+              From the Blog
+            </div>
+            <img
+              src={`/img/blog/${item.post.image}`}
+              height={this.factor * item.post.imageY}
+              width={this.props.width}
+            />
+            <div className={classes.postFoot}>
+              { item.post.title }
+            </div>
+          </Link>
+
         );
       case 'review':
         return (
-          <div
-            key={item.sig}
-            className={classes.itemDiv}
-            style={{
-              width: `${this.props.width}px`,
-              height: ((item.work.coverY * factor) + 100) + 'px',
-            }}>
-            <Link to={this.generateWorkLink(item.work)} title={item.work.title}>
-              <img
-                className={classes.coverImg}
-                src={item.work.cover}
-                height={item.work.coverY * factor}
-                width={this.props.width} />
-              {item.work.height}
-            </Link>
+          <Link to={this.generateWorkLink(item.work)} title={item.work.title}>
+            <img
+              className={classes.coverImg}
+              src={item.work.cover}
+              height={item.work.coverY * this.factor}
+              width={this.props.width} />
+            {item.work.height}
             <div className={classes.footer}
               style={{height:'95px'}}
             >
@@ -163,7 +244,7 @@ class MasonryItem extends React.Component {
                   </em>
               </div>
             </div>
-          </div>
+          </Link>
         );
       case 'work':
         return null;
@@ -174,6 +255,7 @@ class MasonryItem extends React.Component {
 }
 
 MasonryItem.propTypes = {
+  addScrollableItem: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
   item: PropTypes.object.isRequired,
 };

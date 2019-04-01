@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import Autocomplete from "../components/Trim/Autocomplete";
 import Drawer from "../components/Trim/Drawer";
+import BackToTop from "../components/Trim/BackToTop";
 
 import About from "../components/Pages/About";
 import Home from "../components/Pages/Home";
@@ -82,10 +83,11 @@ class BooksApp extends React.Component {
 
           </AppBar>
 
+
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
 
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact render={(props) => <Home {...props} initialProps={initialProps} />} />
             <Route path="/about" exact component={About} />
             <Route path="/privacy" exact component={Privacy} />
             <Route path="/tos" exact component={Tos} />
@@ -94,6 +96,7 @@ class BooksApp extends React.Component {
             <Route path="/work/yada" exact render={(props) => <Home {...props} initialProps={initialProps} />} />
 
           </main>
+
         </MuiThemeProvider>
       </div>
     );

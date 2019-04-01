@@ -36,7 +36,7 @@
             <label>Description:</label>
             <input type="text" name="description" value="{{ description|default('') }}"/><br />
 
-            <input type="checkbox" name="pinned" {% if pinned %} checked="checked" {% endif %}>&nbsp;Pinned<br />
+            <input type="checkbox" name="pinned" {% if pinned|default('') %} checked="checked" {% endif %}>&nbsp;Pinned<br />
 
             <label>Lead</label>
             <div class="editor">

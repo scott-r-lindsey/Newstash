@@ -1,11 +1,15 @@
 
 import React from 'react';
+import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import * as Constants from '../../constants'
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
+  link: {
+    textDecoration: 'none',
+  },
   postDiv: {
     margin: '0 auto 20px auto',
     borderRadius: '5px',
@@ -20,7 +24,7 @@ const styles = theme => ({
     lineHeight: '16vw',
     textDecoration:'none',
     fontWeight: 700,
-    textShadow: '2px 1px 2px #323232',
+    textShadow: '2px 1px 2px #af1b14',
     paddingLeft:'10px',
     backgroundColor: Constants.FireBrick,
   },
@@ -53,36 +57,42 @@ class PinnedPost extends React.Component {
     return this.props.width / width;
   }
 
+  generatePostLink(post) {
+    return '/blog/' + post.id + '/' + post.slug;
+  }
+
   render() {
 
     const { classes, item } = this.props;
 
     let factor = this.findImgFactor(item.post.imageX);
 
-
-    console.log(item);
-
     return (
-      <div
-        key={item.sig}
-        className={classes.postDiv}
-        style={{
-          width: `${this.props.width}px`,
-        }}>
-        <div className={classes.header}>
-          Books to Love
-        </div>
-        <img
-          src={`/img/blog/${item.post.image}`}
-          height={factor * item.post.imageY}
-          width={this.props.width}
-        />
-        <div className={classes.footer}>
-          <img src={item.user.avatarUrl80} className={classes.avatarImg} />
-          <strong>{item.post.title}</strong>
+      <Link
+        className={classes.link}
+        to={this.generatePostLink(item.post)}
+        title={item.post.title}>
+        <div
+          key={item.sig}
+          className={classes.postDiv}
+          style={{
+            width: `${this.props.width}px`,
+          }}>
+          <div className={classes.header}>
+            Books to Love
+          </div>
+          <img
+            src={`/img/blog/${item.post.image}`}
+            height={factor * item.post.imageY}
+            width={this.props.width}
+          />
+          <div className={classes.footer}>
+            <img src={item.user.avatarUrl80} className={classes.avatarImg} />
+            <strong>{item.post.title}</strong>
 
+          </div>
         </div>
-      </div>
+      </Link>
     );
   }
 

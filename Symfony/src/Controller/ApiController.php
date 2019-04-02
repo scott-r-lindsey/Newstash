@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Service\Mongo\Work as MongoWork;
+
 
 class ApiController extends BaseApiController
 {
@@ -54,6 +56,40 @@ class ApiController extends BaseApiController
         }
 
         return $this->bundleResponse(compact('items', 'hasmore'));
+    }
+
+    /**
+     * @Route("/api/v1/search/books")
+     */
+    public function bookSearch(
+        MongoWork $mongoWork,
+        Request $request,
+        News $news
+    ): JsonResponse
+    {
+
+        $work_id        = (int)$request->query->get('work_id');
+        $work_id        = $work_id ? $work_id : null;
+        $page           = (int)$request->get('page', 1);
+        $query_raw      = trim($request->query->get('query'));
+        $count          = 10;
+
+        $result =  $mongoWork->titleSearch($work_id, $query_raw, $count, $page);
+
+        return $this->bundleResponse($result);
+    }
+
+    /**
+     * @Route("/api/v1/search/author")
+     */
+    public function authorSearch(
+        MongoWork $mongoWork,
+        Request $request,
+        News $news
+    ): JsonResponse
+    {
+
+
     }
 
     public function handleException(\Exception $exception)

@@ -75,6 +75,7 @@ class Masonry extends React.Component {
   }
 
   componentDidMount() {
+    console.log('Masonry did mount');
     this.updateDimensions();
     if (!this.state.server) {
       window.addEventListener("resize", this.updateDimensions.bind(this));
@@ -146,7 +147,8 @@ class Masonry extends React.Component {
                 addScrollableItem={this.addScrollableItem}
                 item={item}
                 width={width}
-                key={item.sig} />
+                key={item.sig ? item.sig : item.work_id}
+              />
             )
           }, this)}
 

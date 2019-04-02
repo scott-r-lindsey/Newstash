@@ -24,14 +24,25 @@ export default class Home extends React.Component {
 
   componentDidMount() {
 
-    let items = this.props.initialProps.items;
+    if (this.props.initialProps.items) {
+      let items = this.props.initialProps.items;
 
-    this.setState({
-      initialNews: items,
-      lastFetched: items[items.length -1]._id.$id,
-      hasmore: true,
-    });
-
+      this.setState({
+        initialNews: items,
+        lastFetched: items[items.length -1]._id.$id,
+        hasmore: true,
+      });
+    }
+    else{
+      fetch(api)
+        .then(response => response.json())
+        .then(data =>
+          this.setState({
+            initialNews: data.result.items,
+            lastFetched: data.result.items[data.result.items.length -1]._id.$id,
+            hasmore: data.result.hasmore,
+        }));
+    }
   }
 
   generateRandom = () => {
@@ -87,6 +98,5 @@ export default class Home extends React.Component {
 }
 
 Home.propTypes = {
-  initialProps: PropTypes.object.isRequired,
 };
 

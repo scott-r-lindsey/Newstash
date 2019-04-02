@@ -144,7 +144,6 @@ class SearchAutosuggest extends React.Component {
       .then(data => this.setState({ suggestions: data.suggestions }));
   };
 
-
   handleSuggestionsClearRequested = () => {
     this.setState({
       suggestions: [],

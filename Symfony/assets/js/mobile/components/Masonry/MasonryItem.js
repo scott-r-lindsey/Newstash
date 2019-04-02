@@ -123,11 +123,14 @@ class MasonryItem extends React.Component {
     else if (this.props.item.post) {
       return this.props.width / this.props.item.post.imageX;
     }
+    else if (this.props.item.amzn_large_cover_x) {
+      return this.props.width / this.props.item.amzn_large_cover_x;
+    }
     return null;
   }
 
   generateWorkLink(work) {
-    return '/book/' + work.id + '/' + work.slug;
+    return '/book/' + (work.id ? work.id : work.work_id) + '/' + work.slug;
   }
 
   generatePostLink(post) {
@@ -151,10 +154,8 @@ class MasonryItem extends React.Component {
         return ((item.post.imageY * this.factor) + 80) + 'px';
       case 'review':
         return ((item.work.coverY * this.factor) + 100) + 'px';
-      case 'work':
-        return (item.work.coverY * this.factor) + 'px';
-      default:
-        return null;
+      default: // work
+        return (this.props.item.amzn_large_cover_y * this.factor) + 'px';
     }
   }
 
@@ -165,7 +166,7 @@ class MasonryItem extends React.Component {
 
     return (
       <div
-        key={item.sig}
+        key={item.sig ? item.sig : item.work_id}
         className={classes.itemDiv}
         style={{
           width: `${this.props.width}px`,
@@ -246,10 +247,16 @@ class MasonryItem extends React.Component {
             </div>
           </Link>
         );
-      case 'work':
-        return null;
       default:
-        return null;
+        return (
+          <Link to={this.generateWorkLink(item)} title={item.title}>
+            <img
+              src={item.amzn_large_cover}
+              width={item.amzn_large_cover_x * this.factor}
+              height={item.amzn_large_cover_y * this.factor}
+            />
+          </Link>
+        );
     }
   }
 }

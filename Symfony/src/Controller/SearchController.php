@@ -36,10 +36,15 @@ class SearchController extends AbstractController
      * @Template()
      */
     public function mobileTitleSearch(
+        MongoWork $mongoWork,
+        WorkRepository $workRepository,
         Request $request
     ): array
     {
         return ['props' => []];
+
+        // fixme redirect on isbn?
+
     }
 
     /**

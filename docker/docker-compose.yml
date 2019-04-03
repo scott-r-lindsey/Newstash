@@ -68,11 +68,27 @@ services:
             dockerfile: docker/nginx/Dockerfile
 
         ports:
-            - "${APP_PORT}:80"
+            - "8081:80"
         volumes:
             - "${APP_PATH}:/var/www/html/phpapp"
         depends_on:
             - php
+
+    nginx-mobile-detect:
+        container_name: newstash-nginx-mobile-detect-container
+
+        image: newstash-nginx-mobile-detect-image
+
+        build:
+            context: ../
+            dockerfile: docker/nginx-mobile-detect/Dockerfile
+
+        ports:
+            - "${APP_PORT}:80"
+        volumes:
+            - "${APP_PATH}:/var/www/html/phpapp"
+        depends_on:
+            - nginx
 
     nginx-ssl-proxy:
         container_name: newstash-ssl-proxy
@@ -80,7 +96,7 @@ services:
 
         restart: always
         environment:
-            UPSTREAM: nginx:80
+            UPSTREAM: nginx-mobile-detect:80
             SERVERNAME: dev.booksto.love
         ports:
             - "80:80"
@@ -88,4 +104,4 @@ services:
         volumes:
             - "/etc/letsencrypt"
         depends_on:
-            - nginx
+            - nginx-mobile-detect

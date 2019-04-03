@@ -15,7 +15,7 @@ class DefaultController extends AbstractController
      * @Route(
      *      "/",
      *      name="mobile_home",
-     *      condition="context.getMethod() in ['GET']"
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
      * )
      * @Template()
      */

@@ -16,6 +16,7 @@ use App\Service\Mongo\Work as MongoWork;
 
 class ApiController extends BaseApiController
 {
+    const COUNT = 10;
 
     /**
      * @Route("/healthcheck")
@@ -37,8 +38,7 @@ class ApiController extends BaseApiController
         News $news
     ): JsonResponse
     {
-
-        $count = 10;
+        $count = self::COUNT;
 
         $idlt = $request->get('idlt', false);
 
@@ -67,12 +67,11 @@ class ApiController extends BaseApiController
         News $news
     ): JsonResponse
     {
-
         $work_id        = (int)$request->query->get('work_id');
         $work_id        = $work_id ? $work_id : null;
         $page           = (int)$request->get('page', 1);
         $query_raw      = trim($request->query->get('query'));
-        $count          = 10;
+        $count          = self::COUNT;
 
         $result =  $mongoWork->titleSearch($work_id, $query_raw, $count, $page);
 
@@ -84,12 +83,16 @@ class ApiController extends BaseApiController
      */
     public function authorSearch(
         MongoWork $mongoWork,
-        Request $request,
-        News $news
+        Request $request
     ): JsonResponse
     {
+        $page           = (int)$request->query->get('page', 1);
+        $query_raw      = trim($request->query->get('query'));
+        $count          = self::COUNT;
 
+        $result = $mongoWork->authorSearch($query_raw, $count, $page);
 
+        return $this->bundleResponse($result);
     }
 
     public function handleException(\Exception $exception)

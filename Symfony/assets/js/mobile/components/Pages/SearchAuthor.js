@@ -1,26 +1,34 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types';
+import Search from "./Search";
+import { withStyles } from '@material-ui/core/styles';
 
-export default class Tos extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-  }
 
-  componentDidMount() {
-    console.log('did mount');
-  }
+class SearchAuthor extends Search {
 
-  render() {
+  api = '/api/v1/search/author';
+  title = 'Books to Love search: ';
+
+  renderDescription = () => {
+
+    const { classes } = this.props;
 
     return (
-      <div>
-        <Helmet>
-          <title>Author Search</title>
-        </Helmet>
-        <strong>You searched for an author</strong>
+      <div className={classes.youSearched}>
+        <img className={classes.icon} src="/img/author-icon.svgz" />
+        Found&nbsp;
+        <strong>{this.state.matches}</strong>&nbsp;
+        books by &nbsp;
+        <strong>{ this.searchedFor }</strong>
       </div>
     );
-
   }
+
 }
+
+SearchAuthor.propTypes = {
+  query: PropTypes.string.isRequired,
+};
+
+export default withStyles(SearchAuthor.styles)(withRouter(SearchAuthor));

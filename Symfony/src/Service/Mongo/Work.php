@@ -99,7 +99,7 @@ class Work
 
         $hasmore = true;
         $matches = $cursor->count();
-        if (($page * ($count +1)) >= $cursor->count()){
+        if (($page * ($count)) >= $cursor->count()){
             $hasmore = false;
         }
 

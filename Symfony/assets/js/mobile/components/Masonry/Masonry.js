@@ -75,7 +75,6 @@ class Masonry extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Masonry did mount');
     this.updateDimensions();
     if (!this.state.server) {
       window.addEventListener("resize", this.updateDimensions.bind(this));

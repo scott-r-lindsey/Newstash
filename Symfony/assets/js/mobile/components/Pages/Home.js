@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import Loading from "../Trim/Loading";
 
 import Masonry from "../Masonry/Masonry";
 
@@ -77,7 +78,7 @@ export default class Home extends React.Component {
         <br />
         {
           (this.state.initialNews.length == 0)
-            ? <b>All the loading</b>
+            ? <Loading />
             : <Masonry
                 initialItems={this.state.initialNews}
                 fetchAdditionalItems={this.fetchMoreNews}

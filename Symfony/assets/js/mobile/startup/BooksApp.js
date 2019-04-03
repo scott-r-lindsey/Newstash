@@ -99,8 +99,15 @@ class BooksApp extends React.Component {
                 );
               }}
             />
-            <Route path="/search/author" exact component={SearchAuthor} />
-            <Route path="/work/yada" exact render={(props) => <Home {...props} initialProps={initialProps} />} />
+            <Route path="/search/author" exact render={
+              (props) => {
+                let query = props.location.search;
+                return (
+                  <SearchAuthor {...props} query={query} key={query} initialProps={initialProps} />
+                );
+              }}
+            />
+
 
           </main>
 

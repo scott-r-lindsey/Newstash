@@ -1,26 +1,44 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { withStyles } from '@material-ui/core/styles';
 
-export default class Tos extends React.Component {
+import * as Constants from '../../constants';
+
+import htmltos from 'raw-loader!../../raw/tos.html';
+
+const styles = theme => ({
+  terms: {
+    backgroundColor:'white',
+    padding: '20px 20px 20px 20px',
+    marginTop: '-20px',
+    fontFamily: Constants.BoringFont,
+  },
+});
+
+class Tos extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
 
-  componentDidMount() {
-    console.log('did mount');
-  }
-
   render() {
+
+    const { classes } = this.props;
+
+    let html = htmltos.trim().replace(/\s+/g, ' ');
 
     return (
       <div>
         <Helmet>
           <title>Terms of Service</title>
         </Helmet>
-        <strong>This is a stub</strong>
+        <div
+            className={classes.terms}
+            dangerouslySetInnerHTML={{ __html: html}} />
       </div>
     );
-
   }
 }
+
+export default withStyles(styles)(Tos);
+

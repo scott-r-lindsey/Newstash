@@ -122,4 +122,3 @@ class About extends React.Component {
 }
 
 export default withStyles(styles)(About);
-

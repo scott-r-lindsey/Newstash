@@ -1,0 +1,13 @@
+
+{% extends 'mobile_base.html.twig' %}
+
+{% set booksApp = react_component_array('BooksApp', {'props': []}) %}
+
+{% block title %}
+{{ booksApp.title is defined ? booksApp.title | raw : '' }}
+{% endblock title %}
+
+{% block body %}
+{{ booksApp.componentHtml | raw }}
+{% endblock %}
+

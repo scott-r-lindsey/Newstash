@@ -15,4 +15,6 @@ Encore
 
 ;
 
-module.exports = Encore.getWebpackConfig();
+let config = Encore.getWebpackConfig();
+
+module.exports = config;

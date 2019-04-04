@@ -60,7 +60,6 @@ class WorkController extends AbstractController
     ): array
     {
 
-
         return ['props' => []];
     }
 

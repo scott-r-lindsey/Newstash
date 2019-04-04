@@ -12,7 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\Mongo\Work as MongoWork;
-
+use App\Repository\ReviewRepository;
+use App\Repository\WorkRepository;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ApiController extends BaseApiController
 {
@@ -94,6 +96,55 @@ class ApiController extends BaseApiController
 
         return $this->bundleResponse($result);
     }
+
+    /**
+     * @Route("/api/v1/work/{work_id}")
+     */
+    public function work(
+        SerializerInterface $serializer,
+        string $work_id,
+        ReviewRepository $reviewRepository,
+        WorkRepository $workRepository,
+        Request $request
+    ): JsonResponse
+    {
+
+        $work_id = (int)$work_id;
+
+        $work = $workRepository->getWork($work_id);
+
+        if (!$work) {
+            throw $this->createNotFoundException('The book does not exist');
+        }
+
+
+        //$editions       = $workRepository->getActiveEditions($work_id);
+        //$similar_works  = $workRepository->getSimilarWorks($work_id);
+        $bns            = $workRepository->getBrowseNodes($work);
+        $review_count   = $reviewRepository->count([
+            'work'      => $work_id,
+            'deleted'   => 0
+        ]);
+
+
+        // --------------------------------------------------------------------
+        return $this->bundleResponse(
+            [
+                'work'          => $serializer->serialize($work, 'json', [
+                    'circular_reference_handler' => function ($object) {
+                        return $object->getId();
+                    }
+                ]),
+                //'similar_works',
+                'bns'           => $bns,
+                'review_count'  => $review_count,
+                //'editions'
+
+            ]
+        );
+    }
+
+    // ------------------------------------------------------------------------
 
     public function handleException(\Exception $exception)
     {

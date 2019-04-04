@@ -1,8 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { withStyles } from '@material-ui/core/styles';
 
-export default class Work extends React.Component {
+import * as Constants from '../../constants'
+
+const api = '/api/v1/work';
+
+const styles = theme => ({
+});
+
+class Work extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -24,3 +32,5 @@ export default class Work extends React.Component {
 
   }
 }
+
+export default withStyles(styles)(Work);

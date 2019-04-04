@@ -108,7 +108,6 @@ class SearchController extends AbstractController
      */
     public function authorSearch(
         MongoWork $mongoWork,
-        WorkRepository $workRepository,
         Request $request
     )
     {

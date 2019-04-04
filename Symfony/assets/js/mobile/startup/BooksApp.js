@@ -107,7 +107,13 @@ class BooksApp extends React.Component {
                 );
               }}
             />
-
+            <Route path="/book/:id/:slug" exact render={
+              (props) => {
+                return (
+                  <Work {...props} initialProps={initialProps} />
+                );
+              }}
+            />
 
           </main>
 

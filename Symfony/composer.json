@@ -12,6 +12,7 @@
         "friendsofsymfony/rest-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "^2.1",
         "hwi/oauth-bundle": "^0.6.3",
+        "limenius/react-bundle": "^3.0",
         "misterion/ko-process": "^0.5.3",
         "php-http/guzzle6-adapter": "~1.1.1",
         "php-http/httplug-bundle": "~1.13",

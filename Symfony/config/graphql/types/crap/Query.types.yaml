@@ -1,0 +1,10 @@
+Query:
+  type: object
+  config:
+    fields:
+      work:
+        type: Work
+        args:
+          id:
+            type: Int
+        resolve: '@=resolver("App\\GraphQL\\Resolver\\WorkResolver::resolve", [args["id"]])'

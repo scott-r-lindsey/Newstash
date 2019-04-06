@@ -1,0 +1,9 @@
+Work:
+  type: object
+  config:
+    resolveField: '@=resolver("App\\GraphQL\\Resolver\\WorkResolver", [info, value, args])'
+    fields:
+      id:
+        type: "Int!"
+      title:
+        type: "String"

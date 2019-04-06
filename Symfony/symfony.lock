@@ -161,6 +161,24 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "overblog/graphiql-bundle": {
+        "version": "0.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.1",
+            "ref": "fe8d172f2480efc598f5a8be0e732656d3594cec"
+        }
+    },
+    "overblog/graphql-bundle": {
+        "version": "0.11",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.11",
+            "ref": "80a27b90b4928728bc2afe3ff1198826e033285c"
+        }
+    },
     "paragonie/random_compat": {
         "version": "v2.0.18"
     },
@@ -502,6 +520,9 @@
     },
     "webmozart/assert": {
         "version": "1.2.0"
+    },
+    "webonyx/graphql-php": {
+        "version": "v0.13.1"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"

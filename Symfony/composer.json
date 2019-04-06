@@ -14,6 +14,7 @@
         "hwi/oauth-bundle": "^0.6.3",
         "limenius/react-bundle": "^3.0",
         "misterion/ko-process": "^0.5.3",
+        "overblog/graphql-bundle": "^0.11.12",
         "php-http/guzzle6-adapter": "~1.1.1",
         "php-http/httplug-bundle": "~1.13",
         "phpunit/php-timer": "^2.0",
@@ -41,6 +42,7 @@
         "twig/extensions": "^1.5"
     },
     "require-dev": {
+        "overblog/graphiql-bundle": "^0.1.2"
     },
     "config": {
         "preferred-install": {

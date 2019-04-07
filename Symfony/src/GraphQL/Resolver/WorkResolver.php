@@ -38,4 +38,13 @@ class WorkResolver implements ResolverInterface {
         return $work->getTitle();
     }
 
+    public function editions(Work $work, Argument $args)
+    {
+        $editions = $work->getEditions();
+        $paginator = new Paginator(function ($offset, $limit) use ($editions) {
+            return $editions->slice($offset, $limit ?? 10);
+        });
+        return $paginator->auto($args, count($editions));
+    }
+
 }

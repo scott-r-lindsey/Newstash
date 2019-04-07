@@ -8,3 +8,9 @@ Query:
           id:
             type: Int
         resolve: '@=resolver("App\\GraphQL\\Resolver\\WorkResolver::resolve", [args["id"]])'
+      edition:
+        type: Edition
+        args:
+          asin:
+            type: String
+        resolve: '@=resolver("App\\GraphQL\\Resolver\\EditionResolver::resolve", [args["asin"]])'

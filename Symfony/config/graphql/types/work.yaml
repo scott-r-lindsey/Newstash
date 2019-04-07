@@ -7,3 +7,9 @@ Work:
         type: "Int!"
       title:
         type: "String"
+      editions:
+        type: editionConnection
+        argsBuilder: "Relay::ForwardConnection"
+
+
+

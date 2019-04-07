@@ -1,2 +1,11 @@
-overblog_graphql_endpoint:
-    resource: "@OverblogGraphQLBundle/Resources/config/routing/graphql.yml"
+
+overblog_graphql_single_endpoint:
+    resource: "@OverblogGraphQLBundle/Resources/config/routing/single.yaml"
+    prefix: /graphql
+    trailing_slash_on_root: false
+
+overblog_graphql_multiple_endpoint:
+    resource: "@OverblogGraphQLBundle/Resources/config/routing/multiple.yaml"
+    prefix: /graphql/multi
+    trailing_slash_on_root: false
+

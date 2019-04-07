@@ -1,0 +1,14 @@
+Edition:
+  type: object
+  config:
+    resolveField: '@=resolver("App\\GraphQL\\Resolver\\EditionResolver", [info, value, args])'
+    fields:
+      asin:
+        type: "String!"
+      title:
+        type: "String!"
+
+editionConnection:
+  type: relay-connection
+  config:
+    nodeType: Edition!

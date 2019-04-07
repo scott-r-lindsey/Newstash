@@ -38,6 +38,8 @@
         "symfony/twig-bundle": "^4.0",
         "symfony/webpack-encore-bundle": "^1.1",
         "symfony/yaml": "^4.0",
+        "thecodingmachine/graphqlite": "^3.0@dev",
+        "thecodingmachine/graphqlite-bundle": "^3.0@dev",
         "twig/extensions": "^1.5"
     },
     "require-dev": {
@@ -82,5 +84,7 @@
             "id": "01C1GE95VGX0W7X4BPR19TWZ4A",
             "allow-contrib": "true"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable" : true
 }

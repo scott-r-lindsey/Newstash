@@ -7,3 +7,7 @@ facebook_login:
 
 google_login:
     path: /login/check-google
+
+graphqlite_bundle:
+    resource: '@GraphqliteBundle/Resources/config/routes.xml'
+

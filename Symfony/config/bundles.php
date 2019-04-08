@@ -21,4 +21,5 @@ return [
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Overblog\GraphQLBundle\OverblogGraphQLBundle::class => ['all' => true],
     Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
+    Overblog\DataLoaderBundle\OverblogDataLoaderBundle::class => ['all' => true],
 ];

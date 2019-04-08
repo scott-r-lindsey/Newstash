@@ -43,6 +43,11 @@ services:
 
     # -------------------------------------------------------------------------
 
+    app.graph.works_loader:
+        class: App\GraphQL\Loader\WorkLoader
+
+    # -------------------------------------------------------------------------
+
     aws_delayfish:
         class: App\Service\DelayFish
         autowire: false

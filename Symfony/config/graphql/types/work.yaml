@@ -10,6 +10,14 @@ Work:
       editions:
         type: editionConnection
         argsBuilder: "Relay::ForwardConnection"
+      front_edition:
+        type: Edition
+      similar_works:
+        type: workConnection
+        argsBuilder: "Relay::ForwardConnection"
 
-
+workConnection:
+  type: relay-connection
+  config:
+    nodeType: Work!
 

@@ -1,0 +1,7 @@
+overblog_dataloader:
+    defaults:
+        promise_adapter: "overblog_dataloader.webonyx_graphql_sync_promise_adapter"
+    loaders:
+        works:
+            alias: "works_loader"
+            batch_load_fn: "@app.graph.works_loader:all"

@@ -7,6 +7,67 @@ Edition:
         type: "String!"
       title:
         type: "String!"
+      isbn:
+        type: "String"
+      amzn_updated_at:
+        type: "String!"
+      url:
+        type: "String"
+      amzn_authordisplay:
+        type: "String"
+      amzn_authorlist:
+        type: "String"
+      amzn_small_cover:
+        type: "String"
+      amzn_small_cover_x:
+        type: "String"
+      amzn_small_cover_y:
+        type: "String"
+      amzn_medium_cover:
+        type: "String"
+      amzn_medium_cover_x:
+        type: "String"
+      amzn_medium_cover_y:
+        type: "String"
+      amzn_large_cover:
+        type: "String"
+      amzn_large_cover_x:
+        type: "String"
+      amzn_large_cover_y:
+        type: "String"
+      list_price:
+        type: "Float"
+      amzn_price:
+        type: "Float"
+      amzn_publisher:
+        type: "String"
+      amzn_salesrank:
+        type: "String"
+      amzn_format:
+        type: "String"
+      pages:
+        type: "Int"
+      publication_date:
+        type: "String"
+      release_date:
+        type: "String"
+      description:
+        type: "String"
+      amzn_editorial_review_source:
+        type: "String"
+      amzn_editorial_review:
+        type: "String"
+      amzn_edition:
+        type: "String"
+      amzn_manufacturer:
+        type: "String"
+      amzn_brand:
+        type: "String"
+      apparent_amzn_osi:
+        type: "String"
+      slug:
+        type: "String"
+
 
 editionConnection:
   type: relay-connection

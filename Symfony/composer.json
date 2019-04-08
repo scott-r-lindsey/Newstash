@@ -14,6 +14,7 @@
         "hwi/oauth-bundle": "^0.6.3",
         "limenius/react-bundle": "^3.0",
         "misterion/ko-process": "^0.5.3",
+        "overblog/dataloader-bundle": "^0.4.2",
         "overblog/graphql-bundle": "^0.11.12",
         "php-http/guzzle6-adapter": "~1.1.1",
         "php-http/httplug-bundle": "~1.13",

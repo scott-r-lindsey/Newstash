@@ -10,7 +10,7 @@ require __DIR__.'/../vendor/autoload.php';
 // ----------------------------------------------------------------------------
 
 $app_env = $_SERVER['APP_ENV'];
-$app_env = 'prod';
+#$app_env = 'prod';
 
 if ($app_debug ?? ('prod' !== ($app_env ?? 'dev'))) {
     umask(0000);

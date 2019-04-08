@@ -177,6 +177,7 @@ class Work{
 
     /**
      * @return Collection|Edition[]
+     * @Field
      */
     public function getEditions(): Collection
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Work;
+use App\Entity\Edition;
 use App\Repository\WorkRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,12 +37,17 @@ class GraphQLController extends AbstractController
         int $id
     ): Work
     {
-
         return $this->em->getRepository(Work::class)->findOneById($id);
+    }
 
-    //    $work = $workRepository->getWork($id);
-     //   return $work;
-
+    /**
+     * @Query()
+     */
+    public function edition(
+        string $asin
+    ): Edition
+    {
+        return $this->em->getRepository(Edition::class)->findOneByAsin($asin);
     }
 
 

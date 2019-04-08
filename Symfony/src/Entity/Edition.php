@@ -6,6 +6,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EditionRepository")
@@ -31,6 +33,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *          @ORM\Index(name="idx_edition_groomed", columns={"groomed"}),
  *      }
  * )
+ * @Type()
  */
 
 class Edition{
@@ -466,6 +469,9 @@ class Edition{
     // ./bin/console make:entity --regenerate
     //-------------------------------------------------------------------------------
 
+    /**
+     * @Field()
+     */
     public function getAsin(): ?string
     {
         return $this->asin;
@@ -478,6 +484,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getTitle(): ?string
     {
         return $this->title;
@@ -490,6 +499,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getPubTitle(): ?string
     {
         return $this->pub_title;
@@ -502,6 +514,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getPubSubtitle(): ?string
     {
         return $this->pub_subtitle;
@@ -550,6 +565,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznUpdatedAt(): ?\DateTimeInterface
     {
         return $this->amzn_updated_at;
@@ -574,6 +592,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getUrl(): ?string
     {
         return $this->url;
@@ -586,6 +607,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznAuthordisplay(): ?string
     {
         return $this->amzn_authordisplay;
@@ -610,6 +634,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznSmallCover(): ?string
     {
         return $this->amzn_small_cover;
@@ -622,6 +649,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznSmallCoverX(): ?int
     {
         return $this->amzn_small_cover_x;
@@ -634,6 +664,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznSmallCoverY(): ?int
     {
         return $this->amzn_small_cover_y;
@@ -646,6 +679,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznMediumCover(): ?string
     {
         return $this->amzn_medium_cover;
@@ -658,6 +694,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznMediumCoverX(): ?int
     {
         return $this->amzn_medium_cover_x;
@@ -670,6 +709,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznMediumCoverY(): ?int
     {
         return $this->amzn_medium_cover_y;
@@ -682,6 +724,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznLargeCover(): ?string
     {
         return $this->amzn_large_cover;
@@ -694,6 +739,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznLargeCoverX(): ?int
     {
         return $this->amzn_large_cover_x;
@@ -706,6 +754,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznLargeCoverY(): ?int
     {
         return $this->amzn_large_cover_y;
@@ -718,7 +769,10 @@ class Edition{
         return $this;
     }
 
-    public function getListPrice()
+    /**
+     * @Field()
+     */
+    public function getListPrice(): ?string
     {
         return $this->list_price;
     }
@@ -730,7 +784,10 @@ class Edition{
         return $this;
     }
 
-    public function getAmznPrice()
+    /**
+     * @Field()
+     */
+    public function getAmznPrice(): ?string
     {
         return $this->amzn_price;
     }
@@ -754,6 +811,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznSalesrank(): ?int
     {
         return $this->amzn_salesrank;
@@ -766,6 +826,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getAmznFormat(): ?string
     {
         return $this->amzn_format;
@@ -778,6 +841,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getPages(): ?int
     {
         return $this->pages;
@@ -802,6 +868,9 @@ class Edition{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getReleaseDate(): ?\DateTimeInterface
     {
         return $this->release_date;

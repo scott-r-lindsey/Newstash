@@ -6,6 +6,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
@@ -19,6 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *          @ORM\Index(name="idx_deleted", columns={"deleted"})
  *      }
  * )
+ * @Type()
  */
 
 class Work{
@@ -113,6 +116,9 @@ class Work{
         $this->stash_works = new ArrayCollection();
     }
 
+    /**
+     * @Field()
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -130,6 +136,9 @@ class Work{
         return $this;
     }
 
+    /**
+     * @Field()
+     */
     public function getTitle(): ?string
     {
         return $this->title;

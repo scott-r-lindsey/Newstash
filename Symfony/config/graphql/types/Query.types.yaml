@@ -7,10 +7,11 @@ Query:
         args:
           id:
             type: Int
-        resolve: '@=resolver("App\\GraphQL\\Resolver\\WorkResolver::resolve", [args["id"]])'
+        resolve: '@=resolver("workResolver", [info, args["id"], args])'
+
       edition:
         type: Edition
         args:
           asin:
             type: String
-        resolve: '@=resolver("App\\GraphQL\\Resolver\\EditionResolver::resolve", [args["asin"]])'
+        resolve: '@=resolver("editionResolver", [info, args["asin"], args])'

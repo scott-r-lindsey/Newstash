@@ -3,7 +3,9 @@ namespace App\GraphQL\Resolver;
 
 use App\Entity\Edition;
 use Doctrine\ORM\EntityManagerInterface;
+use GraphQL\Executor\Promise\Promise;
 use GraphQL\Type\Definition\ResolveInfo;
+use Overblog\DataLoader\DataLoader;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Output\Connection;
@@ -19,24 +21,42 @@ class EditionResolver implements ResolverInterface {
         $this->em = $em;
     }
 
+    public function setWorkLoader(DataLoader $workLoader)
+    {
+        $this->workLoader = $workLoader;
+    }
+
+    public function setEditionLoader(DataLoader $editionLoader)
+    {
+        $this->editionLoader = $editionLoader;
+    }
+
+    // ------------------------------------------------------------------------
+
     public function __invoke(ResolveInfo $info, $value, Argument $args)
     {
         $method = $info->fieldName;
         return $this->$method($value, $args);
     }
 
-    public function resolve(string $asin)
+
+    public function edition(string $asin)
     {
         return $this->em->find(Edition::class, $asin);
     }
+
+    public function work(Edition $edition)
+    {
+        return $this->workLoader->load($edition->getWork()->getId());
+    }
+
+    // ------------------------------------------------------------------------
+    // bog standard below
 
     public function asin(Edition $edition): string
     {
         return $edition->getAsin();
     }
-
-    // ------------------------------------------------------------------------
-
     public function title(Edition $edition): ?string
     {
         return $edition->getTitle();

@@ -1,7 +1,15 @@
 overblog_dataloader:
     defaults:
         promise_adapter: "overblog_dataloader.webonyx_graphql_sync_promise_adapter"
+        options:
+            batch: true
+            cache: true
+            max_batch_size: 1000
+            cache_map: "overblog_dataloader.cache_map"
     loaders:
         works:
-            alias: "works_loader"
-            batch_load_fn: "@app.graph.works_loader:all"
+            alias: "work_loader"
+            batch_load_fn: '@App\GraphQL\Loader\WorkLoader'
+        editions:
+            alias: "edition_loader"
+            batch_load_fn: '@App\GraphQL\Loader\EditionLoader'

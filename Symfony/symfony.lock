@@ -188,9 +188,6 @@
     "paragonie/random_compat": {
         "version": "v2.0.18"
     },
-    "php-http/cache-plugin": {
-        "version": "1.6.0"
-    },
     "php-http/client-common": {
         "version": "1.9.1"
     },
@@ -385,6 +382,9 @@
     },
     "symfony/polyfill-intl-icu": {
         "version": "v1.10.0"
+    },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.11.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"

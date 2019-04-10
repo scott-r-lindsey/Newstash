@@ -1,7 +1,8 @@
 Edition:
   type: object
   config:
-    resolveField: '@=resolver("App\\GraphQL\\Resolver\\EditionResolver", [info, value, args])'
+    resolveField: '@=resolver("editionResolver", [info, value, args])'
+
     fields:
       asin:
         type: "String!"
@@ -67,6 +68,8 @@ Edition:
         type: "String"
       slug:
         type: "String"
+      work:
+        type: Work
 
 
 editionConnection:

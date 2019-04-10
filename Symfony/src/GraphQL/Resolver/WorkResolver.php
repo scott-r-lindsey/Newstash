@@ -1,11 +1,11 @@
 <?php
 namespace App\GraphQL\Resolver;
 
-use App\GraphQL\Loader\WorkLoader;
-use App\Entity\Edition;
 use App\Entity\Work;
 use Doctrine\ORM\EntityManagerInterface;
+use GraphQL\Executor\Promise\Promise;
 use GraphQL\Type\Definition\ResolveInfo;
+use Overblog\DataLoader\DataLoader;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Output\Connection;
@@ -14,15 +14,27 @@ use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 class WorkResolver implements ResolverInterface {
 
     private $em;
+    private $workLoader;
+    private static $instance = null;
 
     public function __construct(
-        EntityManagerInterface $em,
-        WorkLoader $workLoader
+        EntityManagerInterface $em
     )
     {
         $this->em           = $em;
-        $this->workLoader   = $workLoader;
     }
+
+    public function setWorkLoader(DataLoader $workLoader)
+    {
+        $this->workLoader = $workLoader;
+    }
+
+    public function setEditionLoader(DataLoader $editionLoader)
+    {
+        $this->editionLoader = $editionLoader;
+    }
+
+    // ------------------------------------------------------------------------
 
     public function __invoke(ResolveInfo $info, $value, Argument $args)
     {
@@ -30,9 +42,9 @@ class WorkResolver implements ResolverInterface {
         return $this->$method($value, $args);
     }
 
-    public function resolve(int $id)
+    public function work(int $id)
     {
-        return $this->em->find(Work::class, $id);
+        return $this->workLoader->load($id);
     }
 
     public function editions(Work $work, Argument $args)
@@ -56,12 +68,15 @@ class WorkResolver implements ResolverInterface {
         return $paginator->auto($args, count($similarWorks));
     }
 
-    public function front_edition(Work $work, Argument $args): Edition
+    public function front_edition(Work $work, Argument $args): Promise
     {
-        return $editions = $work->getFrontEdition();
+        $edition = $work->getFrontEdition();
+
+        return $this->editionLoader->load($edition->getAsin());
     }
 
     // ------------------------------------------------------------------------
+    // bog standard below
 
     public function id(Work $work): int
     {
@@ -71,12 +86,15 @@ class WorkResolver implements ResolverInterface {
     {
         return $work->getTitle();
     }
+
+    // ------------------------------------------------------------------------
+
     private function worksFromSimilarWorksPromises($similarWorks): array
     {
         $ret = [];
 
         foreach ($similarWorks as $sw) {
-            $ret[] = $this->workLoader->load($sw->getSimilarWork()->getId());
+            $ret[] = $this->workLoader->load($sw->getSimilar()->getId());
         }
         return $ret;
     }

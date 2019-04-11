@@ -118,3 +118,10 @@ services:
             - [setUserLoader, ['@overblog_dataloader.user_loader']]
         tags:
             - { name: overblog_graphql.resolver }
+
+    browseNodeResolver:
+        class: App\GraphQL\Resolver\BrowseNodeResolver
+        calls:
+            - [setBrowseNodeLoader, ['@overblog_dataloader.browse_node_loader']]
+        tags:
+            - { name: overblog_graphql.resolver }

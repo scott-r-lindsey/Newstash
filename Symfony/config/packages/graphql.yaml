@@ -1,4 +1,8 @@
 overblog_graphql:
+    security:
+        enable_introspection: '%kernel.debug%'
+        query_max_depth: 5
+
     definitions:
         schema:
             query: Query

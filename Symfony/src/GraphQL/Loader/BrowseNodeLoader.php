@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Loader;
 
+use App\GraphQL\Loader\AbstractSortingLoader;
 use App\Repository\BrowseNodeRepository;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
@@ -20,10 +21,10 @@ class BrowseNodeLoader extends AbstractSortingLoader
 
     public function __invoke(array $ids): Promise
     {
-        $works = $this->repository->getBrowseNodes($ids);
+        $browseNodes = $this->repository->findByIdWithChildren($ids);
 
         return $this->promiseAdapter->all(
-            $this->sortByIds($ids, $works)
+            $this->sortByIds($ids, $browseNodes)
         );
     }
 }

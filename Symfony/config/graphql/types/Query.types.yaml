@@ -43,3 +43,11 @@ Query:
           id:
             type: Int
         resolve: '@=resolver("userResolver", [info, args["id"], args])'
+
+      browseNode:
+        type: BrowseNode
+        args:
+          id:
+            type: Int
+        resolve: '@=resolver("browseNodeResolver", [info, args["id"], args])'
+

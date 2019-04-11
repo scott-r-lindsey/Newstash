@@ -60,7 +60,6 @@ class PostResolver implements ResolverInterface {
 
     public function comments(Post $post, Argument $args)
     {
-        // FIXME this needs to get top level comments only
         $comments =  $this->commentRepository->findPostComments($post);
 
         $paginator = new Paginator(function ($offset, $limit) use ($comments) {
@@ -76,9 +75,6 @@ class PostResolver implements ResolverInterface {
 
         return $paginator->auto($args, count($comments));
     }
-
-
-    // fixme user
 
     // ------------------------------------------------------------------------
     // getters

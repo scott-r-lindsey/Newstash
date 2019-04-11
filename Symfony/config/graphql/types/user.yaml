@@ -1,0 +1,33 @@
+User:
+  type: object
+  config:
+    resolveField: '@=resolver("userResolver", [info, value, args])'
+
+    fields:
+      id:
+        type: "Int!"
+      facebookId:
+        type: "String"
+      googleId:
+        type: "String"
+      avatar_url:
+        type: "String"
+      first_name:
+        type: "String"
+      last_name:
+        type: "String"
+      gender:
+        type: "String"
+      locale:
+        type: "String"
+      rating_count:
+        type: "Int!"
+      review_count:
+        type: "Int!"
+      comment_count:
+        type: "Int!"
+
+
+
+
+

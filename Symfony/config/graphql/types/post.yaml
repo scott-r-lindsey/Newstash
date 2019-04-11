@@ -1,0 +1,39 @@
+Post:
+  type: object
+  config:
+    resolveField: '@=resolver("postResolver", [info, value, args])'
+    fields:
+      id:
+        type: "Int!"
+      active:
+        type: "Boolean!"
+      pinned:
+        type: "Boolean!"
+      title:
+        type: "String!"
+      slug:
+        type: "String!"
+      year:
+        type: "Int!"
+      image:
+        type: "String"
+      image_x:
+        type: "String"
+      image_y:
+        type: "String"
+      description:
+        type: "String"
+      lead:
+        type: "String"
+      fold:
+        type: "String"
+      published_at:
+        type: "String"
+
+      user:
+        type: User!
+
+      comments:
+        type: commentConnection
+        argsBuilder: "Relay::ForwardConnection"
+

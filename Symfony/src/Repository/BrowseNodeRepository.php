@@ -19,32 +19,15 @@ class BrowseNodeRepository extends ServiceEntityRepository
         parent::__construct($registry, BrowseNode::class);
     }
 
-    // /**
-    //  * @return BrowseNode[] Returns an array of BrowseNode objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByIdWithChildren(array $ids)
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('b');
+        $qb
+            ->addSelect('c')
+            ->leftJoin('b.children', 'c')
+            ->add('where', $qb->expr()->in('b.id', ':ids'))
+            ->setParameter('ids', $ids);
 
-    /*
-    public function findOneBySomeField($value): ?BrowseNode
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $qb->getQuery()->getResult();
     }
-    */
 }

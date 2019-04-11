@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -44,5 +45,19 @@ class CommentRepository extends ServiceEntityRepository
         $result = $sth->fetch();
 
         return ['count'    => $result['count']];
+    }
+
+    /**
+     * gets comments for a post, filter "deleted"
+     **/
+    public function findPostComments(
+        Post $post
+    ): array
+    {
+        return $this->findBy([
+            'post'      => $post,
+            'parent'    => null,
+            'deleted'   => 0,
+        ]);
     }
 }

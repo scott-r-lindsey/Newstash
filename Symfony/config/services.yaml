@@ -40,7 +40,6 @@ services:
             - '@MongoDB\Client'
             - {database: 'dbSession', collection: 'session'}
 
-
     # -------------------------------------------------------------------------
 
     aws_delayfish:
@@ -70,3 +69,59 @@ services:
     App\Service\ReviewManager:
         calls:
             - [setRatingManager, ['@App\Service\RatingManager']]
+
+    # -------------------------------------------------------------------------
+    # graphql
+
+    workResolver:
+        class: App\GraphQL\Resolver\WorkResolver
+        calls:
+            - [setWorkLoader, ['@overblog_dataloader.work_loader']]
+            - [setEditionLoader, ['@overblog_dataloader.edition_loader']]
+        tags:
+            - { name: overblog_graphql.resolver }
+
+    editionResolver:
+        class: App\GraphQL\Resolver\EditionResolver
+        calls:
+            - [setWorkLoader, ['@overblog_dataloader.work_loader']]
+            - [setEditionLoader, ['@overblog_dataloader.edition_loader']]
+            - [setFormatLoader, ['@overblog_dataloader.format_loader']]
+        tags:
+            - { name: overblog_graphql.resolver }
+
+    formatResolver:
+        class: App\GraphQL\Resolver\FormatResolver
+        tags:
+            - { name: overblog_graphql.resolver }
+
+    postResolver:
+        class: App\GraphQL\Resolver\PostResolver
+        calls:
+            - [setPostLoader, ['@overblog_dataloader.post_loader']]
+            - [setCommentLoader, ['@overblog_dataloader.comment_loader']]
+            - [setUserLoader, ['@overblog_dataloader.user_loader']]
+        tags:
+            - { name: overblog_graphql.resolver }
+
+    commentResolver:
+        class: App\GraphQL\Resolver\CommentResolver
+        calls:
+            - [setCommentLoader, ['@overblog_dataloader.comment_loader']]
+            - [setUserLoader, ['@overblog_dataloader.user_loader']]
+        tags:
+            - { name: overblog_graphql.resolver }
+
+    userResolver:
+        class: App\GraphQL\Resolver\UserResolver
+        calls:
+            - [setUserLoader, ['@overblog_dataloader.user_loader']]
+        tags:
+            - { name: overblog_graphql.resolver }
+
+    browseNodeResolver:
+        class: App\GraphQL\Resolver\BrowseNodeResolver
+        calls:
+            - [setBrowseNodeLoader, ['@overblog_dataloader.browse_node_loader']]
+        tags:
+            - { name: overblog_graphql.resolver }

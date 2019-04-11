@@ -23,8 +23,6 @@ class WorkRepository extends ServiceEntityRepository
 
     public function getWork(int $work_id)
     {
-        //$this->getFormats();
-
         $em = $this->getEntityManager();
 
         $dql = '
@@ -41,6 +39,18 @@ class WorkRepository extends ServiceEntityRepository
         $query->setParameter('id', $work_id);
 
         return $query->getOneOrNullResult();
+    }
+
+    public function getWorks(array $work_ids): array
+    {
+        $qb = $this->createQueryBuilder('w');
+        $qb
+            ->addSelect('s')
+            ->leftJoin('w.score', 's')
+            ->add('where', $qb->expr()->in('w.id', ':ids'))
+            ->setParameter('ids', $work_ids);
+
+        return $qb->getQuery()->getResult();
     }
 
     public function getSimilarWorks(int $work_id)

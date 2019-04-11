@@ -1,0 +1,24 @@
+BrowseNode:
+  type: object
+  config:
+    resolveField: '@=resolver("browseNodeResolver", [info, value, args])'
+
+    fields:
+      id:
+        type: "String!"
+      name:
+        type: "String!"
+      description:
+        type: "String!"
+      pathdata:
+        type: "String!"
+      slug:
+        type: "String!"
+      root:
+        type: "Boolean!"
+      leaf:
+        type: "Boolean!"
+
+      children:
+        type: "[BrowseNode]"
+

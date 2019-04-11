@@ -1,0 +1,20 @@
+Format:
+  type: object
+  config:
+    resolveField: '@=resolver("formatResolver", [info, value, args])'
+
+    fields:
+      id:
+        type: "Int!"
+      description:
+        type: "String!"
+      paper:
+        type: "Boolean!"
+      e:
+        type: "Boolean!"
+      audio:
+        type: "Boolean!"
+      noprice:
+        type: "Boolean!"
+
+

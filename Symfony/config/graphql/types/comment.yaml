@@ -1,0 +1,22 @@
+Comment:
+  type: object
+  config:
+    resolveField: '@=resolver("commentResolver", [info, value, args])'
+    fields:
+      id:
+        type: "Int!"
+      text:
+        type: "String!"
+      created_at:
+        type: "String!"
+      replies:
+        type: commentConnection
+        argsBuilder: "Relay::ForwardConnection"
+      user:
+        type: User!
+
+commentConnection:
+  type: relay-connection
+  config:
+    nodeType: Comment!
+

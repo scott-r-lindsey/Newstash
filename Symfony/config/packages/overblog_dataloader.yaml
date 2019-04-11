@@ -1,0 +1,30 @@
+overblog_dataloader:
+    defaults:
+        promise_adapter: "overblog_dataloader.webonyx_graphql_sync_promise_adapter"
+        options:
+            batch: true
+            cache: true
+            max_batch_size: 1000
+            cache_map: "overblog_dataloader.cache_map"
+    loaders:
+        work:
+            alias: "work_loader"
+            batch_load_fn: '@App\GraphQL\Loader\WorkLoader'
+        edition:
+            alias: "edition_loader"
+            batch_load_fn: '@App\GraphQL\Loader\EditionLoader'
+        format:
+            alias: "format_loader"
+            batch_load_fn: '@App\GraphQL\Loader\FormatLoader'
+        post:
+            alias: "post_loader"
+            batch_load_fn: '@App\GraphQL\Loader\PostLoader'
+        comment:
+            alias: "comment_loader"
+            batch_load_fn: '@App\GraphQL\Loader\CommentLoader'
+        user:
+            alias: "user_loader"
+            batch_load_fn: '@App\GraphQL\Loader\UserLoader'
+        browseNode:
+            alias: "browseNode_loader"
+            batch_load_fn: '@App\GraphQL\Loader\BrowseNodeLoader'

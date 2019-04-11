@@ -15,3 +15,24 @@ Query:
           asin:
             type: String
         resolve: '@=resolver("editionResolver", [info, args["asin"], args])'
+
+      format:
+        type: Format
+        args:
+          id:
+            type: Int
+        resolve: '@=resolver("formatResolver", [info, args["id"], args])'
+
+      post:
+        type: Post
+        args:
+          id:
+            type: Int
+        resolve: '@=resolver("postResolver", [info, args["id"], args])'
+
+      comment:
+        type: Comment
+        args:
+          id:
+            type: Int
+        resolve: '@=resolver("commentResolver", [info, args["id"], args])'

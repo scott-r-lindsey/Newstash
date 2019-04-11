@@ -110,6 +110,9 @@ class Comment{
 
     public function getText(): ?string
     {
+        if ($this->deleted) {
+            return 'Comment deleted';
+        }
         return $this->text;
     }
 

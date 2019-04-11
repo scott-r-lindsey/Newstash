@@ -70,6 +70,8 @@ Edition:
         type: "String"
       work:
         type: Work
+      format:
+        type: Format
 
 
 editionConnection:

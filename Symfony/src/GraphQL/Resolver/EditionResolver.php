@@ -15,6 +15,8 @@ use DateTime;
 class EditionResolver implements ResolverInterface {
 
     private $em;
+    private $editionLoader;
+    private $workLoader;
 
     public function __construct(EntityManagerInterface $em)
     {
@@ -29,6 +31,11 @@ class EditionResolver implements ResolverInterface {
     public function setEditionLoader(DataLoader $editionLoader)
     {
         $this->editionLoader = $editionLoader;
+    }
+
+    public function setFormatLoader(DataLoader $formatLoader)
+    {
+        $this->formatLoader = $formatLoader;
     }
 
     // ------------------------------------------------------------------------
@@ -50,8 +57,18 @@ class EditionResolver implements ResolverInterface {
         return $this->workLoader->load($edition->getWork()->getId());
     }
 
+    public function format(Edition $edition)
+    {
+        $format = $edition->getFormat();
+
+        if ($format) {
+            return $this->formatLoader->load($format->getId());
+        }
+        return null;
+    }
+
     // ------------------------------------------------------------------------
-    // bog standard below
+    // getters
 
     public function asin(Edition $edition): string
     {

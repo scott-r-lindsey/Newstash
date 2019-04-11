@@ -2,16 +2,17 @@
 
 namespace App\GraphQL\Loader;
 
-use App\Repository\WorkRepository;
+use App\GraphQL\Loader\AbstractSortingLoader;
+use App\Repository\UserRepository;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 
-class WorkLoader extends AbstractSortingLoader
+class UserLoader extends AbstractSortingLoader
 {
 
     public function __construct(
         PromiseAdapter $promiseAdapter,
-        WorkRepository $repository
+        UserRepository $repository
     )
     {
         $this->promiseAdapter = $promiseAdapter;
@@ -20,7 +21,7 @@ class WorkLoader extends AbstractSortingLoader
 
     public function __invoke(array $ids): Promise
     {
-        $works = $this->repository->getWorks($ids);
+        $works = $this->repository->getUsers($ids);
 
         return $this->promiseAdapter->all(
             $this->sortByIds($ids, $works)

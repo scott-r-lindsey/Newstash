@@ -14,8 +14,8 @@ use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 class WorkResolver implements ResolverInterface {
 
     private $em;
+    private $editionLoader;
     private $workLoader;
-    private static $instance = null;
 
     public function __construct(
         EntityManagerInterface $em
@@ -58,7 +58,6 @@ class WorkResolver implements ResolverInterface {
 
     public function similar_works(Work $work, Argument $args)
     {
-
         $similarWorks = $work->getSimilarWorks();
         $paginator = new Paginator(function ($offset, $limit) use ($similarWorks) {
             $slice = $similarWorks->slice($offset, $limit ?? 10);
@@ -76,7 +75,7 @@ class WorkResolver implements ResolverInterface {
     }
 
     // ------------------------------------------------------------------------
-    // bog standard below
+    // getters
 
     public function id(Work $work): int
     {

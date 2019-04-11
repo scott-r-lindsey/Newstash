@@ -5,6 +5,7 @@
 *.cache
 *.config
 *.pid
+*.stop
 
 /Symfony/app/config/developer-*-public.pem
 /Symfony/app/config/parameters.yml

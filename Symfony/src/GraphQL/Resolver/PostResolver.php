@@ -35,6 +35,10 @@ class PostResolver implements ResolverInterface {
     {
         $this->commentLoader = $commentLoader;
     }
+    public function setUserLoader(DataLoader $userLoader)
+    {
+        $this->userLoader = $userLoader;
+    }
 
     // ------------------------------------------------------------------------
 
@@ -42,6 +46,11 @@ class PostResolver implements ResolverInterface {
     {
         $method = $info->fieldName;
         return $this->$method($value, $args);
+    }
+
+    public function user(Post $post)
+    {
+        return $this->userLoader->load($post->getUser()->getId());
     }
 
     public function post(int $id)

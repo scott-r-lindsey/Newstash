@@ -36,3 +36,10 @@ Query:
           id:
             type: Int
         resolve: '@=resolver("commentResolver", [info, args["id"], args])'
+
+      user:
+        type: User
+        args:
+          id:
+            type: Int
+        resolve: '@=resolver("userResolver", [info, args["id"], args])'

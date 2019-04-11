@@ -30,6 +30,9 @@ Post:
       published_at:
         type: "String"
 
+      user:
+        type: User!
+
       comments:
         type: commentConnection
         argsBuilder: "Relay::ForwardConnection"

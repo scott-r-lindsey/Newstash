@@ -21,10 +21,10 @@ class UserLoader extends AbstractSortingLoader
 
     public function __invoke(array $ids): Promise
     {
-        $works = $this->repository->getUsers($ids);
+        $users = $this->repository->findById($ids);
 
         return $this->promiseAdapter->all(
-            $this->sortByIds($ids, $works)
+            $this->sortByIds($ids, $users)
         );
     }
 }

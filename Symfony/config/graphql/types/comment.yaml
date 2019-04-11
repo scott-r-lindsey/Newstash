@@ -12,6 +12,8 @@ Comment:
       replies:
         type: commentConnection
         argsBuilder: "Relay::ForwardConnection"
+      user:
+        type: User!
 
 commentConnection:
   type: relay-connection

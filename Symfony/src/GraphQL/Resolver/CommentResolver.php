@@ -29,12 +29,22 @@ class CommentResolver implements ResolverInterface {
         $this->commentLoader = $commentLoader;
     }
 
+    public function setUserLoader(DataLoader $userLoader)
+    {
+        $this->userLoader = $userLoader;
+    }
+
     // ------------------------------------------------------------------------
 
     public function __invoke(ResolveInfo $info, $value, Argument $args)
     {
         $method = $info->fieldName;
         return $this->$method($value, $args);
+    }
+
+    public function user(Comment $comment)
+    {
+        return $this->userLoader->load($comment->getUser()->getId());
     }
 
     public function comment(int $id)
@@ -73,15 +83,8 @@ class CommentResolver implements ResolverInterface {
     {
         return $comment->getText();
     }
-    public function user(Comment $comment)
-    {
-        return $comment->getUser();
-    }
     public function created_at(Comment $comment): string
     {
         return $comment->getCreatedAt()->format('Y-m-d\TH:i:s.u\Z');
     }
-
-    // ------------------------------------------------------------------------
-
 }

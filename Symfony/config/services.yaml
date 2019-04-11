@@ -100,6 +100,7 @@ services:
         calls:
             - [setPostLoader, ['@overblog_dataloader.post_loader']]
             - [setCommentLoader, ['@overblog_dataloader.comment_loader']]
+            - [setUserLoader, ['@overblog_dataloader.user_loader']]
         tags:
             - { name: overblog_graphql.resolver }
 
@@ -107,5 +108,13 @@ services:
         class: App\GraphQL\Resolver\CommentResolver
         calls:
             - [setCommentLoader, ['@overblog_dataloader.comment_loader']]
+            - [setUserLoader, ['@overblog_dataloader.user_loader']]
+        tags:
+            - { name: overblog_graphql.resolver }
+
+    userResolver:
+        class: App\GraphQL\Resolver\UserResolver
+        calls:
+            - [setUserLoader, ['@overblog_dataloader.user_loader']]
         tags:
             - { name: overblog_graphql.resolver }

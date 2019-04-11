@@ -20,4 +20,7 @@ return [
     Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Limenius\ReactBundle\LimeniusReactBundle::class => ['all' => true],
+    Overblog\GraphQLBundle\OverblogGraphQLBundle::class => ['all' => true],
+    Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
+    Overblog\DataLoaderBundle\OverblogDataLoaderBundle::class => ['all' => true],
 ];

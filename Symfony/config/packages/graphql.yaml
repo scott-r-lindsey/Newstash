@@ -1,0 +1,18 @@
+overblog_graphql:
+    security:
+        enable_introspection: '%kernel.debug%'
+        query_max_depth: 5
+
+    definitions:
+        schema:
+            query: Query
+
+        mappings:
+            auto_discover: false
+            types:
+                -
+                    type: yaml
+                    dir: "%kernel.project_dir%/config/graphql/types"
+                    suffix: ~
+    services:
+        promise_adapter: "webonyx_graphql.sync_promise_adapter"

@@ -21,6 +21,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class BlogController extends AbstractController
 {
+    /**
+     * @Route("/blog",
+     *      name="mobile_blog",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template("default/mobile_generic.html.twig")
+     */
+    public function mobileBlog(): array
+    {
+        return ['props' => []];
+    }
 
     /**
      * @Route("/blog", name="blog", methods={"GET"})
@@ -32,6 +43,21 @@ class BlogController extends AbstractController
     ): array
     {
         return $postManager->findFrontPosts();
+    }
+
+
+
+
+    /**
+     * @Route("/blog/{post_id}/{slug}",
+     *      name="mobile_post",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template("default/mobile_generic.html.twig")
+     */
+    public function mobilePost(): array
+    {
+        return ['props' => []];
     }
 
     /**

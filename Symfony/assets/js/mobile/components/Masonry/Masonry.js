@@ -129,7 +129,7 @@ class Masonry extends React.Component {
           infiniteScrollDistance={700}
           sizes={ [
             { columns: 2, gutter: 20 },
-            // { mq: '768px', columns: 3, gutter: 20 },
+            //{ mq: '768px', columns: 3, gutter: 20 },
             //{ mq: '1024px', columns: 6, gutter: 20 }
           ] }
           style={{

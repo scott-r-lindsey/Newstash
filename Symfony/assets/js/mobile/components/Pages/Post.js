@@ -1,27 +1,22 @@
-
-import gql from "graphql-tag";
 import React from "react";
 import PropTypes from 'prop-types';
+import gql from "graphql-tag";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { withStyles } from '@material-ui/core/styles';
 import { Query } from "react-apollo";
 
-import Loading from "../Trim/Loading";
 import * as Constants from '../../constants'
-import { generatePostLink } from "../../util.js";
+import Loading from "../Trim/Loading";
 
 const styles = theme => ({
   wrap: {
     padding: '5px',
     backgroundColor:'white',
-    minHeight: 'calc(100vh - 56px)',
   },
-  head: {
-  }
 });
 
-class Blog extends React.Component {
+class Post extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -29,6 +24,8 @@ class Blog extends React.Component {
     this.state = {
     };
   }
+
+  loading = false;
 
   componentDidMount() {
     console.log('did mount');
@@ -48,27 +45,23 @@ class Blog extends React.Component {
         <Query
           query={gql`
             {
-              posts(first: 20) {
-                edges {
-                  node {
-                    id
-                    active
-                    pinned
-                    title
-                    slug
-                    year
-                    image
-                    image_x
-                    image_y
-                    description
-                    lead
-                    fold
-                    published_at
-                    user {
-                      first_name
-                      last_name
-                    }
-                  }
+              post(id: ${id}) {
+                id
+                active
+                pinned
+                title
+                slug
+                year
+                image
+                image_x
+                image_y
+                description
+                lead
+                fold
+                published_at
+                user {
+                  first_name
+                  last_name
                 }
               }
             }
@@ -81,18 +74,14 @@ class Blog extends React.Component {
 
             return (
               <div className={classes.wrap}>
-
-                {data.posts.edges.map((post, index) => (
-                    <div key={post.node.id} >
-                      <Link to={generatePostLink(post.node)} >
-                        <strong>{post.node.title}</strong>
-                      </Link>
-                    </div>
-                ))}
-
+                <br/>
+                <br/>
+                { data.post.title }<br />
+                { data.post.description }
               </div>
             );
           }}
+
         </Query>
 
       </div>
@@ -100,4 +89,4 @@ class Blog extends React.Component {
   }
 }
 
-export default withStyles(styles)(Blog);
+export default withStyles(styles)(Post);

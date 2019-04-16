@@ -2,6 +2,12 @@ Query:
   type: object
   config:
     fields:
+
+      posts:
+        type: postConnection
+        argsBuilder: "Relay::ForwardConnection"
+        resolve: '@=resolver("postsResolver", [info, args])'
+
       work:
         type: Work
         args:

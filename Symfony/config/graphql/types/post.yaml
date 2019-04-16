@@ -37,3 +37,8 @@ Post:
         type: commentConnection
         argsBuilder: "Relay::ForwardConnection"
 
+postConnection:
+  type: relay-connection
+  config:
+    nodeType: Post!
+

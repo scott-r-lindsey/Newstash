@@ -73,6 +73,13 @@ services:
     # -------------------------------------------------------------------------
     # graphql
 
+    postsResolver:
+        class: App\GraphQL\Resolver\PostsResolver
+        calls:
+            - [setPostLoader, ['@overblog_dataloader.post_loader']]
+        tags:
+            - { name: overblog_graphql.resolver }
+
     workResolver:
         class: App\GraphQL\Resolver\WorkResolver
         calls:

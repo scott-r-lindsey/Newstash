@@ -17,6 +17,27 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WorkController extends AbstractController
 {
+    /**
+     * @Route(
+     *      "/book/{work}/{slug}",
+     *      name="mobile_work",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template()
+     */
+    public function mobile_work(
+        Work $work
+    ): array
+    {
+
+        return ['props' => []];
+    }
+
+
+
+
+
+
 
     /**
      * @Route("/book/{work}/{review}/{slug}", requirements={"work" = "^\d+$", "review" = "^\d+$"}, name="work_review",  methods={"GET"})
@@ -46,25 +67,6 @@ class WorkController extends AbstractController
 
         return [];
     }
-
-    /**
-     * @Route(
-     *      "/book/{work}/{slug}",
-     *      name="mobile_work",
-     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
-     * )
-     * @Template()
-     */
-    public function mobile_work(
-        Work $work
-    ): array
-    {
-
-        return ['props' => []];
-    }
-
-
-
 
     /**
      * @Route("/book/{work_id}/{slug}", requirements={"work_id" = "^\d+$"}, name="work",  methods={"GET"})

@@ -21,3 +21,12 @@ export const fiveStars = function (count) {
       return (<div><Icon fontSize="inherit">star_border</Icon><Icon fontSize="inherit">star_border</Icon><Icon fontSize="inherit">star_border</Icon><Icon fontSize="inherit">star_border</Icon><Icon fontSize="inherit">star_border</Icon></div>);
   }
 }
+
+export const generateWorkLink = function (work) {
+  return '/book/' + (work.id ? work.id : work.work_id) + '/' + work.slug;
+}
+
+export const generatePostLink = function (post) {
+  return '/blog/' + post.id + '/' + post.slug;
+}
+

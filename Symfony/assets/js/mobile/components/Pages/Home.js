@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import Loading from "../Trim/Loading";
 
+import Loading from "../Trim/Loading";
 import Masonry from "../Masonry/Masonry";
 
 const api = '/api/v1/news';
@@ -24,7 +24,6 @@ export default class Home extends React.Component {
   loading = false;
 
   componentDidMount() {
-
     if (this.props.initialProps.items) {
       let items = this.props.initialProps.items;
 
@@ -52,7 +51,6 @@ export default class Home extends React.Component {
   }
 
   fetchMoreNews = (handler) => {
-
     if (this.state.hasmore && !this.loading) {
       this.loading = true;
       fetch(api + '?idlt=' + this.state.lastFetched)
@@ -69,7 +67,6 @@ export default class Home extends React.Component {
   }
 
   render() {
-
     return (
       <div>
         <Helmet>
@@ -100,4 +97,3 @@ export default class Home extends React.Component {
 
 Home.propTypes = {
 };
-

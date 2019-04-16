@@ -68,4 +68,19 @@ class PostRepository extends ServiceEntityRepository
             'active'    => 1
         ]);
     }
+
+    public function findActivePosts()
+    {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            'SELECT p
+            FROM App\Entity\Post p
+            WHERE
+                p.active = 1
+            ORDER BY
+                p.pinned DESC, p.id DESC');
+
+        return $query->getResult();
+    }
 }

@@ -1,11 +1,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
-import { fiveStars } from "../../util.js";
+
 import * as Constants from '../../constants'
-import Typography from '@material-ui/core/Typography';
+import { fiveStars, generatePostLink, generateWorkLink } from "../../util.js";
 
 const styles = theme => ({
   coverImg: {
@@ -129,14 +130,6 @@ class MasonryItem extends React.Component {
     return null;
   }
 
-  generateWorkLink(work) {
-    return '/book/' + (work.id ? work.id : work.work_id) + '/' + work.slug;
-  }
-
-  generatePostLink(post) {
-    return '/blog/' + post.id + '/' + post.slug;
-  }
-
   componentDidMount() {
     const { classes } = this.props;
 
@@ -188,7 +181,7 @@ class MasonryItem extends React.Component {
     switch(item.type) {
       case 'rating':
         return (
-          <Link to={this.generateWorkLink(item.work)} title={item.work.title}>
+          <Link to={generateWorkLink(item.work)} title={item.work.title}>
             <img
               className={classes.coverImg}
               src={item.work.cover}
@@ -207,7 +200,7 @@ class MasonryItem extends React.Component {
 
           <Link
             className={classes.link}
-            to={this.generatePostLink(item.post)}
+            to={generatePostLink(item.post)}
             title={item.post.title}>
 
             <div className={classes.postHead}>
@@ -226,7 +219,7 @@ class MasonryItem extends React.Component {
         );
       case 'review':
         return (
-          <Link to={this.generateWorkLink(item.work)} title={item.work.title}>
+          <Link to={generateWorkLink(item.work)} title={item.work.title}>
             <img
               className={classes.coverImg}
               src={item.work.cover}
@@ -249,7 +242,7 @@ class MasonryItem extends React.Component {
         );
       default:
         return (
-          <Link to={this.generateWorkLink(item)} title={item.title}>
+          <Link to={generateWorkLink(item)} title={item.title}>
             <img
               src={item.amzn_large_cover}
               width={item.amzn_large_cover_x * this.factor}
@@ -268,4 +261,3 @@ MasonryItem.propTypes = {
 };
 
 export default withStyles(styles)(MasonryItem);
-

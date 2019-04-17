@@ -11,14 +11,17 @@ class GraphQLExecutor
 
     private $logger;
     private $requestExecutor;
+    private $projectDir;
 
     public function __construct(
         LoggerInterface $logger,
-        RequestExecutor $requestExecutor
+        RequestExecutor $requestExecutor,
+        string $projectDir
     )
     {
         $this->logger               = $logger;
         $this->requestExecutor      = $requestExecutor;
+        $this->projectDir           = $projectDir;
     }
 
     public function execute(string $query): array
@@ -34,4 +37,20 @@ class GraphQLExecutor
             ->execute(null, $request)
             ->toArray();
     }
+
+    public function executeQueryByName(
+        string $name,
+        array $replace
+    ): array
+    {
+        $query      = file_get_contents($this->projectDir ."/graphql/$name.graphql");
+
+        foreach ($replace as $key => $value) {
+            $query = str_replace($key, $value, $query);
+        }
+
+        return $this->execute($query);
+    }
+
+
 }

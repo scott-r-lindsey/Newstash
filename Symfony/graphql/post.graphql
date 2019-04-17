@@ -1,0 +1,23 @@
+
+  {
+    post(id: __POST_ID__) {
+      id
+      active
+      pinned
+      title
+      slug
+      year
+      image
+      image_x
+      image_y
+      description
+      lead
+      fold
+      published_at
+      user {
+        first_name
+        last_name
+        avatar_url
+      }
+    }
+  }

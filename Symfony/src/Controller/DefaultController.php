@@ -11,6 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
+
+    // -- Mobile --------------------------------------------------------------
+
     /**
      * @Route(
      *      "/",
@@ -84,8 +87,7 @@ class DefaultController extends AbstractController
         ];
     }
 
-    // ------------------------------------------------------------------------
-
+    // -- Desktop -------------------------------------------------------------
 
     /**
      * @Route("/about", name="about", methods={"GET"})

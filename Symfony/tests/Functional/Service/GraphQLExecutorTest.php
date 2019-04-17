@@ -43,4 +43,34 @@ class GraphQLExecutorTest extends BaseTest
             $result['data']['work']['title']
         );
     }
+
+    public function testByName(): void
+    {
+
+        // this defeats an error:
+        // Error: Class 'Overblog\GraphQLBundle\__DEFINITIONS__\QueryType' not found
+        static::$kernel->getContainer()->get('overblog_graphql.cache_compiler')->loadClasses(true);
+
+        // --------------------------------------------------------------------
+
+        $gqle               = self::$container->get('test.App\Service\GraphQLExecutor');
+        $workGroomer        = self::$container->get('test.App\Service\Data\WorkGroomer');
+
+        $edition            = $this->loadEditionFromXML('product-sample.xml');
+        $workGroomer->workGroomLogic('0674979850');
+
+        // --------------------------------------------------------------------
+
+        $result = $gqle->executeQueryByName(
+            'work',
+            [
+                '__WORK_ID__'   => 1
+            ]
+        );
+
+        $this->assertEquals(
+            'Capital in the Twenty-First Century',
+            $result['data']['work']['title']
+        );
+    }
 }

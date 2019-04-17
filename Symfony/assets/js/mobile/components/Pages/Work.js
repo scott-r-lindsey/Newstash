@@ -30,6 +30,7 @@ class Work extends React.Component {
   }
 
   renderWork(work) {
+    const { classes } = this.props;
     return (
       <div>
         <Helmet>

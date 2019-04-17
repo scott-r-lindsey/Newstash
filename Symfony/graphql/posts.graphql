@@ -1,0 +1,25 @@
+{
+  posts(first: 20) {
+    edges {
+      node {
+        id
+        active
+        pinned
+        title
+        slug
+        year
+        image
+        image_x
+        image_y
+        description
+        lead
+        fold
+        published_at
+        user {
+          first_name
+          last_name
+        }
+      }
+    }
+  }
+}

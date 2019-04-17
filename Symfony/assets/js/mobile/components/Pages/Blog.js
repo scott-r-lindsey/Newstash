@@ -10,6 +10,7 @@ import { Query } from "react-apollo";
 import Loading from "../Trim/Loading";
 import * as Constants from '../../constants'
 import { generatePostLink } from "../../util.js";
+import postsGql from 'raw-loader!../../raw/graphql/posts.graphql';
 
 const styles = theme => ({
   wrap: {
@@ -30,14 +31,35 @@ class Blog extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log('did mount');
+  renderPosts(posts) {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.wrap}>
+
+        {posts.edges.map((post, index) => (
+            <div key={post.node.id} >
+              <Link to={generatePostLink(post.node)} >
+                <strong>{post.node.title}</strong>
+              </Link>
+            </div>
+        ))}
+
+      </div>
+    );
   }
 
   render() {
 
     const id = this.props.match.params.id;
-    const { classes } = this.props;
+    const { initialProps } = this.props;
+
+    let posts = false;
+    if (  (initialProps.data) &&
+          (initialProps.data.posts)) {
+
+      posts = initialProps.data.posts;
+    }
 
     return (
       <div>
@@ -45,55 +67,20 @@ class Blog extends React.Component {
           <title>Books to Love</title>
         </Helmet>
 
-        <Query
-          query={gql`
-            {
-              posts(first: 20) {
-                edges {
-                  node {
-                    id
-                    active
-                    pinned
-                    title
-                    slug
-                    year
-                    image
-                    image_x
-                    image_y
-                    description
-                    lead
-                    fold
-                    published_at
-                    user {
-                      first_name
-                      last_name
-                    }
-                  }
-                }
-              }
-            }
-          `}
-        >
+        { ( posts ) ?
+          <div>
+            { this.renderPosts(posts) }
+          </div> :
+          <Query query={gql(postsGql)} >
 
-          {({ loading, error, data }) => {
-            if (loading) return <Loading />;
-            if (error) return <p>Error </p>;
+            {({ loading, error, data }) => {
+              if (loading) return <Loading />;
+              if (error) return <p>Error </p>;
 
-            return (
-              <div className={classes.wrap}>
-
-                {data.posts.edges.map((post, index) => (
-                    <div key={post.node.id} >
-                      <Link to={generatePostLink(post.node)} >
-                        <strong>{post.node.title}</strong>
-                      </Link>
-                    </div>
-                ))}
-
-              </div>
-            );
-          }}
-        </Query>
+              return this.renderPosts(data.posts);
+            }}
+          </Query>
+        }
 
       </div>
     );

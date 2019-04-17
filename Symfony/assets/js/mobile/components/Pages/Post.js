@@ -9,6 +9,12 @@ import { Query } from "react-apollo";
 import * as Constants from '../../constants'
 import Loading from "../Trim/Loading";
 
+import postGql from 'raw-loader!../../raw/graphql/post.graphql';
+
+const postQuery = (id) => {
+  return gql(postGql.replace('__POST_ID__', id));
+}
+
 const styles = theme => ({
   wrap: {
     padding: '5px',
@@ -25,16 +31,31 @@ class Post extends React.Component {
     };
   }
 
-  loading = false;
+  renderPost(post) {
+    const { classes } = this.props;
 
-  componentDidMount() {
-    console.log('did mount');
+    return (
+      <div className={classes.wrap}>
+        <br/>
+        <br/>
+        { post.title }<br />
+        { post.description }
+      </div>
+    );
   }
 
   render() {
 
     const id = this.props.match.params.id;
-    const { classes } = this.props;
+    const {initialProps} = this.props;
+
+    let post = false;
+    if (  (initialProps.data) &&
+          (initialProps.data.post) &&
+          (id == initialProps.data.post.id)) {
+
+      post = initialProps.data.post;
+    }
 
     return (
       <div>
@@ -42,48 +63,23 @@ class Post extends React.Component {
           <title>Books to Love</title>
         </Helmet>
 
-        <Query
-          query={gql`
-            {
-              post(id: ${id}) {
-                id
-                active
-                pinned
-                title
-                slug
-                year
-                image
-                image_x
-                image_y
-                description
-                lead
-                fold
-                published_at
-                user {
-                  first_name
-                  last_name
-                }
-              }
-            }
-          `}
-        >
+        { ( post ) ?
+          <div>
+            { this.renderPost(post) }
+          </div> :
 
-          {({ loading, error, data }) => {
-            if (loading) return <Loading />;
-            if (error) return <p>Error </p>;
+          <Query
+            query={postQuery(id)} >
 
-            return (
-              <div className={classes.wrap}>
-                <br/>
-                <br/>
-                { data.post.title }<br />
-                { data.post.description }
-              </div>
-            );
-          }}
+            {({ loading, error, data }) => {
+              if (loading) return <Loading />;
+              if (error) return <p>Error </p>;
 
-        </Query>
+              return this.renderPost(data.post);
+            }}
 
+          </Query>
+        }
       </div>
     );
   }

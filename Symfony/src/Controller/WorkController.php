@@ -18,6 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WorkController extends AbstractController
 {
+
+    // -- Mobile --------------------------------------------------------------
+
     /**
      * @Route(
      *      "/book/{work_id}/{slug}",
@@ -27,23 +30,22 @@ class WorkController extends AbstractController
      * @Template()
      */
     public function mobile_work(
-        string $projectDir,
         string $work_id,
         GraphQLExecutor $gqle
     ): array
     {
-
-        $query      = file_get_contents($projectDir .'/graphql/work.graphql');
-        $query      = str_replace('__WORK_ID__', $work_id, $query);
-        $result       = $gqle->execute($query);
+        $result = $gqle->executeQueryByName(
+            'work',
+            [
+                '__WORK_ID__'   => $work_id
+            ]
+        );
 
         return ['props' => ['data' => $result['data']]];
     }
 
 
-
-
-
+    // -- Desktop -------------------------------------------------------------
 
 
     /**

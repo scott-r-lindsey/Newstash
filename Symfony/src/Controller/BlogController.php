@@ -9,6 +9,7 @@ use App\Repository\PostRepository;
 use App\Repository\ReasonRepository;
 use App\Service\CommentManager;
 use App\Service\FlagManager;
+use App\Service\GraphQLExecutor;
 use App\Service\Mongo\News;
 use App\Service\PostManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class BlogController extends AbstractController
 {
+
+    // -- Mobile --------------------------------------------------------------
+
     /**
      * @Route("/blog",
      *      name="mobile_blog",
@@ -28,10 +32,38 @@ class BlogController extends AbstractController
      * )
      * @Template("default/mobile_generic.html.twig")
      */
-    public function mobileBlog(): array
+    public function mobileBlog(
+        GraphQLExecutor $gqle
+    ): array
     {
-        return ['props' => []];
+        $result = $gqle->executeQueryByName( 'posts', []);
+
+        return ['props' => ['data' => $result['data']]];
     }
+
+    /**
+     * @Route("/blog/{post_id}/{slug}",
+     *      name="mobile_post",
+     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
+     * )
+     * @Template("default/mobile_generic.html.twig")
+     */
+    public function mobilePost(
+        GraphQLExecutor $gqle,
+        string $post_id
+    ): array
+    {
+        $result = $gqle->executeQueryByName(
+            'post',
+            [
+                '__POST_ID__'   => $post_id
+            ]
+        );
+
+        return ['props' => ['data' => $result['data']]];
+    }
+
+    // -- Desktop -------------------------------------------------------------
 
     /**
      * @Route("/blog", name="blog", methods={"GET"})
@@ -43,21 +75,6 @@ class BlogController extends AbstractController
     ): array
     {
         return $postManager->findFrontPosts();
-    }
-
-
-
-
-    /**
-     * @Route("/blog/{post_id}/{slug}",
-     *      name="mobile_post",
-     *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
-     * )
-     * @Template("default/mobile_generic.html.twig")
-     */
-    public function mobilePost(): array
-    {
-        return ['props' => []];
     }
 
     /**
@@ -95,7 +112,6 @@ class BlogController extends AbstractController
 
         return compact('prev_post', 'next_post', 'comments', 'count', 'post');
     }
-
 
     /**
      * @Route("/blog/comments/{post_id}", requirements={"post_id" = "^\d+$"}, name="blog_post_comments", methods={"GET"})

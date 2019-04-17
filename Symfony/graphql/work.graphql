@@ -1,0 +1,49 @@
+{
+  work(id: __WORK_ID__) {
+    id
+    title
+    front_edition{
+      asin title amzn_format
+    }
+    editions(first: 10) {
+      edges {
+        cursor
+        node {
+          asin
+          title
+          isbn
+          amzn_updated_at
+          url
+          amzn_authordisplay
+          amzn_authorlist
+          list_price
+          amzn_small_cover
+          amzn_small_cover_x
+          amzn_small_cover_y
+          amzn_medium_cover
+          amzn_medium_cover_x
+          amzn_medium_cover_y
+          amzn_large_cover
+          amzn_large_cover_x
+          amzn_large_cover_y
+          list_price
+          amzn_price
+          amzn_publisher
+          amzn_salesrank
+          amzn_format
+          pages
+          publication_date
+          release_date
+          description
+          amzn_editorial_review
+          amzn_editorial_review_source
+          amzn_edition
+          amzn_manufacturer
+          amzn_brand
+          apparent_amzn_osi
+          slug
+        }
+      }
+    }
+  }
+}

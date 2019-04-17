@@ -30,3 +30,4 @@ services:
     test.App\Service\ReviewManager: '@App\Service\ReviewManager'
     test.App\Service\ScoreManager: '@App\Service\ScoreManager'
     test.App\Service\SitemapGenerator: '@App\Service\SitemapGenerator'
+    test.App\Service\GraphQLExecutor: '@App\Service\GraphQLExecutor'

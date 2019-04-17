@@ -2,21 +2,6 @@ import React from "react";
 import { Route } from "react-router-dom";
 import classNames from 'classnames';
 
-import Autocomplete from "../components/Trim/Autocomplete";
-import Drawer from "../components/Trim/Drawer";
-import BackToTop from "../components/Trim/BackToTop";
-
-import About from "../components/Pages/About";
-import Home from "../components/Pages/Home";
-import Privacy from "../components/Pages/Privacy";
-import SearchAuthor from "../components/Pages/SearchAuthor";
-import SearchTitle from "../components/Pages/SearchTitle";
-import Tos from "../components/Pages/Tos";
-import Work from "../components/Pages/Work";
-import Blog from "../components/Pages/Blog";
-import Post from "../components/Pages/Post";
-import client from "../components/apolloclient";
-
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -25,24 +10,31 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
-
 import InputBase from '@material-ui/core/InputBase';
 import { ApolloProvider } from 'react-apollo';
-
+import client from "../components/apolloclient";
 
 import theme from "./theme";
 import layout from '../../../css/mobile/layout.scss';
 
+import SearchAuthor from "../components/Pages/SearchAuthor";
+import Autocomplete from "../components/Trim/Autocomplete";
+import About from "../components/Pages/About";
+import BackToTop from "../components/Trim/BackToTop";
+import Blog from "../components/Pages/Blog";
+import Drawer from "../components/Trim/Drawer";
+import Home from "../components/Pages/Home";
+import Post from "../components/Pages/Post";
+import Privacy from "../components/Pages/Privacy";
+import SearchTitle from "../components/Pages/SearchTitle";
+import Tos from "../components/Pages/Tos";
+import Work from "../components/Pages/Work";
 
 const styles = theme => ({
   appBarSpacer: theme.mixins.toolbar,
 
   grow: {
     flexGrow: 1,
-  },
-  inputRoot: {
-  },
-  inputInput: {
   },
 });
 
@@ -60,7 +52,8 @@ class BooksApp extends React.Component {
 
   render() {
 
-    const { classes, initialProps } = this.props;
+    const { classes, appContext } = this.props;
+    const initialProps = this.props.initialProps;
 
     return (
       <div>

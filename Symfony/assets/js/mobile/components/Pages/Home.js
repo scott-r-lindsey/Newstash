@@ -20,7 +20,6 @@ export default class Home extends React.Component {
     };
   }
 
-
   loading = false;
 
   componentDidMount() {

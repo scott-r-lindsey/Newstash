@@ -9,6 +9,7 @@ use App\Repository\ReviewRepository;
 use App\Repository\ScoreRepository;
 use App\Repository\WorkRepository;
 use App\Service\ReviewManager;
+use App\Service\GraphQLExecutor;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,18 +20,24 @@ class WorkController extends AbstractController
 {
     /**
      * @Route(
-     *      "/book/{work}/{slug}",
+     *      "/book/{work_id}/{slug}",
      *      name="mobile_work",
      *      condition="context.getMethod() in ['GET'] and request.headers.get('dev-only') and request.headers.get('CloudFront-Is-Mobile-Viewer')"
      * )
      * @Template()
      */
     public function mobile_work(
-        Work $work
+        string $projectDir,
+        string $work_id,
+        GraphQLExecutor $gqle
     ): array
     {
 
-        return ['props' => []];
+        $query      = file_get_contents($projectDir .'/graphql/work.graphql');
+        $query      = str_replace('__WORK_ID__', $work_id, $query);
+        $result       = $gqle->execute($query);
+
+        return ['props' => ['data' => $result['data']]];
     }
 
 

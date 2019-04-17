@@ -9,21 +9,16 @@ import { Query } from "react-apollo";
 import Loading from "../Trim/Loading";
 import * as Constants from '../../constants'
 import { fiveStars, generateWorkLink } from "../../util.js";
-
-const workQuery = (id) => {
-  return gql`
-      {
-        work(id: ${id}) {
-          id
-          title
-        }
-      }`;
-}
-
-const api = '/api/v1/work';
+import workGql from 'raw-loader!../../raw/graphql/work.graphql';
 
 const styles = theme => ({
 });
+
+const workQuery = (id) => {
+  return gql(workGql.replace('__WORK_ID__', id));
+}
+
+const api = '/api/v1/work';
 
 class Work extends React.Component {
   constructor(props, context) {
@@ -34,6 +29,19 @@ class Work extends React.Component {
     };
   }
 
+  renderWork(work) {
+    return (
+      <div>
+        <Helmet>
+          <title>{work.title}</title>
+        </Helmet>
+        <div>
+          <strong>{work.title}</strong>
+        </div>
+      </div>
+    );
+  }
+
   componentDidMount() {
     console.log('did mount');
   }
@@ -41,6 +49,20 @@ class Work extends React.Component {
   render() {
 
     const id = this.props.match.params.id;
+    const {initialProps} = this.props;
+
+    // if initialProps are present and match our needed data
+    // we avoid re-requesting that data.  The page was actually
+    // rendered on the server side, but React is smart enough to
+    // not replace the DOM elements even though we run the
+    // render function again.
+    let work = false;
+    if (  (initialProps.data) &&
+          (initialProps.data.work) &&
+          (id == initialProps.data.work.id)) {
+
+      work = initialProps.data.work;
+    }
 
     return (
       <div>
@@ -48,25 +70,20 @@ class Work extends React.Component {
           <title>{this.state.title}</title>
         </Helmet>
 
-        <Query query={ workQuery(id) } >
+        { ( work ) ?
+          <div>
+            { this.renderWork(work) }
+          </div> :
+          <Query query={ workQuery(id) } >
 
-          {({ loading, error, data }) => {
-            if (loading) return <Loading />;
-            if (error) return <p>Error </p>;
+            {({ loading, error, data }) => {
+              if (loading) return <Loading />;
+              if (error) return <p>Error </p>;
 
-            return (
-              <div>
-                <Helmet>
-                  <title>{data.work.title}</title>
-                </Helmet>
-                <div>
-                  <strong>{data.work.title}</strong>
-                </div>
-              </div>
-
-            );
-          }}
-        </Query>
+              return this.renderWork(data.work);
+            }}
+          </Query>
+        }
       </div>
     );
 

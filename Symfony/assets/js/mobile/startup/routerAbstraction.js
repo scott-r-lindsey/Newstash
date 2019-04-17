@@ -5,7 +5,6 @@ import { BrowserRouter, StaticRouter } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import App from "./BooksApp";
 
-
 export default (initialProps, context) => {
   // We render a different router depending on whether we are rendering server side
   // or client side.
@@ -13,6 +12,7 @@ export default (initialProps, context) => {
   // componentHtml (the component)
   // title (the title)
   // other data you may need to render the page
+
   if (context.serverSide) {
     const renderedHtml = {
       componentHtml: renderToString(
@@ -35,4 +35,3 @@ export default (initialProps, context) => {
     );
   }
 };
-

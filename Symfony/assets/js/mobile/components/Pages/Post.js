@@ -1,14 +1,13 @@
-import React from "react";
 import PropTypes from 'prop-types';
+import React from "react";
 import gql from "graphql-tag";
-import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { withStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
 import { Query } from "react-apollo";
+import { withStyles } from '@material-ui/core/styles';
 
 import * as Constants from '../../constants'
 import Loading from "../Trim/Loading";
-
 import postGql from 'raw-loader!../../raw/graphql/post.graphql';
 
 const postQuery = (id) => {

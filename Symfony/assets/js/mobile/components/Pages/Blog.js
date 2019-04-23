@@ -1,16 +1,15 @@
-
-import gql from "graphql-tag";
-import React from "react";
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
+import React from "react";
+import gql from "graphql-tag";
 import { Helmet } from "react-helmet";
-import { withStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
 import { Query } from "react-apollo";
+import { withStyles } from '@material-ui/core/styles';
 
-import Loading from "../Trim/Loading";
 import * as Constants from '../../constants'
-import { generatePostLink } from "../../util.js";
+import Loading from "../Trim/Loading";
 import postsGql from 'raw-loader!../../raw/graphql/posts.graphql';
+import { generatePostLink } from "../../util.js";
 
 const styles = theme => ({
   wrap: {

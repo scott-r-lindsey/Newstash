@@ -58,7 +58,7 @@ resource "aws_cloudfront_distribution" "the-cloudfront-distribution" {
         origin_id   = "${local.alb_origin_id}"
 
         custom_origin_config {
-            http_port                   = 80
+            http_port                   = 88
             https_port                  = 443
             origin_ssl_protocols        = ["TLSv1.2"]
             origin_protocol_policy      = "http-only"

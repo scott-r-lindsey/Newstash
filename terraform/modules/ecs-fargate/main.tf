@@ -114,6 +114,17 @@ resource "aws_alb_listener" "the-alb-listner" {
     }
 }
 
+resource "aws_alb_listener" "the-alb-listner" {
+    load_balancer_arn = "${aws_alb.the-alb.arn}"
+    port              = "88"
+    protocol          = "HTTP"
+
+    default_action {
+    target_group_arn = "${aws_alb_target_group.the-alb-target-group.arn}"
+        type             = "forward"
+    }
+}
+
 # -----------------------------------------------------------------------------
 # autoscaling, tasks
 # This scales the number of tasks running within a cluster

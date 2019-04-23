@@ -263,6 +263,17 @@ module "alb-security-group" {
     vpc_id                          = "${module.the-vpc.vpc_id}"
 }
 
+module "alt-alb-security-group" {
+    source                          = "./modules/security_group"
+
+    allowed_port                    = "8000"
+
+    project                         = "${var.project}"
+    environment                     = "${var.environment}"
+    name                            = "alb"
+    vpc_id                          = "${module.the-vpc.vpc_id}"
+}
+
 module "ssh-security-group" {
     source                          = "./modules/security_group"
 
@@ -292,7 +303,7 @@ module "autoscaling_fargate" {
 
     # VPC
     vpc_id                          = "${module.the-vpc.vpc_id}"
-    alb_security_groups             = ["${module.alb-security-group.id}"]
+    alb_security_groups             = ["${module.alb-security-group.id}", "${module.alt-alb-security-group.id}"]
     alb_subnets                     = ["${module.the-vpc.public_subnet_ids}"]
     ecs_security_groups             = ["${module.ecs-cluster-security-group.id}"]
     ecs_subnets                     = ["${module.the-vpc.public_subnet_ids}"]

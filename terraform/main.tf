@@ -270,7 +270,7 @@ module "alt-alb-security-group" {
 
     project                         = "${var.project}"
     environment                     = "${var.environment}"
-    name                            = "alb"
+    name                            = "alt-alb"
     vpc_id                          = "${module.the-vpc.vpc_id}"
 }
 

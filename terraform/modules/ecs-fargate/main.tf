@@ -105,17 +105,6 @@ resource "aws_ecs_service" "the-ecs-service" {
 
 resource "aws_alb_listener" "the-alb-listner" {
     load_balancer_arn = "${aws_alb.the-alb.arn}"
-    port              = "80"
-    protocol          = "HTTP"
-
-    default_action {
-    target_group_arn = "${aws_alb_target_group.the-alb-target-group.arn}"
-        type             = "forward"
-    }
-}
-
-resource "aws_alb_listener" "the-alb-listner" {
-    load_balancer_arn = "${aws_alb.the-alb.arn}"
     port              = "88"
     protocol          = "HTTP"
 

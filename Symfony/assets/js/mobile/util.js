@@ -30,3 +30,6 @@ export const generatePostLink = function (post) {
   return '/blog/' + post.id + '/' + post.slug;
 }
 
+export const generatePostImageLink = function (post) {
+  return '/img/blog/' + post.image;
+}

@@ -105,7 +105,7 @@ resource "aws_ecs_service" "the-ecs-service" {
 
 resource "aws_alb_listener" "the-alb-listner" {
     load_balancer_arn = "${aws_alb.the-alb.arn}"
-    port              = "88"
+    port              = "80"
     protocol          = "HTTP"
 
     default_action {

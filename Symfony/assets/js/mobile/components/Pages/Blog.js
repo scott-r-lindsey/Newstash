@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Query } from "react-apollo";
 import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
+import Copyright from "../Trim/Copyright";
 
 import * as Constants from '../../constants'
 import Loading from "../Trim/Loading";
@@ -15,28 +16,19 @@ import { generatePostLink, generatePostImageLink } from "../../util.js";
 
 const styles = theme => ({
   wrap: {
-    padding: '3vw 2vw 10vw 2vw',
+    padding: '3vw 2vw 0vw 2vw',
     backgroundColor:'#ffffff7a',
     minHeight: 'calc(100vh - 56px)',
     fontFamily: Constants.BoringFont,
   },
-  postLink: {
-    color: 'black',
-    textDecoration: 'none',
-    lineHeight: '9vw',
-  },
 
+  // first post classes
   firstPost: {
     paddingTop: '3vw',
     textAlign: 'center',
-    //backgroundColor:'#ffffff7a',
     background:
-      //'#23865d',
       'radial-gradient(ellipse at 65% 50%, rgba(36, 63, 195, 0.4) 0, rgba(255, 255, 255, 0) 100%), ' +
       'linear-gradient(0deg, rgba(48,180,152,1) 0%, rgba(25,194,119,1) 100%)',
-      //'radial-gradient(ellipse at 65% 50%, rgba(255, 255, 255, 0.4) 0, rgba(255, 255, 255, 0) 100%), ' +
-      //'linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0, rgba(75, 75, 75, 0.5)), ' +
-      //'linear-gradient(180deg, #17e243 0, #1789e2);',
     fontSize: '8vw',
     lineHeight: '5vw',
     padding: '0 2vw',
@@ -54,10 +46,7 @@ const styles = theme => ({
     },
   },
   firstPostLink: {
-    lineHeight: '0',
-    color: 'black',
     textDecoration: 'none',
-    lineHeight: '10vw',
   },
   firstImage: {
     width:'100%',
@@ -94,16 +83,12 @@ const styles = theme => ({
     },
   },
 
-  title: {
-    fontSize: '8vw',
-    lineHeight: '12vw',
-  },
+  // all additiional posts
   post: {
     background:
       'radial-gradient(ellipse at 65% 50%, rgba(36, 63, 195, 0.4) 0, rgba(255, 255, 255, 0) 100%), ' +
       'linear-gradient(0deg, rgba(48,180,152,1) 0%, rgba(25,194,119,1) 100%)',
     marginTop: '3vw',
-    //borderTop: '10px solid white',
     textAlign: 'center',
     position: 'relative',
     overflow: 'hidden',
@@ -114,6 +99,9 @@ const styles = theme => ({
         'linear-gradient(0deg, rgb(48, 119, 180) 0%, rgb(25, 69, 194) 100%)',
       textShadow: '2px 2px 2px #1f4c79',
     },
+  },
+  postLink: {
+    textDecoration: 'none',
   },
   postImage: {
     position: 'absolute',
@@ -212,7 +200,9 @@ class Blog extends React.Component {
                 </div>
               </Link>
             </div>
+
         ))}
+        <Copyright />
 
       </div>
     );

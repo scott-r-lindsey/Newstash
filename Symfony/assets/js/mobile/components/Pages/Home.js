@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 
 import Loading from "../Trim/Loading";
 import Masonry from "../Masonry/Masonry";
+import Copyright from "../Trim/Copyright";
 
 const api = '/api/v1/news';
 
@@ -81,13 +82,7 @@ export default class Home extends React.Component {
             />
         }
         { this.state.hasmore ||
-          <div style={{
-              textAlign: 'center',
-              padding: '60px 0',
-              opacity: '.5',
-          }}>
-            <em> Copyright &copy; { new Date().getFullYear() } Books to Love</em>
-          </div>
+          <Copyright />
         }
       </div>
     );

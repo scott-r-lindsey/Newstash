@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import React from "react";
+import Moment from 'react-moment';
 import gql from "graphql-tag";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Query } from "react-apollo";
 import { withStyles } from '@material-ui/core/styles';
+import Icon from '@material-ui/core/Icon';
 
 import * as Constants from '../../constants'
 import Loading from "../Trim/Loading";
@@ -14,42 +16,63 @@ import { generatePostLink, generatePostImageLink } from "../../util.js";
 const styles = theme => ({
   wrap: {
     padding: '3vw 2vw 10vw 2vw',
-    backgroundColor:'white',
+    backgroundColor:'#ffffff7a',
     minHeight: 'calc(100vh - 56px)',
     fontFamily: Constants.BoringFont,
-  },
-  head: {
-  },
-  firstImage: {
-    width:'100%',
-    margin: '5px 0vw 0 0vw',
-  },
-  firstPost: {
-    textAlign: 'center',
-    fontSize: '4vh',
-    lineHeight: '5vh',
   },
   postLink: {
     color: 'black',
     textDecoration: 'none',
-    lineHeight: '5vh',
+    lineHeight: '9vw',
   },
-  title: {
-    fontSize: '4vh',
-    lineHeight: '7vh',
-  },
-  post: {
-    borderTop: '1px solid #ccc',
+
+  firstPost: {
+    paddingTop: '3vw',
     textAlign: 'center',
-    fontSize: '4vh',
-    lineHeight: '5vh',
+    //backgroundColor:'#ffffff7a',
+    background:
+      //'#23865d',
+      'radial-gradient(ellipse at 65% 50%, rgba(36, 63, 195, 0.4) 0, rgba(255, 255, 255, 0) 100%), ' +
+      'linear-gradient(0deg, rgba(48,180,152,1) 0%, rgba(25,194,119,1) 100%)',
+      //'radial-gradient(ellipse at 65% 50%, rgba(255, 255, 255, 0.4) 0, rgba(255, 255, 255, 0) 100%), ' +
+      //'linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0, rgba(75, 75, 75, 0.5)), ' +
+      //'linear-gradient(180deg, #17e243 0, #1789e2);',
+    fontSize: '8vw',
+    lineHeight: '5vw',
+    padding: '0 2vw',
+    '& strong': {
+      backgroundColor: '#ffffff5c',
+      display: 'inline-block',
+      borderRadius: '2vw',
+      paddingTop: '3vw',
+      fontSize: '10vw',
+      fontFamily: Constants.DisplayFont,
+      fontWeight: '600',
+      color: 'white',
+      lineHeight: '11vw',
+      textShadow: '2px 2px 2px #187b64',
+    },
   },
-  lead: {
+  firstPostLink: {
+    lineHeight: '0',
+    color: 'black',
+    textDecoration: 'none',
+    lineHeight: '10vw',
+  },
+  firstImage: {
+    width:'100%',
+    verticalAlign: 'bottom',
+  },
+  firstLead: {
     '& p': {
       margin: 0,
-      fontSize: '3vh',
-      lineHeight: '4vh',
+      fontSize: '5vw',
+      lineHeight: '7vw',
+      opacity: '.9',
+      color: 'white',
+      textShadow: '2px 2px 2px #187b64',
     },
+    fontStyle: 'italic',
     maxHeight:'40vh',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -58,7 +81,76 @@ const styles = theme => ({
     WebkitLineClamp: '3',
     WebkitBoxOrient: 'vertical',
   },
+  firstInfo: {
+    color:'white',
+    backgroundColor: '#4060825c',
+    padding: '2vw',
+    fontSize: '4.0vw',
+    textAlign: 'left',
+    margin: '0 -2vw',
+    textShadow: '2px 2px 2px #187b64',
+    '& em': {
+      paddingLeft: '4vw',
+    },
+  },
 
+  title: {
+    fontSize: '8vw',
+    lineHeight: '12vw',
+  },
+  post: {
+    background:
+      'radial-gradient(ellipse at 65% 50%, rgba(36, 63, 195, 0.4) 0, rgba(255, 255, 255, 0) 100%), ' +
+      'linear-gradient(0deg, rgba(48,180,152,1) 0%, rgba(25,194,119,1) 100%)',
+    marginTop: '3vw',
+    //borderTop: '10px solid white',
+    textAlign: 'center',
+    position: 'relative',
+    overflow: 'hidden',
+    padding:'0vw',
+    '&:nth-of-type(2n)': {
+      background:
+        'radial-gradient(ellipse at 65% 50%, rgba(36, 195, 158, 0.4) 0, rgba(255, 255, 255, 0) 100%), ' +
+        'linear-gradient(0deg, rgb(48, 119, 180) 0%, rgb(25, 69, 194) 100%)',
+      textShadow: '2px 2px 2px #1f4c79',
+    },
+  },
+  postImage: {
+    position: 'absolute',
+    width: '40vw',
+    left: '0',
+    top: '0',
+    backgroundSize: 'cover',
+    height:'100%',
+  },
+  postLead: {
+    position:'relative',
+    padding: '4vw 4vw 8vw 4vw',
+    width:'56vw',
+    fontSize: '8vw',
+    lineHeight: '7vw',
+    marginLeft:'40vw',
+    color: 'white',
+    textShadow: '2px 2px 2px #187b64',
+    fontFamily: Constants.DisplayFont,
+    fontWeight: '600',
+  },
+  postInfo: {
+    position:'absolute',
+    bottom: '0',
+    right: '0',
+    left: '0',
+    backgroundColor: '#4060825c',
+    fontFamily: Constants.BoringFont,
+    fontSize: '4vw',
+    lineHeight: '6vw',
+  },
+  readmore: {
+    float: 'right',
+    textDecoration: 'underline',
+    fontWeight: '600',
+    lineHeight: '7vw',
+  },
 });
 
 class Blog extends React.Component {
@@ -79,24 +171,45 @@ class Blog extends React.Component {
         {posts.edges.map((post, index) => (
           (index === 0) ? // first post
             <div key={post.node.id} >
-              <Link to={generatePostLink(post.node)} className={classes.postLink} >
+              <Link to={generatePostLink(post.node)} className={classes.firstPostLink} >
                 { (console.log(post.node), post.node.image) ?
                   <img
                     className={classes.firstImage}
                     src={generatePostImageLink(post.node)} /> : null
                 }
                 <div className={classes.firstPost}>
-                  <strong className={classes.title}>{post.node.title}</strong>
+                  <strong>{post.node.title}</strong>
                   <div
-                    className={classes.lead}
+                    className={classes.firstLead}
                     dangerouslySetInnerHTML={{__html: post.node.lead.trim()}} />
+                  <div className={classes.firstInfo}>
+                    <Icon style={{verticalAlign: 'middle'}}>perm_identity</Icon>{post.node.user.first_name}&nbsp;
+                    <em>
+                      <Moment interval={30000} fromNow ago>
+                        {post.node.published_at}
+                      </Moment> Ago
+                    </em>
+                    <div className={classes.readmore}>
+                      Read More...
+                    </div>
+                  </div>
                 </div>
               </Link>
             </div>
            : // all other posts
             <div key={post.node.id} className={classes.post} >
               <Link to={generatePostLink(post.node)} className={classes.postLink} >
-                <strong>{post.node.title}</strong>
+                { (console.log(post.node), post.node.image) ?
+                  <div
+                    className={classes.postImage}
+                    style={{backgroundImage: 'url(' + generatePostImageLink(post.node) + ')'}} /> : null
+                }
+                <div className={classes.postLead}>
+                  {post.node.title}
+                  <div className={classes.postInfo}>
+                    Read More...
+                  </div>
+                </div>
               </Link>
             </div>
         ))}

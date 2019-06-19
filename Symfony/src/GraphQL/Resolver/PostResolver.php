@@ -132,6 +132,10 @@ class PostResolver implements ResolverInterface {
     {
         return $post->getPublishedAt()->format('Y-m-d\TH:i:s.u\Z');
     }
+    public function comment_count(Post $post): int
+    {
+        return $this->commentRepository->findPostCommentCount($post);
+    }
 
 /*
 active

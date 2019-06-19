@@ -33,6 +33,7 @@ const styles = theme => ({
     lineHeight: '5vw',
     padding: '0 2vw',
     '& strong': {
+      width: '90vw',
       backgroundColor: '#ffffff5c',
       display: 'inline-block',
       borderRadius: '2vw',
@@ -65,7 +66,6 @@ const styles = theme => ({
     maxHeight:'40vh',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    overflow: 'hidden',
     display: '-webkit-box',
     WebkitLineClamp: '3',
     WebkitBoxOrient: 'vertical',
@@ -160,7 +160,7 @@ class Blog extends React.Component {
           (index === 0) ? // first post
             <div key={post.node.id} >
               <Link to={generatePostLink(post.node)} className={classes.firstPostLink} >
-                { (console.log(post.node), post.node.image) ?
+                { (post.node.image) ?
                   <img
                     className={classes.firstImage}
                     src={generatePostImageLink(post.node)} /> : null
@@ -175,7 +175,7 @@ class Blog extends React.Component {
                     <em>
                       <Moment interval={30000} fromNow ago>
                         {post.node.published_at}
-                      </Moment> Ago
+                      </Moment> ago
                     </em>
                     <div className={classes.readmore}>
                       Read More...
@@ -187,7 +187,7 @@ class Blog extends React.Component {
            : // all other posts
             <div key={post.node.id} className={classes.post} >
               <Link to={generatePostLink(post.node)} className={classes.postLink} >
-                { (console.log(post.node), post.node.image) ?
+                { (post.node.image) ?
                   <div
                     className={classes.postImage}
                     style={{backgroundImage: 'url(' + generatePostImageLink(post.node) + ')'}} /> : null

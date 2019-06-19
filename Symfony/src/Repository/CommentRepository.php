@@ -47,6 +47,30 @@ class CommentRepository extends ServiceEntityRepository
         return ['count'    => $result['count']];
     }
 
+    public function findPostCommentCount(Post $post): int
+    {
+        $em = $this->getEntityManager();
+        $dbh = $em->getConnection();
+
+        $sql = '
+            SELECT
+                count(*) as count
+            FROM
+                comment
+            WHERE
+                post_id = ? AND
+                deleted = 0
+        ';
+
+        $dbh = $em->getConnection();
+        $sth = $dbh->prepare($sql);
+        $sth->execute([$post->getId()]);
+
+        $result = $sth->fetch();
+
+        return $result['count'];
+    }
+
     /**
      * gets comments for a post, filter "deleted"
      **/

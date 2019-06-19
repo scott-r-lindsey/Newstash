@@ -29,6 +29,8 @@ Post:
         type: "String"
       published_at:
         type: "String"
+      comment_count:
+        type: "Int"
 
       user:
         type: User!

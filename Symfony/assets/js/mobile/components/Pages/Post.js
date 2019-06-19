@@ -6,16 +6,15 @@ import { Link } from "react-router-dom";
 import { Query } from "react-apollo";
 import { withStyles } from '@material-ui/core/styles';
 import Moment from 'react-moment';
+import Icon from '@material-ui/core/Icon';
 
 import * as Constants from '../../constants'
 import Loading from "../Trim/Loading";
 import ReadMoreLess from "../Trim/ReadMoreLess";
 import Copyright from "../Trim/Copyright";
 import postGql from 'raw-loader!../../raw/graphql/post.graphql';
-import Icon from '@material-ui/core/Icon';
 
 import { generatePostLink, generatePostImageLink } from "../../util.js";
-
 
 const postQuery = (id) => {
   return gql(postGql.replace('__POST_ID__', id));
@@ -169,14 +168,17 @@ const styles = theme => ({
   reply: {
     marginLeft: '3vw',
   }
-
-
-
-
-
-
 });
 
+/* --------------------------------------------------------------------
+  FIXME: the comments are derived from the query, but really the result
+  of the query should be parsed into state, so that we can represent
+  "load more comments" both for breath and depth of responses.
+
+  FIXME: haven't even started to implement "reply".  Seems like auth
+  will need to come from the top of the tree?  And if we are authed, we
+  can set data in state that will enable the reply textarea, etc.
+-------------------------------------------------------------------- */
 class Post extends React.Component {
 
   constructor(props, context) {

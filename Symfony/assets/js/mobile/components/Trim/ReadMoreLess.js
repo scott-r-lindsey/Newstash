@@ -16,6 +16,8 @@ class ReadMoreLess extends React.Component {
   }
 
   componentDidMount() {
+    // for reasons unknown, scrollHeight is
+    // always 2 pixels larger than expected
     let wiggleRoom = 4;
 
     if ( this._content.scrollHeight > this._content.clientHeight + wiggleRoom ){

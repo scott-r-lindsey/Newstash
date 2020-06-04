@@ -25,8 +25,7 @@ jobs:
         <<: *php-image
 
         steps:
-            - setup_remote_docker:
-                docker_layer_caching: true
+            - setup_remote_docker
             - checkout
             - run: |
                 mkdir workspace
@@ -65,8 +64,7 @@ jobs:
         <<: *php-image
 
         steps:
-            - setup_remote_docker:
-                docker_layer_caching: true
+            - setup_remote_docker
             - checkout
 
             - attach_workspace:
@@ -143,8 +141,7 @@ jobs:
         <<: *python-image
 
         steps:
-            - setup_remote_docker:
-                docker_layer_caching: true
+            - setup_remote_docker
             - checkout
 
             - attach_workspace:
@@ -179,8 +176,7 @@ jobs:
         <<: *python-image
 
         steps:
-            - setup_remote_docker:
-                docker_layer_caching: true
+            - setup_remote_docker
             - checkout
 
             - run:
